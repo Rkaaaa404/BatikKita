@@ -1,9 +1,9 @@
 # Product Requirement Document (PRD)
-# MembatikKita — Interactive Batik Education & AI Cultural Experience Platform
+# Batik Kita — Interactive Batik Education & AI Cultural Experience Platform
 
 | Metadata | Detail |
 |---|---|
-| **Product Name** | **MembatikKita** |
+| **Product Name** | **Batik Kita** |
 | **Document Version** | v1.0.0 (MVP Release) |
 | **Status** | Approved for Development |
 | **Target Competition** | HoloDev — HOLOGY 9.0 (Universitas Brawijaya) |
@@ -16,7 +16,7 @@
 ## 1. Executive Summary & Vision
 
 ### 1.1 Product Vision
-**MembatikKita** adalah platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara. Dengan memadukan **Edu-Games Arcade**, **AI Vision Motif Scanner**, **Asisten Budaya Cerdas (Tanya Sang Empu)**, dan **Peta Geografis Interaktif**, platform ini mengubah pembelajaran sejarah dan filosofi batik dari konsumsi teks pasif menjadi petualangan visual yang menyenangkan, terukur, dan bermakna.
+**Batik Kita** adalah platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara. Dengan memadukan **Edu-Games Arcade**, **AI Vision Motif Scanner**, **Asisten Budaya Cerdas (Tanya Sang Empu)**, dan **Peta Geografis Interaktif**, platform ini mengubah pembelajaran sejarah dan filosofi batik dari konsumsi teks pasif menjadi petualangan visual yang menyenangkan, terukur, dan bermakna.
 
 ### 1.2 Problem Statement
 1. **Rendahnya Keterlibatan Generasi Muda (*Low Cultural Engagement*)**: Apresiasi batik saat ini mayoritas hanya sebatas pemakaian pakaian jadi (*passive wearing*) tanpa pemahaman makna simbolis di balik ragam hiasnya.
@@ -54,7 +54,7 @@
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                          MEMBATIKKITA MVP SCOPE                        │
+│                          Batik Kita MVP SCOPE                        │
 ├───────────────────────────────────┬────────────────────────────────────┤
 │           IN-SCOPE (MVP)          │         OUT-OF-SCOPE (Post-MVP)    │
 ├───────────────────────────────────┼────────────────────────────────────┤

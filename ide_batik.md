@@ -1,4 +1,4 @@
-# MembatikKita — Platform Edukasi dan Eksplorasi Batik Nusantara Interaktif Berbasis Edu-Games, AI Vision, dan Asisten Budaya Cerdas
+# Batik Kita — Platform Edukasi dan Eksplorasi Batik Nusantara Interaktif Berbasis Edu-Games, AI Vision, dan Asisten Budaya Cerdas
 
 > **Dokumen Inti Ide Proposal — HoloDev HOLOGY 9.0**  
 > Subtema: **Pendidikan** — Transformasi pendidikan dengan teknologi adaptif, inklusif, dan pembelajaran sepanjang hayat.
@@ -7,7 +7,7 @@
 
 ## a. Judul / Nama Perangkat Lunak
 
-**MembatikKita** — Platform Edukasi dan Eksplorasi Budaya Batik Nusantara Interaktif Berbasis *Gamified Edu-Arcade*, *AI Computer Vision Lens*, dan *Conversational Cultural Agent*
+**Batik Kita** — Platform Edukasi dan Eksplorasi Budaya Batik Nusantara Interaktif Berbasis *Gamified Edu-Arcade*, *AI Computer Vision Lens*, dan *Conversational Cultural Agent*
 
 ---
 
@@ -15,13 +15,13 @@
 
 Batik Indonesia telah diakui oleh UNESCO sebagai Warisan Budaya Takbenda Kemanusiaan sejak tahun 2009. Meskipun demikian, apresiasi generasi muda terhadap batik masih didominasi oleh pemakaian pasif tanpa pemahaman mengenai filosofi, nilai historis, variasi ragam hias daerah, dan unsur pembuatannya. Media edukasi batik yang ada saat ini umumnya berupa artikel teks statis, ensiklopedia pasif, atau video tutorial satu arah yang kurang interaktif dan membosankan bagi generasi digital.
 
-**MembatikKita** hadir sebagai platform web edukasi interaktif yang mentransformasi pembelajaran warisan budaya batik menjadi pengalaman yang menyenangkan, terukur, dan bermakna. Platform ini memadukan tiga pilar utama:
+**Batik Kita** hadir sebagai platform web edukasi interaktif yang mentransformasi pembelajaran warisan budaya batik menjadi pengalaman yang menyenangkan, terukur, dan bermakna. Platform ini memadukan tiga pilar utama:
 1. **Interactive Edu-Games Arcade**: Mini-games edukatif meliputi *Batik Jigsaw Puzzle* (rekonstruksi potongan geometri motif), *Detektif Isen-Isen* (*spot the pattern element*), dan *Quick Draw Canvas* (latihan menggambar pola dasar dengan umpan balik visual).
 2. **AI-Powered Cultural Lens & Scanner**: Fitur pemindaian citra berbasis Computer Vision yang mengenali motif batik dari foto pakaian/kain pengguna, mengungkap asal daerah, filosofi simbolis, hingga etika penggunaannya.
 3. **"Tanya Sang Empu" (AI Cultural Chatbot)**: Asisten cerdas bertenaga Large Language Model (LLM) dengan persona budayawan/empu batik lokal yang siap menjawab pertanyaan kultural secara interaktif.
 4. **Peta Interaktif Batik Nusantara & Album Koleksi**: Eksplorasi geografis gaya batik (Keraton vs. Pesisiran) yang terintegrasi dengan sistem lencana dan kartu koleksi bermakna (*Batikpedia*).
 
-Dengan pendekatan *playful learning* yang didukung teknologi modern, MembatikKita mendemokratisasi akses edukasi budaya, menumbuhkan rasa bangga generasi muda terhadap warisan nusantara, dan mendukung pelestarian budaya berbasis transformasi digital.
+Dengan pendekatan *playful learning* yang didukung teknologi modern, Batik Kita mendemokratisasi akses edukasi budaya, menumbuhkan rasa bangga generasi muda terhadap warisan nusantara, dan mendukung pelestarian budaya berbasis transformasi digital.
 
 **Kata Kunci:** Batik Nusantara, Edu-Games, *Computer Vision*, *Gamification*, AI Chatbot, Jigsaw Puzzle, Pendidikan Budaya, UNESCO Heritage.
 
@@ -66,7 +66,7 @@ Dengan memanfaatkan teknologi web modern dan AI:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                      MEMBATIKKITA: FITUR UTAMA                         │
+│                      Batik Kita: FITUR UTAMA                         │
 ├──────────────────────┬────────────────────────┬────────────────────────┤
 │   🎮 ARCADE EDUKASI  │   🔍 FITUR AI          │   🗺️ EKSPLORASI BUDAYA │
 │                      │                        │                        │

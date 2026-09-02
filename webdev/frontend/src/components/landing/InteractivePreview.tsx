@@ -1,0 +1,272 @@
+"use client";
+
+import React, { useState } from "react";
+import { Scan, Sparkles, Send, CheckCircle2 } from "lucide-react";
+import { motion } from "motion/react";
+
+const SAMPLE_MOTIFS = [
+  {
+    id: "mega_mendung",
+    name: "Mega Mendung",
+    region: "Cirebon, Jawa Barat",
+    category: "Batik Pesisiran",
+    confidence: 96.4,
+    image: "/images/batik-mega-mendung.jpg",
+    philosophy:
+      "Awan pembawa hujan yang melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan pelindung di tengah terik.",
+    recommendation: "Sangat luwes untuk pakaian kerja, busana semi-formal, maupun perayaan modern.",
+  },
+  {
+    id: "parang_rusak",
+    name: "Parang Rusak Barong",
+    region: "Surakarta & Yogyakarta",
+    category: "Batik Keraton (Larangan)",
+    confidence: 98.2,
+    image: "/images/batik-parang-rusak.jpg",
+    philosophy:
+      "Garis diagonal ombak tak terputus yang melambangkan semangat pantang menyerah, keteguhan pemimpin, dan kesinambungan moral.",
+    recommendation: "Elok untuk acara perhelatan sakral dan wisuda.",
+  },
+  {
+    id: "kawung",
+    name: "Kawung Picis",
+    region: "D.I. Yogyakarta",
+    category: "Batik Keraton",
+    confidence: 95.8,
+    image: "/images/batik-kawung.jpg",
+    philosophy:
+      "Pola 4 kelopak buah aren yang melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
+    recommendation: "Sangat serasi dipakai untuk acara formal, perkantoran, dan silaturahmi.",
+  },
+];
+
+const QUICK_PROMPTS = [
+  "Apa bedanya batik Solo dan Yogyakarta?",
+  "Batik apa yang cocok untuk pernikahan?",
+  "Kenapa motif Parang pernah dilarang?",
+];
+
+const EMPU_RESPONSES: Record<string, string> = {
+  "Apa bedanya batik Solo dan Yogyakarta?":
+    "Batik Solo cenderung berlatar sogan kekuningan dengan ornamen lembut gemulai, sedangkan Yogyakarta berlatar putih bersih dengan sogan kehitaman yang tegas dan gagah.",
+  "Batik apa yang cocok untuk pernikahan?":
+    "Motif Sidomukti, Truntum, atau Sido Asih sangat dianjurkan karena bermakna doa kemakmuran, cinta kasih abadi, dan keharmonisan rumah tangga.",
+  "Kenapa motif Parang pernah dilarang?":
+    "Parang Rusak dahulu merupakan 'Batik Larangan' di Keraton Mataram karena dianggap memiliki muatan spiritual dan kewibawaan agung khusus bagi raja dan ksatria.",
+};
+
+export function InteractivePreview() {
+  const [activeMotif, setActiveMotif] = useState(SAMPLE_MOTIFS[0]);
+  const [isScanning, setIsScanning] = useState(false);
+  const [chatMessages, setChatMessages] = useState<{ sender: "empu" | "user"; text: string; time: string }[]>([
+    {
+      sender: "empu",
+      text: "Sugeng rawuh, Ananda! Apa yang ingin kamu tanyakan hari ini mengenai filosofi Batik kita?",
+      time: "10.02 AM",
+    },
+  ]);
+  const [inputMsg, setInputMsg] = useState("");
+
+  const handleSwitchMotif = (motif: typeof SAMPLE_MOTIFS[0]) => {
+    setIsScanning(true);
+    setTimeout(() => {
+      setActiveMotif(motif);
+      setIsScanning(false);
+    }, 500);
+  };
+
+  const handlePrompt = (prompt: string) => {
+    setChatMessages((prev) => [
+      ...prev,
+      { sender: "user" as const, text: prompt, time: "10.02 AM" },
+      {
+        sender: "empu" as const,
+        text: EMPU_RESPONSES[prompt] || "Pertanyaan yang sangat elok! Mari kita pelajari bersama.",
+        time: "10.02 AM",
+      },
+    ]);
+  };
+
+  const handleCustomSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputMsg.trim()) return;
+    setChatMessages((prev) => [
+      ...prev,
+      { sender: "user" as const, text: inputMsg, time: "10.05 AM" },
+      {
+        sender: "empu" as const,
+        text: `Pertanyaan yang sangat elok mengenai "${inputMsg}". Ragam batik nusantara menyimpan filosofi keselarasan hidup antara manusia dan alam.`,
+        time: "10.05 AM",
+      },
+    ]);
+    setInputMsg("");
+  };
+
+  return (
+    <section className="py-20 px-6 lg:px-16 max-w-[1280px] mx-auto space-y-28 overflow-hidden">
+
+      {/* ── Section: Tanya Sang Empu (left) + AI Scanner (right) ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+        {/* LEFT — Tanya Sang Empu Chat */}
+        <motion.div 
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="bg-white border border-[#e4e2de] rounded-2xl p-6 shadow-sm"
+        >
+          {/* Chat Header */}
+          <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[#e4e2de]">
+            <div className="w-10 h-10 bg-[#7A3E1D] rounded-full flex items-center justify-center text-[#D4AF37]">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-display font-semibold text-sm text-[#1b1c1a]">Tanya Sang Empu</h4>
+              <span className="text-[11px] text-[#10B981] flex items-center gap-1 font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] inline-block animate-pulse" /> Online
+              </span>
+            </div>
+          </div>
+
+          {/* Messages */}
+          <div className="space-y-3 max-h-56 overflow-y-auto mb-4 pr-1">
+            {chatMessages.map((msg, i) => (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                key={i} 
+                className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"}`}
+              >
+                <div
+                  className={`max-w-[88%] px-4 py-3 rounded-2xl text-sm font-narrative leading-relaxed ${
+                    msg.sender === "empu"
+                      ? "bg-[#7A3E1D]/8 text-[#1b1c1a] rounded-tl-none border border-[#e4e2de]"
+                      : "bg-[#fbf9f5] text-[#1b1c1a] rounded-tr-none border border-[#e4e2de]"
+                  }`}
+                >
+                  {msg.text}
+                </div>
+                {msg.sender === "empu" && (
+                  <span className="text-[10px] text-[#86736B] mt-1 ml-1">{msg.time}</span>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Quick prompts */}
+          {chatMessages.length < 3 && (
+            <div className="flex flex-wrap gap-2 mb-3">
+              {QUICK_PROMPTS.map((p, idx) => (
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 + idx * 0.1 }}
+                  key={p}
+                  onClick={() => handlePrompt(p)}
+                  className="text-[11px] font-medium bg-[#f5f3ef] hover:bg-[#eae8e4] text-[#53433C] px-3 py-1.5 rounded-lg border border-[#e4e2de] transition-colors text-left"
+                >
+                  {p}
+                </motion.button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <form onSubmit={handleCustomSend} className="flex gap-2">
+            <input
+              type="text"
+              value={inputMsg}
+              onChange={(e) => setInputMsg(e.target.value)}
+              placeholder="Ketik pesan..."
+              className="flex-1 bg-[#f5f3ef] border border-[#e4e2de] rounded-xl px-4 py-2.5 text-sm text-[#1b1c1a] focus:outline-none focus:ring-1 focus:ring-[#7A3E1D]"
+            />
+            <button
+              type="submit"
+              className="w-10 h-10 bg-[#7A3E1D] hover:bg-[#5D2808] text-[#D4AF37] rounded-xl flex items-center justify-center transition-colors shrink-0"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </form>
+        </motion.div>
+
+        {/* RIGHT — AI Scanner Section */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        >
+          <h3 className="font-display font-bold text-2xl text-[#7A3E1D] mb-3">Pemindai Motif Instan</h3>
+          <p className="font-narrative text-base text-[#53433C] leading-relaxed mb-6">
+            Arahkan kamera ke kain batik, dan biarkan AI kami mengidentifikasi motif, asal daerah, dan makna filosofisnya dalam hitungan detik.
+          </p>
+
+          {/* Motif chips */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {SAMPLE_MOTIFS.map((m) => (
+              <button
+                key={m.id}
+                onClick={() => handleSwitchMotif(m)}
+                className={`text-xs font-display font-semibold px-3 py-1.5 rounded-lg transition-all ${
+                  activeMotif.id === m.id
+                    ? "bg-[#7A3E1D] text-[#FDFBF7]"
+                    : "bg-[#f5f3ef] text-[#53433C] hover:bg-[#eae8e4]"
+                }`}
+              >
+                {m.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Scanner Viewport */}
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#e4e2de] shadow-sm bg-[#1b1c1a] mb-4 group">
+            <div
+              className="w-full h-full bg-cover bg-center transition-opacity duration-300"
+              style={{ backgroundImage: `url(${activeMotif.image})`, opacity: isScanning ? 0.5 : 0.85 }}
+            />
+            
+            {/* Scan frame */}
+            <div className={`absolute inset-8 border border-[#D4AF37]/80 rounded-lg pointer-events-none transition-transform duration-700 ${isScanning ? 'scale-95' : 'scale-100'}`}>
+              <div className="absolute -top-0.5 -left-0.5 w-4 h-4 border-t-2 border-l-2 border-[#D4AF37]" />
+              <div className="absolute -top-0.5 -right-0.5 w-4 h-4 border-t-2 border-r-2 border-[#D4AF37]" />
+              <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37]" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]" />
+            </div>
+
+            {/* Scanning Laser Line */}
+            {isScanning && (
+              <motion.div 
+                initial={{ top: "10%" }}
+                animate={{ top: "90%" }}
+                transition={{ duration: 1.5, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+                className="absolute left-8 right-8 h-0.5 bg-[#D4AF37] shadow-[0_0_8px_rgba(212,175,55,0.8)] z-10"
+              />
+            )}
+
+            {/* Status pill */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-[#fbf9f5]/90 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-2 border border-[#e4e2de] shadow text-xs font-display font-semibold text-[#1b1c1a]">
+              <span className={`w-2 h-2 rounded-full ${isScanning ? 'bg-[#D4AF37] animate-pulse' : 'bg-[#10B981]'}`} />
+              {isScanning ? "Menganalisis..." : `Teridentifikasi: ${activeMotif.name}`}
+            </div>
+          </div>
+
+          {/* Result badge */}
+          {!isScanning && (
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-3 bg-[#f5f3ef] rounded-xl p-3 border border-[#e4e2de]"
+            >
+              <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />
+              <div className="text-xs text-[#53433C]">
+                <span className="font-display font-bold text-[#7A3E1D]">{activeMotif.name}</span>
+                {" · "}{activeMotif.region}{" · "}{activeMotif.confidence}% akurasi
+              </div>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </section>
+  );
+}

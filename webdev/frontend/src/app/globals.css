@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #fbf9f5;
+    --foreground: #1b1c1a;
+    
+    /* Modern Heritage Design Tokens */
+    --royal-sogan: #7a3e1d;
+    --royal-sogan-dark: #4a2511;
+    --heritage-gold: #d4af37;
+    --heritage-gold-light: #f59e0b;
+    --indigofera-blue: #1e3a8a;
+    --indigofera-light: #3b82f6;
+    --mori-cream: #fdfbf7;
+    --mori-cream-alt: #f5f3ef;
+    
+    --surface: #fbf9f5;
+    --surface-container: #efeeea;
+    --surface-container-high: #eae8e4;
+    --on-surface: #1b1c1a;
+    --on-surface-variant: #53433c;
+    --outline: #86736b;
+    --outline-variant: #d8c2b8;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Typography Utility Classes */
+.font-display {
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+.font-narrative {
+  font-family: var(--font-serif), serif;
+}
+
+.font-body {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Custom Cultural Background — clean cream, no dot pattern */
+.bg-mori-fabric {
+  background-color: #fbf9f5;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(253, 251, 247, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(122, 62, 29, 0.12);
+}
+
+.glass-panel-dark {
+  background: rgba(24, 19, 14, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(216, 194, 184, 0.6);
+  box-shadow: 0 10px 30px -10px rgba(122, 62, 29, 0.08);
+}
+
+/* Shimmer & Glow Effects */
+.gold-shimmer {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.35) 50%, rgba(212, 175, 55, 0.1) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.35);
+}
+
+.sogan-glow {
+  box-shadow: 0 12px 30px -8px rgba(122, 62, 29, 0.25);
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 4s ease-in-out 2s infinite;
+}

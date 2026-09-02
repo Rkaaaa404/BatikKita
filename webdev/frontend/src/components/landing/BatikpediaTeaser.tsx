@@ -1,0 +1,146 @@
+"use client";
+
+import React from "react";
+import { Star, ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
+
+const CARDS = [
+  {
+    id: "kawung",
+    name: "Kawung",
+    region: "Yogyakarta",
+    category: "Motif Keraton",
+    stars: 1,
+    isUnlocked: true,
+    image: "/images/batik-kawung.jpg",
+    philosophy:
+      "Melambangkan kesempurnaan, kesucian, dan kemurnian hati. Sering dikaitkan dengan buah kolang-kaling.",
+  },
+  {
+    id: "parang",
+    name: "Parang Rusak",
+    region: "Solo",
+    category: "Motif Larangan",
+    stars: 2,
+    isUnlocked: true,
+    image: "/images/batik-parang-rusak.jpg",
+    philosophy:
+      "Simbol kekuasaan, kekuatan, dan pertumbuhan yang terus menerus bak ombak samudra yang tak pernah berhenti.",
+  },
+  {
+    id: "megamendung",
+    name: "Mega Mendung",
+    region: "Cirebon",
+    category: "Motif Pesisiran",
+    stars: 3,
+    isUnlocked: true,
+    image: "/images/batik-mega-mendung.jpg",
+    philosophy:
+      "Awan pembawa hujan sebagai lambang kesuburan dan pemberi kehidupan, perpaduan budaya Tiongkok dan lokal.",
+  },
+];
+
+export function BatikpediaTeaser() {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: { staggerChildren: 0.15 },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+  };
+
+  return (
+    <section
+      id="batikpedia"
+      className="py-20 px-6 lg:px-16 max-w-[1280px] mx-auto border-t border-[#e4e2de] overflow-hidden"
+    >
+      {/* Header */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12"
+      >
+        <span className="inline-block bg-[#D4AF37]/20 text-[#7A3E1D] font-display font-semibold text-xs px-4 py-1.5 rounded-full mb-4">
+          Galeri Koleksi
+        </span>
+        <h2 className="font-display font-bold text-2xl text-[#7A3E1D] mb-3">
+          Kumpulkan Kartu Batikpedia
+        </h2>
+        <p className="font-narrative text-base text-[#53433C] max-w-xl mx-auto">
+          Selesaikan tantangan di Arcade dan temukan motif baru melalui AI Scanner untuk melengkapi koleksi digital eksklusif Anda.
+        </p>
+      </motion.div>
+
+      {/* Cards — 3 columns */}
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+      >
+        {CARDS.map((card) => (
+          <motion.div
+            key={card.id}
+            variants={cardVariants}
+            className="bg-white border border-[#e4e2de] rounded-xl overflow-hidden group hover:-translate-y-1.5 transition-transform duration-300 shadow-sm hover:shadow-lg cursor-pointer"
+          >
+            {/* Image */}
+            <div className="relative h-44 overflow-hidden bg-[#f5f3ef]">
+              <div
+                className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                style={{ backgroundImage: `url(${card.image})` }}
+              />
+              <div className="absolute top-3 right-3 bg-[#1E3A8A] text-white font-display text-[11px] font-bold px-2.5 py-1 rounded shadow">
+                {card.region}
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="p-5">
+              <div className="flex justify-between items-center mb-1">
+                <h4 className="font-display font-semibold text-base text-[#1b1c1a]">
+                  {card.name}
+                </h4>
+                <div className="flex text-[#D4AF37]">
+                  {Array.from({ length: card.stars }).map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                  ))}
+                </div>
+              </div>
+              <p className="text-[11px] font-display font-semibold text-[#7A3E1D] mb-3 pb-3 border-b border-[#e4e2de]">
+                {card.category}
+              </p>
+              <p className="font-narrative text-xs text-[#53433C] line-clamp-2 leading-relaxed">
+                {card.philosophy}
+              </p>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Footer CTA */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="mt-10 text-center"
+      >
+        <a
+          href="#arcade"
+          className="inline-flex items-center gap-1.5 text-sm font-display font-semibold text-[#7A3E1D] hover:text-[#D4AF37] transition-colors"
+        >
+          Lihat Seluruh Koleksi
+          <ArrowRight className="w-4 h-4" />
+        </a>
+      </motion.div>
+    </section>
+  );
+}
