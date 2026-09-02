@@ -61,17 +61,30 @@ export function Navbar() {
           >
             Arcade
           </Link>
-          {["AI Scanner", "Batikpedia"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(" ", "-")}`}
-              className={`font-body text-sm font-medium transition-colors ${
-                isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
-              }`}
-            >
-              {item}
-            </a>
-          ))}
+          <Link
+            href="/scan"
+            className={`font-body text-sm font-medium transition-colors ${
+              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
+            }`}
+          >
+            Batik Lens
+          </Link>
+          <Link
+            href="/chat"
+            className={`font-body text-sm font-medium transition-colors ${
+              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
+            }`}
+          >
+            Sang Empu
+          </Link>
+          <Link
+            href="/batikpedia"
+            className={`font-body text-sm font-medium transition-colors ${
+              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
+            }`}
+          >
+            Batikpedia
+          </Link>
         </div>
 
         {/* CTA Button */}
@@ -101,16 +114,34 @@ export function Navbar() {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#faf8f4] border-t border-[#713f2c]/10 px-6 py-4 space-y-3">
-          {["Arcade", "AI Scanner", "Batikpedia"].map((item) => (
-            <a
-              key={item}
-              href={`#${item.toLowerCase().replace(" ", "-")}`}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
-            >
-              {item}
-            </a>
-          ))}
+          <Link
+            href="/play"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
+          >
+            Arcade
+          </Link>
+          <Link
+            href="/scan"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
+          >
+            Batik Lens
+          </Link>
+          <Link
+            href="/chat"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
+          >
+            Sang Empu
+          </Link>
+          <Link
+            href="/batikpedia"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
+          >
+            Batikpedia
+          </Link>
           <a
             href="#arcade"
             className="block bg-[#713f2c] text-[#D4AF37] text-sm font-semibold px-4 py-2.5 rounded-lg text-center"
