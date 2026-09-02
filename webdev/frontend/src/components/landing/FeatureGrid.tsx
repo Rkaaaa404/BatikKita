@@ -10,8 +10,8 @@ const pillars = [
     title: "Arcade Edukasi",
     subtitle: "Bermain & Belajar",
     desc: "Uji pengetahuan Anda melalui Jigsaw Puzzle interaktif dan tantangan Detektif Isen-Isen. Belajar filosofi motif menjadi menyenangkan.",
-    iconBg: "bg-[#f5f3ef]",
-    iconColor: "text-[#7A3E1D]",
+    iconBg: "bg-[#e8e5df]",
+    iconColor: "text-[#713f2c]",
   },
   {
     icon: Sparkles,
@@ -20,7 +20,7 @@ const pillars = [
     desc: "Gunakan AI Batik Lens Scanner untuk mengidentifikasi motif dalam sekejap, atau berbincang dengan \"Tanya Sang Empu\".",
     iconBg: "bg-[#FFF8E7]",
     iconColor: "text-[#D4AF37]",
-    subtitleColor: "text-[#7A3E1D]",
+    subtitleColor: "text-[#713f2c]",
   },
   {
     icon: MapPin,
@@ -42,11 +42,12 @@ export function FeatureGrid() {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } },
   };
 
   return (
-    <section className="py-20 px-6 lg:px-16 max-w-[1280px] mx-auto overflow-hidden">
+    <section className="py-24 w-full bg-white relative border-b border-[#d3ccc2]">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-16 overflow-hidden">
       {/* Section Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -55,7 +56,7 @@ export function FeatureGrid() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <h2 className="font-display font-bold text-2xl text-[#7A3E1D] mb-2">
+        <h2 className="font-display font-bold text-2xl text-[#713f2c] mb-2">
           Pilar Penjaga Tradisi
         </h2>
         <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto rounded-full" />
@@ -73,7 +74,7 @@ export function FeatureGrid() {
           <motion.div
             key={idx}
             variants={cardVariants}
-            className={`bg-white border border-[#e4e2de] rounded-xl p-8 hover:shadow-lg transition-all group ${
+            className={`bg-white border border-[#d3ccc2] rounded-xl p-8 hover:shadow-lg transition-all group ${
               idx === 1 ? "relative overflow-hidden" : ""
             }`}
           >
@@ -89,22 +90,23 @@ export function FeatureGrid() {
             </div>
 
             {/* Text */}
-            <h3 className="font-display font-semibold text-lg text-[#1b1c1a] mb-2">
+            <h3 className="font-display font-semibold text-lg text-[#2d2b38] mb-2">
               {p.title}
             </h3>
             <p
               className={`font-body text-sm font-semibold mb-4 ${
-                p.subtitleColor || "text-[#53433C]"
+                p.subtitleColor || "text-[#8d786a]"
               }`}
             >
               {p.subtitle}
             </p>
-            <p className="font-narrative text-sm text-[#53433C] leading-relaxed">
+            <p className="font-narrative text-sm text-[#8d786a] leading-relaxed">
               {p.desc}
             </p>
           </motion.div>
         ))}
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

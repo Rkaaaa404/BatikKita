@@ -10,7 +10,7 @@ import { Footer } from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col bg-[#fbf9f5]">
+    <main className="min-h-screen flex flex-col bg-[#faf8f4]">
       {/* 1. Global Navigation Bar */}
       <Navbar />
 

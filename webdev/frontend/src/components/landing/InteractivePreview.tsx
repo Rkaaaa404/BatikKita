@@ -103,7 +103,8 @@ export function InteractivePreview() {
   };
 
   return (
-    <section className="py-20 px-6 lg:px-16 max-w-[1280px] mx-auto space-y-28 overflow-hidden">
+    <section className="py-24 w-full bg-[#1A1614] relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-16 space-y-28 relative z-10">
 
       {/* ── Section: Tanya Sang Empu (left) + AI Scanner (right) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -114,15 +115,15 @@ export function InteractivePreview() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white border border-[#e4e2de] rounded-2xl p-6 shadow-sm"
+          className="bg-white border border-[#d3ccc2] rounded-2xl p-6 shadow-sm"
         >
           {/* Chat Header */}
-          <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[#e4e2de]">
-            <div className="w-10 h-10 bg-[#7A3E1D] rounded-full flex items-center justify-center text-[#D4AF37]">
+          <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[#d3ccc2]">
+            <div className="w-10 h-10 bg-[#713f2c] rounded-full flex items-center justify-center text-[#D4AF37]">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-display font-semibold text-sm text-[#1b1c1a]">Tanya Sang Empu</h4>
+              <h4 className="font-display font-semibold text-sm text-[#2d2b38]">Tanya Sang Empu</h4>
               <span className="text-[11px] text-[#10B981] flex items-center gap-1 font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] inline-block animate-pulse" /> Online
               </span>
@@ -141,8 +142,8 @@ export function InteractivePreview() {
                 <div
                   className={`max-w-[88%] px-4 py-3 rounded-2xl text-sm font-narrative leading-relaxed ${
                     msg.sender === "empu"
-                      ? "bg-[#7A3E1D]/8 text-[#1b1c1a] rounded-tl-none border border-[#e4e2de]"
-                      : "bg-[#fbf9f5] text-[#1b1c1a] rounded-tr-none border border-[#e4e2de]"
+                      ? "bg-[#713f2c]/8 text-[#2d2b38] rounded-tl-none border border-[#d3ccc2]"
+                      : "bg-[#faf8f4] text-[#2d2b38] rounded-tr-none border border-[#d3ccc2]"
                   }`}
                 >
                   {msg.text}
@@ -164,7 +165,7 @@ export function InteractivePreview() {
                   transition={{ delay: 0.2 + idx * 0.1 }}
                   key={p}
                   onClick={() => handlePrompt(p)}
-                  className="text-[11px] font-medium bg-[#f5f3ef] hover:bg-[#eae8e4] text-[#53433C] px-3 py-1.5 rounded-lg border border-[#e4e2de] transition-colors text-left"
+                  className="text-[11px] font-medium bg-[#e8e5df] hover:bg-[#eae8e4] text-[#8d786a] px-3 py-1.5 rounded-lg border border-[#d3ccc2] transition-colors text-left"
                 >
                   {p}
                 </motion.button>
@@ -179,11 +180,11 @@ export function InteractivePreview() {
               value={inputMsg}
               onChange={(e) => setInputMsg(e.target.value)}
               placeholder="Ketik pesan..."
-              className="flex-1 bg-[#f5f3ef] border border-[#e4e2de] rounded-xl px-4 py-2.5 text-sm text-[#1b1c1a] focus:outline-none focus:ring-1 focus:ring-[#7A3E1D]"
+              className="flex-1 bg-[#e8e5df] border border-[#d3ccc2] rounded-xl px-4 py-2.5 text-sm text-[#2d2b38] focus:outline-none focus:ring-1 focus:ring-[#713f2c]"
             />
             <button
               type="submit"
-              className="w-10 h-10 bg-[#7A3E1D] hover:bg-[#5D2808] text-[#D4AF37] rounded-xl flex items-center justify-center transition-colors shrink-0"
+              className="w-10 h-10 bg-[#713f2c] hover:bg-[#583122] text-[#D4AF37] rounded-xl flex items-center justify-center transition-colors shrink-0"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -197,8 +198,8 @@ export function InteractivePreview() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
         >
-          <h3 className="font-display font-bold text-2xl text-[#7A3E1D] mb-3">Pemindai Motif Instan</h3>
-          <p className="font-narrative text-base text-[#53433C] leading-relaxed mb-6">
+          <h3 className="font-display font-bold text-2xl text-[#D4AF37] mb-3">Pemindai Motif Instan</h3>
+          <p className="font-narrative text-base text-white/70 leading-relaxed mb-6">
             Arahkan kamera ke kain batik, dan biarkan AI kami mengidentifikasi motif, asal daerah, dan makna filosofisnya dalam hitungan detik.
           </p>
 
@@ -210,8 +211,8 @@ export function InteractivePreview() {
                 onClick={() => handleSwitchMotif(m)}
                 className={`text-xs font-display font-semibold px-3 py-1.5 rounded-lg transition-all ${
                   activeMotif.id === m.id
-                    ? "bg-[#7A3E1D] text-[#FDFBF7]"
-                    : "bg-[#f5f3ef] text-[#53433C] hover:bg-[#eae8e4]"
+                    ? "bg-[#D4AF37] text-[#1A1614]"
+                    : "bg-white/5 text-white/70 hover:bg-white/10"
                 }`}
               >
                 {m.name}
@@ -220,7 +221,7 @@ export function InteractivePreview() {
           </div>
 
           {/* Scanner Viewport */}
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#e4e2de] shadow-sm bg-[#1b1c1a] mb-4 group">
+          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-[#d3ccc2] shadow-sm bg-[#2d2b38] mb-4 group">
             <div
               className="w-full h-full bg-cover bg-center transition-opacity duration-300"
               style={{ backgroundImage: `url(${activeMotif.image})`, opacity: isScanning ? 0.5 : 0.85 }}
@@ -245,7 +246,7 @@ export function InteractivePreview() {
             )}
 
             {/* Status pill */}
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-[#fbf9f5]/90 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-2 border border-[#e4e2de] shadow text-xs font-display font-semibold text-[#1b1c1a]">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-[#faf8f4]/90 backdrop-blur-md px-4 py-1.5 rounded-full flex items-center gap-2 border border-[#d3ccc2] shadow text-xs font-display font-semibold text-[#2d2b38]">
               <span className={`w-2 h-2 rounded-full ${isScanning ? 'bg-[#D4AF37] animate-pulse' : 'bg-[#10B981]'}`} />
               {isScanning ? "Menganalisis..." : `Teridentifikasi: ${activeMotif.name}`}
             </div>
@@ -256,16 +257,17 @@ export function InteractivePreview() {
             <motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-3 bg-[#f5f3ef] rounded-xl p-3 border border-[#e4e2de]"
+              className="flex items-center gap-3 bg-white/5 rounded-xl p-3 border border-white/10 backdrop-blur-sm"
             >
               <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0" />
-              <div className="text-xs text-[#53433C]">
-                <span className="font-display font-bold text-[#7A3E1D]">{activeMotif.name}</span>
+              <div className="text-xs text-white/70">
+                <span className="font-display font-bold text-[#D4AF37]">{activeMotif.name}</span>
                 {" · "}{activeMotif.region}{" · "}{activeMotif.confidence}% akurasi
               </div>
             </motion.div>
           )}
         </motion.div>
+      </div>
       </div>
     </section>
   );

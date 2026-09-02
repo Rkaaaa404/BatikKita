@@ -2,24 +2,24 @@
 
 @layer base {
   :root {
-    --background: #fbf9f5;
-    --foreground: #1b1c1a;
+    --background: #faf8f4;
+    --foreground: #2d2b38;
     
     /* Modern Heritage Design Tokens */
-    --royal-sogan: #7a3e1d;
+    --royal-sogan: #713f2c;
     --royal-sogan-dark: #4a2511;
     --heritage-gold: #d4af37;
     --heritage-gold-light: #f59e0b;
     --indigofera-blue: #1e3a8a;
     --indigofera-light: #3b82f6;
     --mori-cream: #fdfbf7;
-    --mori-cream-alt: #f5f3ef;
+    --mori-cream-alt: #e8e5df;
     
-    --surface: #fbf9f5;
+    --surface: #faf8f4;
     --surface-container: #efeeea;
     --surface-container-high: #eae8e4;
-    --on-surface: #1b1c1a;
-    --on-surface-variant: #53433c;
+    --on-surface: #2d2b38;
+    --on-surface-variant: #8d786a;
     --outline: #86736b;
     --outline-variant: #d8c2b8;
   }
@@ -47,7 +47,7 @@
 
 /* Custom Cultural Background — clean cream, no dot pattern */
 .bg-mori-fabric {
-  background-color: #fbf9f5;
+  background-color: #faf8f4;
 }
 
 /* Glassmorphism Classes */

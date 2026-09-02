@@ -20,7 +20,7 @@ export function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-[#fbf9f5]/95 backdrop-blur-md border-b border-[#7A3E1D]/10 py-3 shadow-sm"
+          ? "bg-[#faf8f4]/95 backdrop-blur-md border-b border-[#713f2c]/10 py-3 shadow-sm"
           : "bg-transparent py-4"
       }`}
     >
@@ -36,14 +36,14 @@ export function Navbar() {
             >
               <path
                 d="M4 4L10 4M4 4L4 10M4 4L10 10M20 4L14 4M20 4L20 10M20 4L14 10M4 20L10 20M4 20L4 14M4 20L10 14M20 20L14 20M20 20L20 14M20 20L14 14"
-                stroke={isScrolled ? "#7A3E1D" : "#FFFFFF"}
+                stroke={isScrolled ? "#713f2c" : "#FFFFFF"}
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
             </svg>
             <span
               className={`font-display font-bold text-lg tracking-tight transition-colors ${
-                isScrolled ? "text-[#7A3E1D]" : "text-white"
+                isScrolled ? "text-[#713f2c]" : "text-white"
               }`}
             >
               BatikKita
@@ -53,12 +53,20 @@ export function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-10">
-          {["Arcade", "AI Scanner", "Batikpedia"].map((item) => (
+          <Link
+            href="/play"
+            className={`font-body text-sm font-medium transition-colors ${
+              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
+            }`}
+          >
+            Arcade
+          </Link>
+          {["AI Scanner", "Batikpedia"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase().replace(" ", "-")}`}
               className={`font-body text-sm font-medium transition-colors ${
-                isScrolled ? "text-[#53433C] hover:text-[#7A3E1D]" : "text-white/80 hover:text-white"
+                isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
               }`}
             >
               {item}
@@ -72,7 +80,7 @@ export function Navbar() {
             href="#arcade"
             className={`inline-flex items-center gap-2 font-display font-semibold text-sm px-5 py-2.5 rounded-lg transition-all shadow-sm ${
               isScrolled 
-                ? "bg-[#7A3E1D] text-[#D4AF37] hover:bg-[#5D2808]" 
+                ? "bg-[#713f2c] text-[#D4AF37] hover:bg-[#583122]" 
                 : "bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20"
             }`}
           >
@@ -83,7 +91,7 @@ export function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#7A3E1D]" : "text-white"}`}
+          className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#713f2c]" : "text-white"}`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -92,20 +100,20 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#fbf9f5] border-t border-[#7A3E1D]/10 px-6 py-4 space-y-3">
+        <div className="md:hidden bg-[#faf8f4] border-t border-[#713f2c]/10 px-6 py-4 space-y-3">
           {["Arcade", "AI Scanner", "Batikpedia"].map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase().replace(" ", "-")}`}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-sm font-medium text-[#53433C] hover:text-[#7A3E1D] py-2"
+              className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
             >
               {item}
             </a>
           ))}
           <a
             href="#arcade"
-            className="block bg-[#7A3E1D] text-[#D4AF37] text-sm font-semibold px-4 py-2.5 rounded-lg text-center"
+            className="block bg-[#713f2c] text-[#D4AF37] text-sm font-semibold px-4 py-2.5 rounded-lg text-center"
           >
             Mulai Jelajahi
           </a>

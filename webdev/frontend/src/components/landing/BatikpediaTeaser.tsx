@@ -50,14 +50,15 @@ export function BatikpediaTeaser() {
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as any } },
   };
 
   return (
     <section
       id="batikpedia"
-      className="py-20 px-6 lg:px-16 max-w-[1280px] mx-auto border-t border-[#e4e2de] overflow-hidden"
+      className="py-24 w-full bg-[#e8e5df] relative overflow-hidden"
     >
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-16">
       {/* Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -66,13 +67,13 @@ export function BatikpediaTeaser() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
-        <span className="inline-block bg-[#D4AF37]/20 text-[#7A3E1D] font-display font-semibold text-xs px-4 py-1.5 rounded-full mb-4">
+        <span className="inline-block bg-[#D4AF37]/20 text-[#713f2c] font-display font-semibold text-xs px-4 py-1.5 rounded-full mb-4">
           Galeri Koleksi
         </span>
-        <h2 className="font-display font-bold text-2xl text-[#7A3E1D] mb-3">
+        <h2 className="font-display font-bold text-2xl text-[#713f2c] mb-3">
           Kumpulkan Kartu Batikpedia
         </h2>
-        <p className="font-narrative text-base text-[#53433C] max-w-xl mx-auto">
+        <p className="font-narrative text-base text-[#8d786a] max-w-xl mx-auto">
           Selesaikan tantangan di Arcade dan temukan motif baru melalui AI Scanner untuk melengkapi koleksi digital eksklusif Anda.
         </p>
       </motion.div>
@@ -89,10 +90,10 @@ export function BatikpediaTeaser() {
           <motion.div
             key={card.id}
             variants={cardVariants}
-            className="bg-white border border-[#e4e2de] rounded-xl overflow-hidden group hover:-translate-y-1.5 transition-transform duration-300 shadow-sm hover:shadow-lg cursor-pointer"
+            className="bg-white border border-[#d3ccc2] rounded-xl overflow-hidden group hover:-translate-y-1.5 transition-transform duration-300 shadow-sm hover:shadow-lg cursor-pointer"
           >
             {/* Image */}
-            <div className="relative h-44 overflow-hidden bg-[#f5f3ef]">
+            <div className="relative h-44 overflow-hidden bg-[#e8e5df]">
               <div
                 className="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
                 style={{ backgroundImage: `url(${card.image})` }}
@@ -105,7 +106,7 @@ export function BatikpediaTeaser() {
             {/* Body */}
             <div className="p-5">
               <div className="flex justify-between items-center mb-1">
-                <h4 className="font-display font-semibold text-base text-[#1b1c1a]">
+                <h4 className="font-display font-semibold text-base text-[#2d2b38]">
                   {card.name}
                 </h4>
                 <div className="flex text-[#D4AF37]">
@@ -114,10 +115,10 @@ export function BatikpediaTeaser() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] font-display font-semibold text-[#7A3E1D] mb-3 pb-3 border-b border-[#e4e2de]">
+              <p className="text-[11px] font-display font-semibold text-[#713f2c] mb-3 pb-3 border-b border-[#d3ccc2]">
                 {card.category}
               </p>
-              <p className="font-narrative text-xs text-[#53433C] line-clamp-2 leading-relaxed">
+              <p className="font-narrative text-xs text-[#8d786a] line-clamp-2 leading-relaxed">
                 {card.philosophy}
               </p>
             </div>
@@ -135,12 +136,13 @@ export function BatikpediaTeaser() {
       >
         <a
           href="#arcade"
-          className="inline-flex items-center gap-1.5 text-sm font-display font-semibold text-[#7A3E1D] hover:text-[#D4AF37] transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm font-display font-semibold text-[#713f2c] hover:text-[#D4AF37] transition-colors"
         >
           Lihat Seluruh Koleksi
           <ArrowRight className="w-4 h-4" />
         </a>
       </motion.div>
+      </div>
     </section>
   );
 }

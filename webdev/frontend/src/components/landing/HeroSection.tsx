@@ -21,7 +21,7 @@ export function HeroSection() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } },
   };
 
   return (
@@ -88,7 +88,7 @@ export function HeroSection() {
           <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
             <a
               href="#arcade"
-              className="inline-flex items-center gap-2 bg-[#D4AF37] text-[#1b1c1a] font-display font-bold text-sm px-7 py-3.5 rounded-full hover:bg-[#c9a52f] transition-all shadow-lg hover:shadow-[#D4AF37]/30"
+              className="inline-flex items-center gap-2 bg-[#D4AF37] text-[#2d2b38] font-display font-bold text-sm px-7 py-3.5 rounded-full hover:bg-[#c9a52f] transition-all shadow-lg hover:shadow-[#D4AF37]/30"
             >
               Mulai Jelajahi
               <svg

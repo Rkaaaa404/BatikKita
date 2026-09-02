@@ -55,7 +55,7 @@ export default function RootLayout({
       lang="id"
       className={`${plusJakartaSans.variable} ${sourceSerif4.variable} ${inter.variable} scroll-smooth antialiased`}
     >
-      <body className="min-h-screen bg-mori-fabric text-[#1B1C1A] flex flex-col selection:bg-[#7A3E1D] selection:text-[#FDFBF7]">
+      <body className="min-h-screen bg-mori-fabric text-[#2d2b38] flex flex-col selection:bg-[#713f2c] selection:text-[#faf8f4]">
         {children}
       </body>
     </html>
