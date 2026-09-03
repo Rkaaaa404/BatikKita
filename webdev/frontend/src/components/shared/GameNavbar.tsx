@@ -26,15 +26,16 @@ export function GameNavbar({ title, backHref = "/play" }: GameNavbarProps) {
 
       <div className="h-4 w-px bg-white/10 hidden sm:block" />
 
-      <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+      <Link href="/" className="flex items-center gap-3 shrink-0 group">
         <Image
           src="/images/logo-batik-kita.png"
           alt="Logo Batik Kita"
-          width={36}
-          height={36}
-          className="w-9 h-9 object-contain drop-shadow-sm group-hover:scale-105 transition-transform"
+          width={40}
+          height={40}
+          className="w-10 h-10 object-contain drop-shadow-md group-hover:scale-105 transition-transform"
+          priority
         />
-        <span className="font-philosopher font-bold text-xl text-white hidden sm:inline tracking-wide">
+        <span className="font-philosopher font-bold text-2xl text-white hidden sm:inline tracking-wide">
           Batik Kita
         </span>
       </Link>
