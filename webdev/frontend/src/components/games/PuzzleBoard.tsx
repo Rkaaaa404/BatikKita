@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Hash, Eye, EyeOff, Sparkles } from "lucide-react";
 
 interface PuzzlePieceData {
   id: number;
@@ -23,8 +22,6 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
   const [selectedPieceId, setSelectedPieceId] = useState<number | null>(null);
   const [wrongSlot, setWrongSlot] = useState<number | null>(null);
   const [solved, setSolved] = useState(false);
-  const [showNumbers, setShowNumbers] = useState(true);
-  const [showGhost, setShowGhost] = useState(false);
   const startTime = useRef<number>(Date.now());
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -50,22 +47,25 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
     }
   }, [pieces, solved, onSolve]);
 
-  const placePieceAtSlot = useCallback((pieceId: number, slotIndex: number) => {
-    const piece = pieces.find((p) => p.id === pieceId);
-    if (!piece) return;
+  const placePieceAtSlot = useCallback(
+    (pieceId: number, slotIndex: number) => {
+      const piece = pieces.find((p) => p.id === pieceId);
+      if (!piece) return;
 
-    if (piece.correctIndex === slotIndex) {
-      // Correct placement
-      setPieces((prev) =>
-        prev.map((p) => (p.id === pieceId ? { ...p, currentIndex: slotIndex } : p))
-      );
-      setSelectedPieceId(null);
-    } else {
-      // Wrong — shake animation
-      setWrongSlot(slotIndex);
-      setTimeout(() => setWrongSlot(null), 600);
-    }
-  }, [pieces]);
+      if (piece.correctIndex === slotIndex) {
+        // Correct placement
+        setPieces((prev) =>
+          prev.map((p) => (p.id === pieceId ? { ...p, currentIndex: slotIndex } : p))
+        );
+        setSelectedPieceId(null);
+      } else {
+        // Wrong — shake animation
+        setWrongSlot(slotIndex);
+        setTimeout(() => setWrongSlot(null), 600);
+      }
+    },
+    [pieces]
+  );
 
   const handleDrop = useCallback(
     (slotIndex: number) => {
@@ -86,52 +86,14 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
   );
 
   const trayPieces = pieces.filter((p) => p.currentIndex === null);
-  const selectedPiece = pieces.find((p) => p.id === selectedPieceId);
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Helper Controls Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 max-w-[400px] mx-auto w-full px-1">
-        <button
-          type="button"
-          onClick={() => setShowNumbers(!showNumbers)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold transition-all shadow-sm ${
-            showNumbers
-              ? "bg-[#D4AF37] text-[#1A1614] shadow-[#D4AF37]/20 ring-1 ring-[#D4AF37]"
-              : "bg-white/10 text-white/70 hover:bg-white/15 hover:text-white border border-white/10"
-          }`}
-        >
-          <Hash className="w-3.5 h-3.5" />
-          <span>Bantuan Nomor: {showNumbers ? "Aktif" : "Nonaktif"}</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setShowGhost(!showGhost)}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all ${
-            showGhost
-              ? "bg-white/20 text-white border border-white/30"
-              : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10"
-          }`}
-        >
-          {showGhost ? <Eye className="w-3.5 h-3.5 text-[#D4AF37]" /> : <EyeOff className="w-3.5 h-3.5" />}
-          <span>Pola Asli: {showGhost ? "Terang" : "Samar"}</span>
-        </button>
-      </div>
-
-      {/* Puzzle grid board */}
+    <div className="flex flex-col gap-6">
+      {/* Puzzle grid board - Empty / Kosongan without background image */}
       <div
         ref={boardRef}
-        className="relative w-full max-w-[400px] mx-auto aspect-square rounded-2xl overflow-hidden border-2 border-dashed border-[#713f2c]/50 bg-[#2d2b38]/30 shadow-xl"
-        style={{ backgroundImage: `url(${image})`, backgroundSize: "cover" }}
+        className="relative w-full max-w-[400px] mx-auto aspect-square rounded-2xl overflow-hidden border-2 border-dashed border-[#713f2c]/60 bg-[#141110] shadow-2xl"
       >
-        {/* Background shading based on showGhost */}
-        <div
-          className={`absolute inset-0 transition-colors duration-300 ${
-            showGhost ? "bg-black/15" : "bg-black/60 backdrop-blur-[1px]"
-          }`}
-        />
-
         {/* Grid Slots */}
         <div
           className="absolute inset-0 grid"
@@ -143,7 +105,6 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
           {Array.from({ length: total }, (_, slotIndex) => {
             const placedPiece = pieces.find((p) => p.currentIndex === slotIndex);
             const isWrong = wrongSlot === slotIndex;
-            const isTargetOfSelected = selectedPiece?.correctIndex === slotIndex;
 
             return (
               <motion.div
@@ -153,35 +114,16 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={() => handleDrop(slotIndex)}
                 onClick={() => handleSlotClick(slotIndex)}
-                className={`relative border border-white/15 transition-all cursor-pointer ${
-                  placedPiece
-                    ? ""
-                    : isTargetOfSelected && showNumbers
-                    ? "bg-[#D4AF37]/20 border-[#D4AF37] ring-1 ring-[#D4AF37] animate-pulse"
-                    : "hover:bg-white/10"
+                className={`relative border border-white/10 transition-colors cursor-pointer ${
+                  placedPiece ? "" : "bg-white/[0.02] hover:bg-white/[0.06]"
                 }`}
               >
-                {/* Number Watermark on Empty Slot */}
-                {!placedPiece && showNumbers && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span
-                      className={`w-7 h-7 rounded-full font-display font-extrabold text-xs flex items-center justify-center shadow-lg transition-all ${
-                        isTargetOfSelected
-                          ? "bg-[#D4AF37] text-[#1A1614] scale-110 ring-2 ring-white"
-                          : "bg-[#1A1614]/80 border border-[#D4AF37]/60 text-[#D4AF37]"
-                      }`}
-                    >
-                      {slotIndex + 1}
-                    </span>
-                  </div>
-                )}
-
                 {/* Placed Piece */}
                 {placedPiece && (
                   <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
+                    initial={{ scale: 0.85, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
                     className="absolute inset-0"
                     style={{
                       backgroundImage: `url(${image})`,
@@ -191,8 +133,8 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
                       }%`,
                     }}
                   >
-                    {/* Green glow on correct placement */}
-                    <div className="absolute inset-0 border-2 border-[#10B981] shadow-[inset_0_0_8px_rgba(16,185,129,0.4)]" />
+                    {/* Subtle green glow on correct placement */}
+                    <div className="absolute inset-0 border border-[#10B981]/50 shadow-[inset_0_0_6px_rgba(16,185,129,0.3)]" />
                   </motion.div>
                 )}
               </motion.div>
@@ -201,18 +143,11 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
         </div>
       </div>
 
-      {/* Instructions / Status */}
+      {/* Helper text */}
       <div className="text-center">
-        {selectedPieceId !== null ? (
-          <p className="text-xs text-[#D4AF37] font-display font-semibold animate-pulse flex items-center justify-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
-            Kepingan #{selectedPiece ? selectedPiece.correctIndex + 1 : ""} dipilih. Klik kotak nomor {selectedPiece ? selectedPiece.correctIndex + 1 : ""} di papan!
-          </p>
-        ) : (
-          <p className="text-[11px] text-white/50 font-body">
-            💡 Tip: Klik kepingan lalu klik kotak tujuan, atau geser langsung (*drag & drop*).
-          </p>
-        )}
+        <p className="text-xs text-white/50 font-body">
+          💡 Klik kepingan di bawah lalu klik kotak di papan, atau geser langsung (*drag & drop*).
+        </p>
       </div>
 
       {/* Tray of remaining pieces */}
@@ -247,16 +182,7 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
                     Math.floor(piece.correctIndex / gridSize) * (100 / (gridSize - 1))
                   }%`,
                 }}
-              >
-                {/* Number Badge on Tray Piece */}
-                {showNumbers && (
-                  <div className="absolute top-1.5 left-1.5 pointer-events-none">
-                    <span className="w-5 h-5 rounded-full bg-[#1A1614]/90 border border-[#D4AF37] text-[#D4AF37] font-display font-extrabold text-[10px] flex items-center justify-center shadow-md">
-                      {piece.correctIndex + 1}
-                    </span>
-                  </div>
-                )}
-              </motion.div>
+              />
             );
           })}
         </AnimatePresence>
