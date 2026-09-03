@@ -12,15 +12,15 @@ export function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2.5 mb-3">
+            <div className="flex items-center gap-3 mb-3">
               <Image
                 src="/images/logo-batik-kita.png"
                 alt="Logo Batik Kita"
-                width={28}
-                height={28}
-                className="w-7 h-7 object-contain"
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain"
               />
-              <span className="font-philosopher font-bold text-xl text-[#713f2c]">Batik Kita</span>
+              <span className="font-philosopher font-bold text-2xl text-[#713f2c]">Batik Kita</span>
             </div>
             <p className="font-narrative text-xs text-[#86736B] leading-relaxed">
               © 2026 HoloDev HOLOGY 9.0. Celebrating UNESCO Intangible Cultural Heritage.
