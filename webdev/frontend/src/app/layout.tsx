@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, Source_Serif_4, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Source_Serif_4, Inter, Philosopher } from "next/font/google";
 import "./globals.css";
+
+const philosopher = Philosopher({
+  variable: "--font-philosopher",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -53,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${plusJakartaSans.variable} ${sourceSerif4.variable} ${inter.variable} scroll-smooth antialiased`}
+      className={`${philosopher.variable} ${plusJakartaSans.variable} ${sourceSerif4.variable} ${inter.variable} scroll-smooth antialiased`}
     >
       <body className="min-h-screen bg-mori-fabric text-[#2d2b38] flex flex-col selection:bg-[#713f2c] selection:text-[#faf8f4]">
         {children}

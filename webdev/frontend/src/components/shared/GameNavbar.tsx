@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Star, Gamepad2 } from "lucide-react";
 import { useXp } from "@/hooks/useXp";
 
@@ -21,6 +22,21 @@ export function GameNavbar({ title, backHref = "/play" }: GameNavbarProps) {
       >
         <ArrowLeft className="w-4 h-4" />
         <span className="hidden sm:inline">Kembali</span>
+      </Link>
+
+      <div className="h-4 w-px bg-white/10 hidden sm:block" />
+
+      <Link href="/" className="flex items-center gap-2 shrink-0">
+        <Image
+          src="/images/logo-batik-kita.png"
+          alt="Logo Batik Kita"
+          width={24}
+          height={24}
+          className="w-6 h-6 object-contain"
+        />
+        <span className="font-philosopher font-bold text-base text-white hidden md:inline">
+          Batik Kita
+        </span>
       </Link>
 
       {title && (

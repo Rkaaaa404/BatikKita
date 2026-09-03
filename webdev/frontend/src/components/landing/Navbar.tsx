@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles, Compass, Menu, X, ArrowRight } from "lucide-react";
 
 export function Navbar() {
@@ -26,29 +27,24 @@ export function Navbar() {
     >
       <div className="max-w-[1280px] mx-auto px-6 lg:px-16 flex items-center justify-between">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex items-center gap-1.5">
-            <svg
-              className="w-5 h-5 transition-colors"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4 4L10 4M4 4L4 10M4 4L10 10M20 4L14 4M20 4L20 10M20 4L14 10M4 20L10 20M4 20L4 14M4 20L10 14M20 20L14 20M20 20L20 14M20 20L14 14"
-                stroke={isScrolled ? "#713f2c" : "#FFFFFF"}
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span
-              className={`font-display font-bold text-lg tracking-tight transition-colors ${
-                isScrolled ? "text-[#713f2c]" : "text-white"
-              }`}
-            >
-              BatikKita
-            </span>
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="relative w-8 h-8 md:w-9 md:h-9 flex items-center justify-center shrink-0">
+            <Image
+              src="/images/logo-batik-kita.png"
+              alt="Logo Batik Kita"
+              width={36}
+              height={36}
+              className="w-full h-full object-contain drop-shadow-sm group-hover:scale-105 transition-transform duration-300"
+              priority
+            />
           </div>
+          <span
+            className={`font-philosopher font-bold text-xl md:text-2xl tracking-wide transition-colors ${
+              isScrolled ? "text-[#713f2c]" : "text-white"
+            }`}
+          >
+            Batik Kita
+          </span>
         </Link>
 
         {/* Desktop Links */}

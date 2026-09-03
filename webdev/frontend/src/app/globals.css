@@ -33,6 +33,10 @@
 }
 
 /* Custom Typography Utility Classes */
+.font-philosopher {
+  font-family: var(--font-philosopher), serif;
+}
+
 .font-display {
   font-family: var(--font-jakarta), sans-serif;
 }

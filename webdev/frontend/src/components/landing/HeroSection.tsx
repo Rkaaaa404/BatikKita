@@ -53,12 +53,13 @@ export function HeroSection() {
         >
           {/* Trust badge */}
           <motion.div variants={itemVariants} className="flex items-center gap-2 mb-5">
-            <svg
-              className="w-4 h-4 text-[#D4AF37] fill-current"
-              viewBox="0 0 24 24"
-            >
-              <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
-            </svg>
+            <Image
+              src="/images/logo-batik-kita.png"
+              alt="Logo Batik Kita"
+              width={22}
+              height={22}
+              className="w-5 h-5 object-contain"
+            />
             <span className="text-white/90 font-display text-sm font-medium tracking-wide">
               Platform Edukasi Batik Nusantara
             </span>
@@ -66,7 +67,7 @@ export function HeroSection() {
 
           {/* Headline */}
           <motion.h1 variants={itemVariants} className="font-display font-bold text-[44px] sm:text-[52px] lg:text-[60px] leading-[1.05] text-white mb-4">
-            Batik Kita:{" "}
+            <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
             <span
               style={{
                 color: "#D4AF37",

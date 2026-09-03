@@ -61,9 +61,22 @@ export default function ScannerPage() {
           <Link href="/" className="w-10 h-10 rounded-full bg-[#f5f3ef] flex items-center justify-center text-[#713f2c] hover:bg-[#e8e5df] transition-colors">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div>
-            <h1 className="font-display font-bold text-xl text-[#713f2c]">AI Batik Lens</h1>
-            <p className="text-xs text-[#8d786a]">Pemindai Motif Instan</p>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/logo-batik-kita.png"
+              alt="Logo Batik Kita"
+              width={36}
+              height={36}
+              className="w-9 h-9 object-contain"
+            />
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-philosopher font-bold text-lg text-[#713f2c]">Batik Kita</span>
+                <span className="text-xs text-[#d3ccc2]">/</span>
+                <h1 className="font-display font-bold text-base text-[#2d2b38]">AI Batik Lens</h1>
+              </div>
+              <p className="text-xs text-[#8d786a]">Pemindai Motif Instan</p>
+            </div>
           </div>
         </div>
         <div className="hidden sm:flex items-center gap-2 bg-[#D4AF37]/10 px-3 py-1.5 rounded-full border border-[#D4AF37]/30">

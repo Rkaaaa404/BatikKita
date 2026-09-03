@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Heart } from "lucide-react";
 
 export function Footer() {
@@ -11,11 +12,15 @@ export function Footer() {
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-1.5 mb-3">
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 4L10 4M4 4L4 10M4 4L10 10M20 4L14 4M20 4L20 10M20 4L14 10M4 20L10 20M4 20L4 14M4 20L10 14M20 20L14 20M20 20L20 14M20 20L14 14" stroke="#713f2c" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-              <span className="font-display font-bold text-[#713f2c]">BatikKita</span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <Image
+                src="/images/logo-batik-kita.png"
+                alt="Logo Batik Kita"
+                width={28}
+                height={28}
+                className="w-7 h-7 object-contain"
+              />
+              <span className="font-philosopher font-bold text-xl text-[#713f2c]">Batik Kita</span>
             </div>
             <p className="font-narrative text-xs text-[#86736B] leading-relaxed">
               © 2026 HoloDev HOLOGY 9.0. Celebrating UNESCO Intangible Cultural Heritage.
