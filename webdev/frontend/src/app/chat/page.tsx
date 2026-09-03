@@ -73,20 +73,20 @@ export default function ChatPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full bg-[#713f2c]/40 border border-[#D4AF37]/40 p-1 flex items-center justify-center shrink-0">
+            <div className="relative w-11 h-11 rounded-full bg-[#713f2c]/40 border border-[#D4AF37]/40 p-1 flex items-center justify-center shrink-0 shadow-sm">
               <Image
                 src="/images/logo-batik-kita.png"
                 alt="Logo Batik Kita"
-                width={36}
-                height={36}
+                width={40}
+                height={40}
                 className="w-full h-full object-contain"
               />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-philosopher font-bold text-lg text-white">Batik Kita</span>
+                <span className="font-philosopher font-bold text-xl text-white">Batik Kita</span>
                 <span className="text-xs text-white/30">/</span>
-                <h1 className="font-display font-semibold text-sm text-[#D4AF37]">Sang Empu</h1>
+                <h1 className="font-display font-semibold text-base text-[#D4AF37]">Sang Empu</h1>
               </div>
               <p className="text-xs text-white/60 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

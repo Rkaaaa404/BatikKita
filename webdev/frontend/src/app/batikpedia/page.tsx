@@ -72,13 +72,13 @@ export default function BatikpediaPage() {
             <Image
               src="/images/logo-batik-kita.png"
               alt="Logo Batik Kita"
-              width={36}
-              height={36}
-              className="w-9 h-9 object-contain"
+              width={44}
+              height={44}
+              className="w-11 h-11 object-contain drop-shadow-sm"
             />
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-philosopher font-bold text-lg text-[#713f2c]">Batik Kita</span>
+                <span className="font-philosopher font-bold text-xl text-[#713f2c]">Batik Kita</span>
                 <span className="text-xs text-[#d3ccc2]">/</span>
                 <h1 className="font-display font-bold text-base text-[#2d2b38]">Peta Batikpedia</h1>
               </div>

@@ -52,13 +52,13 @@ export function HeroSection() {
           animate="visible"
         >
           {/* Trust badge */}
-          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-5">
+          <motion.div variants={itemVariants} className="flex items-center gap-2.5 mb-5">
             <Image
               src="/images/logo-batik-kita.png"
               alt="Logo Batik Kita"
-              width={22}
-              height={22}
-              className="w-5 h-5 object-contain"
+              width={26}
+              height={26}
+              className="w-6 h-6 object-contain drop-shadow-sm"
             />
             <span className="text-white/90 font-display text-sm font-medium tracking-wide">
               Platform Edukasi Batik Nusantara
