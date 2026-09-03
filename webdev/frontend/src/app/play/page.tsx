@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Puzzle, Eye, Sparkles, Trophy, ArrowRight, Star, ChevronRight } from "lucide-react";
+import { Puzzle, Eye, Sparkles, Trophy, ArrowRight, Star, ChevronRight, Sprout, Compass, BookOpen, Crown } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { XpBar } from "@/components/shared/XpBar";
 import { useXp } from "@/hooks/useXp";
@@ -36,10 +36,10 @@ const GAMES = [
 ];
 
 const RANKS = [
-  { name: "Pelajar Budaya", xp: 0, icon: "🌱" },
-  { name: "Penjelajah Ragam Hias", xp: 251, icon: "🗺️" },
-  { name: "Kolektor Batik Nusantara", xp: 601, icon: "📚" },
-  { name: "Empu Batik Digital", xp: 1201, icon: "👑" },
+  { name: "Pelajar Budaya", xp: 0, icon: Sprout },
+  { name: "Penjelajah Ragam Hias", xp: 251, icon: Compass },
+  { name: "Kolektor Batik Nusantara", xp: 601, icon: BookOpen },
+  { name: "Empu Batik Digital", xp: 1201, icon: Crown },
 ];
 
 export default function ArcadeHubPage() {
@@ -184,7 +184,9 @@ export default function ArcadeHubPage() {
                         : "border-white/5 opacity-50"
                     }`}
                   >
-                    <div className="text-2xl mb-2">{r.icon}</div>
+                    <div className="w-10 h-10 mx-auto mb-2.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+                      <r.icon className={`w-5 h-5 ${active ? "text-[#D4AF37]" : "text-white/70"}`} />
+                    </div>
                     <p className="font-display font-bold text-xs text-white leading-tight mb-1">{r.name}</p>
                     <p className="text-[10px] text-white/40 font-body">{r.xp}+ XP</p>
                     {active && (

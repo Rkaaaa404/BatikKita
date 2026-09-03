@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import confetti from "canvas-confetti";
-import { Gamepad2, Puzzle, Eye, Award, Sparkles, RefreshCw, HelpCircle, CheckCircle } from "lucide-react";
+import { Gamepad2, Puzzle, Eye, Award, Sparkles, RefreshCw, HelpCircle, CheckCircle, Check, Plus } from "lucide-react";
 
 export function ArcadePreview() {
   // Mini interactive Jigsaw state (4 pieces for quick demonstration)
@@ -165,7 +165,7 @@ export function ArcadePreview() {
             {/* Tray: Pieces to click / place */}
             <div className="space-y-2">
               <span className="text-xs font-display font-bold text-[#8d786a] block">
-                {completed ? "🎉 Selamat! Geometri Motif Tersusun Sempurna!" : "Klik kepingan untuk memasang:"}
+                {completed ? "Selamat! Geometri Motif Tersusun Sempurna!" : "Klik kepingan untuk memasang:"}
               </span>
 
               {completed ? (
@@ -199,7 +199,7 @@ export function ArcadePreview() {
                         }`}
                       >
                         <span>{p.label}</span>
-                        <span>{isPlaced ? "✓" : "+"}</span>
+                        {isPlaced ? <Check className="w-3.5 h-3.5 text-[#10B981]" /> : <Plus className="w-3.5 h-3.5" />}
                       </button>
                     );
                   })}

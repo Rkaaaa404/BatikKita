@@ -146,7 +146,7 @@ export function PuzzleBoard({ image, gridSize = 3, onSolve }: PuzzleBoardProps) 
       {/* Helper text */}
       <div className="text-center">
         <p className="text-xs text-white/50 font-body">
-          💡 Klik kepingan di bawah lalu klik kotak di papan, atau geser langsung (*drag & drop*).
+          Klik kepingan di bawah lalu klik kotak di papan, atau geser langsung (*drag & drop*).
         </p>
       </div>
 
