@@ -136,7 +136,7 @@ export default function CollectionPage() {
                       </div>
                       <h3 className="font-display font-bold text-lg text-[#8d786a] mb-1">Motif Terkunci</h3>
                       <p className="text-xs text-[#8d786a]/80">
-                        Selesaikan Jigsaw Puzzle {card.region} untuk membuka kartu ini.
+                        Selesaikan Cap Stamping {card.region} untuk membuka kartu ini.
                       </p>
                     </div>
                   </>

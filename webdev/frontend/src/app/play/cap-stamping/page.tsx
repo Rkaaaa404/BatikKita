@@ -2,9 +2,9 @@
 
 import React, { useState, useCallback, useRef } from "react";
 import { motion } from "motion/react";
-import { RefreshCw, Timer, Puzzle } from "lucide-react";
+import { RefreshCw, Timer, Target } from "lucide-react";
 import { GameNavbar } from "@/components/shared/GameNavbar";
-import { PuzzleBoard } from "@/components/games/PuzzleBoard";
+import { CapStampingBoard } from "@/components/games/CapStampingBoard";
 import { WinModal } from "@/components/games/WinModal";
 import { useXp } from "@/hooks/useXp";
 
@@ -44,7 +44,7 @@ const MOTIFS = [
   },
 ];
 
-export default function JigsawPage() {
+export default function CapStampingPage() {
   const [selected, setSelected] = useState<(typeof MOTIFS)[0] | null>(null);
   const [gameKey, setGameKey] = useState(0);
   const [elapsed, setElapsed] = useState(0);
@@ -82,15 +82,14 @@ export default function JigsawPage() {
 
   const handleCloseWin = useCallback(() => {
     setWinData({ open: false, time: 0 });
-    handleReset();
-  }, [handleReset]);
+  }, []);
 
   const mins = Math.floor(elapsed / 60);
   const secs = elapsed % 60;
 
   return (
     <div className="min-h-screen bg-[#1A1614] text-white">
-      <GameNavbar title="Batik Jigsaw Puzzle" />
+      <GameNavbar title="Batik Cap Stamping" />
 
       <main className="pt-14 min-h-screen">
         {!selected ? (
@@ -102,11 +101,11 @@ export default function JigsawPage() {
               className="text-center mb-12"
             >
               <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
-                <Puzzle className="w-3.5 h-3.5" /> PILIH MOTIF
+                <Target className="w-3.5 h-3.5" /> PILIH KANVAS MOTIF
               </div>
-              <h1 className="font-display font-extrabold text-3xl md:text-4xl mb-3">Batik Jigsaw Puzzle</h1>
+              <h1 className="font-display font-extrabold text-3xl md:text-4xl mb-3">Batik Cap Stamping</h1>
               <p className="text-white/60 font-body max-w-md mx-auto">
-                Susun kembali potongan motif batik dan pelajari geometri budaya yang tersembunyi di balik setiap pola.
+                Warnai sketsa batik dengan menempatkan kepingan motif (cap) di posisi yang tepat agar menyatu sempurna (*seamless*).
               </p>
             </motion.div>
 
@@ -164,13 +163,14 @@ export default function JigsawPage() {
               </div>
             </div>
 
-            <PuzzleBoard key={gameKey} image={selected.image} gridSize={3} onSolve={handleSolve} />
-
-            {/* Philosophy hint */}
-            <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4">
-              <p className="text-[10px] text-[#D4AF37] font-display font-bold uppercase tracking-wide mb-1">Filosofi Motif</p>
-              <p className="text-sm text-white/70 font-body leading-relaxed">{selected.philosophy}</p>
-            </div>
+            <CapStampingBoard 
+              key={gameKey} 
+              motifId={selected.id}
+              motifName={selected.name}
+              image={selected.image} 
+              philosophy={selected.philosophy}
+              onSolve={handleSolve} 
+            />
           </div>
         )}
       </main>

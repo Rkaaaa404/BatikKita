@@ -9,7 +9,7 @@ const pillars = [
     icon: Gamepad2,
     title: "Arcade Edukasi",
     subtitle: "Bermain & Belajar",
-    desc: "Uji pengetahuan Anda melalui Jigsaw Puzzle interaktif dan tantangan Detektif Isen-Isen. Belajar filosofi motif menjadi menyenangkan.",
+    desc: "Uji pengetahuan Anda melalui Batik Cap Stamping interaktif dan tantangan Detektif Isen-Isen. Belajar filosofi motif menjadi menyenangkan.",
     iconBg: "bg-[#e8e5df]",
     iconColor: "text-[#713f2c]",
   },
