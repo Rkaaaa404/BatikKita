@@ -43,10 +43,10 @@ export function HeroSection() {
       {/* ─── 3D Golden Particles ─── */}
       <HeroParticles />
 
-      {/* ─── Text Content — bottom left ─── */}
-      <div className="absolute inset-0 flex flex-col justify-end pb-16 px-8 lg:px-20 z-20 pointer-events-none">
+      {/* ─── Text Content — centered on left ─── */}
+      <div className="absolute inset-0 flex flex-col justify-center pt-20 pb-10 px-8 lg:px-20 z-20 pointer-events-none">
         <motion.div 
-          className="max-w-lg pointer-events-auto"
+          className="max-w-xl pointer-events-auto"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
