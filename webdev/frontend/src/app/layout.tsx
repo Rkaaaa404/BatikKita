@@ -50,6 +50,14 @@ export const metadata: Metadata = {
     "HoloDev",
   ],
   authors: [{ name: "Tim Batik Kita (Rayka, Rayhan, Haekal)" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/images/logo-batik-kita.png", type: "image/png" },
+    ],
+    shortcut: "/images/logo-batik-kita.png",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({
