@@ -361,7 +361,7 @@ export default function SortirMaplibreMap({
           className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
             theme === "osm"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-              : "text-white/70 hover:text-white"
+              : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
           🗺️ Peta Terang (OSM)
@@ -372,7 +372,7 @@ export default function SortirMaplibreMap({
           className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
             theme === "dark"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-              : "text-white/70 hover:text-white"
+              : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
           🌙 Dark
@@ -383,7 +383,7 @@ export default function SortirMaplibreMap({
           className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
             theme === "satellite"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-              : "text-white/70 hover:text-white"
+              : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
           🛰️ Satelit
@@ -399,21 +399,21 @@ export default function SortirMaplibreMap({
         <button
           type="button"
           onClick={() => flyToPreset("all")}
-          className="text-[11px] font-display font-bold px-2 py-0.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+          className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
         >
           🇮🇩 Nusantara
         </button>
         <button
           type="button"
           onClick={() => flyToPreset("java")}
-          className="text-[11px] font-display font-bold px-2 py-0.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+          className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
         >
           🏝️ Jawa & Bali
         </button>
         <button
           type="button"
           onClick={() => flyToPreset("kalimantan")}
-          className="text-[11px] font-display font-bold px-2 py-0.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+          className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
         >
           🌲 Kalimantan
         </button>

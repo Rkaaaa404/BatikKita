@@ -8,11 +8,11 @@ import { useXp } from "@/hooks/useXp";
 
 // ── Palette ───────────────────────────────────────────────────────────────────
 const DYE_COLORS = [
-  { id: "sogan",    label: "Sogan",   hex: "#8B4513", desc: "Cokelat kemerahan khas Jawa" },
-  { id: "indigo",   label: "Indigo",  hex: "#1a237e", desc: "Biru gelap pesisiran" },
-  { id: "merah",    label: "Merah",   hex: "#c0392b", desc: "Merah bata tradisional" },
-  { id: "hitam",    label: "Hitam",   hex: "#1a1a1a", desc: "Hitam pekat canting" },
-  { id: "kuning",   label: "Sogan Kuning", hex: "#c8a415", desc: "Kuning keemasan" },
+  { id: "sogan",    label: "Sogan",   hex: "#713F2C", desc: "Cokelat kemerahan khas Jawa (Royal Sogan)" },
+  { id: "indigo",   label: "Indigo",  hex: "#1E3A8A", desc: "Biru gelap pesisiran (Indigofera)" },
+  { id: "merah",    label: "Merah",   hex: "#B91C1C", desc: "Merah bata tradisional" },
+  { id: "hitam",    label: "Hitam",   hex: "#1A1614", desc: "Hitam pekat canting" },
+  { id: "kuning",   label: "Sogan Kuning", hex: "#D4AF37", desc: "Kuning keemasan (Heritage Gold)" },
 ];
 
 // Simple outline patterns (SVG path data per pola)
@@ -282,15 +282,15 @@ export default function CantingPage() {
               exit={{ opacity: 0 }}
               className="max-w-2xl mx-auto px-4 py-12 flex flex-col items-center gap-8"
             >
-              <div className="w-20 h-20 rounded-full bg-[#8B4513]/15 border border-[#8B4513]/30 flex items-center justify-center">
-                <Paintbrush className="w-10 h-10 text-[#c8a415]" />
+              <div className="w-20 h-20 rounded-full bg-[#713F2C]/15 border border-[#713F2C]/30 flex items-center justify-center">
+                <Paintbrush className="w-10 h-10 text-[#D4AF37]" />
               </div>
               <div className="text-center">
-                <div className="inline-flex items-center gap-2 bg-[#8B4513]/10 border border-[#c8a415]/20 text-[#c8a415] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
+                <div className="inline-flex items-center gap-2 bg-[#713F2C]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
                   <Paintbrush className="w-3.5 h-3.5" /> SIMULASI MEMBATIK CANTING
                 </div>
                 <h1 className="font-display font-extrabold text-3xl md:text-4xl mb-3">
-                  Torehkan Malam,<br /><span className="text-[#c8a415]">Celupkan Warna</span>
+                  Torehkan Malam,<br /><span className="text-[#D4AF37]">Celupkan Warna</span>
                 </h1>
                 <p className="text-white/60 font-body max-w-md mx-auto text-sm">
                   Simulasikan proses batik wax-resist yang sesungguhnya. Gambarkan garis malam (canting) 
@@ -321,7 +321,7 @@ export default function CantingPage() {
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.96 }}
                       onClick={() => startDrawing(pattern)}
-                      className="bg-[#25201C] border border-white/15 hover:border-[#c8a415]/50 rounded-xl p-4 text-center transition-all"
+                      className="bg-[#25201C] border border-white/15 hover:border-[#D4AF37]/60 rounded-xl p-4 text-center transition-all cursor-pointer"
                     >
                       <p className="font-display font-bold text-sm text-white">{pattern.name}</p>
                     </motion.button>
@@ -347,7 +347,7 @@ export default function CantingPage() {
                   <h2 className="font-display font-bold text-base text-white">{selectedPattern.name}</h2>
                 </div>
                 <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
-                  <Layers className="w-3.5 h-3.5 text-[#c8a415]" />
+                  <Layers className="w-3.5 h-3.5 text-[#D4AF37]" />
                   <span className="font-display font-bold text-xs text-white">Lapisan {layerCount + 1}/3</span>
                 </div>
               </div>
@@ -383,7 +383,7 @@ export default function CantingPage() {
               </div>
 
               {/* Instructions */}
-              <div className="bg-[#c8a415]/10 border border-[#c8a415]/20 rounded-xl px-4 py-3 text-sm text-[#c8a415]/80 font-body text-center">
+              <div className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl px-4 py-3 text-sm text-[#D4AF37] font-body text-center">
                 ✏️ Gambarkan garis mengikuti pola putus-putus sebagai "malam" (wax resist). 
                 Area yang digambar akan tetap berwarna dasar kain setelah dicelup warna.
               </div>
@@ -405,7 +405,7 @@ export default function CantingPage() {
                     setHasDrawn(false);
                     compositeDisplay();
                   }}
-                  className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white border border-white/10 hover:border-white/20 rounded-lg px-3 py-1.5 transition-colors"
+                  className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white border border-white/10 hover:border-white/20 rounded-lg px-3 py-1.5 transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" /> Hapus Coretan
                 </button>
@@ -415,9 +415,9 @@ export default function CantingPage() {
               <button
                 disabled={!hasDrawn}
                 onClick={() => setGameState("dyeing")}
-                className={`flex items-center justify-center gap-2 py-3.5 rounded-xl font-display font-bold text-sm transition-all ${
+                className={`flex items-center justify-center gap-2 py-3.5 rounded-xl font-display font-bold text-sm transition-all cursor-pointer ${
                   hasDrawn
-                    ? "bg-[#c8a415] text-[#1A1614] hover:bg-[#b8940f]"
+                    ? "bg-[#D4AF37] text-[#1A1614] hover:bg-[#c9a52f] shadow-lg shadow-[#D4AF37]/20"
                     : "bg-white/10 text-white/30 cursor-not-allowed"
                 }`}
               >
@@ -466,9 +466,9 @@ export default function CantingPage() {
                       <button
                         key={color.id}
                         onClick={() => setSelectedColor(color)}
-                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all text-left ${
+                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl border transition-all text-left cursor-pointer ${
                           selectedColor.id === color.id
-                            ? "border-[#c8a415] bg-[#c8a415]/10"
+                            ? "border-[#D4AF37] bg-[#D4AF37]/15 shadow-sm"
                             : "border-white/10 bg-white/5 hover:border-white/20"
                         }`}
                       >
@@ -479,7 +479,7 @@ export default function CantingPage() {
                           <p className="text-[10px] text-white/40 font-body">{color.desc}</p>
                         </div>
                         {selectedColor.id === color.id && (
-                          <div className="ml-auto w-2 h-2 rounded-full bg-[#c8a415]" />
+                          <div className="ml-auto w-2 h-2 rounded-full bg-[#D4AF37]" />
                         )}
                       </button>
                     ))}
