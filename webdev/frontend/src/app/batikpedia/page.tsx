@@ -12,39 +12,77 @@ const REGIONS = [
   {
     id: "yogyakarta",
     name: "Yogyakarta",
-    description: "Pusat kebudayaan Mataram. Terkenal dengan motif geometris yang sarat makna filosofis keraton seperti Kawung dan Parang.",
+    description: "Pusat kebudayaan Mataram. Terkenal dengan motif geometris berfilosofi luhur, berlatar putih pethak, seperti Kawung, Parang, Sekar Jagad, Bokor Kencono, Sidomulyo, dan Wahyu Tumurun.",
     color: "from-[#713f2c] to-[#4A2511]",
     motifs: [
       { name: "Kawung", category: "Keraton", image: "/images/batik-kawung.jpg" },
-      { name: "Parang Rusak", category: "Keraton", image: "/images/batik-parang-rusak.jpg" },
-    ],
-  },
-  {
-    id: "cirebon",
-    name: "Cirebon",
-    description: "Terletak di pesisir utara, batiknya banyak dipengaruhi budaya Tiongkok. Warna lebih cerah dengan motif alam yang bebas.",
-    color: "from-[#1E3A8A] to-[#0F172A]",
-    motifs: [
-      { name: "Mega Mendung", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+      { name: "Parang", category: "Keraton Larangan", image: "/images/batik-parang-rusak.jpg" },
+      { name: "Sekar Jagad", category: "Keraton", image: "/images/batik-kawung.jpg" },
+      { name: "Bokor Kencono", category: "Keraton", image: "/images/batik-kawung.jpg" },
+      { name: "Sidomulyo", category: "Keraton", image: "/images/batik-kawung.jpg" },
+      { name: "Wahyu Tumurun", category: "Keraton", image: "/images/batik-parang-rusak.jpg" },
     ],
   },
   {
     id: "solo",
     name: "Surakarta (Solo)",
-    description: "Khas dengan warna soga (cokelat kekuningan) yang hangat. Cenderung memiliki motif yang lebih detail dan luwes dibanding Yogya.",
+    description: "Khas dengan warna soga cokelat kekuningan hangat dan isen-isen lembut. Rumah bagi motif Sidomukti, Truntum, Sidoluhur, Srikaton, Tribusono, dan Wirasat.",
     color: "from-[#8d786a] to-[#4A2511]",
     motifs: [
       { name: "Sidomukti", category: "Keraton", image: "/images/batik-kawung.jpg" },
-      { name: "Truntum", category: "Keraton", image: "/images/batik-parang-rusak.jpg" },
+      { name: "Truntum", category: "Keraton", image: "/images/batik-truntum.jpg" },
+      { name: "Sidoluhur", category: "Keraton", image: "/images/batik-kawung.jpg" },
+      { name: "Srikaton", category: "Keraton", image: "/images/batik-parang-rusak.jpg" },
+      { name: "Tribusono", category: "Keraton", image: "/images/batik-kawung.jpg" },
+      { name: "Wirasat", category: "Keraton", image: "/images/batik-parang-rusak.jpg" },
+    ],
+  },
+  {
+    id: "cirebon",
+    name: "Cirebon",
+    description: "Pertemuan budaya pesisir Jawa, Sunda, dan Tiongkok. Terkenal dengan gradasi awan Mega Mendung dan keagungan kereta Singa Barong Kasepuhan.",
+    color: "from-[#1E3A8A] to-[#0F172A]",
+    motifs: [
+      { name: "Mega Mendung", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+      { name: "Singa Barong", category: "Keraton", image: "/images/batik-mega-mendung.jpg" },
     ],
   },
   {
     id: "pekalongan",
     name: "Pekalongan",
-    description: "Kota Batik Dunia. Motif pesisiran yang sangat dinamis, penuh warna, dan banyak dipengaruhi motif buketan bunga Eropa.",
+    description: "Kota Batik Dunia. Motif pesisiran dinamis penuh warna cerah, dengan pengaruh akulturasi buketan bunga Eropa, Jlamprang geometri Arab-India, dan Tujuh Rupa flora fauna.",
     color: "from-[#10B981] to-[#047857]",
     motifs: [
-      { name: "Jlamprang", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+      { name: "Jlamprang", category: "Pesisiran", image: "/images/batik-jlamprang.jpg" },
+      { name: "Buketan", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+      { name: "Tujuh Rupa", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+    ],
+  },
+  {
+    id: "jakarta",
+    name: "DKI Jakarta (Betawi)",
+    description: "Sentra batik ibu kota dengan warna cerah ceria, mengekspresikan keramahan warga Betawi dengan ornamen Ondel-ondel, pucuk rebung, dan kembang kelapa.",
+    color: "from-[#EA580C] to-[#C2410C]",
+    motifs: [
+      { name: "Batik Betawi", category: "Pesisiran", image: "/images/batik-mega-mendung.jpg" },
+    ],
+  },
+  {
+    id: "lasem",
+    name: "Lasem (Rembang)",
+    description: "Kota Pusaka Tiongkok Kecil di pesisir Jawa Tengah. Terkenal dengan warna merah getih pitik dan motif Naga Liong yang melambangkan kemakmuran akulturasi.",
+    color: "from-[#DC2626] to-[#991B1B]",
+    motifs: [
+      { name: "Batik Liong", category: "Pesisiran", image: "/images/batik-parang-rusak.jpg" },
+    ],
+  },
+  {
+    id: "kalimantan",
+    name: "Kalimantan",
+    description: "Kekayaan wastra luar Jawa dengan ragam hias Batang Garing (Pohon Kehidupan), tameng telawang, dan sulur pakis khas kearifan suku Dayak.",
+    color: "from-[#059669] to-[#064E3B]",
+    motifs: [
+      { name: "Batik Dayak", category: "Nusantara", image: "/images/batik-kawung.jpg" },
     ],
   },
 ];

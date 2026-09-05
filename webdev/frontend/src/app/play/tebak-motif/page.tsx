@@ -111,141 +111,11 @@ class SoundEffects {
 
 const sfx = new SoundEffects();
 
-// ── Data Motif Pool ──────────────────────────────────────────────────────────
-interface MotifData {
-  id: string;
-  name: string;
-  region: string;
-  category: string;
-  image: string;
-  philosophy: string;
-  hint1: string;
-  hint2: string;
-  hint3: string;
-  hint4: string;
-}
+// ── Data Motif Pool (Menggunakan 20 Dataset Resmi) ───────────────────────────
+import { BATIK_DATASET_20, ALL_20_MOTIF_NAMES, type BatikMotif } from "@/data/batikDataset";
 
-const MOTIF_POOL: MotifData[] = [
-  {
-    id: "kawung",
-    name: "Kawung",
-    region: "D.I. Yogyakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg",
-    philosophy:
-      "Pola 4 kelopak buah aren melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
-    hint1: "Motif ini terinspirasi dari buah tanaman pedesaan Jawa dan melambangkan kemurnian niat.",
-    hint2: "Termasuk rumpun batik Keraton (Pedalaman) dari tradisi adiluhung kebangsawanan Jawa.",
-    hint3: "Erat kaitannya dengan lingkungan Kraton Ngayogyakarta dan Kasunanan Surakarta.",
-    hint4: "Berbentuk empat kelopak lonjong yang tersusun mengelilingi titik pusat, menyerupai potongan buah aren atau kolang-kaling.",
-  },
-  {
-    id: "parang",
-    name: "Parang Rusak",
-    region: "Surakarta & Yogyakarta",
-    category: "Batik Larangan",
-    image: "/images/batik-parang-rusak.jpg",
-    philosophy:
-      "Garis diagonal ombak tak terputus melambangkan semangat pantang menyerah dan keteguhan pemimpin.",
-    hint1: "Terinspirasi oleh kekuatan ombak laut yang tak pernah berhenti bergerak, simbol ketangguhan jiwa.",
-    hint2: "Termasuk rumpun batik Larangan (Awisan Ndalem) yang dahulu hanya boleh dikenakan keluarga raja.",
-    hint3: "Merupakan identitas sakral utama dari pusat kebudayaan keraton Jawa Mataram.",
-    hint4: "Berbentuk garis-garis diagonal berulang menyerupai huruf S saling berkait, melambangkan batu karang dan ombak samudra.",
-  },
-  {
-    id: "megamendung",
-    name: "Mega Mendung",
-    region: "Cirebon, Jawa Barat",
-    category: "Batik Pesisiran",
-    image: "/images/batik-mega-mendung.jpg",
-    philosophy:
-      "Awan pembawa hujan melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk di tengah terik.",
-    hint1: "Terinspirasi dari fenomena alam langit pembawa berkah hujan dan kesuburan tanah Nusantara.",
-    hint2: "Termasuk rumpun batik Pesisiran dengan pengaruh akulturasi seni Tiongkok yang sangat kental.",
-    hint3: "Merupakan ikon kebanggaan budaya dari kota pelabuhan Cirebon di pesisir utara Jawa Barat.",
-    hint4: "Berbentuk gumpalan awan berlapis-lapis dengan gradasi warna berulang dan lengkungan ornamen tegas.",
-  },
-  {
-    id: "truntum",
-    name: "Truntum",
-    region: "Surakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg",
-    philosophy:
-      "Melambangkan cinta yang bersemi kembali, sering dipakai orang tua pengantin sebagai doa keharmonisan abadi.",
-    hint1: "Terinspirasi dari kisah cinta permaisuri yang mekar kembali setelah melewati malam penuh kesunyian.",
-    hint2: "Diciptakan oleh Kanjeng Ratu Beruk di lingkungan Kraton Kasunanan Surakarta Hadiningrat.",
-    hint3: "Sering dikenakan orang tua pengantin saat upacara panggih sebagai doa restu tulus tanpa pamrih.",
-    hint4: "Memiliki ornamen bintang kecil berkerlip yang bertaburan merata laksana langit malam berhias konstelasi bintang.",
-  },
-  {
-    id: "sidomukti",
-    name: "Sido Mukti",
-    region: "Surakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-parang-rusak.jpg",
-    philosophy:
-      "Sido berarti terus-menerus, mukti berarti kemakmuran dan kebahagiaan. Harapan luhur bagi pemakainya.",
-    hint1: "Nama motif ini secara harfiah berarti terus-menerus dalam kemuliaan, doa kesejahteraan hidup.",
-    hint2: "Termasuk rumpun batik Keraton yang menjadi busana sakral mempelai dalam tata cara pernikahan Jawa.",
-    hint3: "Lahir dari kehalusan tradisi seni batik Kraton Surakarta Hadiningrat dengan pewarnaan sogan hangat.",
-    hint4: "Menampilkan bidang-bidang simetris berulang yang diisi ornamen pohon hayat, kupu-kupu, atau garuda kecil.",
-  },
-  {
-    id: "sekar-jagad",
-    name: "Sekar Jagad",
-    region: "Yogyakarta & Surakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-mega-mendung.jpg",
-    philosophy:
-      "Sekar berarti bunga, jagad berarti alam semesta. Melambangkan keindahan dan keragaman budaya Nusantara.",
-    hint1: "Bermakna bunga dunia, merayakan keindahan dan keanekaragaman flora di alam semesta.",
-    hint2: "Memiliki komposisi visual paling kaya dan kompleks di antara seluruh ragam batik keraton.",
-    hint3: "Sangat masyhur di kedua sentra kebudayaan Mataram: Yogyakarta dan Surakarta.",
-    hint4: "Ditandai dengan batas kontur tak beraturan menyerupai peta kepulauan, di mana setiap bidang diisi motif berbeda.",
-  },
-  {
-    id: "lereng",
-    name: "Lereng",
-    region: "Yogyakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-parang-rusak.jpg",
-    philosophy:
-      "Garis miring berkesinambungan melambangkan ketekunan, konsistensi, dan keseimbangan hidup manusia.",
-    hint1: "Terinspirasi dari kontur lereng perbukitan yang berundak, lambang ketekunan dan kesabaran.",
-    hint2: "Termasuk rumpun batik geometris pedalaman Jawa yang sederhana, anggun, dan tegas.",
-    hint3: "Banyak diciptakan oleh para empu batik di sentra tradisi Yogyakarta.",
-    hint4: "Memiliki barisan garis-garis diagonal sejajar berulang yang melintasi kain secara harmonis.",
-  },
-  {
-    id: "nitik",
-    name: "Nitik",
-    region: "Bantul, Yogyakarta",
-    category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg",
-    philosophy:
-      "Pola ribuan titik kecil melambangkan ketelitian, kesabaran, dan dedikasi tinggi sang pembatik.",
-    hint1: "Motif ini menuntut kesabaran dan ketelitian luar biasa dari pembuatnya, setiap detik penuh perhitungan.",
-    hint2: "Menggunakan canting khusus berbilah belah untuk menorehkan ribuan titik teratur di kain mori.",
-    hint3: "Merupakan mahakarya kebanggaan para pembatik tulis tradisional di desa Trimulyo, Bantul, Yogyakarta.",
-    hint4: "Tersusun dari ribuan titik-titik (cecek) rapat yang membentuk anyaman geometris mirip tenun kain patola kuno.",
-  },
-  {
-    id: "batik-pekalongan",
-    name: "Batik Pekalongan",
-    region: "Pekalongan, Jawa Tengah",
-    category: "Batik Pesisiran",
-    image: "/images/batik-mega-mendung.jpg",
-    philosophy:
-      "Perpaduan motif lokal dengan pengaruh Belanda, Tiongkok, dan Arab mencerminkan keterbukaan kota pelabuhan.",
-    hint1: "Lahir dari kota pesisir utara yang dinobatkan UNESCO sebagai World City of Batik.",
-    hint2: "Termasuk rumpun batik Pesisiran dengan ciri khas warna riang, berani, dan sarat keceriaan.",
-    hint3: "Berasal dari sentra perdagangan batik terbesar di pesisir utara Jawa Tengah.",
-    hint4: "Menampilkan buketan bunga Eropa, burung merak, dan kupu-kupu yang diwarnai sangat cerah berani.",
-  },
-];
-
-const ALL_MOTIF_NAMES = MOTIF_POOL.map((m) => m.name);
+const MOTIF_POOL = BATIK_DATASET_20;
+const ALL_MOTIF_NAMES = ALL_20_MOTIF_NAMES;
 const XP_PER_HINT: Record<number, number> = { 1: 100, 2: 75, 3: 50, 4: 25 };
 
 type GameState = "idle" | "playing" | "round-complete";
@@ -253,7 +123,7 @@ type GameState = "idle" | "playing" | "round-complete";
 export default function TebakMotifPage() {
   const { addXp } = useXp();
   const [gameState, setGameState] = useState<GameState>("idle");
-  const [currentMotif, setCurrentMotif] = useState<MotifData | null>(null);
+  const [currentMotif, setCurrentMotif] = useState<BatikMotif | null>(null);
   const [revealedHints, setRevealedHints] = useState<number>(1);
   const [roundCount, setRoundCount] = useState(0);
   const [totalXp, setTotalXp] = useState(0);
@@ -421,9 +291,7 @@ export default function TebakMotifPage() {
   const potentialScore = (XP_PER_HINT[revealedHints] ?? 25) + (inputMode === "type" ? 20 : 0);
   const potentialPercent = ((XP_PER_HINT[revealedHints] ?? 25) / 100) * 100;
 
-  const hints = currentMotif
-    ? [currentMotif.hint1, currentMotif.hint2, currentMotif.hint3, currentMotif.hint4]
-    : [];
+  const hints = currentMotif ? currentMotif.hints : [];
 
   // Blur level depending on hints revealed
   const getBlurClass = () => {

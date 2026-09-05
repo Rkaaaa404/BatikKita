@@ -6,14 +6,17 @@ import { ArrowLeft, Lock, Share2, Sparkles, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Mock data (in a real app, this joins with user_cards or reads from localStorage)
-const CARDS = [
-  { id: "kawung", name: "Kawung", region: "Yogyakarta", category: "Keraton", isUnlocked: true, image: "/images/batik-kawung.jpg" },
-  { id: "parang", name: "Parang Rusak", region: "Yogyakarta", category: "Keraton", isUnlocked: true, image: "/images/batik-parang.jpg" },
-  { id: "megamendung", name: "Mega Mendung", region: "Cirebon", category: "Pesisiran", isUnlocked: false, image: "/images/batik-megamendung.jpg" },
-  { id: "truntum", name: "Truntum", region: "Surakarta", category: "Keraton", isUnlocked: false, image: "/images/batik-truntum.jpg" },
-  { id: "jlamprang", name: "Jlamprang", region: "Pekalongan", category: "Pesisiran", isUnlocked: false, image: "/images/batik-jlamprang.jpg" },
-];
+import { BATIK_DATASET_20 } from "@/data/batikDataset";
+
+// 20 Koleksi Motif Resmi Dataset Tim
+const CARDS = BATIK_DATASET_20.map((motif, index) => ({
+  id: motif.rawId,
+  name: motif.fullName,
+  region: motif.region,
+  category: motif.category.replace("Batik ", ""),
+  isUnlocked: index < 6, // 6 motif pertama terbuka
+  image: motif.image,
+}));
 
 export default function CollectionPage() {
   const [unlockedCards, setUnlockedCards] = useState<string[]>([]);
@@ -98,7 +101,15 @@ export default function CollectionPage() {
                 {unlocked ? (
                   <>
                     {/* Card Content - Unlocked */}
-                    <div className="absolute inset-0 bg-[#713f2c] z-0" />
+                    <div className="absolute inset-0 z-0">
+                      <Image
+                        src={card.image}
+                        alt={card.name}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-[#713f2c]/40 backdrop-blur-[0.5px]" />
+                    </div>
                     
                     {/* Holographic Shimmer Effect */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-[#D4AF37]/30 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-1000 -translate-x-full z-20 pointer-events-none" style={{ width: '200%' }} />
