@@ -123,34 +123,33 @@ export default function ArcadeHubPage() {
   const { xp, rank } = useXp();
 
   return (
-    <div className="min-h-screen bg-[#1A1614] font-body text-white flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#faf8f4] flex flex-col">
       {/* Global Navbar */}
       <Navbar variant="transparent" />
 
-      {/* ─── Dedicated Full Tab Background: Batik Tab Arcade.jpg ─── */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <Image
-          src="/images/Batik Tab Arcade.jpg"
-          alt="Background Tab Arcade Batik"
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-          priority
-        />
-        {/* Luxury heritage vignette overlay for seamless tab cohesion */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-[#1A1614]/85 to-[#1A1614]/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-transparent via-[#1A1614]/50 to-[#1A1614]" />
-      </div>
+      <main className="flex-1">
+        {/* ─── Hero Section with Dedicated Batik Tab Arcade.jpg to Highlight the Title ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
+          {/* Background Image: Batik Tab Arcade.jpg */}
+          <Image
+            src="/images/Batik Tab Arcade.jpg"
+            alt="Arena Arcade Batik Nusantara"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority
+          />
 
-      <main className="flex-1 relative z-10">
-        {/* ─── Hero Section with Dedicated Arcade Heritage Copy ─── */}
-        <section className="relative w-full pt-32 pb-20 px-6 lg:px-16 min-h-[560px] lg:min-h-[620px] flex items-center">
+          {/* Contrast overlays to prominently highlight the title & text */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/35 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50 z-0" />
+
           {/* Golden glow accents */}
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
 
           <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left column: Editorial copy */}
+            {/* Left column: Editorial copy highlighting the title */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -162,12 +161,12 @@ export default function ArcadeHubPage() {
                 <span>ARENA EDU-GAMES BATIK NUSANTARA</span>
               </div>
 
-              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
+              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
                 <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
                 <span
                   style={{
                     color: "#D4AF37",
-                    textShadow: "0 2px 20px rgba(212,175,55,0.4)",
+                    textShadow: "0 2px 24px rgba(212,175,55,0.45)",
                   }}
                 >
                   Belajar Ragam Hias
@@ -176,15 +175,15 @@ export default function ArcadeHubPage() {
                 Sambil Bermain.
               </h1>
 
-              <p className="font-narrative text-base sm:text-lg text-white/80 leading-relaxed mb-8 max-w-xl">
+              <p className="font-narrative text-base sm:text-lg text-white/85 leading-relaxed mb-8 max-w-xl drop-shadow-sm">
                 Asah ketajaman mata terhadap ornamen tradisional, uji memori filosofis, petakan sentra Nusantara, hingga pecahkan tebakan makro visual melalui empat mini-game budaya berhadiah XP.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/70">
-                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/80">
+                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 4 Mode Permainan Aktif
                 </span>
-                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10">
+                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
                   <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Gamifikasi Berbasis Peringkat Budaya
                 </span>
               </div>
@@ -252,19 +251,19 @@ export default function ArcadeHubPage() {
           </div>
         </section>
 
-        {/* ─── Main Games Grid Section ─── */}
-        <section className="max-w-[1280px] mx-auto px-6 lg:px-16 py-16 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-white/10 gap-4">
+        {/* ─── Main Games Grid Section (Clean Light Theme) ─── */}
+        <section className="max-w-[1280px] mx-auto px-6 lg:px-16 py-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-[#713f2c]/10 gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 text-[#D4AF37] text-xs font-display font-bold tracking-wider uppercase mb-1">
+              <div className="inline-flex items-center gap-2 text-[#713f2c] text-xs font-display font-bold tracking-wider uppercase mb-1">
                 <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                 Katalog Permainan
               </div>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white tracking-tight">
+              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#2d2b38] tracking-tight">
                 Pilih Tantangan Anda
               </h2>
             </div>
-            <p className="font-narrative text-sm text-white/70 max-w-md">
+            <p className="font-narrative text-sm text-[#8d786a] max-w-md">
               Selesaikan tantangan untuk mengumpulkan kartu koleksi dan membuka filosofi tersembunyi motif batik nusantara.
             </p>
           </div>
@@ -281,7 +280,7 @@ export default function ArcadeHubPage() {
               >
                 <Link
                   href={game.href}
-                  className="group block rounded-2xl overflow-hidden border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-[0_10px_35px_rgba(212,175,55,0.18)] transition-all duration-300 bg-[#231e1c]/90 backdrop-blur-md h-full flex flex-col hover:-translate-y-1"
+                  className="group block rounded-2xl overflow-hidden border border-[#d3ccc2]/80 hover:border-[#713f2c]/60 hover:shadow-xl transition-all duration-300 bg-white h-full flex flex-col"
                 >
                   {/* Card Visual Header with Real Motif Image */}
                   <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-[#2d2b38]">
@@ -290,19 +289,19 @@ export default function ArcadeHubPage() {
                       alt={game.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-85"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-80"
                     />
 
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#231e1c] via-black/40 to-black/20" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20" />
 
                     {/* Badges on Top */}
                     <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                      <span className="bg-black/60 backdrop-blur-md text-white text-[11px] font-display font-bold px-3 py-1 rounded-full border border-white/20">
+                      <span className="bg-black/50 backdrop-blur-md text-white text-[11px] font-display font-bold px-3 py-1 rounded-full border border-white/20">
                         {game.badge}
                       </span>
                       <span
-                        className="bg-black/70 backdrop-blur-md text-xs font-display font-bold px-3 py-1 rounded-full border border-[#D4AF37]/50 shadow-sm"
+                        className="bg-black/60 backdrop-blur-md text-xs font-display font-bold px-3 py-1 rounded-full border border-[#D4AF37]/40 shadow-sm"
                         style={{ color: game.accent }}
                       >
                         {game.xp}
@@ -312,14 +311,14 @@ export default function ArcadeHubPage() {
                     {/* Category and Icon at Bottom of image */}
                     <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-10 h-10 rounded-xl bg-[#713f2c]/90 border border-[#D4AF37]/50 text-[#D4AF37] flex items-center justify-center shadow-md">
+                        <div className="w-10 h-10 rounded-xl bg-[#713f2c]/90 border border-[#D4AF37]/40 text-[#D4AF37] flex items-center justify-center shadow-md">
                           <game.icon className="w-5 h-5" />
                         </div>
                         <div>
                           <span className="text-[10px] font-display font-semibold tracking-wider text-[#D4AF37] uppercase block">
                             {game.category}
                           </span>
-                          <span className="text-xs text-white/90 font-body">
+                          <span className="text-xs text-white/80 font-body">
                             {game.difficulty}
                           </span>
                         </div>
@@ -328,25 +327,25 @@ export default function ArcadeHubPage() {
                   </div>
 
                   {/* Card Body */}
-                  <div className="p-6 flex-1 flex flex-col justify-between bg-[#231e1c]/95">
+                  <div className="p-6 flex-1 flex flex-col justify-between bg-white">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-display font-bold text-xl text-white group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="font-display font-bold text-xl text-[#2d2b38] group-hover:text-[#713f2c] transition-colors">
                           {game.title}
                         </h3>
-                        <ChevronRight className="w-5 h-5 text-[#D4AF37]/60 group-hover:text-[#D4AF37] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                        <ChevronRight className="w-5 h-5 text-[#8d786a] group-hover:text-[#713f2c] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
                       </div>
-                      <p className="font-narrative text-sm text-white/70 leading-relaxed mb-6">
+                      <p className="font-narrative text-sm text-[#8d786a] leading-relaxed mb-6">
                         {game.desc}
                       </p>
                     </div>
 
                     {/* Card Action Footer */}
-                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-xs font-display font-medium text-white/60 group-hover:text-white transition-colors">
-                        Tingkat Kesulitan: <strong className="text-[#D4AF37]">{game.difficulty}</strong>
+                    <div className="pt-4 border-t border-[#713f2c]/10 flex items-center justify-between">
+                      <span className="text-xs font-display font-medium text-[#713f2c]/80 group-hover:text-[#713f2c] transition-colors">
+                        Tingkat Kesulitan: <strong className="text-[#2d2b38]">{game.difficulty}</strong>
                       </span>
-                      <span className="inline-flex items-center gap-1.5 text-xs font-display font-bold text-[#D4AF37] group-hover:brightness-125">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-display font-bold text-[#713f2c] group-hover:underline">
                         {game.buttonText}
                         <ArrowRight className="w-3.5 h-3.5" />
                       </span>
@@ -359,17 +358,17 @@ export default function ArcadeHubPage() {
         </section>
 
         {/* ─── Cultural Rank Roadmap Section ─── */}
-        <section className="bg-black/50 backdrop-blur-md border-t border-white/10 py-16 px-6 lg:px-16 relative z-10">
+        <section className="bg-[#e8e5df]/60 border-t border-[#d3ccc2]/70 py-16 px-6 lg:px-16">
           <div className="max-w-[1280px] mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <div className="inline-flex items-center gap-2 text-[#D4AF37] text-xs font-display font-bold tracking-wider uppercase mb-2">
+              <div className="inline-flex items-center gap-2 text-[#713f2c] text-xs font-display font-bold tracking-wider uppercase mb-2">
                 <Trophy className="w-3.5 h-3.5 text-[#D4AF37]" />
                 Tangga Kebudayaan
               </div>
-              <h2 className="font-display font-extrabold text-3xl text-white">
+              <h2 className="font-display font-extrabold text-3xl text-[#2d2b38]">
                 Peringkat & Pencapaian Budaya
               </h2>
-              <p className="font-narrative text-sm text-white/70 mt-2">
+              <p className="font-narrative text-sm text-[#8d786a] mt-2">
                 Semakin banyak mini-game yang Anda taklukkan, semakin tinggi gelar kebudayaan yang Anda sandang.
               </p>
             </div>
@@ -383,10 +382,10 @@ export default function ArcadeHubPage() {
                     key={r.name}
                     className={`rounded-2xl p-6 border transition-all ${
                       isCurrent
-                        ? "bg-[#2a2421] border-[#D4AF37] shadow-xl ring-2 ring-[#D4AF37]/40"
+                        ? "bg-white border-[#D4AF37] shadow-lg ring-2 ring-[#D4AF37]/30"
                         : isUnlocked
-                        ? "bg-[#231e1c]/90 border-white/15 shadow-md"
-                        : "bg-[#1a1614]/60 border-white/10 opacity-60"
+                        ? "bg-white/80 border-[#d3ccc2] shadow-sm"
+                        : "bg-white/40 border-[#d3ccc2]/50 opacity-70"
                     }`}
                   >
                     <div className="flex items-center justify-between mb-4">
@@ -394,7 +393,7 @@ export default function ArcadeHubPage() {
                         className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
                           isUnlocked
                             ? "bg-[#713f2c] text-[#D4AF37] border-[#D4AF37]/40"
-                            : "bg-white/10 text-white/40 border-transparent"
+                            : "bg-[#d3ccc2] text-[#8d786a] border-transparent"
                         }`}
                       >
                         <r.icon className="w-5 h-5" />
@@ -404,23 +403,23 @@ export default function ArcadeHubPage() {
                           AKTIF
                         </span>
                       ) : isUnlocked ? (
-                        <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-display font-bold px-2 py-0.5 rounded-full">
+                        <span className="bg-emerald-100 text-emerald-800 text-[10px] font-display font-bold px-2 py-0.5 rounded-full">
                           TERBUKA
                         </span>
                       ) : (
-                        <span className="text-white/40 text-[10px] font-display">
+                        <span className="text-[#8d786a] text-[10px] font-display">
                           {r.minXp} XP
                         </span>
                       )}
                     </div>
 
-                    <h4 className="font-display font-bold text-base text-white mb-1">
+                    <h4 className="font-display font-bold text-base text-[#2d2b38] mb-1">
                       {r.name}
                     </h4>
-                    <p className="text-[11px] font-display font-semibold text-[#D4AF37] mb-2">
+                    <p className="text-[11px] font-display font-semibold text-[#713f2c] mb-2">
                       {r.maxXp ? `${r.minXp} - ${r.maxXp} XP` : `${r.minXp}+ XP`}
                     </p>
-                    <p className="font-narrative text-xs text-white/70 leading-relaxed">
+                    <p className="font-narrative text-xs text-[#8d786a] leading-relaxed">
                       {r.desc}
                     </p>
                   </div>
