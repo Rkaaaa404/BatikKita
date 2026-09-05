@@ -4,7 +4,7 @@ import React, { useMemo, useState, useRef, useCallback, useEffect } from "react"
 import Map, { Source, Layer, Marker, NavigationControl, MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Image from "next/image";
-import { Check, Layers, ZoomIn } from "lucide-react";
+import { Check, Layers, ZoomIn, Sun, Moon, Satellite, Compass } from "lucide-react";
 import regionsGeoData from "@/data/regionsGeo.json";
 
 export interface RegionData {
@@ -371,35 +371,38 @@ export default function SortirMaplibreMap({
         <button
           type="button"
           onClick={() => setTheme("osm")}
-          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
             theme === "osm"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
               : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
-          🗺️ Peta Terang (OSM)
+          <Sun className="w-3 h-3" />
+          <span>Peta Terang</span>
         </button>
         <button
           type="button"
           onClick={() => setTheme("dark")}
-          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
             theme === "dark"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
               : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
-          🌙 Dark
+          <Moon className="w-3 h-3" />
+          <span>Mode Gelap</span>
         </button>
         <button
           type="button"
           onClick={() => setTheme("satellite")}
-          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 ${
             theme === "satellite"
               ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
               : "text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10"
           }`}
         >
-          🛰️ Satelit
+          <Satellite className="w-3 h-3" />
+          <span>Satelit</span>
         </button>
       </div>
 
@@ -412,23 +415,24 @@ export default function SortirMaplibreMap({
         <button
           type="button"
           onClick={() => flyToPreset("all")}
-          className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
+          className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer flex items-center gap-1"
         >
-          🇮🇩 Nusantara
+          <Compass className="w-3 h-3 text-[#D4AF37]" />
+          <span>Nusantara</span>
         </button>
         <button
           type="button"
           onClick={() => flyToPreset("java")}
           className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
         >
-          🏝️ Jawa & Bali
+          Jawa & Bali
         </button>
         <button
           type="button"
           onClick={() => flyToPreset("kalimantan")}
           className="text-[11px] font-display font-bold px-2.5 py-1 rounded-lg text-white/70 hover:text-[#D4AF37] hover:bg-[#D4AF37]/15 transition-all cursor-pointer"
         >
-          🌲 Kalimantan
+          Kalimantan
         </button>
       </div>
 

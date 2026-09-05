@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Paintbrush, RotateCcw, Download, Layers, Trophy, Droplets, ChevronRight } from "lucide-react";
+import { Paintbrush, RotateCcw, Download, Layers, Trophy, Droplets, ChevronRight, PenTool, Palette, Info } from "lucide-react";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
 
@@ -300,12 +300,14 @@ export default function CantingPage() {
 
               <div className="grid grid-cols-3 gap-3 w-full max-w-md">
                 {[
-                  { step: "1", label: "Torehkan Malam", desc: "Gambar garis dengan canting virtual", icon: "🖊️" },
-                  { step: "2", label: "Celupkan Warna", desc: "Pilih warna tradisional, terapkan ke kain", icon: "🎨" },
-                  { step: "3", label: "Simpan Karya", desc: "Download hasil batik digitalmu", icon: "🖼️" },
+                  { step: "1", label: "Torehkan Malam", desc: "Gambar garis dengan canting virtual", icon: PenTool },
+                  { step: "2", label: "Celupkan Warna", desc: "Pilih warna tradisional, terapkan ke kain", icon: Palette },
+                  { step: "3", label: "Simpan Karya", desc: "Unduh hasil karya batik digitalmu", icon: Download },
                 ].map((s) => (
-                  <div key={s.step} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                    <div className="text-2xl mb-2">{s.icon}</div>
+                  <div key={s.step} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center flex flex-col items-center">
+                    <div className="w-9 h-9 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/25 flex items-center justify-center mb-2 text-[#D4AF37]">
+                      <s.icon className="w-4 h-4" />
+                    </div>
                     <p className="font-display font-bold text-xs text-white mb-1">{s.label}</p>
                     <p className="text-[10px] text-white/40 font-body">{s.desc}</p>
                   </div>
@@ -383,9 +385,12 @@ export default function CantingPage() {
               </div>
 
               {/* Instructions */}
-              <div className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl px-4 py-3 text-sm text-[#D4AF37] font-body text-center">
-                ✏️ Gambarkan garis mengikuti pola putus-putus sebagai "malam" (wax resist). 
-                Area yang digambar akan tetap berwarna dasar kain setelah dicelup warna.
+              <div className="bg-[#D4AF37]/10 border border-[#D4AF37]/30 rounded-xl px-4 py-3 text-sm text-[#D4AF37] font-body text-center flex items-center justify-center gap-2">
+                <Info className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>
+                  Gambarkan garis mengikuti pola putus-putus sebagai &quot;malam&quot; (wax resist). 
+                  Area yang digambar akan tetap berwarna dasar kain setelah dicelup warna.
+                </span>
               </div>
 
               {/* Reset strokes */}

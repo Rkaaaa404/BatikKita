@@ -869,13 +869,14 @@ export default function SortirPetaPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedCard(selectedCard ? null : currentCard)}
-                      className={`text-xs font-display font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border transition-all cursor-pointer ${
+                      className={`text-xs font-display font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 ${
                         selectedCard
                           ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37] shadow-lg shadow-[#D4AF37]/30"
                           : "bg-white/5 hover:bg-white/10 text-white border-white/15 hover:border-white/30"
                       }`}
                     >
-                      {selectedCard ? "✓ Siap Pilih" : "Ketuk Pilih"}
+                      {selectedCard && <Check className="w-3.5 h-3.5 text-[#1A1614]" />}
+                      <span>{selectedCard ? "Siap Pilih" : "Ketuk Pilih"}</span>
                     </button>
                     <span className="text-[9px] text-white/40 font-body hidden sm:inline">
                       atau Drag ke peta
