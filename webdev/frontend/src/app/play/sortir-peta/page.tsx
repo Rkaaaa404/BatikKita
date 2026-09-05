@@ -594,8 +594,8 @@ export default function SortirPetaPage() {
               className="max-w-3xl mx-auto px-4 py-12 flex flex-col items-center text-center gap-6"
             >
               <div className="relative">
-                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#1E3A8A] via-[#1E40AF] to-[#0F172A] border-2 border-[#60A5FA]/40 flex items-center justify-center shadow-2xl shadow-blue-500/20">
-                  <Compass className="w-12 h-12 text-[#93C5FD] animate-pulse" />
+                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#713f2c]/40 via-[#4a2511]/30 to-[#1A1816] border-2 border-[#D4AF37]/40 flex items-center justify-center shadow-2xl shadow-[#D4AF37]/15">
+                  <Compass className="w-12 h-12 text-[#D4AF37] animate-pulse" />
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-[#D4AF37] text-[#1A1614] rounded-full p-1.5 shadow-md">
                   <Sparkles className="w-4 h-4" />
@@ -603,11 +603,11 @@ export default function SortirPetaPage() {
               </div>
 
               <div>
-                <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/25 text-blue-400 text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3 tracking-wider uppercase">
+                <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3 tracking-wider uppercase">
                   <MapPin className="w-3.5 h-3.5" /> Peta Geografis Basemap Interaktif
                 </div>
                 <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight mb-3">
-                  Sortir Motif ke <span className="text-[#60A5FA]">Basemap Nusantara</span>
+                  Sortir Motif ke <span className="text-[#D4AF37]">Basemap Nusantara</span>
                 </h1>
                 <p className="text-white/70 font-body max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
                   Jelajahi peta bumi Nusantara berbasis Basemap geografis nyata.
@@ -619,7 +619,7 @@ export default function SortirPetaPage() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl text-left">
                 <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
                   <p className="text-[11px] text-white/50 font-body">Mesin Peta</p>
-                  <p className="text-blue-300 font-display font-bold text-xs">Real Basemap</p>
+                  <p className="text-[#D4AF37] font-display font-bold text-xs">Real Basemap</p>
                 </div>
                 <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
                   <p className="text-[11px] text-white/50 font-body">Zona Wilayah</p>
@@ -638,7 +638,7 @@ export default function SortirPetaPage() {
               {/* Instructions Callout */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-4 max-w-xl text-left text-xs text-white/70 space-y-2">
                 <div className="flex items-center gap-2 text-white font-display font-bold">
-                  <Info className="w-4 h-4 text-blue-400" />
+                  <Info className="w-4 h-4 text-[#D4AF37]" />
                   <span>Petunjuk Permainan:</span>
                 </div>
                 <ul className="space-y-1 pl-5 list-disc text-white/60">
@@ -648,7 +648,7 @@ export default function SortirPetaPage() {
                   </li>
                   <li>
                     <strong className="text-white">Pencocokan Zona Daerah:</strong> Tarik kartu batik
-                    ke lingkaran zona wilayah di peta. Zona akan menyala biru saat kartu terdeteksi!
+                    ke lingkaran zona wilayah di peta. Zona akan menyala saat kartu terdeteksi!
                   </li>
                   <li>
                     <strong className="text-white">Mode Ketuk:</strong> Anda juga bisa mengetuk kartu
@@ -658,12 +658,13 @@ export default function SortirPetaPage() {
               </div>
 
               <motion.button
-                whileHover={{ scale: 1.04 }}
+                whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={startGame}
-                className="bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600 text-white font-display font-extrabold px-12 py-4 rounded-full text-base hover:from-blue-500 hover:to-indigo-500 transition-all shadow-xl shadow-blue-500/25 border border-blue-400/30"
+                className="inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#1A1614] font-display font-extrabold px-10 py-4 rounded-2xl text-base hover:brightness-105 transition-all shadow-xl shadow-[#D4AF37]/25 border border-[#D4AF37]/40 cursor-pointer"
               >
-                Mulai Jelajah Basemap Sekarang
+                <Compass className="w-5 h-5 text-[#1A1614]" />
+                <span>Mulai Jelajah Basemap</span>
               </motion.button>
             </motion.div>
           )}
@@ -985,27 +986,29 @@ export default function SortirPetaPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={startGame}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-display font-extrabold py-3.5 rounded-xl hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg shadow-blue-500/20"
+                  className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#1A1614] font-display font-bold py-3.5 px-4 rounded-xl hover:brightness-105 transition-all shadow-lg shadow-[#D4AF37]/20 border border-[#D4AF37]/40 cursor-pointer"
                 >
-                  Jelajah Ulang Sesi Peta
+                  <RotateCcw className="w-4 h-4 text-[#1A1614]" />
+                  <span>Jelajah Ulang</span>
                 </motion.button>
                 <button
                   type="button"
                   onClick={() => setGameState("idle")}
-                  className="flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white font-display font-semibold px-6 py-3.5 rounded-xl transition-all"
+                  className="w-full flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-semibold py-3.5 px-4 rounded-xl transition-all hover:border-white/30 cursor-pointer"
                 >
-                  <RotateCcw className="w-4 h-4" />
-                  <span>Menu Game</span>
+                  <Compass className="w-4 h-4 text-[#D4AF37]" />
+                  <span>Halaman Awal</span>
                 </button>
                 <Link
                   href="/play"
-                  className="flex items-center justify-center gap-2 border border-white/15 bg-[#D4AF37]/15 hover:bg-[#D4AF37]/25 text-[#D4AF37] font-display font-semibold px-6 py-3.5 rounded-xl transition-all"
+                  className="w-full flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-semibold py-3.5 px-4 rounded-xl transition-all hover:border-white/30 cursor-pointer"
                 >
+                  <Trophy className="w-4 h-4 text-emerald-400" />
                   <span>Pilih Game Lain</span>
                 </Link>
               </div>
