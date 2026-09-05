@@ -128,25 +128,25 @@ export default function ArcadeHubPage() {
       <Navbar variant="transparent" />
 
       <main className="flex-1">
-        {/* ─── Hero Section with Authentic Canting Photography (matches Landing Page) ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-20 px-6 lg:px-16 min-h-[540px] flex items-center">
-          {/* Background Image */}
+        {/* ─── Hero Section with Dedicated Arcade Heritage Imagery (Full-bleed like Beranda) ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
+          {/* Background Image - Full-bleed like Beranda */}
           <Image
-            src="/images/batik-art-applying-wax-with-canting-tool-2026-03-25-04-45-42-utc.jpg"
-            alt="Proses Membatik Tradisional"
+            src="/images/batik-tab-arcade.jpg"
+            alt="Arena Arcade Batik Nusantara"
             fill
             sizes="100vw"
-            className="object-cover object-center opacity-40 mix-blend-luminosity"
+            className="object-cover object-center"
             priority
           />
 
-          {/* Dark heritage vignette overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1A1614] via-[#1A1614]/85 to-[#713f2c]/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50" />
+          {/* Contrast overlays for text legibility & smooth page transition */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/30 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50 z-0" />
 
           {/* Golden glow accents */}
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
 
           <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left column: Editorial copy */}

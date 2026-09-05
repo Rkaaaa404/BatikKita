@@ -15,7 +15,7 @@ const NAV_LINKS = [
   { href: "/play", label: "Arcade", exact: false },
   { href: "/scan", label: "Batik Lens", exact: false },
   { href: "/chat", label: "Sang Empu", exact: false },
-  { href: "/batikpedia", label: "Batikpedia", exact: false },
+  { href: "/batikpedia", label: "Batik Pedia", exact: false },
 ];
 
 export function Navbar({ variant = "auto" }: NavbarProps) {
@@ -31,8 +31,8 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Determine if this page has a dark hero at the top
-  const pagesWithDarkHero = ["/", "/play", "/chat"];
+  // Determine if this page has a dark hero at the top (now all main tabs have consistent dark hero banners)
+  const pagesWithDarkHero = ["/", "/play", "/scan", "/chat", "/batikpedia"];
   const hasDarkHero =
     variant === "transparent" ||
     (variant === "auto" && pagesWithDarkHero.some((p) => p === "/" ? pathname === "/" : pathname?.startsWith(p)));

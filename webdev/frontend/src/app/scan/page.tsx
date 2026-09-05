@@ -303,21 +303,23 @@ export default function ScannerPage() {
       <Navbar variant="transparent" />
 
       <main className="flex-1">
-        {/* ─── Hero Header Section with Authentic Motif Imagery ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-16 px-6 lg:px-16 text-center">
-          {/* Subtle Background Art */}
+        {/* ─── Hero Header Section with Dedicated Batik Lens Imagery (Full-bleed like Beranda) ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 text-center min-h-[520px] lg:min-h-[580px] flex items-center justify-center">
+          {/* Full-bleed Background Art */}
           <Image
-            src="/images/batik-art-applying-wax-with-canting-tool-2026-03-25-04-45-42-utc.jpg"
-            alt="AI Scanner Background"
+            src="/images/batik-tab-batik-lens.jpg"
+            alt="AI Scanner Batik Lens Background"
             fill
             sizes="100vw"
-            className="object-cover object-center opacity-30 mix-blend-luminosity"
+            className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-[#1A1614]/80 to-black/60" />
+          {/* Contrast overlays for text legibility & smooth page transition */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/85 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60 z-0" />
 
           {/* Golden glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
 
           <div className="max-w-3xl mx-auto relative z-10">
             <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4 backdrop-blur-sm">

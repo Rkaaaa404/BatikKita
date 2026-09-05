@@ -91,15 +91,20 @@ export default function ChatPage() {
       {/* Global Navbar */}
       <Navbar variant="transparent" />
 
-      {/* Pendopo Cultural Atmosphere Background */}
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-0 left-0 right-0 h-[480px] bg-gradient-to-b from-[#713f2c]/50 via-[#713f2c]/20 to-transparent" />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: "radial-gradient(circle at center, transparent 0%, #1A1614 90%)",
-          }}
+      {/* ─── Full-bleed Dedicated Background Image like Beranda ─── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <Image
+          src="/images/batik-tab-sang-empu.jpg"
+          alt="Suasana Pendopo Sang Empu Batik"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+          priority
         />
+        {/* Contrast overlays for chat readability & cultural aura */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-[#1A1614]/85 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-[#1A1614]/70 to-black/75" />
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#D4AF37]/10 rounded-full blur-3xl" />
       </div>
 
       {/* Main Chat Layout */}

@@ -101,36 +101,155 @@ export default function BatikpediaPage() {
 
   return (
     <div className="min-h-screen bg-[#faf8f4] font-body text-[#2d2b38] flex flex-col">
-      {/* Global Navbar (solid state on light background) */}
-      <Navbar variant="solid" />
+      {/* Global Navbar */}
+      <Navbar variant="transparent" />
 
-      <main className="flex-1 max-w-[1280px] mx-auto w-full px-6 lg:px-16 pt-24 pb-16 flex flex-col gap-8">
-        {/* Page Title & Search Bar */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-[#713f2c]/10">
-          <div>
-            <div className="inline-flex items-center gap-2 text-[#713f2c] text-xs font-display font-bold tracking-wider uppercase mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-              Ensiklopedia Wastra Nusantara
+      <main className="flex-1">
+        {/* ─── Hero Section with Dedicated Batik Pedia Imagery (Full-bleed like Beranda) ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 min-h-[560px] lg:min-h-[620px] flex items-center">
+          {/* Background Image - Full-bleed like Beranda */}
+          <Image
+            src="/images/batik-tab-batikpedia.jpg"
+            alt="Ensiklopedia Batik Pedia Nusantara"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority
+          />
+
+          {/* Contrast overlays for text legibility & smooth page transition */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/30 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50 z-0" />
+
+          {/* Golden glow accents */}
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
+
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-7 text-left"
+            >
+              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
+                <Sparkles className="w-4 h-4" />
+                <span>ENSIKLOPEDIA & SENTRA BUDAYA NUSANTARA</span>
+              </div>
+
+              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
+                <span className="font-philosopher tracking-wide">Batik Pedia</span>:{" "}
+                <span
+                  style={{
+                    color: "#D4AF37",
+                    textShadow: "0 2px 20px rgba(212,175,55,0.4)",
+                  }}
+                >
+                  Peta Sentra & Filosofi
+                </span>{" "}
+                Wastra Nusantara.
+              </h1>
+
+              <p className="font-narrative text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
+                Telusuri persebaran geografis, akar sejarah akulturasi, dan kedalaman makna simbolik setiap motif khas Nusantara dari keraton Mataram hingga pesisiran.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/70">
+                <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg border border-white/15">
+                  <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>{REGIONS.length} Sentra Daerah</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-white/10 px-3 py-1.5 rounded-lg border border-white/15">
+                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Katalog Ragam Hias Tradisional</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Search Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="lg:col-span-5"
+            >
+              <div className="bg-[#1A1614]/80 backdrop-blur-xl border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
+                <h3 className="font-display font-bold text-lg text-white flex items-center gap-2">
+                  <Search className="w-4 h-4 text-[#D4AF37]" />
+                  Eksplorasi Sentra & Motif
+                </h3>
+                <p className="font-narrative text-xs text-white/70 leading-relaxed">
+                  Ketik nama kota, daerah pesisir, atau nama motif untuk menelusuri keunikan budaya lokal:
+                </p>
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Contoh: Mega Mendung, Yogyakarta, Lasem..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full bg-black/50 border border-white/20 rounded-xl pl-11 pr-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-hidden focus:border-[#D4AF37] focus:ring-1 focus:ring-[#D4AF37] transition-all shadow-inner"
+                  />
+                  <Search className="w-4 h-4 text-[#D4AF37] absolute left-4 top-1/2 -translate-y-1/2" />
+                  {search && (
+                    <button
+                      type="button"
+                      onClick={() => setSearch("")}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/50 hover:text-white cursor-pointer"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Quick filter chips */}
+                <div className="pt-2">
+                  <span className="text-[11px] font-display text-white/50 block mb-2">
+                    Pilihan Populer:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["Yogyakarta", "Solo", "Cirebon", "Pekalongan", "Lasem"].map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => setSearch(search === tag ? "" : tag)}
+                        className={`text-xs px-2.5 py-1 rounded-lg border transition-all cursor-pointer font-display ${
+                          search === tag
+                            ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37] font-bold"
+                            : "bg-white/5 text-white/80 border-white/10 hover:bg-white/10 hover:border-white/25"
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ─── Interactive Region Explorer Workspace ─── */}
+        <section className="max-w-[1280px] mx-auto w-full px-6 lg:px-16 py-14 flex flex-col gap-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#713f2c]/10">
+            <div>
+              <h2 className="font-display font-bold text-2xl text-[#2d2b38]">
+                Daftar Sentra Batik Nusantara
+              </h2>
+              <p className="font-narrative text-xs sm:text-sm text-[#8d786a] mt-0.5">
+                Menampilkan {filteredRegions.length} sentra kebudayaan{search ? ` dengan kata kunci "${search}"` : ""}
+              </p>
             </div>
-            <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-[#2d2b38] tracking-tight">
-              Peta Sentra Batikpedia
-            </h1>
-            <p className="font-narrative text-sm text-[#8d786a] mt-1 max-w-xl">
-              Telusuri asal-usul geografis, sejarah akulturasi, dan karakteristik ragam hias dari sentra-sentra batik terkemuka di tanah air.
-            </p>
+            {search && (
+              <button
+                type="button"
+                onClick={() => setSearch("")}
+                className="text-xs font-display font-bold text-[#713f2c] hover:underline cursor-pointer self-start sm:self-auto"
+              >
+                Reset Pencarian
+              </button>
+            )}
           </div>
-
-          <div className="w-full md:w-80 relative">
-            <input
-              type="text"
-              placeholder="Cari daerah atau motif..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-white border border-[#d3ccc2] rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-hidden focus:border-[#713f2c] focus:ring-1 focus:ring-[#713f2c] transition-all shadow-xs"
-            />
-            <Search className="w-4 h-4 text-[#8d786a] absolute left-4 top-1/2 -translate-y-1/2" />
-          </div>
-        </div>
 
         {/* Content Layout */}
         <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -260,6 +379,7 @@ export default function BatikpediaPage() {
             )}
           </AnimatePresence>
         </div>
+        </section>
       </main>
 
       {/* Global Footer */}
