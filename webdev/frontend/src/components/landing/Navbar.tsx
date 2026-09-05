@@ -3,147 +3,198 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Sparkles, Compass, Menu, X, ArrowRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Menu, X, ArrowRight, Gamepad2, Sparkles } from "lucide-react";
 
-export function Navbar() {
+interface NavbarProps {
+  variant?: "auto" | "transparent" | "solid";
+}
+
+const NAV_LINKS = [
+  { href: "/", label: "Beranda", exact: true },
+  { href: "/play", label: "Arcade", exact: false },
+  { href: "/scan", label: "Batik Lens", exact: false },
+  { href: "/chat", label: "Sang Empu", exact: false },
+  { href: "/batikpedia", label: "Batikpedia", exact: false },
+];
+
+export function Navbar({ variant = "auto" }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 30);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Determine if this page has a dark hero at the top
+  const pagesWithDarkHero = ["/", "/play", "/chat"];
+  const hasDarkHero =
+    variant === "transparent" ||
+    (variant === "auto" && pagesWithDarkHero.some((p) => p === "/" ? pathname === "/" : pathname?.startsWith(p)));
+
+  // Solid mode is active either when forced, scrolled, or on pages without dark hero
+  const isSolid = variant === "solid" || !hasDarkHero || isScrolled;
+
+  const isActive = (href: string, exact: boolean) => {
+    if (!pathname) return false;
+    return exact ? pathname === href : pathname.startsWith(href);
+  };
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isSolid
           ? "bg-[#faf8f4]/95 backdrop-blur-md border-b border-[#713f2c]/10 py-3 shadow-sm"
-          : "bg-transparent py-4"
+          : "bg-gradient-to-b from-black/60 via-black/25 to-transparent py-4"
       }`}
     >
       <div className="max-w-[1280px] mx-auto px-6 lg:px-16 flex items-center justify-between">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3.5 group">
-          <div className="relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center shrink-0">
+          <div className="relative w-11 h-11 md:w-13 md:h-13 flex items-center justify-center shrink-0">
             <Image
               src="/images/logo-batik-kita.png"
               alt="Logo Batik Kita"
-              width={56}
-              height={56}
+              width={52}
+              height={52}
               className="w-full h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
               priority
             />
           </div>
-          <span
-            className={`font-philosopher font-bold text-2xl md:text-3xl tracking-wide transition-colors ${
-              isScrolled ? "text-[#713f2c]" : "text-white"
-            }`}
-          >
-            Batik Kita
-          </span>
+          <div className="flex flex-col">
+            <span
+              className={`font-philosopher font-bold text-2xl md:text-3xl tracking-wide transition-colors leading-none ${
+                isSolid ? "text-[#713f2c]" : "text-white"
+              }`}
+            >
+              Batik Kita
+            </span>
+            <span
+              className={`text-[10px] tracking-widest uppercase font-display font-medium transition-colors ${
+                isSolid ? "text-[#8d786a]" : "text-[#D4AF37]"
+              }`}
+            >
+              Warisan Luhur Nusantara
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-10">
-          <Link
-            href="/play"
-            className={`font-body text-sm font-medium transition-colors ${
-              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
-            }`}
-          >
-            Arcade
-          </Link>
-          <Link
-            href="/scan"
-            className={`font-body text-sm font-medium transition-colors ${
-              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
-            }`}
-          >
-            Batik Lens
-          </Link>
-          <Link
-            href="/chat"
-            className={`font-body text-sm font-medium transition-colors ${
-              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
-            }`}
-          >
-            Sang Empu
-          </Link>
-          <Link
-            href="/batikpedia"
-            className={`font-body text-sm font-medium transition-colors ${
-              isScrolled ? "text-[#8d786a] hover:text-[#713f2c]" : "text-white/80 hover:text-white"
-            }`}
-          >
-            Batikpedia
-          </Link>
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href, link.exact);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`font-body text-sm transition-all relative py-1 ${
+                  isSolid
+                    ? active
+                      ? "text-[#713f2c] font-bold"
+                      : "text-[#8d786a] hover:text-[#713f2c] font-medium"
+                    : active
+                    ? "text-[#D4AF37] font-bold drop-shadow-sm"
+                    : "text-white/85 hover:text-white font-medium"
+                }`}
+              >
+                {link.label}
+                {active && (
+                  <span
+                    className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all ${
+                      isSolid ? "bg-[#713f2c]" : "bg-[#D4AF37]"
+                    }`}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <a
-            href="#arcade"
-            className={`inline-flex items-center gap-2 font-display font-semibold text-sm px-5 py-2.5 rounded-lg transition-all shadow-sm ${
-              isScrolled 
-                ? "bg-[#713f2c] text-[#D4AF37] hover:bg-[#583122]" 
-                : "bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20"
-            }`}
-          >
-            Mulai Jelajahi
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          {pathname === "/" ? (
+            <a
+              href="#arcade"
+              className={`inline-flex items-center gap-2 font-display font-semibold text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm ${
+                isSolid
+                  ? "bg-[#713f2c] text-[#D4AF37] hover:bg-[#583122]"
+                  : "bg-[#D4AF37] text-[#2d2b38] hover:bg-[#c9a52f] shadow-lg shadow-[#D4AF37]/20"
+              }`}
+            >
+              Mulai Jelajahi
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          ) : (
+            <Link
+              href={pathname?.startsWith("/play") ? "/chat" : "/play"}
+              className={`inline-flex items-center gap-2 font-display font-semibold text-sm px-5 py-2.5 rounded-xl transition-all shadow-sm ${
+                isSolid
+                  ? "bg-[#713f2c] text-[#D4AF37] hover:bg-[#583122]"
+                  : "bg-[#D4AF37] text-[#2d2b38] hover:bg-[#c9a52f] shadow-lg shadow-[#D4AF37]/20"
+              }`}
+            >
+              {pathname?.startsWith("/play") ? (
+                <>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Tanya Sang Empu
+                </>
+              ) : (
+                <>
+                  <Gamepad2 className="w-3.5 h-3.5" />
+                  Main Arcade
+                </>
+              )}
+            </Link>
+          )}
         </div>
 
         {/* Mobile Toggle */}
         <button
-          className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#713f2c]" : "text-white"}`}
+          className={`md:hidden p-2 rounded-lg transition-colors ${
+            isSolid ? "text-[#713f2c] hover:bg-[#713f2c]/5" : "text-white hover:bg-white/10"
+          }`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle Menu"
         >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#faf8f4] border-t border-[#713f2c]/10 px-6 py-4 space-y-3">
-          <Link
-            href="/play"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
-          >
-            Arcade
-          </Link>
-          <Link
-            href="/scan"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
-          >
-            Batik Lens
-          </Link>
-          <Link
-            href="/chat"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
-          >
-            Sang Empu
-          </Link>
-          <Link
-            href="/batikpedia"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium text-[#8d786a] hover:text-[#713f2c] py-2"
-          >
-            Batikpedia
-          </Link>
-          <a
-            href="#arcade"
-            className="block bg-[#713f2c] text-[#D4AF37] text-sm font-semibold px-4 py-2.5 rounded-lg text-center"
-          >
-            Mulai Jelajahi
-          </a>
+        <div className="md:hidden bg-[#faf8f4] border-t border-[#713f2c]/10 px-6 py-5 space-y-3 shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href, link.exact);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block text-sm py-2 px-3 rounded-lg transition-colors ${
+                  active
+                    ? "bg-[#713f2c]/10 text-[#713f2c] font-bold"
+                    : "text-[#8d786a] hover:text-[#713f2c] hover:bg-[#faf8f4]"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
+          <div className="pt-2 border-t border-[#713f2c]/10">
+            <Link
+              href="/play"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm px-4 py-2.5 rounded-xl text-center shadow-sm"
+            >
+              <Gamepad2 className="w-4 h-4" />
+              Main Arcade Sekarang
+            </Link>
+          </div>
         </div>
       )}
     </nav>
