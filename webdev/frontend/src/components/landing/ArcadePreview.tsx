@@ -30,27 +30,39 @@ export function ArcadePreview() {
             Pahami anatomi motif, sejarah persebaran budaya Nusantara, hingga tebak motif makro secara interaktif dan menyenangkan.
           </p>
 
-          <div className="space-y-4 mb-8">
-            <div className="flex items-start gap-3 bg-[#F5F3EF] p-4 rounded-xl border border-[#ada69f]/40">
-              <div className="w-9 h-9 rounded-lg bg-[#713f2c] flex items-center justify-center text-[#D4AF37] font-bold shrink-0">
+          <div className="space-y-3 mb-8">
+            <div className="flex items-start gap-3 bg-[#F5F3EF] p-3.5 rounded-xl border border-[#ada69f]/40">
+              <div className="w-8 h-8 rounded-lg bg-[#713f2c] flex items-center justify-center text-[#D4AF37] font-bold text-xs shrink-0">
                 1
               </div>
               <div>
                 <h4 className="font-display font-bold text-sm text-[#2d2b38]">Batik Cap Stamping</h4>
                 <p className="font-narrative text-xs text-[#8d786a]">
-                  Warnai sketsa batik dengan menempatkan kepingan motif (cap) secara tepat agar menyatu sempurna.
+                  Warnai sketsa batik dengan menempatkan kepingan cap secara presisi.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 bg-[#F5F3EF] p-4 rounded-xl border border-[#ada69f]/40">
-              <div className="w-9 h-9 rounded-lg bg-[#78350f] flex items-center justify-center text-[#fcd34d] font-bold shrink-0">
+            <div className="flex items-start gap-3 bg-[#F5F3EF] p-3.5 rounded-xl border border-[#ada69f]/40">
+              <div className="w-8 h-8 rounded-lg bg-[#f59e0b] flex items-center justify-center text-[#1A1614] font-bold text-xs shrink-0">
                 2
               </div>
               <div>
-                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Tika (Tebak Batik) & Sortir Peta</h4>
+                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Tika (Tebak Batik Nusantara)</h4>
                 <p className="font-narrative text-xs text-[#8d786a]">
-                  Uji wawasan motif Nusantara dari visual makro berjenjang, petakan sentra daerah, dan kumpulkan skor XP.
+                  Tebak nama motif dari potongan visual makro berjenjang zoom 800% hingga 100%.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3 bg-[#F5F3EF] p-3.5 rounded-xl border border-[#ada69f]/40">
+              <div className="w-8 h-8 rounded-lg bg-[#0284c7] flex items-center justify-center text-white font-bold text-xs shrink-0">
+                3
+              </div>
+              <div>
+                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Sortir Peta & Tebak Motif</h4>
+                <p className="font-narrative text-xs text-[#8d786a]">
+                  Petakan sentra budaya Nusantara dan uji wawasan filosofi motif berjenjang.
                 </p>
               </div>
             </div>

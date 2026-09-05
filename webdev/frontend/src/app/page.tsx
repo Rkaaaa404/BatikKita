@@ -4,6 +4,7 @@ import React from "react";
 import { Navbar } from "@/components/landing/Navbar";
 import { HeroSection } from "@/components/landing/HeroSection";
 import { FeatureGrid } from "@/components/landing/FeatureGrid";
+import { ArcadePreview } from "@/components/landing/ArcadePreview";
 import { InteractivePreview } from "@/components/landing/InteractivePreview";
 import { BatikpediaTeaser } from "@/components/landing/BatikpediaTeaser";
 import { Footer } from "@/components/landing/Footer";
@@ -20,7 +21,10 @@ export default function Home() {
       {/* 3. The 3 Pillars Feature Cards */}
       <FeatureGrid />
 
-      {/* 4. Tanya Sang Empu + AI Scanner Interactive Preview */}
+      {/* 4. Edu-Games Arcade Interactive Preview */}
+      <ArcadePreview />
+
+      {/* 5. Tanya Sang Empu + AI Scanner Interactive Preview */}
       <InteractivePreview />
 
       {/* 5. Batikpedia Heritage Cards Collection */}
