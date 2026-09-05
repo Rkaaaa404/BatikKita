@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Camera,
-  Smartphone,
   Upload,
   Scan,
   RefreshCw,
@@ -18,9 +17,6 @@ import {
   MessageSquare,
   FlipHorizontal,
   AlertCircle,
-  Wifi,
-  Copy,
-  Check,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -77,15 +73,13 @@ export default function ScannerPage() {
   const [result, setResult] = useState<MotifData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // ─── Camera & Mobile States ───
+  // ─── Camera States ───
   const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [facingMode, setFacingMode] = useState<"environment" | "user">("user"); // default user/front for laptop
+  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
   const [availableDevices, setAvailableDevices] = useState<MediaDeviceInfo[]>([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string>("");
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
-  const [showMobileModal, setShowMobileModal] = useState(false);
-  const [copyFeedback, setCopyFeedback] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -249,14 +243,13 @@ export default function ScannerPage() {
     setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
   };
 
-  const handleCopyMobileLink = () => {
-    if (typeof window === "undefined") return;
-    const mobileUrl = `${window.location.protocol}//192.168.1.13:${window.location.port || "3000"}/scan`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(mobileUrl);
-      setCopyFeedback(true);
-      setTimeout(() => setCopyFeedback(false), 2500);
+  const openCamera = () => {
+    // If device/browser has no getUserMedia support, trigger camera input directly
+    if (typeof navigator !== "undefined" && (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)) {
+      mobileCameraInputRef.current?.click();
+      return;
     }
+    setIsCameraOpen(true);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -426,29 +419,17 @@ export default function ScannerPage() {
                     Mendukung format JPG, PNG, atau WEBP. Pastikan pencahayaan cukup dan pola kain terlihat jelas.
                   </p>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-2xl mx-auto">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-xl mx-auto">
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setIsCameraOpen(true);
+                        openCamera();
                       }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/50 px-5 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-all shadow-md cursor-pointer group"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/50 px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-all shadow-md cursor-pointer group"
                     >
                       <Camera className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
-                      Kamera Laptop / Webcam
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        mobileCameraInputRef.current?.click();
-                      }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] px-5 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#c9a52f] transition-all shadow-md cursor-pointer group"
-                    >
-                      <Smartphone className="w-4 h-4 text-[#1A1614] group-hover:scale-110 transition-transform" />
-                      Gunakan Kamera HP
+                      Buka Kamera
                     </button>
 
                     <button
@@ -457,7 +438,7 @@ export default function ScannerPage() {
                         e.stopPropagation();
                         fileInputRef.current?.click();
                       }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-5 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs cursor-pointer hover:border-[#713f2c]"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs cursor-pointer hover:border-[#713f2c]"
                     >
                       <Upload className="w-4 h-4" />
                       Pilih dari Perangkat
@@ -695,23 +676,11 @@ export default function ScannerPage() {
                   <button
                     type="button"
                     onClick={switchCamera}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-display font-semibold transition-colors cursor-pointer text-white/90"
-                    title="Beralih Kamera Depan / Belakang"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-display font-semibold transition-colors cursor-pointer text-white/90"
+                    title="Beralih Kamera"
                   >
                     <FlipHorizontal className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span className="hidden sm:inline">
-                      {facingMode === "environment" ? "Kamera Depan" : "Kamera Belakang"}
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setShowMobileModal(true)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 hover:bg-[#D4AF37]/30 text-xs font-display font-semibold transition-colors cursor-pointer text-[#D4AF37]"
-                    title="Pindai via Kamera HP"
-                  >
-                    <Smartphone className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Pakai HP</span>
+                    <span className="hidden sm:inline">Beralih Kamera</span>
                   </button>
 
                   <button
@@ -757,7 +726,7 @@ export default function ScannerPage() {
                         }}
                         className="px-4 py-2 rounded-xl bg-[#713f2c] text-[#D4AF37] text-xs font-display font-bold hover:bg-[#583122] transition-all cursor-pointer"
                       >
-                        Buka Kamera HP
+                        Ambil Foto
                       </button>
                       <button
                         type="button"
@@ -767,7 +736,7 @@ export default function ScannerPage() {
                         }}
                         className="px-4 py-2 rounded-xl bg-white/10 text-white text-xs font-display font-semibold hover:bg-white/20 transition-all cursor-pointer"
                       >
-                        Unggah Berkas
+                        Pilih dari Perangkat
                       </button>
                     </div>
                   </div>
@@ -830,87 +799,6 @@ export default function ScannerPage() {
                   </span>
                 </div>
               )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ─── MODAL KONEKSI KAMERA HP (SCAN DARI HP) ─── */}
-      <AnimatePresence>
-        {showMobileModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-            onClick={() => setShowMobileModal(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.92, opacity: 0 }}
-              className="bg-[#1A1614] border-2 border-[#D4AF37]/40 rounded-3xl max-w-md w-full p-6 shadow-2xl text-center space-y-4 relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="w-14 h-14 bg-[#713f2c]/40 border border-[#D4AF37]/40 rounded-2xl flex items-center justify-center mx-auto text-[#D4AF37]">
-                <Smartphone className="w-7 h-7" />
-              </div>
-
-              <div>
-                <h3 className="font-display font-bold text-xl text-white">
-                  Gunakan Kamera HP Anda
-                </h3>
-                <p className="font-narrative text-xs text-white/70 mt-1.5 leading-relaxed">
-                  Buka alamat lokal Batik Kita di peramban (Chrome/Safari) ponsel Anda yang terhubung pada jaringan Wi-Fi yang sama:
-                </p>
-              </div>
-
-              {/* IP Address Box with 1-click copy */}
-              <div className="bg-black/60 border border-white/15 rounded-2xl p-3 flex items-center justify-between gap-2 text-left">
-                <div className="min-w-0">
-                  <span className="text-[10px] text-white/40 uppercase font-display block">
-                    Alamat Wi-Fi Lokal:
-                  </span>
-                  <span className="text-xs sm:text-sm font-mono font-bold text-[#D4AF37] truncate block">
-                    http://192.168.1.13:3000/scan
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleCopyMobileLink}
-                  className="px-3 py-1.5 rounded-xl bg-[#D4AF37] text-[#1A1614] text-xs font-display font-bold hover:brightness-105 transition-all shrink-0 flex items-center gap-1 cursor-pointer"
-                >
-                  {copyFeedback ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Tersalin!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Salin</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-left space-y-1">
-                <p className="text-[11px] font-display font-bold text-white flex items-center gap-1.5">
-                  <Wifi className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  Kemudahan Kamera Ponsel:
-                </p>
-                <p className="text-[11px] font-narrative text-white/70 leading-relaxed">
-                  Di HP, tombol <strong>&quot;Gunakan Kamera HP&quot;</strong> akan langsung memicu aplikasi kamera bawaan ponsel dengan resolusi penuh dan fokus makro.
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setShowMobileModal(false)}
-                className="w-full py-2.5 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-display font-semibold transition-colors cursor-pointer"
-              >
-                Tutup Jendela Ini
-              </button>
             </motion.div>
           </motion.div>
         )}
