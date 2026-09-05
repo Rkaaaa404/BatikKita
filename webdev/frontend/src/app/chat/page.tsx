@@ -32,7 +32,7 @@ const PRESET_ANSWERS: Record<string, string> = {
     "Parang Rusak dan Parang Barong merupakan kelompok 'Batik Larangan' (Awisan Ndalem) di Keraton Mataram.\n\nMotif ini melambangkan ombak samudra bergelora yang tak kenal lelah memecah karang, simbol keteguhan jiwa, keberanian ksatria, dan kepemimpinan spiritual yang hanya boleh dikenakan oleh Raja, Pangeran, dan keturunan langsung. Mengenakannya tanpa hak di masa lalu dianggap melanggar tatanan adiluhung keraton.",
 
   "Apa makna motif Kawung bagi kepemimpinan?":
-    "Motif Kawung terinspirasi dari empat kelopak bunga aren atau buah kolang-kaling yang tersusun simetris membentuk persilangan.\n\nDalam falsafah Jawa, ini melambangkan 'Sedulur Papat Lima Pancer' — empat penjuru mata angin yang bermuara pada satu pusat kesadaran Ilahi. Bagi seorang pemimpin, Kawung mengajarkan kesucian hati, keadilan tanpa pandang bulu, serta kemampuan mengendalikan hawa nafsu demi kesejahteraan rakyat.",
+    "Motif Kawung terinspirasi dari empat kelopak bunga aren atau buah kolang-kaling yang tersusun simetris membentuk persilangan.\n\nDalam falsafah Jawa, ini melambangkan 'Sedulur Papat Lima Pancer', empat penjuru mata angin yang bermuara pada satu pusat kesadaran Ilahi. Bagi seorang pemimpin, Kawung mengajarkan kesucian hati, keadilan tanpa pandang bulu, serta kemampuan mengendalikan hawa nafsu demi kesejahteraan rakyat.",
 };
 
 export default function ChatPage() {

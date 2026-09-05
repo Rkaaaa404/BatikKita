@@ -37,7 +37,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Batik Kita — Warisan Luhur dalam Sentuhan Digital",
+  title: "Batik Kita: Warisan Luhur dalam Sentuhan Digital",
   description:
     "Platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara melalui Edu-Games, AI Vision Scanner, Tanya Sang Empu, dan Peta Interaktif.",
   keywords: [

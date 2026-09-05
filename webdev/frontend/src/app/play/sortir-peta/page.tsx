@@ -143,7 +143,7 @@ export default function SortirPetaPage() {
         setTimeout(() => endGame(), 600);
       }
     } else {
-      // bounce back — wrong pin flash
+      // bounce back: wrong pin flash
       setPinStates((prev) => ({ ...prev, [regionId]: { regionId, cardId: null, flash: "wrong" } }));
       setTimeout(() => {
         setPinStates((prev) => ({ ...prev, [regionId]: { ...prev[regionId], flash: null } }));
@@ -396,7 +396,7 @@ export default function SortirPetaPage() {
                     <h3 className="font-display font-bold text-base text-white">{currentCard.name}</h3>
                     <p className="text-white/50 text-sm font-body mt-1">
                       {selectedCard
-                        ? "✅ Kartu dipilih — ketuk pin daerah yang tepat"
+                        ? "✅ Kartu dipilih: ketuk pin daerah yang tepat"
                         : "Drag kartu ke peta atau ketuk kartu lalu ketuk pin daerah"}
                     </p>
                     <p className="text-white/30 text-xs font-body mt-2">

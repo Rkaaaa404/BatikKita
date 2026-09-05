@@ -78,7 +78,7 @@ export function BatikpediaTeaser() {
         </p>
       </motion.div>
 
-      {/* Cards — 3 columns */}
+      {/* Cards: 3 columns */}
       <motion.div 
         variants={containerVariants}
         initial="hidden"

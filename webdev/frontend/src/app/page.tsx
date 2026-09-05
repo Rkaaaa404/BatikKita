@@ -14,7 +14,7 @@ export default function Home() {
       {/* 1. Global Navigation Bar */}
       <Navbar />
 
-      {/* 2. Hero Section — full editorial layout */}
+      {/* 2. Hero Section: full editorial layout */}
       <HeroSection />
 
       {/* 3. The 3 Pillars Feature Cards */}

@@ -2,11 +2,116 @@
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Brain, ChevronRight, CheckCircle, XCircle, Lightbulb, RotateCcw, Trophy } from "lucide-react";
+import {
+  Brain,
+  ChevronRight,
+  CheckCircle2,
+  XCircle,
+  Lightbulb,
+  RotateCcw,
+  Trophy,
+  Sparkles,
+  Volume2,
+  VolumeX,
+  HelpCircle,
+  Flame,
+  Search,
+  ZoomIn,
+  Eye,
+  SlidersHorizontal,
+  ArrowRight,
+} from "lucide-react";
+import confetti from "canvas-confetti";
+import Image from "next/image";
+import Link from "next/link";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
 
-// ── Data Motif & Hint ────────────────────────────────────────────────────────
+// ── Web Audio Sound Synthesizer (No external audio files needed) ─────────────
+class SoundEffects {
+  private ctx: AudioContext | null = null;
+  public enabled: boolean = true;
+
+  private init() {
+    if (!this.ctx && typeof window !== "undefined") {
+      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+  }
+
+  playChime() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(587.33, now); // D5
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.4);
+    } catch {
+      // Ignore audio failure
+    }
+  }
+
+  playWin() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+      notes.forEach((freq, idx) => {
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime + idx * 0.08;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      });
+    } catch {
+      // Ignore
+    }
+  }
+
+  playWrong() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(220, now); // A3
+      osc.frequency.linearRampToValueAtTime(140, now + 0.25);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.28);
+    } catch {
+      // Ignore
+    }
+  }
+}
+
+const sfx = new SoundEffects();
+
+// ── Data Motif Pool ──────────────────────────────────────────────────────────
 interface MotifData {
   id: string;
   name: string;
@@ -14,10 +119,10 @@ interface MotifData {
   category: string;
   image: string;
   philosophy: string;
-  hint1: string; // paling samar
-  hint2: string; // kategori/rumpun
-  hint3: string; // asal daerah
-  hint4: string; // ciri visual
+  hint1: string;
+  hint2: string;
+  hint3: string;
+  hint4: string;
 }
 
 const MOTIF_POOL: MotifData[] = [
@@ -27,11 +132,12 @@ const MOTIF_POOL: MotifData[] = [
     region: "D.I. Yogyakarta",
     category: "Batik Keraton",
     image: "/images/batik-kawung.jpg",
-    philosophy: "Pola 4 kelopak buah aren melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
-    hint1: "Motif ini terinspirasi dari buah tanaman yang tumbuh di pedesaan Jawa dan melambangkan kemurnian niat.",
-    hint2: "Motif ini termasuk rumpun batik Keraton (Pedalaman) dari tradisi kebangsawanan Jawa.",
-    hint3: "Motif ini erat kaitannya dengan lingkungan Kraton Ngayogyakarta dan Surakarta.",
-    hint4: "Motif ini berbentuk empat kelopak lonjong yang tersusun mengelilingi titik pusat, menyerupai potongan buah aren (kolang-kaling).",
+    philosophy:
+      "Pola 4 kelopak buah aren melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
+    hint1: "Motif ini terinspirasi dari buah tanaman pedesaan Jawa dan melambangkan kemurnian niat.",
+    hint2: "Termasuk rumpun batik Keraton (Pedalaman) dari tradisi adiluhung kebangsawanan Jawa.",
+    hint3: "Erat kaitannya dengan lingkungan Kraton Ngayogyakarta dan Kasunanan Surakarta.",
+    hint4: "Berbentuk empat kelopak lonjong yang tersusun mengelilingi titik pusat, menyerupai potongan buah aren atau kolang-kaling.",
   },
   {
     id: "parang",
@@ -39,11 +145,12 @@ const MOTIF_POOL: MotifData[] = [
     region: "Surakarta & Yogyakarta",
     category: "Batik Larangan",
     image: "/images/batik-parang-rusak.jpg",
-    philosophy: "Garis diagonal ombak tak terputus melambangkan semangat pantang menyerah dan keteguhan pemimpin.",
-    hint1: "Motif ini terinspirasi oleh kekuatan alam yang tak pernah berhenti bergerak, simbol ketangguhan jiwa.",
-    hint2: "Motif ini termasuk rumpun batik Larangan yang dahulu hanya boleh dikenakan oleh keluarga raja.",
-    hint3: "Motif ini erat kaitannya dengan wilayah Yogyakarta dan Surakarta, merupakan identitas batik keraton.",
-    hint4: "Motif ini berbentuk garis-garis diagonal berulang menyerupai huruf S yang saling berkaitan, terinspirasi dari batu karang dan ombak laut.",
+    philosophy:
+      "Garis diagonal ombak tak terputus melambangkan semangat pantang menyerah dan keteguhan pemimpin.",
+    hint1: "Terinspirasi oleh kekuatan ombak laut yang tak pernah berhenti bergerak, simbol ketangguhan jiwa.",
+    hint2: "Termasuk rumpun batik Larangan (Awisan Ndalem) yang dahulu hanya boleh dikenakan keluarga raja.",
+    hint3: "Merupakan identitas sakral utama dari pusat kebudayaan keraton Jawa Mataram.",
+    hint4: "Berbentuk garis-garis diagonal berulang menyerupai huruf S saling berkait, melambangkan batu karang dan ombak samudra.",
   },
   {
     id: "megamendung",
@@ -51,108 +158,141 @@ const MOTIF_POOL: MotifData[] = [
     region: "Cirebon, Jawa Barat",
     category: "Batik Pesisiran",
     image: "/images/batik-mega-mendung.jpg",
-    philosophy: "Awan pembawa hujan melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk.",
-    hint1: "Motif ini terinspirasi dari fenomena alam langit yang membawa berkah hujan dan kesuburan bumi.",
-    hint2: "Motif ini termasuk rumpun batik Pesisiran dengan pengaruh kuat kebudayaan Tiongkok.",
-    hint3: "Motif ini merupakan ikon budaya dari kota pelabuhan di Pantai Utara Jawa Barat.",
-    hint4: "Motif ini berbentuk gumpalan awan berlapis-lapis dengan gradasi warna biru tua hingga biru muda atau merah, dengan ornamen lengkung berulang.",
+    philosophy:
+      "Awan pembawa hujan melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk di tengah terik.",
+    hint1: "Terinspirasi dari fenomena alam langit pembawa berkah hujan dan kesuburan tanah Nusantara.",
+    hint2: "Termasuk rumpun batik Pesisiran dengan pengaruh akulturasi seni Tiongkok yang sangat kental.",
+    hint3: "Merupakan ikon kebanggaan budaya dari kota pelabuhan Cirebon di pesisir utara Jawa Barat.",
+    hint4: "Berbentuk gumpalan awan berlapis-lapis dengan gradasi warna berulang dan lengkungan ornamen tegas.",
   },
   {
     id: "truntum",
     name: "Truntum",
     region: "Surakarta",
     category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg", // fallback image
-    philosophy: "Melambangkan cinta yang bersemi kembali, sering dipakai orang tua pengantin sebagai doa untuk anaknya.",
-    hint1: "Motif ini terinspirasi dari kisah cinta yang mekar kembali setelah melewati masa sulit.",
-    hint2: "Motif ini termasuk rumpun batik Keraton Surakarta dengan motif kecil-kecil yang bertebaran.",
-    hint3: "Motif ini lahir di lingkungan Kraton Kasunanan Surakarta Hadiningrat.",
-    hint4: "Motif ini memiliki ciri khas berupa bintang atau bunga kecil bertebaran merata di seluruh permukaan kain seperti taburan bintang di langit malam.",
+    image: "/images/batik-kawung.jpg",
+    philosophy:
+      "Melambangkan cinta yang bersemi kembali, sering dipakai orang tua pengantin sebagai doa keharmonisan abadi.",
+    hint1: "Terinspirasi dari kisah cinta permaisuri yang mekar kembali setelah melewati malam penuh kesunyian.",
+    hint2: "Diciptakan oleh Kanjeng Ratu Beruk di lingkungan Kraton Kasunanan Surakarta Hadiningrat.",
+    hint3: "Sering dikenakan orang tua pengantin saat upacara panggih sebagai doa restu tulus tanpa pamrih.",
+    hint4: "Memiliki ornamen bintang kecil berkerlip yang bertaburan merata laksana langit malam berhias konstelasi bintang.",
   },
   {
     id: "sidomukti",
     name: "Sido Mukti",
     region: "Surakarta",
     category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg", // fallback image
-    philosophy: "Sido berarti terus-menerus, mukti berarti kebahagiaan. Melambangkan harapan akan kehidupan yang sejahtera dan bahagia.",
-    hint1: "Nama motif ini secara harfiah berarti 'terus-menerus dalam kemuliaan' — harapan luhur bagi pemakainya.",
-    hint2: "Motif ini termasuk rumpun batik Keraton, biasa dipakai dalam upacara pernikahan adat Jawa.",
-    hint3: "Motif ini berasal dari tradisi batik Kraton Surakarta dan sering dipilih sebagai busana pengantin Jawa.",
-    hint4: "Motif ini menampilkan pola kotak-kotak (ceplok) berulang yang di dalamnya terdapat ragam hias tumbuhan, kupu-kupu, atau garuda kecil.",
+    image: "/images/batik-parang-rusak.jpg",
+    philosophy:
+      "Sido berarti terus-menerus, mukti berarti kemakmuran dan kebahagiaan. Harapan luhur bagi pemakainya.",
+    hint1: "Nama motif ini secara harfiah berarti terus-menerus dalam kemuliaan, doa kesejahteraan hidup.",
+    hint2: "Termasuk rumpun batik Keraton yang menjadi busana sakral mempelai dalam tata cara pernikahan Jawa.",
+    hint3: "Lahir dari kehalusan tradisi seni batik Kraton Surakarta Hadiningrat dengan pewarnaan sogan hangat.",
+    hint4: "Menampilkan bidang-bidang simetris berulang yang diisi ornamen pohon hayat, kupu-kupu, atau garuda kecil.",
   },
   {
     id: "sekar-jagad",
     name: "Sekar Jagad",
     region: "Yogyakarta & Surakarta",
     category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg", // fallback image
-    philosophy: "Sekar berarti bunga, jagad berarti dunia. Melambangkan keindahan alam semesta dan keanekaragaman budaya.",
-    hint1: "Nama motif ini bermakna 'bunga dunia' — merayakan keindahan dan keanekaragaman alam semesta.",
-    hint2: "Motif ini termasuk rumpun batik Keraton yang memiliki tampilan paling beragam dan kompleks.",
-    hint3: "Motif ini populer di kedua pusat kebudayaan Jawa: Yogyakarta dan Surakarta.",
-    hint4: "Motif ini ditandai dengan pola tak beraturan menyerupai kepulauan atau benua, di mana setiap 'pulau' diisi dengan motif berbeda-beda.",
+    image: "/images/batik-mega-mendung.jpg",
+    philosophy:
+      "Sekar berarti bunga, jagad berarti alam semesta. Melambangkan keindahan dan keragaman budaya Nusantara.",
+    hint1: "Bermakna bunga dunia, merayakan keindahan dan keanekaragaman flora di alam semesta.",
+    hint2: "Memiliki komposisi visual paling kaya dan kompleks di antara seluruh ragam batik keraton.",
+    hint3: "Sangat masyhur di kedua sentra kebudayaan Mataram: Yogyakarta dan Surakarta.",
+    hint4: "Ditandai dengan batas kontur tak beraturan menyerupai peta kepulauan, di mana setiap bidang diisi motif berbeda.",
   },
   {
     id: "lereng",
     name: "Lereng",
     region: "Yogyakarta",
     category: "Batik Keraton",
-    image: "/images/batik-parang-rusak.jpg", // fallback
-    philosophy: "Garis miring berkesinambungan melambangkan ketekunan, konsistensi, dan keseimbangan dalam menjalani kehidupan.",
-    hint1: "Motif ini terinspirasi dari lereng pegunungan yang berundak — simbol ketekunan tanpa henti.",
-    hint2: "Motif ini termasuk rumpun batik geometris pedalaman Jawa yang sederhana namun bermakna mendalam.",
-    hint3: "Motif ini banyak diproduksi di sentra batik Yogyakarta sebagai variasi dari tradisi batik keraton.",
-    hint4: "Motif ini memiliki ciri khas garis-garis diagonal sejajar yang membentuk pola miring berkesinambungan di seluruh permukaan kain.",
+    image: "/images/batik-parang-rusak.jpg",
+    philosophy:
+      "Garis miring berkesinambungan melambangkan ketekunan, konsistensi, dan keseimbangan hidup manusia.",
+    hint1: "Terinspirasi dari kontur lereng perbukitan yang berundak, lambang ketekunan dan kesabaran.",
+    hint2: "Termasuk rumpun batik geometris pedalaman Jawa yang sederhana, anggun, dan tegas.",
+    hint3: "Banyak diciptakan oleh para empu batik di sentra tradisi Yogyakarta.",
+    hint4: "Memiliki barisan garis-garis diagonal sejajar berulang yang melintasi kain secara harmonis.",
   },
   {
     id: "nitik",
     name: "Nitik",
-    region: "Yogyakarta",
+    region: "Bantul, Yogyakarta",
     category: "Batik Keraton",
-    image: "/images/batik-kawung.jpg", // fallback
-    philosophy: "Pola titik-titik kecil melambangkan ketelitian, kesabaran, dan dedikasi tinggi sang pembatik.",
-    hint1: "Motif ini menuntut kesabaran dan ketelitian luar biasa dari pembuatnya — setiap detik penuh perhitungan.",
-    hint2: "Motif ini adalah teknik khusus batik tulis yang menggunakan canting khusus berbilah tipis untuk membentuk titik.",
-    hint3: "Motif ini adalah kebanggaan sentra batik tulis tradisional Bantul, Yogyakarta.",
-    hint4: "Motif ini memiliki ciri khas berupa susunan titik-titik (dot) kecil sangat rapat yang membentuk pola geometris atau tumbuhan.",
+    image: "/images/batik-kawung.jpg",
+    philosophy:
+      "Pola ribuan titik kecil melambangkan ketelitian, kesabaran, dan dedikasi tinggi sang pembatik.",
+    hint1: "Motif ini menuntut kesabaran dan ketelitian luar biasa dari pembuatnya, setiap detik penuh perhitungan.",
+    hint2: "Menggunakan canting khusus berbilah belah untuk menorehkan ribuan titik teratur di kain mori.",
+    hint3: "Merupakan mahakarya kebanggaan para pembatik tulis tradisional di desa Trimulyo, Bantul, Yogyakarta.",
+    hint4: "Tersusun dari ribuan titik-titik (cecek) rapat yang membentuk anyaman geometris mirip tenun kain patola kuno.",
   },
   {
     id: "batik-pekalongan",
     name: "Batik Pekalongan",
     region: "Pekalongan, Jawa Tengah",
     category: "Batik Pesisiran",
-    image: "/images/batik-mega-mendung.jpg", // fallback
-    philosophy: "Perpaduan motif lokal Jawa dengan pengaruh budaya Belanda, Tiongkok, dan Arab mencerminkan keterbukaan kota pelabuhan.",
-    hint1: "Motif ini lahir dari kota yang dijuluki 'World City of Batik' karena keberagaman pengaruh budayanya.",
-    hint2: "Motif ini termasuk rumpun batik Pesisiran dengan ciri khas warna cerah dan beragam motif bunga.",
-    hint3: "Motif ini merupakan produk kebudayaan kota di Jawa Tengah bagian utara yang terkenal sebagai sentra batik nasional.",
-    hint4: "Motif ini dikenal dengan warna-warna cerah (merah, hijau, kuning) dan motif bunga naturalis yang dipengaruhi seni Eropa dan Asia.",
+    image: "/images/batik-mega-mendung.jpg",
+    philosophy:
+      "Perpaduan motif lokal dengan pengaruh Belanda, Tiongkok, dan Arab mencerminkan keterbukaan kota pelabuhan.",
+    hint1: "Lahir dari kota pesisir utara yang dinobatkan UNESCO sebagai World City of Batik.",
+    hint2: "Termasuk rumpun batik Pesisiran dengan ciri khas warna riang, berani, dan sarat keceriaan.",
+    hint3: "Berasal dari sentra perdagangan batik terbesar di pesisir utara Jawa Tengah.",
+    hint4: "Menampilkan buketan bunga Eropa, burung merak, dan kupu-kupu yang diwarnai sangat cerah berani.",
   },
 ];
 
 const ALL_MOTIF_NAMES = MOTIF_POOL.map((m) => m.name);
+const XP_PER_HINT: Record<number, number> = { 1: 100, 2: 75, 3: 50, 4: 25 };
 
-const XP_PER_HINT: Record<number, number> = { 1: 100, 2: 75, 3: 50, 4: 25, 5: 25 };
-
-// ── Component ────────────────────────────────────────────────────────────────
-type GameState = "idle" | "playing" | "correct" | "round-complete";
+type GameState = "idle" | "playing" | "round-complete";
 
 export default function TebakMotifPage() {
   const { addXp } = useXp();
   const [gameState, setGameState] = useState<GameState>("idle");
   const [currentMotif, setCurrentMotif] = useState<MotifData | null>(null);
   const [revealedHints, setRevealedHints] = useState<number>(1);
+  const [roundCount, setRoundCount] = useState(0);
+  const [totalXp, setTotalXp] = useState(0);
+  const [earnedXp, setEarnedXp] = useState(0);
+  const [usedMotifIds, setUsedMotifIds] = useState<string[]>([]);
+  const [streak, setStreak] = useState(0);
+
+  // Input modes: "choices" (interactive cards) or "type" (manual mastery)
+  const [inputMode, setInputMode] = useState<"choices" | "type">("choices");
+  const [choices, setChoices] = useState<string[]>([]);
+  const [disabledChoices, setDisabledChoices] = useState<string[]>([]);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [wrongAttempt, setWrongAttempt] = useState(false);
-  const [earnedXp, setEarnedXp] = useState(0);
-  const [roundCount, setRoundCount] = useState(0);
-  const [totalXp, setTotalXp] = useState(0);
-  const [usedMotifIds, setUsedMotifIds] = useState<string[]>([]);
-  const [showConfetti, setShowConfetti] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [soundOn, setSoundOn] = useState(true);
+
+  // Lifelines
+  const [used5050, setUsed5050] = useState(false);
+
+  // Interactive Loupe (Kaca Pembesar) state
+  const [lensPos, setLensPos] = useState<{ x: number; y: number; active: boolean }>({
+    x: 50,
+    y: 50,
+    active: false,
+  });
+
+  const clothContainerRef = useRef<HTMLDivElement>(null);
+
+  // Generate 4 plausible choices for multiple choice mode
+  const generateChoices = useCallback((correctName: string) => {
+    const others = ALL_MOTIF_NAMES.filter((n) => n !== correctName);
+    // Shuffle others and take 3
+    const shuffledOthers = [...others].sort(() => 0.5 - Math.random()).slice(0, 3);
+    const combined = [correctName, ...shuffledOthers].sort(() => 0.5 - Math.random());
+    setChoices(combined);
+    setDisabledChoices([]);
+    setUsed5050(false);
+  }, []);
 
   const pickNewMotif = useCallback(() => {
     const available = MOTIF_POOL.filter((m) => !usedMotifIds.includes(m.id));
@@ -163,14 +303,17 @@ export default function TebakMotifPage() {
     setQuery("");
     setSuggestions([]);
     setWrongAttempt(false);
+    generateChoices(chosen.name);
     setGameState("playing");
+
     if (available.length === 0) setUsedMotifIds([chosen.id]);
     else setUsedMotifIds((prev) => [...prev, chosen.id]);
-  }, [usedMotifIds]);
+  }, [usedMotifIds, generateChoices]);
 
   const startGame = useCallback(() => {
     setRoundCount(0);
     setTotalXp(0);
+    setStreak(0);
     setUsedMotifIds([]);
     const chosen = MOTIF_POOL[Math.floor(Math.random() * MOTIF_POOL.length)];
     setCurrentMotif(chosen);
@@ -178,61 +321,84 @@ export default function TebakMotifPage() {
     setQuery("");
     setSuggestions([]);
     setWrongAttempt(false);
+    generateChoices(chosen.name);
     setGameState("playing");
     setUsedMotifIds([chosen.id]);
-  }, []);
+    sfx.playChime();
+  }, [generateChoices]);
 
-  const handleQueryChange = (val: string) => {
-    setQuery(val);
-    if (val.length > 0) {
-      const filtered = ALL_MOTIF_NAMES.filter((n) =>
-        n.toLowerCase().includes(val.toLowerCase())
-      );
-      setSuggestions(filtered);
-      setShowSuggestions(true);
-    } else {
-      setSuggestions([]);
-      setShowSuggestions(false);
-    }
+  // Handle Interactive Loupe / Magnifier mouse move
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!clothContainerRef.current) return;
+    const rect = clothContainerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setLensPos({ x: Math.max(0, Math.min(100, x)), y: Math.max(0, Math.min(100, y)), active: true });
   };
 
-  const submitAnswer = useCallback((answer: string) => {
-    if (!currentMotif) return;
-    setShowSuggestions(false);
-    const correct = answer.toLowerCase().trim() === currentMotif.name.toLowerCase().trim();
-    if (correct) {
-      const xp = XP_PER_HINT[revealedHints] ?? 25;
-      setEarnedXp(xp);
-      setTotalXp((prev) => prev + xp);
-      addXp(xp);
-      setGameState("correct");
-      setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 2500);
-      setTimeout(() => setGameState("round-complete"), 1200);
-      setRoundCount((prev) => prev + 1);
-    } else {
-      setWrongAttempt(true);
-      setTimeout(() => setWrongAttempt(false), 600);
-      // Push to reveal next hint after wrong attempt if at last hint
-      if (revealedHints >= 4) {
-        // reveal answer
-        const xp = 25;
-        setEarnedXp(xp);
-        setTotalXp((prev) => prev + xp);
-        addXp(xp);
-        setTimeout(() => {
-          setGameState("round-complete");
-          setRoundCount((prev) => prev + 1);
-        }, 700);
+  const handlePointerLeave = () => {
+    setLensPos((prev) => ({ ...prev, active: false }));
+  };
+
+  const submitAnswer = useCallback(
+    (answer: string) => {
+      if (!currentMotif || gameState !== "playing") return;
+      setShowSuggestions(false);
+      const isCorrect = answer.toLowerCase().trim() === currentMotif.name.toLowerCase().trim();
+
+      if (isCorrect) {
+        sfx.playWin();
+        const baseScore = XP_PER_HINT[revealedHints] ?? 25;
+        const masteryBonus = inputMode === "type" ? 20 : 0;
+        const totalEarned = baseScore + masteryBonus;
+
+        setEarnedXp(totalEarned);
+        setTotalXp((prev) => prev + totalEarned);
+        setStreak((prev) => prev + 1);
+        addXp(totalEarned);
+
+        // Confetti celebration
+        confetti({
+          particleCount: 70,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ["#D4AF37", "#10B981", "#ffffff", "#713f2c"],
+        });
+
+        setGameState("round-complete");
+        setRoundCount((prev) => prev + 1);
+      } else {
+        sfx.playWrong();
+        setWrongAttempt(true);
+        setStreak(0);
+        setTimeout(() => setWrongAttempt(false), 600);
+
+        // Disable this incorrect choice
+        setDisabledChoices((prev) => [...prev, answer]);
+
+        // If wrong on the last hint, auto complete round with minimum points
+        if (revealedHints >= 4) {
+          setTimeout(() => {
+            const xp = 15;
+            setEarnedXp(xp);
+            setTotalXp((prev) => prev + xp);
+            addXp(xp);
+            setGameState("round-complete");
+            setRoundCount((prev) => prev + 1);
+          }, 800);
+        }
       }
-    }
-  }, [currentMotif, revealedHints, addXp]);
+    },
+    [currentMotif, gameState, revealedHints, inputMode, addXp]
+  );
 
   const revealNextHint = () => {
-    if (revealedHints < 4) setRevealedHints((prev) => prev + 1);
-    else {
-      // auto-reveal answer after hint 4
-      const xp = 25;
+    if (revealedHints < 4) {
+      setRevealedHints((prev) => prev + 1);
+      sfx.playChime();
+    } else {
+      // Auto-reveal
+      const xp = 15;
       setEarnedXp(xp);
       setTotalXp((prev) => prev + xp);
       addXp(xp);
@@ -241,335 +407,519 @@ export default function TebakMotifPage() {
     }
   };
 
-  const potentialScore = XP_PER_HINT[revealedHints] ?? 25;
-  const potentialPercent = (potentialScore / 100) * 100;
+  // 50:50 Lifeline
+  const useLifeline5050 = () => {
+    if (!currentMotif || used5050 || choices.length < 4) return;
+    const wrongOptions = choices.filter((c) => c !== currentMotif.name);
+    // pick 2 to disable
+    const toDisable = wrongOptions.slice(0, 2);
+    setDisabledChoices((prev) => [...prev, ...toDisable]);
+    setUsed5050(true);
+    sfx.playChime();
+  };
+
+  const potentialScore = (XP_PER_HINT[revealedHints] ?? 25) + (inputMode === "type" ? 20 : 0);
+  const potentialPercent = ((XP_PER_HINT[revealedHints] ?? 25) / 100) * 100;
 
   const hints = currentMotif
     ? [currentMotif.hint1, currentMotif.hint2, currentMotif.hint3, currentMotif.hint4]
     : [];
 
+  // Blur level depending on hints revealed
+  const getBlurClass = () => {
+    switch (revealedHints) {
+      case 1:
+        return "blur-2xl scale-110";
+      case 2:
+        return "blur-lg scale-105";
+      case 3:
+        return "blur-sm scale-102";
+      case 4:
+      default:
+        return "blur-none scale-100";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-[#1A1614] text-white">
+    <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614]">
+      {/* Top Bar with back link and XP */}
       <GameNavbar title="Tebak Motif Berjenjang" />
 
-      <main className="pt-14 min-h-screen flex flex-col">
+      <main className="flex-1 pt-20 pb-12 px-4 sm:px-6 max-w-5xl mx-auto w-full flex flex-col">
+        {/* Audio Toggle & Streak Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                const nextState = !soundOn;
+                setSoundOn(nextState);
+                sfx.enabled = nextState;
+              }}
+              className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-full transition-all"
+              title="Pengaturan Suara"
+            >
+              {soundOn ? <Volume2 className="w-3.5 h-3.5 text-[#D4AF37]" /> : <VolumeX className="w-3.5 h-3.5 text-red-400" />}
+              <span>{soundOn ? "Suara Aktif" : "Bisu"}</span>
+            </button>
+
+            {streak > 1 && (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-display font-bold px-3 py-1 rounded-full shadow-sm"
+              >
+                <Flame className="w-3.5 h-3.5 fill-current text-amber-400 animate-bounce" />
+                <span>Streak {streak}x!</span>
+              </motion.div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-4 text-xs font-display">
+            <span className="text-white/60">
+              Ronde: <strong className="text-white">#{roundCount + 1}</strong>
+            </span>
+            <span className="text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-3 py-1 rounded-full font-bold">
+              Total: {totalXp} XP
+            </span>
+          </div>
+        </div>
+
         <AnimatePresence mode="wait">
-          {/* ── IDLE / START SCREEN ── */}
+          {/* ── 1. IDLE / INTRO SCREEN ── */}
           {gameState === "idle" && (
             <motion.div
               key="idle"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="max-w-2xl mx-auto px-4 py-16 flex flex-col items-center text-center gap-8"
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="flex-1 flex flex-col items-center justify-center text-center max-w-xl mx-auto py-8"
             >
-              <div className="w-20 h-20 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center">
-                <Brain className="w-10 h-10 text-[#D4AF37]" />
-              </div>
-              <div>
-                <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
-                  <Brain className="w-3.5 h-3.5" /> TEBAK MOTIF BERJENJANG
+              {/* Animated Emblem */}
+              <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-br from-[#713f2c] via-[#8d786a] to-[#2d2b38] p-1 flex items-center justify-center mb-6 shadow-2xl border-2 border-[#D4AF37]/50">
+                <Brain className="w-12 h-12 text-[#D4AF37] drop-shadow-md animate-pulse" />
+                <div className="absolute -top-2 -right-2 bg-[#D4AF37] text-[#1A1614] text-[10px] font-display font-extrabold px-2 py-0.5 rounded-full shadow-sm">
+                  INTERAKTIF
                 </div>
-                <h1 className="font-display font-extrabold text-3xl md:text-4xl mb-3">
-                  Uji Pengetahuan<br />
-                  <span className="text-[#D4AF37]">Batik Nusantaramu</span>
-                </h1>
-                <p className="text-white/60 font-body max-w-md mx-auto">
-                  Tebak nama motif batik berdasarkan petunjuk yang diberikan secara bertahap. 
-                  Semakin sedikit petunjuk yang kamu butuhkan, semakin besar XP yang kamu dapatkan!
-                </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 w-full max-w-sm text-left">
+              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
+                <Sparkles className="w-3.5 h-3.5" /> ARENA UJI PENGETAHUAN BUDAYA
+              </div>
+
+              <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-white mb-3 tracking-tight">
+                Tebak Motif Berjenjang
+              </h1>
+
+              <p className="font-narrative text-sm sm:text-base text-white/80 leading-relaxed mb-8">
+                Tatap kain misteri di pemidangan, amati detail isen-isen menggunakan kaca pembesar interaktif, dan tebak nama motif dari petunjuk bertahap. Semakin cepat kamu menebak, semakin melimpah XP yang diraih.
+              </p>
+
+              {/* Point Rules Card */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-8">
                 {[
-                  { hint: "Tebak dengan Hint 1", xp: "100 XP" },
-                  { hint: "Tebak dengan Hint 2", xp: "75 XP" },
-                  { hint: "Tebak dengan Hint 3", xp: "50 XP" },
-                  { hint: "Tebak dengan Hint 4", xp: "25 XP" },
-                ].map((item) => (
-                  <div key={item.hint} className="bg-white/5 border border-white/10 rounded-xl p-3">
-                    <p className="text-[10px] text-white/50 font-body mb-1">{item.hint}</p>
-                    <p className="text-[#D4AF37] font-display font-bold text-sm">{item.xp}</p>
+                  { hint: "Petunjuk 1", xp: "+100 XP", desc: "Mata Elang" },
+                  { hint: "Petunjuk 2", xp: "+75 XP", desc: "Paham Rumpun" },
+                  { hint: "Petunjuk 3", xp: "+50 XP", desc: "Kolektor Sentra" },
+                  { hint: "Petunjuk 4", xp: "+25 XP", desc: "Pakar Ciri Visual" },
+                ].map((tier, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#1f1a18] border border-[#713f2c]/40 rounded-xl p-3.5 text-center flex flex-col justify-between hover:border-[#D4AF37]/50 transition-colors"
+                  >
+                    <span className="text-[11px] text-white/50 font-body">{tier.hint}</span>
+                    <span className="font-display font-extrabold text-base text-[#D4AF37] my-1">
+                      {tier.xp}
+                    </span>
+                    <span className="text-[10px] text-white/70 font-display">{tier.desc}</span>
                   </div>
                 ))}
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
+              <button
+                type="button"
                 onClick={startGame}
-                className="bg-[#D4AF37] text-[#1A1614] font-display font-extrabold px-10 py-3.5 rounded-full text-base hover:bg-[#c9a42c] transition-colors shadow-lg shadow-[#D4AF37]/20"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-base px-10 py-4 rounded-xl hover:bg-[#c9a52f] transition-all shadow-xl shadow-[#D4AF37]/20 active:scale-98"
               >
-                Mulai Kuis
-              </motion.button>
+                <span>Mulai Tantangan Sekarang</span>
+                <ArrowRight className="w-5 h-5" />
+              </button>
             </motion.div>
           )}
 
-          {/* ── PLAYING ── */}
-          {(gameState === "playing" || gameState === "correct") && currentMotif && (
+          {/* ── 2. ACTIVE PLAYING STAGE ── */}
+          {gameState === "playing" && currentMotif && (
             <motion.div
               key="playing"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6 w-full"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-white/50 text-xs font-body">Ronde #{roundCount + 1}</p>
-                  <p className="text-white/80 text-sm font-display font-semibold">Tebak motif batik ini!</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-[10px] text-white/40 font-body">Total XP sesi ini</p>
-                  <p className="text-[#D4AF37] font-display font-bold text-lg">{totalXp} XP</p>
-                </div>
-              </div>
-
-              {/* Potential Score Bar */}
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs text-white/60 font-body">Skor Potensial</span>
-                  <span className="text-sm font-display font-bold text-[#D4AF37]">{potentialScore} XP</span>
-                </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                  <motion.div
-                    animate={{ width: `${potentialPercent}%` }}
-                    transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                    className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-[#f0cc5a]"
-                  />
-                </div>
-              </div>
-
-              {/* Hint Cards */}
-              <div className="flex flex-col gap-3">
-                {hints.slice(0, revealedHints).map((hint, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i === revealedHints - 1 ? 0 : 0 }}
-                    className={`rounded-xl border p-4 ${
-                      i === revealedHints - 1
-                        ? "bg-[#D4AF37]/10 border-[#D4AF37]/30"
-                        : "bg-white/5 border-white/10 opacity-60"
-                    }`}
-                  >
-                    <div className="flex gap-3 items-start">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-xs font-bold ${
-                        i === revealedHints - 1 ? "bg-[#D4AF37] text-[#1A1614]" : "bg-white/10 text-white/60"
-                      }`}>
-                        {i + 1}
-                      </div>
-                      <p className="font-body text-sm text-white/80 leading-relaxed">{hint}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Input */}
-              <div className="relative">
-                <div className={`flex gap-2 rounded-xl border overflow-hidden transition-all ${
-                  wrongAttempt ? "border-red-500 animate-[shake_0.3s_ease]" : "border-white/20 focus-within:border-[#D4AF37]/60"
-                } bg-white/5`}>
-                  <input
-                    ref={inputRef}
-                    value={query}
-                    onChange={(e) => handleQueryChange(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === "Enter" && query) submitAnswer(query); }}
-                    onFocus={() => query && setShowSuggestions(true)}
-                    onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
-                    placeholder="Ketik nama motif batik..."
-                    className="flex-1 bg-transparent px-4 py-3.5 text-sm font-body text-white placeholder-white/30 outline-none"
-                    autoComplete="off"
-                  />
-                  <button
-                    onClick={() => query && submitAnswer(query)}
-                    disabled={!query}
-                    className="px-4 text-[#D4AF37] hover:text-white transition-colors disabled:opacity-30"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Autocomplete */}
-                <AnimatePresence>
-                  {showSuggestions && suggestions.length > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute top-full mt-1 left-0 right-0 bg-[#25201C] border border-white/10 rounded-xl overflow-hidden z-10 shadow-2xl"
-                    >
-                      {suggestions.map((s) => (
-                        <button
-                          key={s}
-                          onMouseDown={() => { setQuery(s); submitAnswer(s); }}
-                          className="w-full text-left px-4 py-3 text-sm font-body text-white/80 hover:bg-white/5 hover:text-white transition-colors border-b border-white/5 last:border-0"
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Wrong attempt feedback */}
-              <AnimatePresence>
-                {wrongAttempt && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-2 text-red-400 text-sm font-body bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3"
-                  >
-                    <XCircle className="w-4 h-4 shrink-0" />
-                    Jawaban kurang tepat. Coba perhatikan petunjuk lebih cermat atau buka hint berikutnya!
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Correct feedback */}
-              <AnimatePresence>
-                {gameState === "correct" && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="flex items-center gap-2 text-emerald-400 text-sm font-body bg-emerald-500/10 border border-emerald-500/20 rounded-xl px-4 py-3"
-                  >
-                    <CheckCircle className="w-4 h-4 shrink-0" />
-                    Tepat sekali! Kamu berhasil menebak dengan {revealedHints} petunjuk dan mendapat{" "}
-                    <span className="font-bold text-[#D4AF37]">+{earnedXp} XP</span>!
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              {/* Reveal next hint button */}
-              {gameState === "playing" && (
-                <button
-                  onClick={revealNextHint}
-                  className="flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-sm font-display font-semibold px-5 py-3 rounded-xl transition-all"
-                >
-                  <Lightbulb className="w-4 h-4 text-[#D4AF37]" />
-                  {revealedHints < 4
-                    ? `Petunjuk Berikutnya (−${potentialScore - (XP_PER_HINT[revealedHints + 1] ?? 25)} poin)`
-                    : "Ungkap Jawaban"}
-                </button>
-              )}
-            </motion.div>
-          )}
-
-          {/* ── ROUND COMPLETE ── */}
-          {gameState === "round-complete" && currentMotif && (
-            <motion.div
-              key="round-complete"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6 w-full"
+              className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
             >
-              {/* Motif reveal card */}
-              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/5">
-                <div
-                  className="h-52 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${currentMotif.image})` }}
-                />
-                <div className="p-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <div>
-                      <h2 className="font-display font-bold text-xl text-white">{currentMotif.name}</h2>
-                      <p className="text-white/50 text-xs font-body">{currentMotif.region} · {currentMotif.category}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-[10px] text-white/40 font-body">XP diperoleh</p>
-                      <p className="text-[#D4AF37] font-display font-bold text-xl">+{earnedXp}</p>
+              {/* Left Column: Mystery Cloth Canvas with Interactive Loupe */}
+              <div className="lg:col-span-5 flex flex-col gap-4">
+                {/* Visual Canvas Card */}
+                <div className="bg-[#1f1a18] border-2 border-[#713f2c]/50 rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col items-center">
+                  <div className="w-full flex items-center justify-between text-xs text-white/60 mb-3 px-1">
+                    <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold">
+                      <ZoomIn className="w-3.5 h-3.5" /> Kain Misteri Pemidangan
+                    </span>
+                    <span className="text-[11px] bg-white/10 px-2 py-0.5 rounded-full text-white/70">
+                      Tingkat Keburaman: {5 - revealedHints}/4
+                    </span>
+                  </div>
+
+                  {/* Interactive Cloth Container */}
+                  <div
+                    ref={clothContainerRef}
+                    onPointerMove={handlePointerMove}
+                    onPointerLeave={handlePointerLeave}
+                    className="relative w-full aspect-square rounded-2xl overflow-hidden cursor-crosshair border border-white/15 bg-black select-none group"
+                  >
+                    {/* Blurred base motif image */}
+                    <Image
+                      src={currentMotif.image}
+                      alt="Kain Misteri"
+                      fill
+                      className={`object-cover object-center transition-all duration-700 ${getBlurClass()}`}
+                      priority
+                    />
+
+                    {/* Dark mystery gradient scrim */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none" />
+
+                    {/* Interactive Loupe (Kaca Pembesar Budaya) */}
+                    {lensPos.active && (
+                      <div
+                        className="absolute pointer-events-none rounded-full border-2 border-[#D4AF37] shadow-[0_0_25px_rgba(212,175,55,0.8)] overflow-hidden z-20"
+                        style={{
+                          width: "120px",
+                          height: "120px",
+                          left: `${lensPos.x}%`,
+                          top: `${lensPos.y}%`,
+                          transform: "translate(-50%, -50%)",
+                        }}
+                      >
+                        {/* Zoomed clear image slice */}
+                        <div
+                          className="w-full h-full relative"
+                          style={{
+                            backgroundImage: `url(${currentMotif.image})`,
+                            backgroundPosition: `${lensPos.x}% ${lensPos.y}%`,
+                            backgroundSize: "400%",
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent pointer-events-none" />
+                        <span className="absolute bottom-1 right-2 text-[8px] font-display font-extrabold text-[#D4AF37] uppercase tracking-wider">
+                          LOUPE 2X
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Tip overlay when not hovering */}
+                    {!lensPos.active && (
+                      <div className="absolute bottom-3 inset-x-3 bg-black/70 backdrop-blur-sm border border-white/10 rounded-xl py-1.5 px-3 text-center text-[11px] text-white/75 pointer-events-none flex items-center justify-center gap-1.5">
+                        <Eye className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <span>Arahkan kursor atau sentuh untuk melihat detail isen</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Lifeline Buttons */}
+                  <div className="w-full grid grid-cols-2 gap-2.5 mt-4">
+                    <button
+                      type="button"
+                      onClick={useLifeline5050}
+                      disabled={used5050 || inputMode !== "choices"}
+                      className="flex items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 disabled:opacity-30 border border-white/10 py-2.5 px-3 rounded-xl text-xs font-display font-semibold text-[#D4AF37] transition-all"
+                      title="Eliminasi 2 pilihan jawaban yang salah"
+                    >
+                      <SlidersHorizontal className="w-3.5 h-3.5" />
+                      <span>{used5050 ? "50:50 Terpakai" : "Bantuan 50:50"}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={revealNextHint}
+                      disabled={revealedHints >= 4}
+                      className="flex items-center justify-center gap-1.5 bg-[#713f2c]/40 hover:bg-[#713f2c]/70 disabled:opacity-40 border border-[#D4AF37]/30 py-2.5 px-3 rounded-xl text-xs font-display font-semibold text-white transition-all"
+                      title="Buka petunjuk teks berikutnya dengan penalti 25 XP"
+                    >
+                      <Lightbulb className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span>{revealedHints < 4 ? "Petunjuk (-25 XP)" : "Petunjuk Terakhir"}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Progressive Hints & Answer Controls */}
+              <div className="lg:col-span-7 flex flex-col gap-5">
+                {/* Potential Score Gauge */}
+                <div className="bg-[#1f1a18] border border-white/10 rounded-2xl p-4 shadow-md">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs text-white/70 font-body flex items-center gap-1.5">
+                      <Trophy className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      Skor Potensial Ronde Ini:
+                    </span>
+                    <span className="text-sm font-display font-bold text-[#D4AF37]">
+                      {potentialScore} XP {inputMode === "type" && <span className="text-emerald-400 text-xs">(+20 Bonus)</span>}
+                    </span>
+                  </div>
+                  <div className="h-2.5 bg-black/50 rounded-full overflow-hidden p-0.5 border border-white/10">
+                    <motion.div
+                      animate={{ width: `${potentialPercent}%` }}
+                      transition={{ type: "spring", stiffness: 180, damping: 22 }}
+                      className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-amber-300 shadow-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* Progressive Hints Accordion */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-white/60 px-1">
+                    <span className="font-display font-bold uppercase tracking-wider text-[#D4AF37]">
+                      Petunjuk Filosofi & Budaya:
+                    </span>
+                    <span>{revealedHints} dari 4 Terbuka</span>
+                  </div>
+
+                  {hints.slice(0, revealedHints).map((hint, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`rounded-2xl border p-4 transition-all shadow-sm ${
+                        i === revealedHints - 1
+                          ? "bg-[#28211e] border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20"
+                          : "bg-[#1b1716] border-white/10 opacity-70"
+                      }`}
+                    >
+                      <div className="flex gap-3.5 items-start">
+                        <div
+                          className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 text-xs font-display font-bold border ${
+                            i === revealedHints - 1
+                              ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37]"
+                              : "bg-white/10 text-white/70 border-white/15"
+                          }`}
+                        >
+                          {i + 1}
+                        </div>
+                        <p className="font-narrative text-sm text-white/90 leading-relaxed pt-0.5">
+                          {hint}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Answer Mode Tabs: Multiple Choice vs Type Mastery */}
+                <div className="mt-2 bg-[#1f1a18] border border-white/10 rounded-2xl p-5 shadow-xl">
+                  <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
+                    <span className="text-xs font-display font-bold text-white uppercase tracking-wider">
+                      Tebak Nama Motif:
+                    </span>
+                    <div className="flex gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
+                      <button
+                        type="button"
+                        onClick={() => setInputMode("choices")}
+                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all ${
+                          inputMode === "choices"
+                            ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
+                            : "text-white/60 hover:text-white"
+                        }`}
+                      >
+                        Pilihan Kartu
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setInputMode("type")}
+                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all ${
+                          inputMode === "type"
+                            ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
+                            : "text-white/60 hover:text-white"
+                        }`}
+                      >
+                        Ketik Bebas (+20 XP)
+                      </button>
                     </div>
                   </div>
-                  <div className="h-px bg-white/10 my-3" />
-                  <p className="text-white/70 font-body text-sm leading-relaxed italic">
-                    "{currentMotif.philosophy}"
-                  </p>
-                </div>
-              </div>
 
-              {/* Stats */}
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                  <p className="text-[10px] text-white/40 font-body mb-1">Ronde</p>
-                  <p className="font-display font-bold text-lg text-white">#{roundCount}</p>
-                </div>
-                <div className="flex-1 bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                  <p className="text-[10px] text-white/40 font-body mb-1">Hint Terpakai</p>
-                  <p className="font-display font-bold text-lg text-white">{revealedHints}</p>
-                </div>
-                <div className="flex-1 bg-[#D4AF37]/10 border border-[#D4AF37]/20 rounded-xl p-4 text-center">
-                  <p className="text-[10px] text-[#D4AF37]/70 font-body mb-1">Total XP</p>
-                  <p className="font-display font-bold text-lg text-[#D4AF37]">{totalXp}</p>
-                </div>
-              </div>
+                  {/* Mode 1: Interactive Choice Cards */}
+                  {inputMode === "choices" ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {choices.map((choiceName) => {
+                        const isDisabled = disabledChoices.includes(choiceName);
+                        return (
+                          <motion.button
+                            key={choiceName}
+                            type="button"
+                            whileHover={!isDisabled ? { scale: 1.02 } : {}}
+                            whileTap={!isDisabled ? { scale: 0.98 } : {}}
+                            onClick={() => submitAnswer(choiceName)}
+                            disabled={isDisabled}
+                            className={`p-4 rounded-xl border text-left font-display font-bold text-sm transition-all flex items-center justify-between group ${
+                              isDisabled
+                                ? "bg-black/30 border-white/5 text-white/20 line-through cursor-not-allowed"
+                                : wrongAttempt
+                                ? "bg-red-950/30 border-red-500/50 text-red-200"
+                                : "bg-[#28221f] hover:bg-[#713f2c]/50 border-white/15 hover:border-[#D4AF37] text-white shadow-md"
+                            }`}
+                          >
+                            <span>{choiceName}</span>
+                            {!isDisabled && (
+                              <ChevronRight className="w-4 h-4 text-[#D4AF37] opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
+                            )}
+                          </motion.button>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    /* Mode 2: Manual Typing Input with Autocomplete */
+                    <div className="relative">
+                      <div
+                        className={`flex gap-2 rounded-xl border overflow-hidden transition-all bg-black/40 ${
+                          wrongAttempt
+                            ? "border-red-500 ring-2 ring-red-500/30 animate-pulse"
+                            : "border-white/20 focus-within:border-[#D4AF37]"
+                        }`}
+                      >
+                        <input
+                          type="text"
+                          value={query}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setQuery(val);
+                            if (val.length > 0) {
+                              const filtered = ALL_MOTIF_NAMES.filter((n) =>
+                                n.toLowerCase().includes(val.toLowerCase())
+                              );
+                              setSuggestions(filtered);
+                              setShowSuggestions(true);
+                            } else {
+                              setShowSuggestions(false);
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && query.trim()) submitAnswer(query.trim());
+                          }}
+                          placeholder="Ketik nama motif (contoh: Kawung, Parang Rusak, Mega Mendung)..."
+                          className="flex-1 bg-transparent px-4 py-3.5 text-sm text-white placeholder-white/40 focus:outline-hidden"
+                          autoComplete="off"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => query.trim() && submitAnswer(query.trim())}
+                          disabled={!query.trim()}
+                          className="px-5 bg-[#713f2c] hover:bg-[#583122] disabled:opacity-30 text-[#D4AF37] font-display font-bold text-sm transition-all"
+                        >
+                          Kirim
+                        </button>
+                      </div>
 
-              {/* Actions */}
-              <div className="flex gap-3">
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={pickNewMotif}
-                  className="flex-1 bg-[#D4AF37] text-[#1A1614] font-display font-extrabold py-3.5 rounded-xl hover:bg-[#c9a42c] transition-colors"
-                >
-                  Motif Berikutnya
-                </motion.button>
-                <button
-                  onClick={() => setGameState("idle")}
-                  className="flex items-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white font-display font-semibold px-5 py-3.5 rounded-xl transition-all"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Selesai
-                </button>
+                      {/* Autocomplete Suggestions */}
+                      {showSuggestions && suggestions.length > 0 && (
+                        <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#231e1c] border border-[#D4AF37]/40 rounded-xl overflow-hidden shadow-2xl z-30">
+                          {suggestions.map((sug) => (
+                            <button
+                              key={sug}
+                              type="button"
+                              onClick={() => {
+                                setQuery(sug);
+                                setShowSuggestions(false);
+                                submitAnswer(sug);
+                              }}
+                              className="w-full text-left px-4 py-2.5 text-xs text-white/90 hover:bg-[#713f2c] hover:text-[#D4AF37] transition-colors border-b border-white/5 last:border-none flex items-center justify-between"
+                            >
+                              <span>{sug}</span>
+                              <Search className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {wrongAttempt && (
+                    <p className="text-xs text-red-400 mt-2.5 flex items-center gap-1.5 font-display animate-bounce">
+                      <XCircle className="w-4 h-4" />
+                      Jawaban belum tepat, silakan coba tebakan motif lain.
+                    </p>
+                  )}
+                </div>
               </div>
             </motion.div>
           )}
-        </AnimatePresence>
 
-        {/* Confetti overlay */}
-        <AnimatePresence>
-          {showConfetti && (
+          {/* ── 3. ROUND COMPLETE MODAL / SUCCESS CELEBRATION ── */}
+          {gameState === "round-complete" && currentMotif && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              key="complete"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center"
+              className="flex-1 max-w-2xl mx-auto w-full py-6 flex flex-col justify-center"
             >
-              <div className="text-6xl animate-bounce">🎉</div>
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: [0, 1.5, 1] }}
-                transition={{ duration: 0.5 }}
-                className="absolute text-4xl"
-                style={{ top: "30%", left: "20%" }}
-              >✨</motion.div>
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: [0, 1.5, 1] }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="absolute text-4xl"
-                style={{ top: "25%", right: "20%" }}
-              >🌟</motion.div>
+              <div className="bg-[#1f1a18] border-2 border-[#D4AF37]/60 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+                {/* Confetti Glow Header */}
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3">
+                    <CheckCircle2 className="w-4 h-4" /> TEBAKAN TEPAT
+                  </div>
+                  <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
+                    {currentMotif.name}
+                  </h2>
+                  <p className="text-sm font-display text-[#D4AF37] mt-1">
+                    Sentra Asal: {currentMotif.region} • {currentMotif.category}
+                  </p>
+                </div>
+
+                {/* Motif Image Showcase */}
+                <div className="relative w-full h-56 sm:h-64 rounded-2xl overflow-hidden border border-white/20 mb-6 shadow-xl">
+                  <Image
+                    src={currentMotif.image}
+                    alt={currentMotif.name}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] font-display font-extrabold text-sm px-3.5 py-1 rounded-full shadow-md">
+                    +{earnedXp} XP Diperoleh
+                  </div>
+                </div>
+
+                {/* Cultural Philosophy Card */}
+                <div className="bg-[#28221f] rounded-2xl p-5 border border-white/10 mb-6">
+                  <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#D4AF37] mb-2 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" />
+                    Kearifan & Makna Filosofis
+                  </h4>
+                  <p className="font-narrative text-sm text-white/90 leading-relaxed">
+                    {currentMotif.philosophy}
+                  </p>
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={pickNewMotif}
+                    className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-sm py-3.5 rounded-xl hover:bg-[#c9a52f] transition-all shadow-lg shadow-[#D4AF37]/20"
+                  >
+                    <span>Lanjut ke Ronde Berikutnya</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <Link
+                    href="/play"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-display font-semibold text-sm py-3.5 px-6 rounded-xl border border-white/10 transition-colors"
+                  >
+                    Kembali ke Arena
+                  </Link>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
       </main>
-
-      <style jsx>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-6px); }
-          40% { transform: translateX(6px); }
-          60% { transform: translateX(-4px); }
-          80% { transform: translateX(4px); }
-        }
-        .animate-\\[shake_0\\.3s_ease\\] { animation: shake 0.3s ease; }
-      `}</style>
     </div>
   );
 }
