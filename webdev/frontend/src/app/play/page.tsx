@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { Puzzle, Eye, Sparkles, Trophy, ArrowRight, Star, ChevronRight, Sprout, Compass, BookOpen, Crown, Brain, MapPin, Paintbrush } from "lucide-react";
+import { Puzzle, Sparkles, Trophy, ArrowRight, Star, ChevronRight, Sprout, Compass, BookOpen, Crown, Brain, MapPin, Paintbrush } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { XpBar } from "@/components/shared/XpBar";
 import { useXp } from "@/hooks/useXp";
@@ -47,19 +47,6 @@ const GAMES = [
     accent: "#7dd3fc",
     badge: "8 DAERAH SENTRA",
     isNew: true,
-  },
-  {
-    id: "detektif",
-    href: "/play/detektif",
-    icon: Eye,
-    title: "Detektif Isen-Isen",
-    desc: "Jadilah detektif budaya! Temukan elemen pengisi (isen-isen) tersembunyi seperti cecek, sawut, dan mlinjon pada kain batik.",
-    xp: "+80 XP per selesai",
-    difficulty: "Menengah",
-    color: "from-[#1E3A8A] via-[#2d2b38] to-[#51586b]",
-    accent: "#60A5FA",
-    badge: "3 MISI TERSEDIA",
-    isNew: false,
   },
   {
     id: "canting",
@@ -159,7 +146,7 @@ export default function ArcadeHubPage() {
             </motion.span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {GAMES.map((game, i) => (
               <motion.div
                 key={game.id}

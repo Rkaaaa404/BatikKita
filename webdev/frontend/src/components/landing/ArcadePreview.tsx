@@ -23,11 +23,11 @@ export function ArcadePreview() {
           </div>
 
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#713f2c] tracking-tight mb-4">
-            Batik Cap Stamping & Detektif Isen
+            Batik Cap Stamping & Ragam Permainan Edukasi
           </h2>
 
           <p className="font-narrative text-base sm:text-lg text-[#8d786a] leading-relaxed mb-6">
-            Pahami anatomi geometri, simetri belah ketupat, dan kehalusan elemen isen-isen (cecek, sawut, sisik) dengan cara yang adiktif dan mengasah otak.
+            Pahami anatomi motif, sejarah persebaran budaya Nusantara, hingga simulasi membatik canting tradisional secara interaktif dan menyenangkan.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -44,13 +44,13 @@ export function ArcadePreview() {
             </div>
 
             <div className="flex items-start gap-3 bg-[#F5F3EF] p-4 rounded-xl border border-[#ada69f]/40">
-              <div className="w-9 h-9 rounded-lg bg-[#1E3A8A] flex items-center justify-center text-white font-bold shrink-0">
+              <div className="w-9 h-9 rounded-lg bg-[#78350f] flex items-center justify-center text-[#fcd34d] font-bold shrink-0">
                 2
               </div>
               <div>
-                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Detektif Isen-Isen</h4>
+                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Tebak Motif & Simulasi Canting</h4>
                 <p className="font-narrative text-xs text-[#8d786a]">
-                  Misi menemukan ornamen isen-isen tersembunyi pada kain batik beresolusi ultra-tinggi.
+                  Uji wawasan motif Nusantara, sortir peta daerah, dan torehkan lilin malam menggunakan canting virtual.
                 </p>
               </div>
             </div>
