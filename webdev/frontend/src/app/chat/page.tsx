@@ -14,6 +14,8 @@ import {
   CheckCircle2,
   HelpCircle,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -32,6 +34,11 @@ const QUICK_PROMPTS = [
   "Kenapa motif Parang dulu dilarang untuk rakyat biasa?",
   "Apa makna motif Kawung bagi kepemimpinan?",
   "Batik apa yang tepat untuk upacara tujuh bulanan (Mitoni)?",
+  "Apa filosofi motif Mega Mendung dari Cirebon?",
+  "Bagaimana cara merawat kain batik tulis agar awet?",
+  "Apa makna motif Truntum bagi orang tua pengantin?",
+  "Kapan motif Sekar Jagad pertama kali diciptakan?",
+  "Bolehkah memakai batik motif Parang saat melayat?",
 ];
 
 const PRESET_ANSWERS: Record<string, string> = {
@@ -49,6 +56,21 @@ const PRESET_ANSWERS: Record<string, string> = {
 
   "Batik apa yang tepat untuk upacara tujuh bulanan (Mitoni)?":
     "Dalam upacara tingkeban atau mitoni (kehamilan tujuh bulan), calon ibu berganti kain hingga tujuh kali. Motif yang digunakan sarat akan doa keselamatan:\n\n1. Sidoluhur: Harapan agar si jabang bayi berbudi pekerti luhur dan mulia.\n2. Wahyu Tumurun: Memohon keberkahan dan anugerah petunjuk dari Tuhan Yang Maha Esa.\n3. Semen Rama: Melambangkan ajaran kepemimpinan Hasta Brata (delapan laku alam).\n\nUpacara diakhiri dengan kain lurik bermotif Lasem atau Yuyu Sekandang yang melambangkan kesetiaan.",
+
+  "Apa filosofi motif Mega Mendung dari Cirebon?":
+    "Motif Mega Mendung lahir dari akulturasi budaya Keraton Cirebon dengan kebudayaan Tiongkok melalui Sunan Gunung Jati dan Putri Ong Tien.\n\nGradasi tujuh lapis awan melambangkan tingkatan langit dan ajaran bahwa seorang manusia harus memiliki sifat penyabar, teduh, dan mampu mendinginkan suasana laksana mendung yang membawa berkah hujan tanpa menghancurkan.",
+
+  "Bagaimana cara merawat kain batik tulis agar awet?":
+    "Untuk menjaga zat warna alami (soga) dan serat kain mori tetap awet:\n\n1. Cuci menggunakan sari buah lerak atau sabun herbal khusus batik, hindari detergen keras berklorin.\n2. Cukup kucek perlahan, jangan diperas kencang atau diputar di mesin cuci.\n3. Jemur di tempat teduh berangin tanpa paparan sinar matahari terik langsung.\n4. Simpan bersama akar wangi atau biji merica untuk menangkal serangga, hindari menempelkan kapur barus langsung ke kain.",
+
+  "Apa makna motif Truntum bagi orang tua pengantin?":
+    "Truntum berasal dari kata 'tumaruntum' yang berarti tumbuh dan bersemi kembali. Motif ini diciptakan oleh Kanjeng Ratu Kencana saat berduka, hingga kasih cintanya pada Sunan Pakubuwana III bersemi kembali.\n\nDalam upacara panggih pengantin, motif ini wajib dikenakan oleh orang tua kedua mempelai sebagai lambang doa dan restu agar cinta sang anak senantiasa bertumbuh subur dan langgeng sepanjang hayat.",
+
+  "Kapan motif Sekar Jagad pertama kali diciptakan?":
+    "Motif Sekar Jagad berasal dari kata 'kar' (peta dalam bahasa Belanda) dan 'jagad' (dunia dalam bahasa Jawa), yang bermakna bunga keindahan seluruh dunia.\n\nMotif ini berkembang sejak abad ke-18 di pesisir Jawa Tengah dan Yogyakarta, menggambarkan keragaman pulau dan keindahan ragam hias nusantara yang bersatu dalam satu kesatuan yang harmonis.",
+
+  "Bolehkah memakai batik motif Parang saat melayat?":
+    "Dalam pakem adat keraton Jawa, motif Parang (terutama Parang Rusak dan Parang Barong) dihindari saat melayat atau takziah.\n\nMotif Parang membawa getaran energi satria yang membara, optimisme ksatria, dan kemenangan. Untuk momen duka cita, pakem yang dianjurkan adalah motif berlatar gelap atau motif yang bernuansa hening dan sarat doa seperti Slobok atau motif sederhana tanpa ornamen megah.",
 };
 
 export default function ChatPage() {
@@ -65,6 +87,13 @@ export default function ChatPage() {
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
+  const chipsRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isDraggingChips, setIsDraggingChips] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const [dragScrollLeft, setDragScrollLeft] = useState(0);
+  const [hasDraggedChips, setHasDraggedChips] = useState(false);
 
   // Auto-scroll to bottom of chat
   useEffect(() => {
@@ -72,6 +101,71 @@ export default function ChatPage() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, isTyping]);
+
+  // Check scroll position of chips container
+  const checkChipsScroll = () => {
+    if (chipsRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = chipsRef.current;
+      setCanScrollLeft(scrollLeft > 6);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkChipsScroll();
+    const el = chipsRef.current;
+    if (el) {
+      el.addEventListener("scroll", checkChipsScroll, { passive: true });
+      window.addEventListener("resize", checkChipsScroll);
+      return () => {
+        el.removeEventListener("scroll", checkChipsScroll);
+        window.removeEventListener("resize", checkChipsScroll);
+      };
+    }
+  }, []);
+
+  const scrollChips = (direction: "left" | "right") => {
+    if (chipsRef.current) {
+      const amount = 280;
+      chipsRef.current.scrollBy({
+        left: direction === "left" ? -amount : amount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Mouse wheel horizontal scrolling
+  const handleChipsWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (chipsRef.current && e.deltaY !== 0) {
+      chipsRef.current.scrollLeft += e.deltaY * 0.8;
+      checkChipsScroll();
+    }
+  };
+
+  // Mouse drag-to-scroll handlers
+  const handleChipsMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!chipsRef.current) return;
+    setIsDraggingChips(true);
+    setHasDraggedChips(false);
+    setDragStartX(e.pageX - chipsRef.current.offsetLeft);
+    setDragScrollLeft(chipsRef.current.scrollLeft);
+  };
+
+  const handleChipsMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDraggingChips || !chipsRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - chipsRef.current.offsetLeft;
+    const distance = x - dragStartX;
+    if (Math.abs(distance) > 4) {
+      setHasDraggedChips(true);
+    }
+    chipsRef.current.scrollLeft = dragScrollLeft - distance;
+    checkChipsScroll();
+  };
+
+  const handleChipsMouseUp = () => {
+    setIsDraggingChips(false);
+  };
 
   const scrollToChat = () => {
     chatSectionRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -299,24 +393,79 @@ export default function ChatPage() {
             </Link>
           </div>
 
-          {/* Quick Question Chips */}
-          <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-            <span className="text-[11px] font-display font-bold text-[#713f2c] shrink-0 uppercase tracking-wider pl-1">
-              Topik Pilihan:
-            </span>
-            {QUICK_PROMPTS.map((prompt) => (
-              <button
-                key={prompt}
-                type="button"
-                onClick={() => {
-                  handleSend(prompt);
-                  scrollToChat();
-                }}
-                className="text-xs bg-white hover:bg-[#713f2c] text-[#2d2b38] hover:text-white border border-[#d3ccc2] hover:border-[#713f2c] px-3.5 py-2 rounded-full transition-all shrink-0 font-body shadow-xs cursor-pointer"
+          {/* Quick Question Chips with Left/Right Scroll Controls */}
+          <div className="mb-6 relative flex items-center gap-2">
+            {/* Left Scroll Button */}
+            <button
+              type="button"
+              onClick={() => scrollChips("left")}
+              disabled={!canScrollLeft}
+              className={`w-8 h-8 rounded-full bg-white border border-[#d3ccc2] shadow-xs flex items-center justify-center text-[#713f2c] hover:bg-[#713f2c] hover:text-white hover:border-[#713f2c] transition-all shrink-0 cursor-pointer ${
+                !canScrollLeft ? "opacity-30 cursor-not-allowed" : "hover:scale-105 active:scale-95"
+              }`}
+              title="Geser topik ke kiri"
+              aria-label="Geser topik ke kiri"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+
+            {/* Scrollable Chips Container */}
+            <div className="relative flex-1 overflow-hidden">
+              {/* Left Gradient Fade */}
+              {canScrollLeft && (
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#faf8f4] to-transparent z-10 pointer-events-none" />
+              )}
+
+              <div
+                ref={chipsRef}
+                onWheel={handleChipsWheel}
+                onMouseDown={handleChipsMouseDown}
+                onMouseMove={handleChipsMouseMove}
+                onMouseUp={handleChipsMouseUp}
+                onMouseLeave={handleChipsMouseUp}
+                className={`flex items-center gap-2 overflow-x-auto py-1 scrollbar-none scroll-smooth ${
+                  isDraggingChips ? "cursor-grabbing select-none" : "cursor-grab"
+                }`}
               >
-                {prompt}
-              </button>
-            ))}
+                <span className="text-[11px] font-display font-bold text-[#713f2c] shrink-0 uppercase tracking-wider pl-1">
+                  Topik Pilihan:
+                </span>
+                {QUICK_PROMPTS.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => {
+                      if (!hasDraggedChips) {
+                        handleSend(prompt);
+                        scrollToChat();
+                      }
+                    }}
+                    className="text-xs bg-white hover:bg-[#713f2c] text-[#2d2b38] hover:text-white border border-[#d3ccc2] hover:border-[#713f2c] px-3.5 py-2 rounded-full transition-all shrink-0 font-body shadow-xs cursor-pointer whitespace-nowrap active:scale-95"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+
+              {/* Right Gradient Fade */}
+              {canScrollRight && (
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#faf8f4] to-transparent z-10 pointer-events-none" />
+              )}
+            </div>
+
+            {/* Right Scroll Button */}
+            <button
+              type="button"
+              onClick={() => scrollChips("right")}
+              disabled={!canScrollRight}
+              className={`w-8 h-8 rounded-full bg-white border border-[#d3ccc2] shadow-xs flex items-center justify-center text-[#713f2c] hover:bg-[#713f2c] hover:text-white hover:border-[#713f2c] transition-all shrink-0 cursor-pointer ${
+                !canScrollRight ? "opacity-30 cursor-not-allowed" : "hover:scale-105 active:scale-95"
+              }`}
+              title="Geser topik ke kanan"
+              aria-label="Geser topik ke kanan"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Chat Container Card */}
