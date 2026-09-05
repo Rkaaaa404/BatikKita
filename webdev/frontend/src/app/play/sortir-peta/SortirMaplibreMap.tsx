@@ -121,6 +121,77 @@ const BASEMAP_STYLES: Record<TileTheme, any> = {
   },
 };
 
+export const REGION_THEME_COLORS: Record<
+  string,
+  {
+    fill: string;
+    border: string;
+    glow: string;
+    name: string;
+  }
+> = {
+  jakarta: {
+    fill: "#0284C7", // Sky Blue
+    border: "#0369A1",
+    glow: "#38BDF8",
+    name: "DKI Jakarta",
+  },
+  garut: {
+    fill: "#84CC16", // Lime Green
+    border: "#4D7C0F",
+    glow: "#A3E635",
+    name: "Garut",
+  },
+  cirebon: {
+    fill: "#06B6D4", // Ocean Cyan
+    border: "#0E7490",
+    glow: "#22D3EE",
+    name: "Cirebon",
+  },
+  pekalongan: {
+    fill: "#16A34A", // Emerald Green (seperti zona hijau pada gambar referensi)
+    border: "#15803D",
+    glow: "#22C55E",
+    name: "Pekalongan",
+  },
+  yogyakarta: {
+    fill: "#8B5CF6", // Royal Purple / Violet
+    border: "#6D28D9",
+    glow: "#A78BFA",
+    name: "Yogyakarta",
+  },
+  surakarta: {
+    fill: "#F59E0B", // Amber / Warm Orange (seperti zona oranye pada gambar referensi)
+    border: "#B45309",
+    glow: "#FBBF24",
+    name: "Surakarta (Solo)",
+  },
+  lasem: {
+    fill: "#F43F5E", // Coral Crimson
+    border: "#BE123C",
+    glow: "#FB7185",
+    name: "Lasem",
+  },
+  madura: {
+    fill: "#EA580C", // Tangerine Orange
+    border: "#C2410C",
+    glow: "#FB923C",
+    name: "Madura",
+  },
+  bali: {
+    fill: "#EAB308", // Sun Gold
+    border: "#A16207",
+    glow: "#FACC15",
+    name: "Bali",
+  },
+  kalimantan: {
+    fill: "#059669", // Deep Jade / Forest
+    border: "#047857",
+    glow: "#10B981",
+    name: "Kalimantan",
+  },
+};
+
 export default function SortirMaplibreMap({
   regions,
   placedItems,
@@ -134,7 +205,7 @@ export default function SortirMaplibreMap({
 }: SortirMaplibreMapProps) {
   const mapRef = useRef<MapRef | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [theme, setTheme] = useState<TileTheme>("dark");
+  const [theme, setTheme] = useState<TileTheme>("osm");
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
 
   const currentMapStyle = useMemo(() => BASEMAP_STYLES[theme], [theme]);
@@ -175,12 +246,12 @@ export default function SortirMaplibreMap({
           // ignore
         }
 
-        // 2. Proximity check to region centers / markers (snap radius 55px)
+        // 2. Proximity check to region centers / markers (snap radius 60px)
         for (const reg of regions) {
           try {
             const pt = map.project([reg.lng, reg.lat]);
             const dist = Math.hypot(pt.x - x, pt.y - y);
-            if (dist < 55) {
+            if (dist < 60) {
               handleRegionHover(reg.id);
               return;
             }
@@ -199,9 +270,9 @@ export default function SortirMaplibreMap({
     const map = mapRef.current?.getMap();
     if (!map) return;
     if (preset === "all") {
-      map.flyTo({ center: [114.5, -4.2], zoom: 4.3, duration: 1000 });
+      map.flyTo({ center: [114.5, -4.2], zoom: 4.5, duration: 1000 });
     } else if (preset === "java") {
-      map.flyTo({ center: [110.6, -7.3], zoom: 6.8, duration: 1000 });
+      map.flyTo({ center: [110.5, -7.2], zoom: 6.8, duration: 1000 });
     } else if (preset === "kalimantan") {
       map.flyTo({ center: [113.6, -1.8], zoom: 5.8, duration: 1000 });
     }
@@ -214,7 +285,7 @@ export default function SortirMaplibreMap({
     map.flyTo({ center: [reg.lng, reg.lat], zoom: 8, duration: 1000 });
   };
 
-  // Prepare dynamic GeoJSON mapping properties for regions (bold red boundary like in the uploaded image)
+  // Prepare dynamic GeoJSON mapping properties for regions with distinct colors per region
   const interactiveGeoJson = useMemo(() => {
     const featureCollection = { ...(regionsGeoData as any) };
     featureCollection.features = featureCollection.features.map((feature: any) => {
@@ -225,32 +296,39 @@ export default function SortirMaplibreMap({
       const isFlashCorrect = flashRegion?.id === regionId && flashRegion?.status === "correct";
       const isFlashWrong = flashRegion?.id === regionId && flashRegion?.status === "wrong";
 
-      // Default: BOLD VIBRANT RED BOUNDARY LINE (like the user's reference image)
-      let fillColor = "#EF4444";
-      let fillOpacity = 0.22;
-      let lineColor = "#EF4444";
-      let lineWidth = 3.5;
+      const themeColor = REGION_THEME_COLORS[regionId] || {
+        fill: "#0284C7",
+        border: "#0369A1",
+        glow: "#38BDF8",
+        name: regionId,
+      };
+
+      // Distinct colorful polygon fill like the user's reference image
+      let fillColor = themeColor.fill;
+      let fillOpacity = 0.40; // Translucent so roads & coastlines underneath are visible
+      let lineColor = themeColor.border;
+      let lineWidth = 2.8;
 
       if (placed || isFlashCorrect) {
-        fillColor = "#10B981";
-        fillOpacity = 0.45;
-        lineColor = "#10B981";
-        lineWidth = 4;
+        fillColor = "#10B981"; // Emerald green for successfully placed
+        fillOpacity = 0.55;
+        lineColor = "#059669";
+        lineWidth = 3.5;
       } else if (isFlashWrong) {
-        fillColor = "#DC2626";
+        fillColor = "#EF4444";
         fillOpacity = 0.65;
-        lineColor = "#EF4444";
-        lineWidth = 5;
+        lineColor = "#DC2626";
+        lineWidth = 4;
       } else if (isHovered) {
-        fillColor = "#3B82F6";
-        fillOpacity = 0.45;
-        lineColor = "#60A5FA";
-        lineWidth = 5;
+        fillColor = themeColor.glow;
+        fillOpacity = 0.65;
+        lineColor = "#FFFFFF"; // High-contrast clean white border on hover
+        lineWidth = 4.5;
       } else if (isSelected) {
         fillColor = "#F59E0B";
-        fillOpacity = 0.4;
-        lineColor = "#D4AF37";
-        lineWidth = 4.5;
+        fillOpacity = 0.55;
+        lineColor = "#FFFFFF";
+        lineWidth = 4;
       }
 
       return {
@@ -270,13 +348,24 @@ export default function SortirMaplibreMap({
   return (
     <div
       ref={containerRef}
-      className="w-full h-[460px] sm:h-[520px] md:h-[580px] relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#D4AF37]/30 bg-[#141211]"
+      className="w-full h-[460px] sm:h-[520px] md:h-[580px] relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#D4AF37]/30 bg-[#F8FAFC]"
     >
       {/* Top Left: Map Tile Switcher */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 p-1 rounded-xl shadow-lg">
         <span className="text-white/50 px-1 text-[11px] flex items-center gap-1">
           <Layers className="w-3 h-3 text-[#D4AF37]" />
         </span>
+        <button
+          type="button"
+          onClick={() => setTheme("osm")}
+          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+            theme === "osm"
+              ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
+              : "text-white/70 hover:text-white"
+          }`}
+        >
+          🗺️ Peta Terang (OSM)
+        </button>
         <button
           type="button"
           onClick={() => setTheme("dark")}
@@ -286,7 +375,7 @@ export default function SortirMaplibreMap({
               : "text-white/70 hover:text-white"
           }`}
         >
-          🌙 Dark Basemap
+          🌙 Dark
         </button>
         <button
           type="button"
@@ -298,17 +387,6 @@ export default function SortirMaplibreMap({
           }`}
         >
           🛰️ Satelit
-        </button>
-        <button
-          type="button"
-          onClick={() => setTheme("osm")}
-          className={`text-[11px] font-display font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-            theme === "osm"
-              ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-              : "text-white/70 hover:text-white"
-          }`}
-        >
-          🗺️ Terang (OSM)
         </button>
       </div>
 
@@ -344,9 +422,9 @@ export default function SortirMaplibreMap({
       <Map
         ref={mapRef}
         initialViewState={{
-          longitude: 112.5,
-          latitude: -6.5,
-          zoom: 5.6,
+          longitude: 110.5,
+          latitude: -7.2,
+          zoom: 6.6,
         }}
         style={{ width: "100%", height: "100%" }}
         mapStyle={currentMapStyle}
@@ -375,9 +453,9 @@ export default function SortirMaplibreMap({
       >
         <NavigationControl position="bottom-right" />
 
-        {/* Polygons with Bold Red Outlines like the uploaded image */}
+        {/* Polygons with colorful area styling like the user's reference image */}
         <Source id="regions-source" type="geojson" data={interactiveGeoJson}>
-          {/* Inner Fill */}
+          {/* Inner Fill with distinct area colors */}
           <Layer
             id="regions-fill"
             type="fill"
@@ -386,21 +464,7 @@ export default function SortirMaplibreMap({
               "fill-opacity": ["get", "fillOpacity"],
             }}
           />
-          {/* Outer Glow Boundary Line */}
-          <Layer
-            id="regions-line-glow"
-            type="line"
-            layout={{
-              "line-join": "round",
-              "line-cap": "round",
-            }}
-            paint={{
-              "line-color": ["get", "lineColor"],
-              "line-width": ["+", ["get", "lineWidth"], 3],
-              "line-opacity": 0.35,
-            }}
-          />
-          {/* Solid Perimeter Boundary Line */}
+          {/* Outer Boundary Line */}
           <Layer
             id="regions-line"
             type="line"
@@ -414,22 +478,41 @@ export default function SortirMaplibreMap({
               "line-opacity": 0.95,
             }}
           />
+          {/* Crisp white inner border separator (like GIS choropleth borders) */}
+          <Layer
+            id="regions-line-inner"
+            type="line"
+            layout={{
+              "line-join": "round",
+              "line-cap": "round",
+            }}
+            paint={{
+              "line-color": "#FFFFFF",
+              "line-width": 1.2,
+              "line-opacity": 0.45,
+            }}
+          />
         </Source>
 
-        {/* Markers & Area Badges */}
+        {/* Sleek Area Label Badges (No bulky circle balls - 'bukan bulet-bulet') */}
         {regions.map((region) => {
           const placed = placedItems[region.id];
           const isHovered = hoveredRegionId === region.id;
           const isSelected = selectedCard?.regionId === region.id;
           const isFlashCorrect = flashRegion?.id === region.id && flashRegion?.status === "correct";
           const isFlashWrong = flashRegion?.id === region.id && flashRegion?.status === "wrong";
+          const colorCfg = REGION_THEME_COLORS[region.id] || {
+            fill: "#3B82F6",
+            border: "#2563EB",
+            glow: "#60A5FA",
+          };
 
           return (
             <Marker
               key={region.id}
               longitude={region.lng}
               latitude={region.lat}
-              anchor="bottom"
+              anchor="center"
               onClick={(e: any) => {
                 e.originalEvent.stopPropagation();
                 onSelectRegion(region.id);
@@ -444,63 +527,55 @@ export default function SortirMaplibreMap({
                   if (!isDraggingCard) handleRegionHover(null);
                 }}
               >
-                {isHovered || isSelected ? (
-                  <span className="absolute -inset-3 rounded-full bg-blue-400/50 animate-ping pointer-events-none" />
-                ) : null}
-
-                {/* Circle Marker Icon */}
+                {/* Sleek District Label Tag with Theme Color Pip (NO big round balls!) */}
                 <div
-                  className={`w-9 h-9 rounded-full border-2 flex items-center justify-center shadow-2xl transition-all duration-200 ${
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-full shadow-lg border backdrop-blur-md transition-all duration-200 ${
                     placed || isFlashCorrect
-                      ? "bg-emerald-500 border-white text-white shadow-emerald-500/60 scale-110"
+                      ? "bg-emerald-950/90 border-emerald-400 text-emerald-200 ring-2 ring-emerald-500/40"
                       : isFlashWrong
-                      ? "bg-red-500 border-white text-white shadow-red-500/60 scale-95"
+                      ? "bg-red-950/90 border-red-400 text-red-200 ring-2 ring-red-500/50"
                       : isHovered
-                      ? "bg-blue-500 border-white text-white shadow-blue-500/60 scale-115"
-                      : "bg-[#1E293B] border-[#EF4444] text-white shadow-black/60"
+                      ? "bg-[#0F172A]/95 border-white text-white scale-110 shadow-2xl ring-2 ring-white/70 -translate-y-0.5"
+                      : isSelected
+                      ? "bg-[#0F172A]/95 border-amber-400 text-amber-200 scale-105 shadow-xl ring-2 ring-amber-400/50"
+                      : "bg-[#0F172A]/85 border-white/30 text-white hover:border-white hover:bg-[#0F172A]"
                   }`}
                 >
+                  {/* Subtle color pip matching the polygon's fill color */}
+                  <span
+                    className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm border border-white/40"
+                    style={{ backgroundColor: colorCfg.glow }}
+                  />
+
+                  {/* Clean text label for the region */}
+                  <span className="font-display font-bold text-[12px] tracking-wide whitespace-nowrap">
+                    {region.shortName}
+                  </span>
+
                   {placed || isFlashCorrect ? (
-                    <Check className="w-4 h-4" strokeWidth={3} />
-                  ) : (
-                    <span className="font-display font-extrabold text-xs">
-                      {region.shortName.charAt(0)}
+                    <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[3] shrink-0" />
+                  ) : isHovered ? (
+                    <span className="text-[10px] text-blue-300 font-semibold animate-pulse">
+                      (Drop)
                     </span>
-                  )}
+                  ) : null}
                 </div>
 
-                {/* Area Name Badge */}
-                <div
-                  className={`absolute top-full mt-1.5 flex flex-col items-center pointer-events-none transition-all duration-200 ${
-                    isHovered || isSelected || placed ? "opacity-100 translate-y-0" : "opacity-85"
-                  }`}
-                >
-                  <div
-                    className={`px-2.5 py-1 rounded-md text-[11px] font-bold whitespace-nowrap shadow-xl border backdrop-blur-md ${
-                      placed || isFlashCorrect
-                        ? "bg-emerald-950/90 border-emerald-500/60 text-emerald-300"
-                        : isHovered
-                        ? "bg-blue-950/90 border-blue-400/70 text-blue-200 scale-105"
-                        : "bg-[#0F172A]/90 border-[#EF4444]/60 text-white"
-                    }`}
-                  >
-                    📍 {region.shortName}
+                {/* Placed Motif Card preview badge */}
+                {placed && (
+                  <div className="absolute top-full mt-1 flex items-center gap-1.5 bg-[#0F172A]/95 border border-emerald-500/50 px-2 py-0.5 rounded-lg shadow-xl backdrop-blur-md pointer-events-none whitespace-nowrap z-20">
+                    <Image
+                      src={placed.cardImage}
+                      alt={placed.cardName}
+                      width={18}
+                      height={18}
+                      className="rounded-xs object-cover border border-emerald-400/40"
+                    />
+                    <span className="text-[10px] font-semibold text-emerald-200">
+                      {placed.cardName}
+                    </span>
                   </div>
-                  {placed && (
-                    <div className="mt-1 flex items-center gap-1.5 bg-[#0F172A]/95 border border-emerald-500/40 px-2 py-0.5 rounded-md shadow-xl backdrop-blur-md">
-                      <Image
-                        src={placed.cardImage}
-                        alt={placed.cardName}
-                        width={20}
-                        height={20}
-                        className="rounded-xs object-cover"
-                      />
-                      <span className="text-[10px] font-semibold text-emerald-200">
-                        {placed.cardName}
-                      </span>
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
             </Marker>
           );
@@ -509,4 +584,8 @@ export default function SortirMaplibreMap({
     </div>
   );
 }
+
+
+
+
 
