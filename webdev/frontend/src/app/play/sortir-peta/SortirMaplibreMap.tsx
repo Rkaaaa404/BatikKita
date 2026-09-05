@@ -104,7 +104,11 @@ const BASEMAP_STYLES: Record<TileTheme, any> = {
     sources: {
       osm: {
         type: "raster",
-        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+        tiles: [
+          "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          "https://b.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        ],
         tileSize: 256,
         attribution: "&copy; OpenStreetMap contributors",
       },
@@ -265,6 +269,14 @@ export default function SortirMaplibreMap({
     handleRegionHover(null);
   }, [isDraggingCard, dragPos, regions, handleRegionHover]);
 
+  // Ensure MapLibre WebGL canvas accurately measures and resizes on mount
+  useEffect(() => {
+    const t = setTimeout(() => {
+      mapRef.current?.resize();
+    }, 150);
+    return () => clearTimeout(t);
+  }, []);
+
   // Camera preset navigation
   const flyToPreset = (preset: "all" | "java" | "kalimantan") => {
     const map = mapRef.current?.getMap();
@@ -272,7 +284,7 @@ export default function SortirMaplibreMap({
     if (preset === "all") {
       map.flyTo({ center: [114.5, -4.2], zoom: 4.5, duration: 1000 });
     } else if (preset === "java") {
-      map.flyTo({ center: [110.5, -7.2], zoom: 6.4, duration: 1000 });
+      map.flyTo({ center: [110.8, -7.2], zoom: 6.6, duration: 1000 });
     } else if (preset === "kalimantan") {
       map.flyTo({ center: [113.6, -1.8], zoom: 5.8, duration: 1000 });
     }
@@ -348,7 +360,8 @@ export default function SortirMaplibreMap({
   return (
     <div
       ref={containerRef}
-      className="w-full h-[300px] sm:h-[340px] md:h-[380px] lg:h-[400px] max-h-[50vh] relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-[#D4AF37]/30 bg-[#F8FAFC]"
+      className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-[#D4AF37]/30 bg-[#1A1816]"
+      style={{ height: 460, minHeight: 400 }}
     >
       {/* Top Left: Map Tile Switcher */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 p-1 rounded-xl shadow-lg">
@@ -422,13 +435,16 @@ export default function SortirMaplibreMap({
       <Map
         ref={mapRef}
         initialViewState={{
-          longitude: 110.5,
-          latitude: -7.15,
-          zoom: 6.4,
+          longitude: 110.8,
+          latitude: -7.2,
+          zoom: 6.6,
         }}
         style={{ width: "100%", height: "100%" }}
         mapStyle={currentMapStyle}
         interactiveLayerIds={["regions-fill"]}
+        onLoad={() => {
+          mapRef.current?.resize();
+        }}
         onMouseMove={(e: any) => {
           if (isDraggingCard) return;
           if (e.features && e.features.length > 0) {

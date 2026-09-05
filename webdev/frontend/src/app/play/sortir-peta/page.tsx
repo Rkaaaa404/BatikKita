@@ -28,7 +28,10 @@ import type { RegionData, PlacedItem } from "./SortirMaplibreMap";
 const SortirMaplibreMap = dynamic(() => import("./SortirMaplibreMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[300px] sm:h-[340px] md:h-[380px] lg:h-[400px] max-h-[50vh] rounded-2xl sm:rounded-3xl border border-[#D4AF37]/20 bg-[#0F172A] flex flex-col items-center justify-center gap-3 text-white">
+    <div
+      className="w-full rounded-2xl sm:rounded-3xl border border-[#D4AF37]/20 bg-[#0F172A] flex flex-col items-center justify-center gap-3 text-white"
+      style={{ height: 460, minHeight: 400 }}
+    >
       <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
       <p className="font-display font-bold text-sm text-blue-200">
         Memuat Basemap Geografis Nusantara...
