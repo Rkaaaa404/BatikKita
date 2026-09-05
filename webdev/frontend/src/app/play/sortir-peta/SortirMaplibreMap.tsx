@@ -272,7 +272,7 @@ export default function SortirMaplibreMap({
     if (preset === "all") {
       map.flyTo({ center: [114.5, -4.2], zoom: 4.5, duration: 1000 });
     } else if (preset === "java") {
-      map.flyTo({ center: [110.8, -7.2], zoom: 6.8, duration: 1000 });
+      map.flyTo({ center: [110.5, -7.2], zoom: 6.4, duration: 1000 });
     } else if (preset === "kalimantan") {
       map.flyTo({ center: [113.6, -1.8], zoom: 5.8, duration: 1000 });
     }
@@ -348,7 +348,7 @@ export default function SortirMaplibreMap({
   return (
     <div
       ref={containerRef}
-      className="w-full h-[460px] sm:h-[520px] md:h-[580px] relative rounded-3xl overflow-hidden shadow-2xl border-4 border-[#D4AF37]/30 bg-[#F8FAFC]"
+      className="w-full h-[300px] sm:h-[340px] md:h-[380px] lg:h-[400px] max-h-[50vh] relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-[#D4AF37]/30 bg-[#F8FAFC]"
     >
       {/* Top Left: Map Tile Switcher */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 p-1 rounded-xl shadow-lg">
@@ -422,9 +422,9 @@ export default function SortirMaplibreMap({
       <Map
         ref={mapRef}
         initialViewState={{
-          longitude: 110.8,
-          latitude: -7.2,
-          zoom: 6.7,
+          longitude: 110.5,
+          latitude: -7.15,
+          zoom: 6.4,
         }}
         style={{ width: "100%", height: "100%" }}
         mapStyle={currentMapStyle}

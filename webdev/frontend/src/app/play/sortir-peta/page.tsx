@@ -28,7 +28,7 @@ import type { RegionData, PlacedItem } from "./SortirMaplibreMap";
 const SortirMaplibreMap = dynamic(() => import("./SortirMaplibreMap"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[400px] sm:h-[480px] md:h-[540px] rounded-3xl border border-[#D4AF37]/20 bg-[#0F172A] flex flex-col items-center justify-center gap-3 text-white">
+    <div className="w-full h-[300px] sm:h-[340px] md:h-[380px] lg:h-[400px] max-h-[50vh] rounded-2xl sm:rounded-3xl border border-[#D4AF37]/20 bg-[#0F172A] flex flex-col items-center justify-center gap-3 text-white">
       <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
       <p className="font-display font-bold text-sm text-blue-200">
         Memuat Basemap Geografis Nusantara...
@@ -581,7 +581,7 @@ export default function SortirPetaPage() {
     <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden">
       <GameNavbar title="Sortir Motif ke Peta Basemap" />
 
-      <main className="pt-16 flex-1 flex flex-col">
+      <main className="pt-14 sm:pt-16 flex-1 flex flex-col">
         <AnimatePresence mode="wait">
           {/* ══════════════════════════════════════════════════════════════════
               IDLE SCREEN
@@ -679,19 +679,19 @@ export default function SortirPetaPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex-1 flex flex-col max-w-6xl mx-auto w-full px-3 sm:px-6 py-2 gap-3"
+              className="flex-1 flex flex-col max-w-6xl mx-auto w-full px-3 sm:px-6 py-1 sm:py-2 gap-2 sm:gap-2.5"
             >
               {/* Top Status Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 bg-[#1A1816] border border-white/10 rounded-2xl px-4 py-2.5 shadow-lg">
+              <div className="flex flex-wrap items-center justify-between gap-2.5 bg-[#1A1816] border border-white/10 rounded-2xl px-3.5 py-1.5 sm:py-2 shadow-lg">
                 {/* Timer */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-1.5">
                     <Timer className="w-4 h-4 text-blue-400" />
                     <span className="font-display font-extrabold text-sm text-white">
                       {timeLeft}s
                     </span>
                   </div>
-                  <div className="w-24 sm:w-36 h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="w-20 sm:w-32 h-2 bg-white/10 rounded-full overflow-hidden">
                     <motion.div
                       animate={{ width: `${timerPercent}%`, backgroundColor: timerColor }}
                       transition={{ duration: 0.3 }}
@@ -701,10 +701,10 @@ export default function SortirPetaPage() {
                 </div>
 
                 {/* Score & Streak */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   {streak > 1 && (
-                    <span className="inline-flex items-center gap-1 text-xs font-display font-extrabold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-1 rounded-full animate-bounce">
-                      <Flame className="w-3.5 h-3.5 fill-amber-400" />
+                    <span className="inline-flex items-center gap-1 text-[11px] font-display font-extrabold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full animate-bounce">
+                      <Flame className="w-3 h-3 fill-amber-400" />
                       {streak}x Kombo
                     </span>
                   )}
@@ -716,17 +716,17 @@ export default function SortirPetaPage() {
                     </span>
                   </div>
 
-                  <div className="text-xs font-display font-bold text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/25 px-3 py-1 rounded-lg">
+                  <div className="text-xs font-display font-bold text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/25 px-2.5 py-0.5 rounded-lg">
                     +{earnedXp} XP
                   </div>
 
                   <button
                     type="button"
                     onClick={handleToggleSound}
-                    className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors"
+                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
                     title={soundOn ? "Matikan Suara" : "Nyalakan Suara"}
                   >
-                    {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                    {soundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </div>
@@ -738,7 +738,7 @@ export default function SortirPetaPage() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="bg-[#1E293B]/90 backdrop-blur-md border border-white/20 text-white text-xs font-display font-semibold px-4 py-2 rounded-full shadow-xl flex items-center gap-2 max-w-md mx-auto text-center"
+                    className="bg-[#1E293B]/90 backdrop-blur-md border border-white/20 text-white text-xs font-display font-semibold px-3.5 py-1.5 rounded-full shadow-xl flex items-center gap-2 max-w-md mx-auto text-center"
                   >
                     <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
                     <span>{recentNotification}</span>
@@ -764,10 +764,10 @@ export default function SortirPetaPage() {
                 <div
                   className="fixed pointer-events-none z-50 rounded-2xl overflow-hidden border-2 border-[#D4AF37] shadow-2xl bg-[#1A1816] flex flex-col items-center p-1"
                   style={{
-                    width: 85,
-                    height: 85,
-                    left: dragPos.x - 42,
-                    top: dragPos.y - 42,
+                    width: 75,
+                    height: 75,
+                    left: dragPos.x - 37,
+                    top: dragPos.y - 37,
                     transform: hoveredRegionId
                       ? "scale(1.15) rotate(0deg)"
                       : "scale(1.05) rotate(6deg)",
@@ -792,19 +792,19 @@ export default function SortirPetaPage() {
 
               {/* ── BOTTOM DOCK: ACTIVE MOTIF CARD TRAY ── */}
               {currentCard && (
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-center gap-4 shadow-xl">
+                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-2.5 sm:p-3 flex items-center gap-3 sm:gap-4 shadow-xl">
                   {/* Draggable Active Card */}
-                  <div className="flex items-center gap-3 shrink-0">
+                  <div className="flex items-center gap-2.5 shrink-0">
                     <motion.div
                       whileHover={{ scale: 1.03 }}
                       animate={{
-                        scale: selectedCard ? 1.06 : 1,
+                        scale: selectedCard ? 1.05 : 1,
                         boxShadow: selectedCard
                           ? "0 0 0 3px #D4AF37, 0 10px 25px -5px rgba(212, 175, 55, 0.5)"
                           : "none",
                       }}
                       onPointerDown={handleCardPointerDown}
-                      className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 cursor-grab active:cursor-grabbing touch-none select-none shadow-lg group bg-[#2A2421] transition-colors ${
+                      className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden border-2 cursor-grab active:cursor-grabbing touch-none select-none shadow-lg group bg-[#2A2421] transition-colors shrink-0 ${
                         selectedCard ? "border-[#D4AF37]" : "border-[#D4AF37]/40 hover:border-[#D4AF37]"
                       }`}
                     >
@@ -816,26 +816,26 @@ export default function SortirPetaPage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                       <div className="absolute bottom-1 left-1 right-1 flex justify-center">
-                        <span className="bg-black/80 backdrop-blur-xs text-[#D4AF37] text-[9px] font-display font-extrabold px-2 py-0.5 rounded-sm border border-[#D4AF37]/40 uppercase tracking-wider">
+                        <span className="bg-black/80 backdrop-blur-xs text-[#D4AF37] text-[8px] sm:text-[9px] font-display font-extrabold px-1.5 py-0.5 rounded-sm border border-[#D4AF37]/40 uppercase tracking-wider">
                           {selectedCard ? "Terpilih" : "Tarik Saya"}
                         </span>
                       </div>
                     </motion.div>
 
-                    <div className="sm:hidden">
-                      <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 rounded-full">
+                    <div className="sm:hidden min-w-0">
+                      <span className="text-[9px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-1.5 py-0.5 rounded-full">
                         {currentCard.category}
                       </span>
-                      <h3 className="font-display font-bold text-base text-white mt-0.5">
+                      <h3 className="font-display font-bold text-sm text-white mt-0.5 truncate">
                         {currentCard.name}
                       </h3>
                     </div>
                   </div>
 
                   {/* Card Narrative & Helper */}
-                  <div className="flex-1 text-center sm:text-left">
-                    <div className="hidden sm:inline-flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  <div className="flex-1 min-w-0 text-left">
+                    <div className="hidden sm:inline-flex items-center gap-2 mb-0.5">
+                      <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 rounded-full uppercase tracking-wider">
                         {currentCard.category}
                       </span>
                       <span className="text-white/40 text-xs font-body">
@@ -843,28 +843,46 @@ export default function SortirPetaPage() {
                       </span>
                     </div>
 
-                    <h3 className="hidden sm:block font-display font-bold text-lg text-white">
+                    <h3 className="hidden sm:block font-display font-bold text-base text-white truncate">
                       {currentCard.name}
                     </h3>
 
-                    <p className="text-white/60 text-xs sm:text-sm font-narrative mt-1 line-clamp-2">
+                    <p className="text-white/60 text-xs font-narrative mt-0.5 line-clamp-1 sm:line-clamp-2">
                       {currentCard.philosophy}
                     </p>
 
-                    <p className="text-blue-300/80 text-xs font-display font-medium mt-1 flex items-center justify-center sm:justify-start gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <p className="text-blue-300/80 text-[11px] font-display font-medium mt-0.5 hidden sm:flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                       <span>
                         {selectedCard
-                          ? "Kartu terpilih: Sekarang geser peta lalu ketuk zona daerah yang tepat!"
-                          : "Drag kartu ke atas zona peta yang tepat, atau ketuk kartu untuk memilih."}
+                          ? "Kartu terpilih: Geser peta dan ketuk zona daerah yang tepat!"
+                          : "Tarik kartu ke atas daerah tujuan di peta, atau ketuk untuk memilih."}
                       </span>
                     </p>
                   </div>
 
+                  {/* Action Button: Tap-to-Place Guide */}
+                  <div className="flex flex-col items-center sm:items-end gap-0.5 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCard(selectedCard ? null : currentCard)}
+                      className={`text-xs font-display font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border transition-all cursor-pointer ${
+                        selectedCard
+                          ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37] shadow-lg shadow-[#D4AF37]/30"
+                          : "bg-white/5 hover:bg-white/10 text-white border-white/15 hover:border-white/30"
+                      }`}
+                    >
+                      {selectedCard ? "✓ Siap Pilih" : "Ketuk Pilih"}
+                    </button>
+                    <span className="text-[9px] text-white/40 font-body hidden sm:inline">
+                      atau Drag ke peta
+                    </span>
+                  </div>
+
                   {/* Upcoming Queue Thumbnails */}
-                  <div className="hidden md:flex items-center gap-2 pl-4 border-l border-white/10 shrink-0">
+                  <div className="hidden md:flex items-center gap-1.5 pl-3 border-l border-white/10 shrink-0">
                     <div className="text-right mr-1">
-                      <p className="text-[10px] font-display font-bold text-white/40 uppercase">
+                      <p className="text-[9px] font-display font-bold text-white/40 uppercase">
                         Antrean:
                       </p>
                       <p className="text-xs font-display font-bold text-white/70">
@@ -874,10 +892,10 @@ export default function SortirPetaPage() {
                     {queue.slice(0, 3).map((card, i) => (
                       <div
                         key={card.id}
-                        className="relative rounded-xl overflow-hidden border border-white/20 opacity-60 shadow-sm"
+                        className="relative rounded-lg overflow-hidden border border-white/20 opacity-60 shadow-sm"
                         style={{
-                          width: 44,
-                          height: 44,
+                          width: 36,
+                          height: 36,
                           transform: `scale(${1 - i * 0.08})`,
                         }}
                       >
