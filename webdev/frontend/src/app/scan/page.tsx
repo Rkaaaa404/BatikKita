@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Camera,
@@ -15,6 +15,8 @@ import {
   CheckCircle2,
   ArrowRight,
   MessageSquare,
+  FlipHorizontal,
+  AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -70,6 +72,144 @@ export default function ScannerPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [result, setResult] = useState<MotifData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // ─── Camera States & Refs ───
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [facingMode, setFacingMode] = useState<"environment" | "user">("environment");
+  const [cameraError, setCameraError] = useState<string | null>(null);
+  const [isCapturing, setIsCapturing] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
+
+  // Effect to manage live media stream
+  useEffect(() => {
+    if (!isCameraOpen) return;
+
+    let active = true;
+    let currentStream: MediaStream | null = null;
+
+    async function initCamera() {
+      setCameraError(null);
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          throw new Error("Peramban Anda tidak mendukung akses kamera langsung.");
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode,
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+          },
+          audio: false,
+        });
+
+        if (!active) {
+          stream.getTracks().forEach((track) => track.stop());
+          return;
+        }
+
+        currentStream = stream;
+        streamRef.current = stream;
+
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.play().catch((err) => console.warn("Video play error:", err));
+        }
+      } catch (primaryErr) {
+        console.warn("Primary camera error, trying basic fallback...", primaryErr);
+        try {
+          const fallbackStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+          });
+
+          if (!active) {
+            fallbackStream.getTracks().forEach((track) => track.stop());
+            return;
+          }
+
+          currentStream = fallbackStream;
+          streamRef.current = fallbackStream;
+
+          if (videoRef.current) {
+            videoRef.current.srcObject = fallbackStream;
+            videoRef.current.play().catch((err) => console.warn("Fallback video play error:", err));
+          }
+        } catch (fallbackErr) {
+          if (!active) return;
+          const errObj = fallbackErr as Error;
+          if (errObj.name === "NotAllowedError" || errObj.name === "PermissionDeniedError") {
+            setCameraError("Izin kamera ditolak. Silakan aktifkan izin kamera di pengaturan peramban Anda.");
+          } else if (errObj.name === "NotFoundError" || errObj.name === "DevicesNotFoundError") {
+            setCameraError("Perangkat kamera tidak ditemukan pada sistem ini.");
+          } else {
+            setCameraError("Gagal mengaktifkan kamera. Silakan periksa pengaturan atau gunakan opsi unggah berkas.");
+          }
+        }
+      }
+    }
+
+    initCamera();
+
+    return () => {
+      active = false;
+      if (currentStream) {
+        currentStream.getTracks().forEach((track) => track.stop());
+      }
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+      }
+    };
+  }, [isCameraOpen, facingMode]);
+
+  const capturePhoto = () => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    if (video.videoWidth === 0 || video.videoHeight === 0) return;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    if (facingMode === "user") {
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+    }
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
+
+    setIsCapturing(true);
+    setTimeout(() => {
+      setIsCapturing(false);
+      setIsCameraOpen(false);
+      setPreview(dataUrl);
+      setResult(null);
+
+      fetch(dataUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const capturedFile = new File([blob], "foto-batik-kamera.jpg", {
+            type: "image/jpeg",
+          });
+          setFile(capturedFile);
+        })
+        .catch((e) => console.warn("Blob conversion error:", e));
+    }, 200);
+  };
+
+  const closeCamera = () => {
+    setIsCameraOpen(false);
+    setCameraError(null);
+  };
+
+  const switchCamera = () => {
+    setFacingMode((prev) => (prev === "environment" ? "user" : "environment"));
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -241,7 +381,11 @@ export default function ScannerPage() {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button
                       type="button"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] px-7 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-colors shadow-md"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                      }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] px-7 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-colors shadow-md cursor-pointer"
                     >
                       <Upload className="w-4 h-4" />
                       Pilih dari Perangkat
@@ -250,11 +394,11 @@ export default function ScannerPage() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        fileInputRef.current?.click();
+                        setIsCameraOpen(true);
                       }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs cursor-pointer hover:border-[#713f2c]"
                     >
-                      <Camera className="w-4 h-4" />
+                      <Camera className="w-4 h-4 text-[#713f2c]" />
                       Gunakan Kamera
                     </button>
                   </div>
@@ -305,14 +449,24 @@ export default function ScannerPage() {
                   )}
 
                   {!isScanning && (
-                    <button
-                      type="button"
-                      onClick={reset}
-                      className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/80 transition-colors z-20 shadow-md"
-                      title="Ganti Foto"
-                    >
-                      <X className="w-5 h-5" />
-                    </button>
+                    <div className="absolute top-4 right-4 flex items-center gap-2 z-20">
+                      <button
+                        type="button"
+                        onClick={() => setIsCameraOpen(true)}
+                        className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/80 transition-colors shadow-md cursor-pointer"
+                        title="Buka Kamera Lagi"
+                      >
+                        <Camera className="w-5 h-5 text-[#D4AF37]" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={reset}
+                        className="w-10 h-10 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white hover:bg-black/80 transition-colors shadow-md cursor-pointer"
+                        title="Ganti Foto"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
                   )}
                 </div>
 
@@ -417,6 +571,157 @@ export default function ScannerPage() {
           </AnimatePresence>
         </section>
       </main>
+
+      {/* ─── LIVE CAMERA MODAL / VIEWFINDER ─── */}
+      <AnimatePresence>
+        {isCameraOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+            onClick={closeCamera}
+          >
+            <motion.div
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-[#1A1614] border-2 border-[#D4AF37]/40 rounded-3xl max-w-xl w-full overflow-hidden shadow-2xl flex flex-col relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Camera Header */}
+              <div className="px-5 py-3.5 bg-black/40 border-b border-white/10 flex items-center justify-between text-white">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-display font-bold uppercase tracking-wider text-[#D4AF37]">
+                    Kamera Batik Lens Aktif
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={switchCamera}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-display font-semibold transition-colors cursor-pointer text-white/90"
+                    title="Beralih Kamera Depan / Belakang"
+                  >
+                    <FlipHorizontal className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span className="hidden sm:inline">
+                      {facingMode === "environment" ? "Kamera Depan" : "Kamera Belakang"}
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={closeCamera}
+                    className="w-8 h-8 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
+                    title="Tutup Kamera"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Viewfinder Display */}
+              <div className="relative aspect-[4/3] bg-black overflow-hidden flex items-center justify-center">
+                {cameraError ? (
+                  <div className="p-6 text-center max-w-md">
+                    <div className="w-12 h-12 rounded-2xl bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center mx-auto mb-3">
+                      <AlertCircle className="w-6 h-6" />
+                    </div>
+                    <h4 className="font-display font-bold text-white text-base mb-1.5">
+                      Kendala Akses Kamera
+                    </h4>
+                    <p className="font-narrative text-xs text-white/70 leading-relaxed mb-5">
+                      {cameraError}
+                    </p>
+                    <div className="flex items-center justify-center gap-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCameraError(null);
+                          setFacingMode((prev) => prev);
+                        }}
+                        className="px-4 py-2 rounded-xl bg-[#D4AF37] text-[#1A1614] text-xs font-display font-bold hover:brightness-105 transition-all cursor-pointer"
+                      >
+                        Coba Lagi
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          closeCamera();
+                          fileInputRef.current?.click();
+                        }}
+                        className="px-4 py-2 rounded-xl bg-white/10 text-white text-xs font-display font-semibold hover:bg-white/20 transition-all cursor-pointer"
+                      >
+                        Unggah Berkas Saja
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <video
+                      ref={videoRef}
+                      playsInline
+                      muted
+                      autoPlay
+                      className={`w-full h-full object-cover ${
+                        facingMode === "user" ? "-scale-x-100" : ""
+                      }`}
+                    />
+
+                    {/* Shutter flash animation */}
+                    {isCapturing && (
+                      <div className="absolute inset-0 bg-white z-30 animate-out fade-out duration-200" />
+                    )}
+
+                    {/* Viewfinder Target Framing / Reticle */}
+                    <div className="absolute inset-8 sm:inset-10 pointer-events-none flex items-center justify-center">
+                      {/* 4 Corner brackets */}
+                      <div className="absolute top-0 left-0 w-8 h-8 border-t-3 border-l-3 border-[#D4AF37] rounded-tl-xl shadow-sm" />
+                      <div className="absolute top-0 right-0 w-8 h-8 border-t-3 border-r-3 border-[#D4AF37] rounded-tr-xl shadow-sm" />
+                      <div className="absolute bottom-0 left-0 w-8 h-8 border-b-3 border-l-3 border-[#D4AF37] rounded-bl-xl shadow-sm" />
+                      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-3 border-r-3 border-[#D4AF37] rounded-br-xl shadow-sm" />
+
+                      {/* Center Crosshair */}
+                      <div className="w-16 h-16 rounded-full border border-[#D4AF37]/40 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-[#D4AF37]" />
+                      </div>
+                    </div>
+
+                    {/* Hint Banner */}
+                    <div className="absolute top-3 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/15 pointer-events-none">
+                      <p className="text-[11px] font-display text-white/90">
+                        Arahkan kamera tegak lurus ke kain batik
+                      </p>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Shutter Control Footer */}
+              {!cameraError && (
+                <div className="p-4 bg-black/50 border-t border-white/10 flex flex-col items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={capturePhoto}
+                    className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#D4AF37] to-[#fde68a] p-1 shadow-lg shadow-[#D4AF37]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer flex items-center justify-center group"
+                    title="Ambil Foto"
+                  >
+                    <div className="w-full h-full rounded-full border-2 border-[#1A1614] bg-white flex items-center justify-center text-[#713f2c] group-hover:bg-[#FFF8E7] transition-colors">
+                      <Camera className="w-6 h-6 stroke-[2.5]" />
+                    </div>
+                  </button>
+                  <span className="text-[11px] font-display text-white/50">
+                    Ketuk untuk mengambil foto motif
+                  </span>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Landing Page Footer */}
       <Footer />
