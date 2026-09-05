@@ -22,10 +22,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
-import type { RegionData, PlacedItem } from "./SortirLeafletMap";
+import type { RegionData, PlacedItem } from "./SortirMaplibreMap";
 
 // Dynamic import Leaflet map with ssr: false for Next.js 16 SSR safety
-const SortirLeafletMap = dynamic(() => import("./SortirLeafletMap"), {
+const SortirMaplibreMap = dynamic(() => import("./SortirMaplibreMap"), {
   ssr: false,
   loading: () => (
     <div className="w-full h-[400px] sm:h-[480px] md:h-[540px] rounded-3xl border border-[#D4AF37]/20 bg-[#0F172A] flex flex-col items-center justify-center gap-3 text-white">
@@ -745,7 +745,7 @@ export default function SortirPetaPage() {
               </AnimatePresence>
 
               {/* ── REAL BASEMAP CANVAS COMPONENT ── */}
-              <SortirLeafletMap
+              <SortirMaplibreMap
                 regions={REGIONS_DATA}
                 placedItems={placedItems}
                 activeCard={currentCard}
