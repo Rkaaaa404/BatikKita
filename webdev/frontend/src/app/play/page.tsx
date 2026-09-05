@@ -16,7 +16,7 @@ import {
   Crown,
   Brain,
   MapPin,
-  Paintbrush,
+  ZoomIn,
   Sparkles,
   Gamepad2,
 } from "lucide-react";
@@ -69,18 +69,18 @@ const GAMES = [
     buttonText: "Jelajahi Peta",
   },
   {
-    id: "canting",
-    href: "/play/canting",
-    icon: Paintbrush,
-    title: "Simulasi Membatik Canting",
-    category: "Kriya & Kreasi",
-    desc: "Torehkan malam (wax) dengan canting virtual lalu celupkan kain ke pewarna tradisional, rasakan proses batik yang sesungguhnya!",
-    xp: "+60 - 80 XP",
-    difficulty: "Eksplorasi Kreatif",
-    image: "/images/batik-art-applying-wax-with-canting-tool-2026-03-25-04-45-42-utc.jpg",
-    accent: "#fcd34d",
-    badge: "3 POLA KAIN",
-    buttonText: "Mulai Membatik",
+    id: "tika",
+    href: "/play/tika",
+    icon: ZoomIn,
+    title: "Tika: Tebak Batik Nusantara",
+    category: "Observasi & Deduksi",
+    desc: "Tebak nama motif batik dari potongan visual makro super detail (zoom 800% hingga 100%) sebelum kesempatan habis!",
+    xp: "Max +100 XP",
+    difficulty: "Tantangan Harian & Bebas",
+    image: "/images/batik-kawung.jpg",
+    accent: "#f59e0b",
+    badge: "PROGRESSIVE ZOOM",
+    buttonText: "Mainkan Tika",
   },
 ];
 
@@ -106,7 +106,7 @@ const RANKS = [
     minXp: 601,
     maxXp: 1200,
     icon: BookOpen,
-    desc: "Menguasai peta sentra budaya dan teknik cap serta canting.",
+    desc: "Menguasai peta sentra budaya, observasi mikro batik, dan teknik cap.",
     color: "text-blue-400 bg-blue-950/40 border-blue-500/30",
   },
   {
@@ -176,7 +176,7 @@ export default function ArcadeHubPage() {
               </h1>
 
               <p className="font-narrative text-base sm:text-lg text-white/80 leading-relaxed mb-8 max-w-xl">
-                Asah ketajaman mata terhadap ornamen tradisional, uji memori filosofis, petakan sentra Nusantara, hingga torehkan lilin malam digital melalui empat mini-game budaya berhadiah XP.
+                Asah ketajaman mata terhadap ornamen tradisional, uji memori filosofis, petakan sentra Nusantara, hingga pecahkan tebakan makro visual melalui empat mini-game budaya berhadiah XP.
               </p>
 
               <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/70">

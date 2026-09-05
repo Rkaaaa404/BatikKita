@@ -9,7 +9,7 @@ const pillars = [
     icon: Gamepad2,
     title: "Arcade Edukasi",
     subtitle: "Bermain & Belajar",
-    desc: "Uji pengetahuan Anda melalui Batik Cap Stamping, Tebak Motif, Sortir Peta, dan Simulasi Canting interaktif. Belajar filosofi motif menjadi menyenangkan.",
+    desc: "Uji pengetahuan Anda melalui Batik Cap Stamping, Tebak Motif, Sortir Peta, dan game Tika (Tebak Batik Makro). Belajar filosofi motif menjadi menyenangkan.",
     iconBg: "bg-[#e8e5df]",
     iconColor: "text-[#713f2c]",
   },

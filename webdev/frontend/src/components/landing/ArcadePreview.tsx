@@ -27,7 +27,7 @@ export function ArcadePreview() {
           </h2>
 
           <p className="font-narrative text-base sm:text-lg text-[#8d786a] leading-relaxed mb-6">
-            Pahami anatomi motif, sejarah persebaran budaya Nusantara, hingga simulasi membatik canting tradisional secara interaktif dan menyenangkan.
+            Pahami anatomi motif, sejarah persebaran budaya Nusantara, hingga tebak motif makro secara interaktif dan menyenangkan.
           </p>
 
           <div className="space-y-4 mb-8">
@@ -48,9 +48,9 @@ export function ArcadePreview() {
                 2
               </div>
               <div>
-                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Tebak Motif & Simulasi Canting</h4>
+                <h4 className="font-display font-bold text-sm text-[#2d2b38]">Tika (Tebak Batik) & Sortir Peta</h4>
                 <p className="font-narrative text-xs text-[#8d786a]">
-                  Uji wawasan motif Nusantara, sortir peta daerah, dan torehkan lilin malam menggunakan canting virtual.
+                  Uji wawasan motif Nusantara dari visual makro berjenjang, petakan sentra daerah, dan kumpulkan skor XP.
                 </p>
               </div>
             </div>
