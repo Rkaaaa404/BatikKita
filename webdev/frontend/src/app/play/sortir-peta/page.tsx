@@ -523,49 +523,54 @@ export default function SortirPetaPage() {
     [currentCard, gameState, queue, streak, addXp, endGame]
   );
 
+  const pointerStartPosRef = useRef({ x: 0, y: 0 });
+
   // Drag Card Handlers
   const handleCardPointerDown = (e: React.PointerEvent) => {
     if (gameState !== "playing" || !currentCard) return;
-    e.preventDefault();
-    setIsDraggingCard(true);
+    pointerStartPosRef.current = { x: e.clientX, y: e.clientY };
     setDragPos({ x: e.clientX, y: e.clientY });
+    setIsDraggingCard(true);
     sfx.playSnap();
-    (e.target as HTMLElement).setPointerCapture(e.pointerId);
   };
 
-  const handleGlobalPointerMove = useCallback(
-    (e: React.PointerEvent) => {
-      if (!isDraggingCard) return;
-      setDragPos({ x: e.clientX, y: e.clientY });
-    },
-    [isDraggingCard]
-  );
+  // Window pointer listeners for smooth dragging across canvas without pointer-capture blocks
+  useEffect(() => {
+    if (!isDraggingCard) return;
 
-  const handleGlobalPointerUp = useCallback(
-    (e: React.PointerEvent) => {
-      if (!isDraggingCard) return;
+    const handlePointerMove = (e: PointerEvent) => {
+      setDragPos({ x: e.clientX, y: e.clientY });
+    };
+
+    const handlePointerUp = (e: PointerEvent) => {
+      const moveDist = Math.hypot(
+        e.clientX - pointerStartPosRef.current.x,
+        e.clientY - pointerStartPosRef.current.y
+      );
+
       setIsDraggingCard(false);
 
+      // If it was just a quick tap (movement < 8px), toggle card selection
+      if (moveDist < 8) {
+        setSelectedCard((prev) => (prev?.id === currentCard?.id ? null : currentCard));
+        return;
+      }
+
+      // If dragged and released over a detected region
       if (hoveredRegionId) {
         handleDropOnRegion(hoveredRegionId);
         setHoveredRegionId(null);
       }
-      try {
-        (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-      } catch {
-        // Safe ignore
-      }
-    },
-    [isDraggingCard, hoveredRegionId, handleDropOnRegion]
-  );
+    };
 
-  // Tap to select mode
-  const handleCardTap = () => {
-    if (!isDraggingCard && currentCard) {
-      setSelectedCard((prev) => (prev ? null : currentCard));
-      sfx.playSnap();
-    }
-  };
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [isDraggingCard, hoveredRegionId, handleDropOnRegion, currentCard]);
 
   const timerPercent = (timeLeft / ROUND_DURATION) * 100;
   const timerColor =
@@ -573,11 +578,7 @@ export default function SortirPetaPage() {
   const totalCards = MOTIF_CARDS.length;
 
   return (
-    <div
-      className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden"
-      onPointerMove={isDraggingCard ? handleGlobalPointerMove : undefined}
-      onPointerUp={isDraggingCard ? handleGlobalPointerUp : undefined}
-    >
+    <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden">
       <GameNavbar title="Sortir Motif ke Peta Basemap" />
 
       <main className="pt-16 flex-1 flex flex-col">
@@ -782,8 +783,8 @@ export default function SortirPetaPage() {
                     />
                   </div>
                   {hoveredRegionId && (
-                    <span className="absolute bottom-1 bg-[#D4AF37] text-[#1A1614] font-display font-extrabold text-[9px] px-1.5 py-0.5 rounded-sm shadow-md">
-                      Lepas di sini!
+                    <span className="absolute -bottom-3 bg-emerald-500 text-white font-display font-extrabold text-[10px] px-2.5 py-0.5 rounded-full shadow-xl border border-white/50 whitespace-nowrap animate-bounce">
+                      Lepas di {REGIONS_DATA.find((r) => r.id === hoveredRegionId)?.shortName}!
                     </span>
                   )}
                 </div>
@@ -797,14 +798,15 @@ export default function SortirPetaPage() {
                     <motion.div
                       whileHover={{ scale: 1.03 }}
                       animate={{
-                        scale: selectedCard ? 1.05 : 1,
+                        scale: selectedCard ? 1.06 : 1,
                         boxShadow: selectedCard
-                          ? "0 0 0 3px #60A5FA, 0 10px 25px -5px rgba(96, 165, 250, 0.4)"
+                          ? "0 0 0 3px #D4AF37, 0 10px 25px -5px rgba(212, 175, 55, 0.5)"
                           : "none",
                       }}
                       onPointerDown={handleCardPointerDown}
-                      onClick={handleCardTap}
-                      className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-blue-400/60 cursor-grab active:cursor-grabbing touch-none select-none shadow-lg group bg-[#2A2421]"
+                      className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 cursor-grab active:cursor-grabbing touch-none select-none shadow-lg group bg-[#2A2421] transition-colors ${
+                        selectedCard ? "border-[#D4AF37]" : "border-[#D4AF37]/40 hover:border-[#D4AF37]"
+                      }`}
                     >
                       <Image
                         src={currentCard.image}
@@ -812,16 +814,16 @@ export default function SortirPetaPage() {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
                       <div className="absolute bottom-1 left-1 right-1 flex justify-center">
-                        <span className="bg-black/70 backdrop-blur-xs text-[#D4AF37] text-[9px] font-display font-bold px-1.5 py-0.5 rounded-sm border border-[#D4AF37]/30 uppercase">
-                          Tarik Saya
+                        <span className="bg-black/80 backdrop-blur-xs text-[#D4AF37] text-[9px] font-display font-extrabold px-2 py-0.5 rounded-sm border border-[#D4AF37]/40 uppercase tracking-wider">
+                          {selectedCard ? "Terpilih" : "Tarik Saya"}
                         </span>
                       </div>
                     </motion.div>
 
                     <div className="sm:hidden">
-                      <span className="text-[10px] font-display font-bold text-blue-400 bg-blue-500/15 border border-blue-500/30 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 rounded-full">
                         {currentCard.category}
                       </span>
                       <h3 className="font-display font-bold text-base text-white mt-0.5">
@@ -833,7 +835,7 @@ export default function SortirPetaPage() {
                   {/* Card Narrative & Helper */}
                   <div className="flex-1 text-center sm:text-left">
                     <div className="hidden sm:inline-flex items-center gap-2 mb-1">
-                      <span className="text-[10px] font-display font-bold text-blue-400 bg-blue-500/15 border border-blue-500/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                      <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                         {currentCard.category}
                       </span>
                       <span className="text-white/40 text-xs font-body">
