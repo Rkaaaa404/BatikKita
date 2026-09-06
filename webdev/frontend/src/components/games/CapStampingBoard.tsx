@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageCircle, Sparkles, Eye, Grid } from "lucide-react";
+import { Sparkles, Eye, Grid } from "lucide-react";
 import {
   generateDynamicPuzzle,
   PuzzleResult,
@@ -157,15 +157,6 @@ export function CapStampingBoard({
   const [justPlacedPiece, setJustPlacedPiece] = useState<number | null>(null);
   const [solved, setSolved] = useState(false);
   const [showGridOverlay, setShowGridOverlay] = useState(false);
-  const [feedback, setFeedback] = useState<{
-    message: string;
-    type: "perfect" | "near_miss" | "wrong_area" | "idle";
-  }>({
-    message:
-      "Mari, Ananda, pasang kepingan cap tembaga ke rongga sketsa kain mori yang sesuai bentuk dan letaknya.",
-    type: "idle",
-  });
-
   const boardRef = useRef<HTMLDivElement>(null);
   const startTime = useRef<number>(Date.now());
 
@@ -186,10 +177,6 @@ export function CapStampingBoard({
     setShowGridOverlay(false);
     startTime.current = Date.now();
     setSolved(false);
-    setFeedback({
-      message: `Tingkat ${difficulty}: Pasang ${newPuzzle.pieces.length} kepingan cap ke rongga sketsa hitam-putih agar kain mori bermotif anggun.`,
-      type: "idle",
-    });
   }, [image, difficulty]);
 
   // Check victory condition
@@ -202,15 +189,10 @@ export function CapStampingBoard({
         unlockMotif(motifId, difficulty);
       }
 
-      setFeedback({
-        message: `Luar biasa, Ananda! Seluruh rongga cap telah terisi penuh dan menyatu sempurna (*seamless*). Tahukah kamu? ${philosophy}`,
-        type: "perfect",
-      });
-
       const elapsed = Math.round((Date.now() - startTime.current) / 1000);
       setTimeout(() => onSolve(elapsed), 2400);
     }
-  }, [placed, solved, onSolve, philosophy, currentPieceDefs.length, motifId, difficulty, unlockMotif]);
+  }, [placed, solved, onSolve, currentPieceDefs.length, motifId, difficulty, unlockMotif]);
 
   // Attempt placement with tight, realistic stamping precision
   const attemptPlace = useCallback(
@@ -241,22 +223,12 @@ export function CapStampingBoard({
         setGuidePiece(null);
         setJustPlacedPiece(pieceId);
         setTimeout(() => setJustPlacedPiece(null), 1000);
-
-        setFeedback({
-          message: `Tepat sekali, Ananda! Kepingan ${def.name ?? "cap"} menempel presisi pada serat mori.`,
-          type: "perfect",
-        });
       } else {
         setWrongSlot({ x: dropX, y: dropY });
         setTimeout(() => setWrongSlot(null), 700);
 
         setGuidePiece(pieceId);
         setTimeout(() => setGuidePiece(null), 2500);
-
-        setFeedback({
-          message: `Wah, posisi cap belum tepat, Ananda. Arahkan lebih dekat ke rongga sketsa yang bersesuaian.`,
-          type: "wrong_area",
-        });
       }
     },
     [currentPieceDefs]
@@ -357,12 +329,6 @@ export function CapStampingBoard({
       if (pid === 0 || placed.includes(pid)) {
         if (selectedPiece !== null) {
           attemptPlace(selectedPiece, x, y);
-        } else {
-          setFeedback({
-            message:
-              "Bagian kain ini sudah berwarna penuh, Ananda. Silakan pilih keping cap di baki dan pasang ke rongga pola sketsa.",
-            type: "idle",
-          });
         }
         return;
       }
@@ -372,15 +338,6 @@ export function CapStampingBoard({
       } else {
         if (workbench.activeSlots.includes(pid)) {
           setSelectedPiece(pid);
-          setFeedback({
-            message: `Kepingan cap untuk rongga ini sudah tersedia di meja kerja. Pasang ke sini sekarang!`,
-            type: "idle",
-          });
-        } else {
-          setFeedback({
-            message: `Rongga ini membutuhkan keping cap yang masih di antrean. Pasang salah satu dari 3 kepingan yang ada di meja kerja terlebih dahulu.`,
-            type: "idle",
-          });
         }
       }
     },
@@ -399,49 +356,6 @@ export function CapStampingBoard({
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Persona Feedback Area (Budayawan Nusantara) */}
-      <motion.div
-        key={feedback.message}
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className={`flex items-start gap-4 p-4 rounded-xl border shadow-md transition-colors ${
-          feedback.type === "perfect"
-            ? isDark ? "bg-[#10B981]/15 border-[#10B981]/40" : "bg-emerald-50 border-emerald-300"
-            : feedback.type === "near_miss"
-            ? isDark ? "bg-[#F59E0B]/15 border-[#F59E0B]/40" : "bg-amber-50 border-amber-300"
-            : feedback.type === "wrong_area"
-            ? isDark ? "bg-[#EF4444]/15 border-[#EF4444]/40" : "bg-red-50 border-red-300"
-            : isDark ? "bg-[#D4AF37]/15 border-[#D4AF37]/40" : "bg-amber-50/70 border-amber-200"
-        }`}
-      >
-        <div
-          className={`shrink-0 w-11 h-11 rounded-full border-2 border-[#D4AF37] flex items-center justify-center overflow-hidden shadow-inner ${
-            isDark ? "bg-[#1A1614]" : "bg-white"
-          }`}
-        >
-          <MessageCircle className="w-5 h-5 text-[#D4AF37]" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-display font-bold text-[#D4AF37] tracking-wider uppercase">
-              Budayawan Nusantara
-            </span>
-            {feedback.type === "perfect" && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-500 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                <Sparkles className="w-3 h-3" /> Presisi Sempurna
-              </span>
-            )}
-          </div>
-          <p
-            className={`text-sm font-body leading-relaxed ${
-              isDark ? "text-white/95" : "text-stone-800"
-            }`}
-          >
-            {feedback.message}
-          </p>
-        </div>
-      </motion.div>
-
       {/* Progress & Mode Bar */}
       <div className="relative flex items-center justify-center px-2">
         <p
