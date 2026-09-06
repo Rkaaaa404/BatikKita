@@ -29,14 +29,14 @@ Melalui perpaduan harmonis antara **Edge AI Computer Vision langsung di peramban
 
 Seluruh layanan di dalam Batik Kita dirancang secara modular dan menggunakan tata nama rute (*clean URL design*) yang intuitif:
 
-| Fitur | Rute URL | Tipe Layanan | Inovasi & Keunggulan Utama |
+| Fitur | Rute URL | Tipe Layanan | Penjelasan & Gameplay |
 | :--- | :--- | :--- | :--- |
-| **Batik Lens** | `/scan` | Edge AI Vision | Pemindai motif batik berbasis **EfficientNet-B0 ONNX WebAssembly**. Inferensi 100% lokal pada peranti klien tanpa mengirim data foto ke server luar (menjamin privasi & zero cloud cost). |
-| **Batik Arcade** | `/play` | Gamifikasi Edukasi | Hub utama arena arcade wastra berfitur *Paspor Budaya*, akumulasi XP kultural, dan 5 tingkatan peringkat (*Pelajar Budaya* hingga *Empu Batik Digital*). |
-| **Batik Cap** | `/play/cap` | Rekayasa Simulasi | Simulasi teknik canting cap tembaga dengan **Partisi Polimino Dinamis (BFS Growth)**, meja kerja 3 slot (*In-Place Replenishment*), serta toleransi magnetik presisi tinggi. |
-| **Batik Guess** | `/play/guess` | Deduksi Kultural | Game tebak motif 4 jenjang petunjuk terenkapsulasi segel lilin malam (*Heritage Wax Seal*), dilengkapi sistem validasi huruf Wordle beraksen wastra. |
-| **Batik Map** | `/play/map` | Geospasial Interaktif | Eksplorasi geografi budaya Nusantara berbasis **MapLibre GL** dan GeoJSON pulau, menantang pemain memetakan motif ke **7 Sentra Otentik**. |
-| **Batik Zoom** | `/play/zoom` | Observasi Visual | Uji ketajaman mata meneliti detail canting dan serat kain mori melalui lensa makro bertahap (pembesaran 800% hingga 100%). |
+| **Batik Lens** | `/scan` | Edge AI Vision | Pemindai motif batik berbasis **EfficientNet-B0 ONNX WebAssembly**. Inferensi 100% lokal pada peranti klien tanpa mengirim data foto ke server luar (privasi aman & bebas latensi). |
+| **Batik Arcade** | `/play` | Hub Game Edukasi | Hub utama arena game batik dengan sistem akumulasi XP dan 5 tingkatan peringkat (*Pelajar Budaya* hingga *Empu Batik Digital*). |
+| **Batik Cap** | `/play/cap` | Block Puzzle | Game puzzle balok polyomino ala *Block Blast*; pemain menyusun potongan balok motif ke kisi kanvas dengan meja kerja 3 balok yang otomatis terisi ulang saat dipasang. |
+| **Batik Guess** | `/play/guess` | Tebak Nama Motif | Game tebak nama motif batik ala Wordle dengan 4 petunjuk bertahap (daerah asal, ciri visual corak, filosofi makna, dan kisi tebak huruf). |
+| **Batik Map** | `/play/map` | Tebak Sentra Peta | Game mencocokkan kartu motif batik ke daerah asalnya di peta interaktif 7 Sentra Batik Nusantara (MapLibre GL). |
+| **Batik Zoom** | `/play/zoom` | Uji Hafalan Pola | Game menguji seberapa hafal pemain dengan pola batik dari gambar yang di-zoom in dekat (800%), lalu ditebak sebelum gambarnya perlahan diperkecil (*zoom out*). |
 | **Batik Pedia** | `/batikpedia` | Ensiklopedia Digital | Katalog 20 motif resmi terlengkap yang memuat filosofi mendalam, asal-usul sentra, klasifikasi corak, panduan etika pemakaian, dan 3 ragam visual per motif. |
 | **Batik Ask** | `/chat` | Conversational AI | Asisten dialog interaktif "Sang Empu" untuk berdiskusi sejarah, makna filosofis ornamen, hingga tata krama busana batik adat. |
 | **Album Koleksi** | `/collection` | Progresi & Mastery | Galeri kartu pencapaian wastra berbingkai adaptif (*Dynamic Mastery Borders*): Zamrud, Perunggu, Perak, dan Emas Berkilau Hologram. |
@@ -61,10 +61,10 @@ graph TD
     
     subgraph "Arcade Gaming Engine (/play)"
         Landing --> ArcadeHub[Hub Batik Arcade]
-        ArcadeHub --> Cap[Batik Cap: Meja Kerja 3 Slot & In-Place Replenishment]
-        ArcadeHub --> Guess[Batik Guess: 4-Stage Wax Seal Deduction]
-        ArcadeHub --> MapGame[Batik Map: MapLibre GL 7 Sentra GeoJSON]
-        ArcadeHub --> ZoomGame[Batik Zoom: 800% Macro Optical View]
+        ArcadeHub --> Cap[Batik Cap: Puzzle Balok Ala Block Blast]
+        ArcadeHub --> Guess[Batik Guess: Tebak Nama Motif Ala Wordle]
+        ArcadeHub --> MapGame[Batik Map: Peta Tebak 7 Sentra Batik]
+        ArcadeHub --> ZoomGame[Batik Zoom: Tebak Motif Zoom In 800%]
     end
     
     subgraph "Cultural Knowledge & Mastery Layer"
@@ -86,20 +86,26 @@ graph TD
   * **Latensi Inferensi:** ~50–120 ms (bebas latensi jaringan).
 * **Serialized Execution Queue:** Diterapkan antrean eksekusi sequential di `onnxClassifier.ts` untuk mencegah *race condition* atau crash sesi WebAssembly concurrent (`Session already started / mismatch`).
 
-### 2. Meja Kerja 3 Slot Dinamis & Partisi Polimino Dinamis (Batik Cap)
-* **Algoritma Partisi Polimino:** Memotong kanvas mori secara acak dan seimbang menggunakan algoritma **Constrained Breadth-First Search (BFS)** berlandaskan sebaran benih (*seed expansion*), sehingga menghasilkan susunan kepingan unik di setiap sesi.
-* **In-Place Slot Replenishment (Anti-Crowded):** Meja kerja dirancang bersih hanya menampilkan 3 keping aktif konstan. Saat 1 keping berhasil dicap ke kanvas, kepingan berikutnya dari antrean cadangan langsung mengisi posisi slot tersebut di tempat tanpa mengubah posisi kepingan lain dan tanpa perlu membolak-balik halaman.
-* **Sensitivitas Magnetik Presisi Tinggi:** Ambang batas daya tarik magnetik diperketat dari `2.2` ke `0.85` unit grid, menuntut pemain menempatkan cap secara presisi di atas serat mori layaknya pembatik profesional.
+### 2. Puzzle Balok Polyomino (Batik Cap)
+* **Gameplay Block Puzzle:** Terinspirasi dari mekanisme puzzle balok (seperti *Block Blast*), pemain menyusun potongan-potongan balok batik ke kisi kanvas 6 × 6 hingga motif terbentuk utuh.
+* **Partisi Balok Dinamis (BFS):** Potongan balok dipotong secara acak menggunakan algoritma partisi polimino (*Breadth-First Search*), sehingga variasi balok di setiap sesi permainan selalu berbeda.
+* **Meja Kerja 3 Balok (Anti-Pusing):** Meja kerja hanya menampilkan 3 balok aktif. Begitu 1 balok dipasang, posisi balok tersebut langsung diisi balok baru dari antrean tanpa perlu repot geser halaman (*no pagination*).
+* **Sensitivitas Magnetik Presisi:** Ambang batas tarik magnetik diperketat (`0.85` unit grid) agar balok menempel pas pada rongga yang tepat.
 * **Skalabilitas Kesulitan:**
-  * **Mudah:** Grid 6 × 6, 5–6 kepingan (+100 XP).
-  * **Menengah:** Grid 6 × 6, 8–10 kepingan (+150 XP).
-  * **Sulit:** Grid 6 × 6, 12–15 kepingan polimino kompleks (+200 XP).
+  * **Mudah:** 5–6 kepingan balok (+100 XP).
+  * **Menengah:** 8–10 kepingan balok (+150 XP).
+  * **Sulit:** 12–15 kepingan balok (+200 XP).
 
-### 3. Peta Geospasial 7 Sentra Budaya Nusantara (Batik Map)
-* Peta interaktif berbasis **MapLibre GL** dan GeoJSON pulau Nusantara yang diselaraskan secara akurat dengan **7 Sentra Budaya Otentik**: *DKI Jakarta, Cirebon, Pekalongan, D.I. Yogyakarta, Surakarta, Lasem, dan Kalimantan*.
-* Mendukung fitur *drag-and-drop* kartu wastra dengan indikator *glow* daerah sentra yang reaktif.
+### 3. Tebak Nama Motif Ala Wordle (Batik Guess)
+* Pemain menebak nama motif batik dengan bantuan 4 petunjuk bertahap: daerah asal motif, karakteristik visual corak, makna filosofisnya, dan kisi tebak huruf ala Wordle.
 
-### 4. Sistem Border Mastery Dinamis (Album Koleksi Wastra)
+### 4. Peta Tebak Sentra Nusantara (Batik Map)
+* Peta interaktif berbasis **MapLibre GL** yang menantang pemain menyeret kartu motif batik dan menempatkannya ke salah satu dari **7 Sentra Batik Nusantara** (*DKI Jakarta, Cirebon, Pekalongan, D.I. Yogyakarta, Surakarta, Lasem, dan Kalimantan*).
+
+### 5. Uji Hafalan Pola Zoom In (Batik Zoom)
+* Menguji seberapa hafal dan teliti pemain terhadap pola batik. Gambar motif diperbesar secara ekstrem (hingga 800%), dan pemain harus menebak nama motifnya secepat mungkin sebelum gambar perlahan diperkecil (*zoom out*).
+
+### 6. Sistem Border Mastery Dinamis (Album Koleksi Wastra)
 Tingkat kesulitan yang berhasil dituntaskan pada Batik Cap secara langsung mentransformasikan penampilan visual kartu koleksi wastra di `/collection`:
 * 🔒 **Terkunci:** Tampilan siluet monokrom abu-abu redup dengan petunjuk pembukaan.
 * 🌿 **Koleksi Terbuka:** Border hijau zamrud (*emerald*) dari kemenangan mode arcade lainnya.
@@ -107,12 +113,12 @@ Tingkat kesulitan yang berhasil dituntaskan pada Batik Cap secara langsung mentr
 * 🥈 **Cap Terampil:** Border perak metalik halus (`#CBD5E1`) untuk keberhasilan tingkat Menengah.
 * 🥇 **Mahakarya Empu:** Border emas ganda (`#D4AF37`) berkilau dengan efek partikel kilau hologram (*holographic gold shimmer*) untuk keberhasilan tingkat Sulit.
 
-### 5. Dukungan Penuh High-Contrast Light Mode & Dark Mode
+### 7. Dukungan Penuh High-Contrast Light Mode & Dark Mode
 Seluruh antarmuka—termasuk kanvas mori, palet cap tembaga, papan deduksi Wordle, hingga ensiklopedia—telah diadaptasi dengan palet kontras tinggi:
 * **Dark Mode:** Nuansa mewah *Deep Soga Brown* (`#1A1614`) beraksen emas klasik (`#D4AF37`).
 * **Light Mode:** Nuansa hangat *Heritage Parchment* (`#FAF8F4`) dengan teks kontras tinggi (`#2D2B38`), bebas dari teks pudar atau sulit dibaca.
 
-### 6. Optimasi Performa & Core Web Vitals
+### 8. Optimasi Performa & Core Web Vitals
 * Semua komponen Next.js `<Image fill>` telah dilengkapi properti `sizes` responsif untuk mengeliminasi pemborosan bandwidth dan meningkatkan skor *Largest Contentful Paint* (LCP).
 * Asset gambar web berformat modern **WebP** dengan kompresi optimal.
 
