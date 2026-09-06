@@ -5,31 +5,36 @@ Frontend aplikasi web **Batik Kita** dibangun menggunakan **Next.js 16 (App Rout
 ## Menjalankan Frontend
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Jalankan dev server
+# 2. Jalankan development server
 npm run dev
 
-# Build produksi
+# 3. Uji type checking
+npx tsc --noEmit
+
+# 4. Build produksi
 npm run build
 
-# Start server produksi lokal
+# 5. Jalankan server produksi
 npm start
 ```
 
-## Fitur & Routing
+## Fitur & Routing (Suite Batik)
 
 - `/` — Beranda interaktif & showcase ekosistem
-- `/scan` — Scanner AI Batik Lens (Edge AI ONNX EfficientNet-B0)
-- `/play` — Hub Edu-Games Arcade
-  - `/play/tebak-motif` — Game kuis berjenjang
-  - `/play/sortir-peta` — Game pemetaan geografis
-  - `/play/cap-stamping` — Canvas stamping kreatif
-  - `/play/tika` — Simulasi membatik canting
-- `/batikpedia` — Ensiklopedia 20 ragam hias motif batik
-- `/chat` — Tanya Sang Empu (Asisten Budaya Cerdas)
-- `/collection` — Galeri kartu koleksi batik pengguna
+- `/scan` — **Batik Lens** (Edge AI ONNX EfficientNet-B0 Scanner)
+- `/play` — **Batik Arcade** (Hub Edu-Games & Cultural XP Pass)
+  - `/play/cap` — **Batik Cap** (Presisi canting cap tembaga & grid dinamis)
+  - `/play/guess` — **Batik Guess** (Deduksi budaya 4 jenjang petunjuk)
+  - `/play/map` — **Batik Map** (Eksplorasi geografi 7 sentra Nusantara)
+  - `/play/zoom` — **Batik Zoom** (Observasi visual makro bertahap)
+- `/collection` — **Album Koleksi Wastra** (20 kartu motif dengan bingkai adaptif mastery)
+- `/batikpedia` — **Batik Pedia** (Ensiklopedia 20 ragam hias motif batik resmi)
+- `/chat` — **Batik Ask** (Tanya Sang Empu - Asisten Budaya Cerdas)
+
+> Catatan: Tautan lama (`/play/tika`, `/play/cap-stamping`, `/play/sortir-peta`, `/play/tebak-motif`) telah dikonfigurasi dengan auto-redirect HTTP 308 pada `next.config.ts`.
 
 ## Standalone Docker Build
 
