@@ -26,6 +26,22 @@ let inferenceSession: any = null;
 let isInitializing = false;
 let initPromise: Promise<any> | null = null;
 
+// Serialized queue to guarantee single-thread re-entrancy on WebAssembly runtime
+let runQueue: Promise<any> = Promise.resolve();
+
+/**
+ * Executes session.run in a strict sequential queue to prevent
+ * "Session already started" and "Session mismatch" WebAssembly concurrency errors.
+ */
+async function runSessionSerialized(session: any, feeds: Record<string, any>): Promise<any> {
+  const currentRun = runQueue.then(async () => {
+    return await session.run(feeds);
+  });
+  // Maintain queue continuity even if an individual inference pass encounters an error
+  runQueue = currentRun.catch(() => {});
+  return currentRun;
+}
+
 /**
  * Initializes and warms up the ONNX Runtime WebAssembly inference session.
  * Uses single-threaded WASM to avoid SharedArrayBuffer COOP/COEP isolation requirements.
@@ -66,7 +82,7 @@ export async function getInferenceSession() {
       // Warmup forward-pass with a dummy tensor to prime JIT & WebAssembly heap
       try {
         const dummyTensor = new ortModule.Tensor("float32", new Float32Array(1 * 3 * 224 * 224), [1, 3, 224, 224]);
-        await inferenceSession.run({ input: dummyTensor });
+        await runSessionSerialized(inferenceSession, { input: dummyTensor });
         console.log("[Batik Lens AI] ONNX Session warmed up successfully.");
       } catch (warmupErr) {
         console.warn("[Batik Lens AI] Warmup run skipped:", warmupErr);
@@ -204,9 +220,9 @@ export async function classifyBatikImage(
   const inputTensor = new ortModule.Tensor("float32", float32Data, [1, 3, 224, 224]);
   const preprocessTimeMs = Math.round((performance.now() - preprocessStart) * 10) / 10;
 
-  // Run model inference (Pure forward-pass execution latency)
+  // Run model inference (Pure forward-pass execution latency via serialized queue)
   const inferenceStart = performance.now();
-  const results = await session.run({ input: inputTensor });
+  const results = await runSessionSerialized(session, { input: inputTensor });
   const inferenceTimeMs = Math.round((performance.now() - inferenceStart) * 10) / 10;
 
   const outputTensor = results.output;

@@ -112,12 +112,11 @@ export function InteractivePreview() {
   }, []);
 
   useEffect(() => {
-    preloadClassifier();
     testMotifWithAI(SAMPLE_MOTIFS[0]);
   }, [testMotifWithAI]);
 
   const handleSwitchMotif = (motif: SampleMotif) => {
-    if (isScanning) return;
+    if (isScanning || activeMotif.id === motif.id) return;
     testMotifWithAI(motif);
   };
 
