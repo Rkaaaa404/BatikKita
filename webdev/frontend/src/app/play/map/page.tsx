@@ -557,7 +557,7 @@ export default function SortirPetaPage() {
         isDark ? "bg-[#141211] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
       }`}
     >
-      <GameNavbar title="Batik Map (Sortir Motif ke Peta)" />
+      <GameNavbar title="Batik Map (Eksplorasi Sentra Nusantara)" />
 
       <main className="pt-14 sm:pt-16 flex-1 flex flex-col">
         <AnimatePresence mode="wait">
@@ -596,7 +596,7 @@ export default function SortirPetaPage() {
                     isDark ? "text-white" : "text-[#2D2B38]"
                   }`}
                 >
-                  Sortir Motif ke <span className="text-[#D4AF37]">Basemap Nusantara</span>
+                  Batik Map: <span className="text-[#D4AF37]">Sentra Nusantara</span>
                 </h1>
                 <p
                   className={`font-body max-w-xl mx-auto text-sm sm:text-base leading-relaxed ${

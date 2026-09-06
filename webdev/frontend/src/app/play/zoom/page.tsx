@@ -407,7 +407,7 @@ export default function TikaGamePage() {
         isDark ? "bg-[#141211] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
       }`}
     >
-      <GameNavbar title="Batik Zoom: Observasi Makro" />
+      <GameNavbar title="Batik Zoom (Observasi Visual Makro)" />
 
       <main className="pt-16 sm:pt-20 pb-12 flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 sm:px-6 gap-4">
         {/* ── Top Bar: Mode Switcher & Stats ── */}
@@ -489,23 +489,31 @@ export default function TikaGamePage() {
           {ZOOM_STAGES.map((stg, idx) => {
             const guess = guesses.find((g) => g.stage === idx + 1);
             const isCurrent = idx === currentStageIdx && gameStatus === "playing";
-            const isDone = idx < currentStageIdx || gameStatus !== "playing";
 
-            let bgStyle = "bg-white/5 border-white/10 text-white/40";
+            let bgStyle = isDark
+              ? "bg-white/5 border-white/10 text-white/40"
+              : "bg-white border-[#E2DDD5] text-stone-500 shadow-xs";
             let statusText = `+${stg.points}`;
 
             if (guess?.isCorrect) {
-              bgStyle = "bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold";
+              bgStyle = isDark
+                ? "bg-emerald-500/20 border-emerald-500 text-emerald-300 font-bold"
+                : "bg-emerald-100 border-emerald-400 text-emerald-800 font-bold";
               statusText = "Benar";
             } else if (guess?.type === "guess" && !guess.isCorrect) {
-              bgStyle = "bg-red-500/20 border-red-500/50 text-red-300";
+              bgStyle = isDark
+                ? "bg-red-500/20 border-red-500/50 text-red-300"
+                : "bg-red-100 border-red-400 text-red-800";
               statusText = "Salah";
             } else if (guess?.type === "pass") {
-              bgStyle = "bg-amber-500/15 border-amber-500/40 text-amber-300";
+              bgStyle = isDark
+                ? "bg-amber-500/15 border-amber-500/40 text-amber-300"
+                : "bg-amber-100 border-amber-400 text-amber-800";
               statusText = "Lewat";
             } else if (isCurrent) {
-              bgStyle =
-                "bg-[#D4AF37]/15 border-[#D4AF37] text-[#D4AF37] ring-2 ring-[#D4AF37]/40 shadow-lg shadow-[#D4AF37]/20";
+              bgStyle = isDark
+                ? "bg-[#D4AF37]/15 border-[#D4AF37] text-[#D4AF37] ring-2 ring-[#D4AF37]/40 shadow-lg shadow-[#D4AF37]/20"
+                : "bg-amber-50 border-[#D4AF37] text-[#9a781b] ring-2 ring-[#D4AF37]/40 shadow-sm font-bold";
             }
 
             return (

@@ -34,7 +34,7 @@ const GAMES = [
     title: "Batik Cap",
     category: "Presisi Canting Cap Tembaga",
     desc: "Susun kepingan polyomino cap tembaga ke kanvas kain mori. Pilihan 3 tingkat kesulitan (Mudah, Menengah, Sulit) dengan algoritma partisi acak!",
-    xp: "+60 - 150 XP",
+    xp: "+100 - 200 XP",
     difficulty: "Mudah • Menengah • Sulit",
     image: "/images/motifs/batik_kawung.webp",
     accent: "#D4AF37",
@@ -53,7 +53,7 @@ const GAMES = [
     image: "/images/motifs/batik_parang.webp",
     accent: "#c4b5fd",
     badge: "20 MOTIF TERSEDIA",
-    buttonText: "Tebak Motif",
+    buttonText: "Mulai Deduksi Budaya",
   },
   {
     id: "map",
@@ -67,7 +67,7 @@ const GAMES = [
     image: "/images/motifs/batik_mega_mendung_v2.webp",
     accent: "#7dd3fc",
     badge: "7 SENTRA NUSANTARA",
-    buttonText: "Jelajahi Peta",
+    buttonText: "Jelajahi Peta Sentra",
   },
   {
     id: "zoom",
@@ -81,7 +81,7 @@ const GAMES = [
     image: "/images/motifs/batik_truntum.webp",
     accent: "#f59e0b",
     badge: "PROGRESSIVE MACRO ZOOM",
-    buttonText: "Mulai Zoom Makro",
+    buttonText: "Mulai Observasi Makro",
   },
 ];
 

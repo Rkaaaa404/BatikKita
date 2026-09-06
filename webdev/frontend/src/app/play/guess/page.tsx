@@ -362,7 +362,7 @@ export default function TebakMotifPage() {
                   isDark ? "text-white" : "text-[#2D2B38]"
                 }`}
               >
-                Tebak Motif Berjenjang
+                Batik Guess
               </h1>
 
               <p
@@ -370,7 +370,7 @@ export default function TebakMotifPage() {
                   isDark ? "text-white/80" : "text-stone-600"
                 }`}
               >
-                Amati corak kain di pemidangan, gunakan kaca pembesar untuk melihat isen-isen halus, lalu tebak nama motifnya. Petunjuk bertahap akan terbuka bila Anda membutuhkan bantuan.
+                Pecahkan misteri mahakarya wastra nusantara melalui 4 jenjang deduksi budaya: Makna Filosofis, Asal Sentra & Rumpun, Ciri Visual Isen-Isen, dan Penggunaan Tradisi. Semakin sedikit petunjuk yang dibuka, semakin besar perolehan XP Anda!
               </p>
 
               {/* Point Rules Card */}

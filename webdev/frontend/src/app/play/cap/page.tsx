@@ -99,7 +99,7 @@ export default function CapStampingPage() {
                   isDark ? "text-white" : "text-[#2D2B38]"
                 }`}
               >
-                Batik Cap Stamping
+                Batik Cap
               </h1>
               <p
                 className={`font-body max-w-lg mx-auto text-sm ${
@@ -116,7 +116,11 @@ export default function CapStampingPage() {
               <span className="text-xs font-display font-bold text-[#D4AF37] tracking-wider uppercase">
                 PILIH TINGKAT KESULITAN BLOK:
               </span>
-              <div className="inline-flex p-1.5 rounded-2xl bg-black/20 border border-white/10 backdrop-blur-md gap-2">
+              <div
+                className={`inline-flex p-1.5 rounded-2xl border backdrop-blur-md gap-2 ${
+                  isDark ? "bg-black/20 border-white/10" : "bg-stone-100 border-[#E2DDD5] shadow-xs"
+                }`}
+              >
                 {(["Mudah", "Menengah", "Sulit"] as PuzzleDifficulty[]).map((diff) => {
                   const isCur = difficulty === diff;
                   return (
@@ -129,13 +133,17 @@ export default function CapStampingPage() {
                           ? "bg-[#D4AF37] text-[#1A1614] shadow-md shadow-[#D4AF37]/20 scale-105"
                           : isDark
                           ? "text-white/70 hover:text-white hover:bg-white/5"
-                          : "text-stone-700 hover:text-stone-900 hover:bg-white/40"
+                          : "text-stone-700 hover:text-stone-900 hover:bg-white"
                       }`}
                     >
                       <span>{diff}</span>
                       <span
                         className={`text-[10px] px-1.5 py-0.5 rounded-full ${
-                          isCur ? "bg-black/20 text-[#1A1614]" : "bg-white/10 text-white/60"
+                          isCur
+                            ? "bg-black/20 text-[#1A1614]"
+                            : isDark
+                            ? "bg-white/10 text-white/60"
+                            : "bg-stone-200 text-stone-700"
                         }`}
                       >
                         +{DIFFICULTY_XP[diff]} XP
@@ -144,10 +152,10 @@ export default function CapStampingPage() {
                   );
                 })}
               </div>
-              <p className="text-xs text-white/50">
-                {difficulty === "Mudah" && "3-4 kepingan besar. Sangat cocok untuk pemula."}
-                {difficulty === "Menengah" && "5-6 kepingan bervariasi. Menuntut ketelitian."}
-                {difficulty === "Sulit" && "7-8 kepingan kecil & asimetris. Tantangan Empu sejati!"}
+              <p className={`text-xs ${isDark ? "text-white/60" : "text-stone-600"}`}>
+                {difficulty === "Mudah" && "5–6 kepingan presisi. Pilihan ideal untuk pemula."}
+                {difficulty === "Menengah" && "8–10 kepingan terukur. Menuntut ketelitian dan fokus."}
+                {difficulty === "Sulit" && "12–15 kepingan canting detail. Tantangan deduksi Empu sejati!"}
               </p>
             </div>
 
