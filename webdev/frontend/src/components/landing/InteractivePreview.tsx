@@ -11,7 +11,7 @@ const SAMPLE_MOTIFS = [
     region: "Cirebon, Jawa Barat",
     category: "Batik Pesisiran",
     confidence: 96.4,
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
     philosophy:
       "Awan pembawa hujan yang melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan pelindung di tengah terik.",
     recommendation: "Sangat luwes untuk pakaian kerja, busana semi-formal, maupun perayaan modern.",
@@ -22,7 +22,7 @@ const SAMPLE_MOTIFS = [
     region: "Surakarta & Yogyakarta",
     category: "Batik Keraton (Larangan)",
     confidence: 98.2,
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
     philosophy:
       "Garis diagonal ombak tak terputus yang melambangkan semangat pantang menyerah, keteguhan pemimpin, dan kesinambungan moral.",
     recommendation: "Elok untuk acara perhelatan sakral dan wisuda.",
@@ -33,7 +33,7 @@ const SAMPLE_MOTIFS = [
     region: "D.I. Yogyakarta",
     category: "Batik Keraton",
     confidence: 95.8,
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_kawung.webp",
     philosophy:
       "Pola 4 kelopak buah aren yang melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
     recommendation: "Sangat serasi dipakai untuk acara formal, perkantoran, dan silaturahmi.",

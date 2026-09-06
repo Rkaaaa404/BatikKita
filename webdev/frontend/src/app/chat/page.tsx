@@ -209,9 +209,9 @@ export default function ChatPage() {
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik_Tab_Sang Empu.jpg to Highlight the Title ─── */}
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
-          {/* Background Image: Batik_Tab_Sang Empu.jpg */}
+          {/* Background Image: batik-tab-sang-empu.webp */}
           <Image
-            src="/images/Batik_Tab_Sang Empu.jpg"
+            src="/images/batik-tab-sang-empu.webp"
             alt="Suasana Canting Sang Empu Batik Nusantara"
             fill
             sizes="100vw"

@@ -28,8 +28,8 @@ export function HeroSection() {
     <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
       {/* ─── Full-bleed Background Image ─── */}
       <Image
-        src="/images/batik-art-applying-wax-with-canting-tool-2026-03-25-04-45-42-utc.jpg"
-        alt="Pengrajin batik menggunakan canting"
+        src="/images/batik-hero-canting.webp"
+        alt="Pengrajin batik melukis malam menggunakan canting tembaga"
         fill
         sizes="100vw"
         className="object-cover object-center"
@@ -82,7 +82,7 @@ export function HeroSection() {
 
           {/* Sub */}
           <motion.p variants={itemVariants} className="font-narrative text-base text-white/80 leading-relaxed mb-8 max-w-md">
-            Transformasi edukasi batik nusantara melalui Edu-Games Arcade, AI Scanner cerdas, dan Asisten Budaya interaktif.
+            Kenali ragam motif kain nusantara, telusuri filosofi di balik setiap goresan canting, dan asah kepekaan budayamu lewat permainan edukatif dan pengenal citra visual.
           </motion.p>
 
           {/* CTAs */}

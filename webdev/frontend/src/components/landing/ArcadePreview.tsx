@@ -94,7 +94,7 @@ export function ArcadePreview() {
             <div className="scale-90 origin-top">
               <CapStampingBoard 
                 motifId="kawung"
-                image="/images/batik-kawung.jpg" 
+                image="/images/motifs/batik_kawung.webp" 
                 philosophy="Pola 4 kelopak buah aren melambangkan empat penjuru mata angin."
                 onSolve={handleSolve} 
               />

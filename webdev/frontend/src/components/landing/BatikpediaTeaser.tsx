@@ -12,20 +12,20 @@ const CARDS = [
     category: "Motif Keraton",
     stars: 1,
     isUnlocked: true,
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_kawung.webp",
     philosophy:
-      "Melambangkan kesempurnaan, kesucian, dan kemurnian hati. Sering dikaitkan dengan buah kolang-kaling.",
+      "Melambangkan kesempurnaan, kesucian, dan kemurnian hati. Terinspirasi dari irisan empat kelopak buah aren.",
   },
   {
     id: "parang",
     name: "Parang Rusak",
-    region: "Solo",
+    region: "Solo & Jogja",
     category: "Motif Larangan",
     stars: 2,
     isUnlocked: true,
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
     philosophy:
-      "Simbol kekuasaan, kekuatan, dan pertumbuhan yang terus menerus bak ombak samudra yang tak pernah berhenti.",
+      "Simbol keteguhan, pantang menyerah, dan kesinambungan budi luhur laksana ombak karang samudra.",
   },
   {
     id: "megamendung",
@@ -34,9 +34,9 @@ const CARDS = [
     category: "Motif Pesisiran",
     stars: 3,
     isUnlocked: true,
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
     philosophy:
-      "Awan pembawa hujan sebagai lambang kesuburan dan pemberi kehidupan, perpaduan budaya Tiongkok dan lokal.",
+      "Awan pembawa hujan sebagai lambang kesabaran dan keteduhan jiwa, lahir dari akulturasi Cirebon dan Tiongkok.",
   },
 ];
 

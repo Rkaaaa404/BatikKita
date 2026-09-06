@@ -50,7 +50,7 @@ const SAMPLE_PRESETS: MotifData[] = [
     philosophy:
       "Melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk di tengah terik matahari. Motif ini banyak dipengaruhi oleh budaya Tiongkok yang berbaur dengan tradisi Cirebon.",
     usage: "Sangat luwes, pantas untuk busana kerja, santai, maupun perhelatan resmi kontemporer.",
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
   },
   {
     name: "Parang Rusak Barong",
@@ -60,7 +60,7 @@ const SAMPLE_PRESETS: MotifData[] = [
     philosophy:
       "Garis diagonal ombak tak terputus yang melambangkan semangat pantang menyerah, keteguhan ksatria, serta kesinambungan budi pekerti luhur pemimpin.",
     usage: "Sangat elok untuk upacara kenegaraan, perhelatan pernikahan sakral, dan wisuda.",
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
   },
   {
     name: "Kawung Picis",
@@ -70,7 +70,7 @@ const SAMPLE_PRESETS: MotifData[] = [
     philosophy:
       "Empat kelopak buah aren yang merefleksikan empat penjuru mata angin (sedulur papat lima pancer), melambangkan kesucian niat, pengendalian hawa nafsu, dan kemurnian hati.",
     usage: "Serasi dikenakan dalam upacara adat formal, pertemuan dinas, dan silaturahmi budaya.",
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_kawung.webp",
   },
 ];
 
@@ -333,7 +333,7 @@ export default function ScannerPage() {
           usage:
             motifInfo?.usage ||
             "Sangat luwes dikenakan untuk upacara resmi kenegaraan, perhelatan adat sakral, maupun busana etnik modern.",
-          image: preview || motifInfo?.image || "/images/batik-mega-mendung.jpg",
+          image: preview || motifInfo?.image || "/images/motifs/batik_mega_mendung.webp",
         };
 
         setResult(detectedData);
@@ -372,7 +372,7 @@ export default function ScannerPage() {
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 text-center min-h-[520px] lg:min-h-[580px] flex items-center justify-center">
           {/* Full-bleed Background Art */}
           <Image
-            src="/images/batik-tab-batik-lens.jpg"
+            src="/images/batik-tab-batik-lens.webp"
             alt="AI Scanner Batik Lens Background"
             fill
             sizes="100vw"
@@ -389,7 +389,7 @@ export default function ScannerPage() {
           <div className="max-w-3xl mx-auto relative z-10">
             <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4 backdrop-blur-sm">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>AI CULTURAL SUITE • POWERED BY GEMINI VISION</span>
+              <span>EDGE AI CLASSIFIER • ON-DEVICE INFERENCE</span>
             </div>
 
             <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
@@ -406,7 +406,7 @@ export default function ScannerPage() {
             </h1>
 
             <p className="font-narrative text-base text-white/80 max-w-xl mx-auto leading-relaxed">
-              Arahkan kamera atau unggah foto kain batik Anda. Computer Vision kami akan menganalisis geometri ornamen, isen-isen, dan mengungkap filosofi luhurnya dalam sekejap.
+              Arahkan kamera atau unggah foto kain batik Anda. Model Edge AI memproses citra langsung di perangkat Anda tanpa mengunggah foto ke server luar.
             </p>
           </div>
         </section>
