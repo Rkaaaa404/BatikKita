@@ -14,7 +14,9 @@ export interface ClassificationResult {
   top1: ClassPrediction;
   top3: ClassPrediction[];
   allRanked: ClassPrediction[];
-  inferenceTimeMs: number;
+  inferenceTimeMs: number; // Waktu inferensi murni (forward-pass model neural network)
+  preprocessTimeMs: number; // Waktu resize canvas & normalisasi tensor
+  totalTimeMs: number; // Total end-to-end latency
   device: string;
 }
 
@@ -60,6 +62,15 @@ export async function getInferenceSession() {
         executionProviders: ["wasm"],
         graphOptimizationLevel: "all",
       });
+
+      // Warmup forward-pass with a dummy tensor to prime JIT & WebAssembly heap
+      try {
+        const dummyTensor = new ortModule.Tensor("float32", new Float32Array(1 * 3 * 224 * 224), [1, 3, 224, 224]);
+        await inferenceSession.run({ input: dummyTensor });
+        console.log("[Batik Lens AI] ONNX Session warmed up successfully.");
+      } catch (warmupErr) {
+        console.warn("[Batik Lens AI] Warmup run skipped:", warmupErr);
+      }
 
       console.log("[Batik Lens AI] ONNX Session successfully created & ready.");
       return inferenceSession;
@@ -176,7 +187,7 @@ function softmax(logits: Float32Array | number[]): number[] {
 export async function classifyBatikImage(
   source: string | File | Blob | HTMLImageElement
 ): Promise<ClassificationResult> {
-  const startTime = performance.now();
+  const overallStart = performance.now();
 
   const [session, img] = await Promise.all([
     getInferenceSession(),
@@ -187,12 +198,17 @@ export async function classifyBatikImage(
     throw new Error("ONNX Runtime module is not loaded.");
   }
 
-  // Preprocess input tensor
+  // Preprocess input tensor (Canvas resize 224x224 & normalization)
+  const preprocessStart = performance.now();
   const float32Data = preprocessToFloat32Array(img);
   const inputTensor = new ortModule.Tensor("float32", float32Data, [1, 3, 224, 224]);
+  const preprocessTimeMs = Math.round((performance.now() - preprocessStart) * 10) / 10;
 
-  // Run model inference
+  // Run model inference (Pure forward-pass execution latency)
+  const inferenceStart = performance.now();
   const results = await session.run({ input: inputTensor });
+  const inferenceTimeMs = Math.round((performance.now() - inferenceStart) * 10) / 10;
+
   const outputTensor = results.output;
   const logits = outputTensor.data as Float32Array;
 
@@ -218,13 +234,15 @@ export async function classifyBatikImage(
     })
     .sort((a, b) => b.rawProb - a.rawProb);
 
-  const inferenceTimeMs = Math.round(performance.now() - startTime);
+  const totalTimeMs = Math.round(performance.now() - overallStart);
 
   return {
     top1: ranked[0],
     top3: ranked.slice(0, 3),
     allRanked: ranked,
     inferenceTimeMs,
+    preprocessTimeMs,
+    totalTimeMs,
     device: "Edge AI • WebAssembly (ONNX)",
   };
 }

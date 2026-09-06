@@ -675,9 +675,12 @@ export default function ScannerPage() {
                                   Top-3 Analisis Probabilitas Motif
                                 </span>
                               </div>
-                              <span className="text-[11px] font-mono text-[#713f2c] bg-[#713f2c]/10 px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1">
+                              <span
+                                className="text-[11px] font-mono text-[#713f2c] bg-[#713f2c]/10 px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1 cursor-help"
+                                title={`Inferensi Model Murni (Forward Pass): ${aiResult.inferenceTimeMs}ms | Pra-pemrosesan Citra: ${aiResult.preprocessTimeMs}ms | Total Latensi: ${aiResult.totalTimeMs}ms`}
+                              >
                                 <Zap className="w-3 h-3 text-[#D4AF37]" />
-                                {aiResult.inferenceTimeMs}ms • Edge AI
+                                {aiResult.inferenceTimeMs}ms • Inferensi On-Device
                               </span>
                             </div>
 
