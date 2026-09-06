@@ -132,7 +132,7 @@ export default function ArcadeHubPage() {
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
           {/* Background Image: Batik Tab Arcade.jpg */}
           <Image
-            src="/images/Batik Tab Arcade.jpg"
+            src="/images/batik-tab-arcade.jpg"
             alt="Arena Arcade Batik Nusantara"
             fill
             sizes="100vw"
