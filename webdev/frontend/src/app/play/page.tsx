@@ -19,6 +19,7 @@ import {
   ZoomIn,
   Sparkles,
   Gamepad2,
+  Layers,
 } from "lucide-react";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
@@ -27,60 +28,60 @@ import { useXp } from "@/hooks/useXp";
 
 const GAMES = [
   {
-    id: "cap-stamping",
-    href: "/play/cap-stamping",
+    id: "cap",
+    href: "/play/cap",
     icon: Puzzle,
-    title: "Batik Cap Stamping",
-    category: "Geometri & Presisi",
-    desc: "Warnai sketsa batik dengan menempatkan kepingan motif (cap) secara tepat dan presisi agar menyatu sempurna.",
-    xp: "+100 XP",
-    difficulty: "Mudah → Lanjutan",
+    title: "Batik Cap",
+    category: "Presisi Canting Cap Tembaga",
+    desc: "Susun kepingan polyomino cap tembaga ke kanvas kain mori. Pilihan 3 tingkat kesulitan (Mudah, Menengah, Sulit) dengan algoritma partisi acak!",
+    xp: "+60 - 150 XP",
+    difficulty: "Mudah • Menengah • Sulit",
     image: "/images/motifs/batik_kawung.webp",
     accent: "#D4AF37",
-    badge: "3 MOTIF TERSEDIA",
-    buttonText: "Mulai Stamping",
+    badge: "20 MOTIF & GRID DINAMIS",
+    buttonText: "Mulai Canting Cap",
   },
   {
-    id: "tebak-motif",
-    href: "/play/tebak-motif",
+    id: "guess",
+    href: "/play/guess",
     icon: Brain,
-    title: "Tebak Motif Berjenjang",
-    category: "Wawasan & Filosofi",
-    desc: "Uji pengetahuanmu! Tebak nama motif batik dari petunjuk bertahap, semakin sedikit petunjuk, semakin besar XP.",
+    title: "Batik Guess",
+    category: "Deduksi Budaya Berjenjang",
+    desc: "Uji kejelian analisa budaya! Buka segel petunjuk bertahap: sentra, rumpun filosofis, ornamen, dan makna simbolik untuk meraih poin maksimal.",
     xp: "Max +100 XP",
-    difficulty: "Semua Level",
+    difficulty: "4 Jenjang Petunjuk",
     image: "/images/motifs/batik_parang.webp",
     accent: "#c4b5fd",
-    badge: "9 MOTIF TERSEDIA",
+    badge: "20 MOTIF TERSEDIA",
     buttonText: "Tebak Motif",
   },
   {
-    id: "sortir-peta",
-    href: "/play/sortir-peta",
+    id: "map",
+    href: "/play/map",
     icon: MapPin,
-    title: "Sortir Motif ke Peta",
-    category: "Geografi Budaya",
-    desc: "Drag kartu motif batik ke pin daerah asalnya pada peta Nusantara sebelum waktu 90 detik berakhir!",
+    title: "Batik Map",
+    category: "Geografi Budaya Nusantara",
+    desc: "Tarik dan pasangkan kartu wastra ke 7 pin sentra batik resmi di peta interaktif Nusantara sebelum waktu 90 detik habis!",
     xp: "+40 - 50 XP / motif",
     difficulty: "Tantangan Waktu",
     image: "/images/motifs/batik_mega_mendung_v2.webp",
     accent: "#7dd3fc",
-    badge: "8 SENTRA NUSANTARA",
+    badge: "7 SENTRA NUSANTARA",
     buttonText: "Jelajahi Peta",
   },
   {
-    id: "tika",
-    href: "/play/tika",
+    id: "zoom",
+    href: "/play/zoom",
     icon: ZoomIn,
-    title: "Tika: Tebak Batik Nusantara",
-    category: "Observasi & Deduksi",
+    title: "Batik Zoom",
+    category: "Observasi Visual Makro",
     desc: "Tebak nama motif batik dari potongan visual makro super detail (zoom 800% hingga 100%) sebelum kesempatan habis!",
     xp: "Max +100 XP",
     difficulty: "Tantangan Harian & Bebas",
     image: "/images/motifs/batik_truntum.webp",
     accent: "#f59e0b",
-    badge: "PROGRESSIVE ZOOM",
-    buttonText: "Mainkan Tika",
+    badge: "PROGRESSIVE MACRO ZOOM",
+    buttonText: "Mulai Zoom Makro",
   },
 ];
 
@@ -120,7 +121,13 @@ const RANKS = [
 ];
 
 export default function ArcadeHubPage() {
-  const { xp, rank } = useXp();
+  const { xp = 0, rank = "Pelajar Budaya", unlockedCards = [], masteryCards = {} } = useXp();
+
+  const starterCount = 6;
+  const safeUnlocked = Array.isArray(unlockedCards) ? unlockedCards : [];
+  const safeMastery = masteryCards && typeof masteryCards === "object" ? masteryCards : {};
+  const totalUnlocked = Math.min(20, Math.max(starterCount, safeUnlocked.length));
+  const goldCount = Object.values(safeMastery).filter((v) => v === "Sulit").length;
 
   return (
     <div className="min-h-screen bg-[#faf8f4] flex flex-col">
@@ -253,6 +260,64 @@ export default function ArcadeHubPage() {
 
         {/* ─── Main Games Grid Section (Clean Light Theme) ─── */}
         <section className="max-w-[1280px] mx-auto px-6 lg:px-16 py-16">
+          {/* ─── Album Koleksi Promo Banner ─── */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-14 bg-gradient-to-r from-[#211b18] via-[#2f221c] to-[#211b18] rounded-3xl p-6 sm:p-8 border border-[#D4AF37]/50 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden text-white"
+          >
+            {/* Background Glow Accents */}
+            <div className="absolute -top-16 -right-16 w-60 h-60 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+              <div className="w-16 h-16 rounded-2xl bg-[#713f2c] border-2 border-[#D4AF37]/60 flex items-center justify-center shadow-lg shrink-0">
+                <Layers className="w-8 h-8 text-[#D4AF37]" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="bg-[#D4AF37] text-[#1A1614] text-[10px] font-display font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Fitur Koleksi Wastra
+                  </span>
+                  <span className="text-xs text-[#D4AF37] font-display font-semibold flex items-center gap-1">
+                    <Sparkles className="w-3 h-3" /> 20 Motif Resmi
+                  </span>
+                </div>
+                <h3 className="font-display font-extrabold text-2xl text-white mb-1">
+                  Album Koleksi & Tingkat Mastery Cap
+                </h3>
+                <p className="text-xs sm:text-sm text-white/80 font-narrative max-w-xl">
+                  Buka 20 kartu motif Nusantara dan raih bingkai eksklusif <strong>Perunggu</strong>, <strong>Perak</strong>, hingga <strong>Emas Berkilau</strong> dengan menuntaskan berbagai tingkat kesulitan.
+                </p>
+              </div>
+            </div>
+
+            {/* Quick Stats & Button */}
+            <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto shrink-0">
+              <div className="bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-center sm:text-right w-full sm:w-auto">
+                <span className="text-[10px] text-white/60 font-display uppercase tracking-wider block">
+                  Status Koleksi Anda
+                </span>
+                <span className="font-display font-extrabold text-lg text-[#D4AF37]">
+                  {totalUnlocked} / 20 Motif
+                </span>
+                {goldCount > 0 && (
+                  <span className="text-[11px] text-emerald-400 font-semibold flex items-center justify-center sm:justify-end gap-1 mt-0.5">
+                    <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>{goldCount} Mahakarya Emas</span>
+                  </span>
+                )}
+              </div>
+              <Link
+                href="/collection"
+                className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#c49f2e] text-[#1A1614] font-display font-bold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#D4AF37]/25 shrink-0"
+              >
+                <span>Buka Album Koleksi</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
+
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-[#713f2c]/10 gap-4">
             <div>
               <div className="inline-flex items-center gap-2 text-[#713f2c] text-xs font-display font-bold tracking-wider uppercase mb-1">

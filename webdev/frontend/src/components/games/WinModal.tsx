@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Star, Trophy, X, ChevronRight } from "lucide-react";
+import { Star, Trophy, X, ChevronRight, Layers } from "lucide-react";
 import Link from "next/link";
 
 interface WinModalProps {
@@ -137,28 +137,38 @@ export function WinModal({
               </div>
 
               {/* CTA */}
-              <div className="flex gap-3">
-                <button
-                  onClick={onClose}
-                  className="flex-1 border border-[#d3ccc2] text-[#8d786a] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#e8e5df] transition-colors"
-                >
-                  Main Lagi
-                </button>
-                {onNext ? (
+              <div className="flex flex-col gap-2">
+                <div className="flex gap-3">
                   <button
-                    onClick={onNext}
-                    className="flex-1 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#583122] transition-colors flex items-center justify-center gap-1.5"
+                    onClick={onClose}
+                    className="flex-1 border border-[#d3ccc2] text-[#8d786a] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#e8e5df] transition-colors"
                   >
-                    Game Lain <ChevronRight className="w-4 h-4" />
+                    Main Lagi
                   </button>
-                ) : (
-                  <Link
-                    href="/play"
-                    className="flex-1 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#583122] transition-colors flex items-center justify-center gap-1.5"
-                  >
-                    Hub Arcade <ChevronRight className="w-4 h-4" />
-                  </Link>
-                )}
+                  {onNext ? (
+                    <button
+                      onClick={onNext}
+                      className="flex-1 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#583122] transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      Game Lain <ChevronRight className="w-4 h-4" />
+                    </button>
+                  ) : (
+                    <Link
+                      href="/play"
+                      className="flex-1 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm py-2.5 rounded-xl hover:bg-[#583122] transition-colors flex items-center justify-center gap-1.5"
+                    >
+                      Batik Arcade <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  )}
+                </div>
+                <Link
+                  href="/collection"
+                  className="w-full text-center text-xs text-[#713f2c] hover:text-[#583122] font-display font-bold py-1.5 bg-[#FAF8F4] hover:bg-[#F3EFEA] rounded-xl border border-[#d3ccc2]/80 transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <Layers className="w-3.5 h-3.5 text-[#D4AF37]" />
+                  <span>Buka Album Koleksi Kartu</span>
+                  <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />
+                </Link>
               </div>
             </div>
           </motion.div>

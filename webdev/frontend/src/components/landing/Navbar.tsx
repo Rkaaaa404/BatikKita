@@ -12,10 +12,11 @@ interface NavbarProps {
 
 const NAV_LINKS = [
   { href: "/", label: "Beranda", exact: true },
-  { href: "/play", label: "Arcade", exact: false },
+  { href: "/play", label: "Batik Arcade", exact: false },
   { href: "/scan", label: "Batik Lens", exact: false },
-  { href: "/chat", label: "Sang Empu", exact: false },
+  { href: "/chat", label: "Batik Ask", exact: false },
   { href: "/batikpedia", label: "Batik Pedia", exact: false },
+  { href: "/collection", label: "Koleksi", exact: false },
 ];
 
 export function Navbar({ variant = "auto" }: NavbarProps) {

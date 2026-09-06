@@ -794,11 +794,11 @@ export default function BatikpediaPage() {
                       </Link>
 
                       <Link
-                        href="/play/tebak-motif"
+                        href="/play/guess"
                         className="flex-1 inline-flex items-center justify-center gap-2 bg-[#713f2c] hover:bg-[#583122] text-[#D4AF37] font-display font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-md"
                       >
                         <Gamepad2 className="w-4 h-4" />
-                        <span>Tebak di Arcade</span>
+                        <span>Batik Guess</span>
                       </Link>
                     </div>
                   </div>
