@@ -1,0 +1,14 @@
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+.next
+.git
+.gitignore
+.vscode
+.idea
+README.md
+CLAUDE.md
+AGENTS.md
+*.tsbuildinfo
+.DS_Store
