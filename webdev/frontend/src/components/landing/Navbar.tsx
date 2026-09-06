@@ -142,7 +142,7 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
               {pathname?.startsWith("/play") ? (
                 <>
                   <Sparkles className="w-3.5 h-3.5" />
-                  Tanya Sang Empu
+                  Batik Ask
                 </>
               ) : (
                 <>

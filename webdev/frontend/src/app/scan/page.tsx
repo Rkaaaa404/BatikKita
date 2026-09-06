@@ -723,7 +723,7 @@ export default function ScannerPage() {
                             className="w-full sm:flex-1 text-center inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] font-display font-bold text-sm py-3.5 px-4 rounded-xl hover:bg-[#583122] transition-colors shadow-sm"
                           >
                             <MessageSquare className="w-4 h-4" />
-                            Tanya Sang Empu Lebih Lanjut
+                            Batik Ask — Tanya Lebih Lanjut
                           </Link>
                           <Link
                             href="/play"

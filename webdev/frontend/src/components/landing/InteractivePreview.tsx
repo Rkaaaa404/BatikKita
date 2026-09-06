@@ -151,10 +151,10 @@ export function InteractivePreview() {
     <section className="py-24 w-full bg-[#1A1614] relative overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-16 space-y-28 relative z-10">
 
-      {/* ── Section: Tanya Sang Empu (left) + AI Scanner (right) ── */}
+      {/* ── Section: Batik Ask (left) + AI Scanner (right) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-        {/* LEFT: Tanya Sang Empu Chat */}
+        {/* LEFT: Batik Ask Chat */}
         <motion.div 
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -168,7 +168,7 @@ export function InteractivePreview() {
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-display font-semibold text-sm text-[#2d2b38]">Tanya Sang Empu</h4>
+              <h4 className="font-display font-semibold text-sm text-[#2d2b38]">Batik Ask</h4>
               <span className="text-[11px] text-[#10B981] flex items-center gap-1 font-medium">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] inline-block animate-pulse" /> Online
               </span>

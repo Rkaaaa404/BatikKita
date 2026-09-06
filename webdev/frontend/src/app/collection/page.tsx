@@ -602,7 +602,7 @@ export default function CollectionPage() {
                     className="w-full bg-[#f5f3ef] hover:bg-[#e8e5df] text-[#713f2c] font-display font-semibold text-xs py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2 border border-[#d3ccc2]"
                   >
                     <MessageSquare className="w-4 h-4 text-[#D4AF37]" />
-                    Tanya Sang Empu (Batik Ask)
+                    Batik Ask
                   </Link>
 
                   <Link

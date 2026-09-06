@@ -24,7 +24,7 @@ export default function Home() {
       {/* 4. Edu-Games Arcade Interactive Preview */}
       <ArcadePreview />
 
-      {/* 5. Tanya Sang Empu + AI Scanner Interactive Preview */}
+      {/* 5. Batik Ask + AI Scanner Interactive Preview */}
       <InteractivePreview />
 
       {/* 5. Batikpedia Heritage Cards Collection */}

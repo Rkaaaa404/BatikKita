@@ -17,7 +17,7 @@ const pillars = [
     icon: Sparkles,
     title: "Batik Lens & Ask",
     subtitle: "AI Cultural Suite Nusantara",
-    desc: "Identifikasi motif kain seketika dengan AI Batik Lens multimodal, atau berbincang mendalam seputar filosofi wastra bersama asisten Batik Ask (Sang Empu).",
+    desc: "Identifikasi motif kain seketika dengan AI Batik Lens multimodal, atau berbincang mendalam seputar filosofi wastra bersama asisten Batik Ask.",
     iconBg: "bg-[#FFF8E7]",
     iconColor: "text-[#D4AF37]",
     subtitleColor: "text-[#713f2c]",

@@ -39,13 +39,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Batik Kita: Warisan Luhur dalam Sentuhan Digital",
   description:
-    "Platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara melalui Edu-Games, AI Vision Scanner, Tanya Sang Empu, dan Peta Interaktif.",
+    "Platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara melalui Edu-Games, AI Vision Scanner, Batik Ask, dan Peta Interaktif.",
   keywords: [
     "Batik Kita",
     "Edukasi Batik",
     "Batik Nusantara",
     "AI Batik Scanner",
-    "Tanya Sang Empu",
+    "Batik Ask",
     "HOLOGY 9.0",
     "HoloDev",
   ],

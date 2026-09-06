@@ -241,7 +241,7 @@ export default function ChatPage() {
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
-                <span className="font-philosopher tracking-wide">Tanya Sang Empu</span>:{" "}
+                <span className="font-philosopher tracking-wide">Batik Ask</span>:{" "}
                 <span
                   style={{
                     color: "#D4AF37",
@@ -260,7 +260,7 @@ export default function ChatPage() {
 
               <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/80">
                 <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Sang Empu Siap Berdialog
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Batik Ask Siap Berdialog
                 </span>
                 <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
                   <BookOpen className="w-3.5 h-3.5 text-[#D4AF37]" /> Berbasis Serat Klasik Mataram
@@ -271,7 +271,7 @@ export default function ChatPage() {
               </div>
             </motion.div>
 
-            {/* Right column: Sang Empu Persona Card */}
+            {/* Right column: Batik Ask Persona Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -305,7 +305,7 @@ export default function ChatPage() {
                     <div>
                       <div className="flex items-center gap-2">
                         <h3 className="font-display font-bold text-lg text-white">
-                          Sang Empu Batik
+                          Batik Ask
                         </h3>
                         <span className="bg-[#D4AF37]/20 text-[#D4AF37] text-[10px] font-display font-bold px-2 py-0.5 rounded-full border border-[#D4AF37]/30">
                           Budayawan AI
@@ -377,7 +377,7 @@ export default function ChatPage() {
                 </span>
               </div>
               <h2 className="font-display font-bold text-2xl text-[#2d2b38] mt-1">
-                Dialog Bersama Sang Empu
+                Dialog Bersama Batik Ask
               </h2>
               <p className="font-narrative text-xs sm:text-sm text-[#8d786a]">
                 Ketik pertanyaan Anda atau klik salah satu topik populer di bawah ini untuk memulai percakapan:
@@ -478,7 +478,7 @@ export default function ChatPage() {
                 </div>
                 <div>
                   <span className="font-display font-bold text-sm text-[#2d2b38] block leading-tight">
-                    Sang Empu Batik Nusantara
+                    Batik Ask — Sang Empu Nusantara
                   </span>
                   <span className="text-[11px] text-[#8d786a] font-narrative">
                     Menjawab dengan bahasa santun & rujukan serat
@@ -551,7 +551,7 @@ export default function ChatPage() {
                   </div>
                   <div className="bg-white border border-[#d3ccc2]/80 rounded-2xl rounded-tl-none px-5 py-4 flex items-center gap-2.5 shadow-xs">
                     <span className="text-xs text-[#8d786a] font-narrative">
-                      Sang Empu sedang menimbang petuah...
+                      Batik Ask sedang menimbang petuah...
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-[#713f2c] animate-ping" />
                   </div>
