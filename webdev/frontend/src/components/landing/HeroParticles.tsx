@@ -4,6 +4,17 @@ import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
+// Suppress upstream Three.js r185 THREE.Clock deprecation notice emitted by @react-three/fiber internal loop
+if (typeof window !== "undefined") {
+  const originalWarn = console.warn;
+  console.warn = (...args: unknown[]) => {
+    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) {
+      return;
+    }
+    originalWarn.apply(console, args);
+  };
+}
+
 function DustParticles() {
   const pointsRef = useRef<THREE.Points>(null);
 
