@@ -60,8 +60,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_bokor_kencono",
     name: "Bokor Kencono",
     fullName: "Batik Bokor Kencono",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "D.I. Yogyakarta & Jawa Tengah",
+    region: "D.I. Yogyakarta",
+    province: "D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -192,8 +192,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_kawung",
     name: "Kawung",
     fullName: "Batik Kawung",
-    region: "D.I. Yogyakarta & Surakarta (Mataram)",
-    province: "D.I. Yogyakarta & Jawa Tengah",
+    region: "D.I. Yogyakarta",
+    province: "D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -265,18 +265,18 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     philosophy:
       "Gumpalan awan mendung pembawa hujan menyimbolkan kepala dingin, kesabaran jiwa, dan kemampuan meredam emosi saat menghadapi persoalan, seperti awan sejuk yang membasahi bumi panas.",
     usage: "Busana kerja kantor pria dan wanita, kemeja santai etnik, syal, serta busana panggung diplomasi budaya.",
-    visualTraits: "Lapis-lapis awan mendung horizontal berundak dengan ujung segitiga lancip, menampilkan gradasi tujuh tingkat warna dari biru pekat menuju biru langit dan putih bersih.",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    visualTraits: "Gumpalan awan mendung berundak meliuk lancip segitiga dengan gradasi tujuh lapis warna biru indigo, toska cerah, dan putih bersih yang meneduhkan jiwa khas pusaka Keraton Cirebon.",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
     variants: [
       {
-        name: "Mega Mendung Biru Latar Putih Pethak",
+        name: "Mega Mendung Gradasi Royal Blue Klasik",
         image: "/images/motifs/batik_mega_mendung_var1.webp",
-        description: "Gumpalan awan mendung biru bergradasi anggun di atas latar kain putih bersih (pethak) yang menonjolkan ketajaman siluet awan.",
+        description: "Pola awan mendung bergradasi tujuh lapis biru pekat dan biru langit di atas latar biru malam, melambangkan kedalaman kesabaran dan keteduhan jiwa.",
       },
       {
-        name: "Mega Mendung Latar Merah Menyala",
+        name: "Mega Mendung Awan Indigo Latar Scarlet",
         image: "/images/motifs/batik_mega_mendung_var2.webp",
-        description: "Paduan kontras awan gradasi biru-putih di atas latar merah menyala (abang) khas pesisir Cirebon yang berani dan energik.",
+        description: "Liukan awan biru indigo dengan kontur putih tajam di atas latar merah marun scarlet, menampilkan akulturasi seni rupa Cirebon dan Tionghoa yang semarak.",
       },
     ],
     hints: [
@@ -291,8 +291,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_parang",
     name: "Parang",
     fullName: "Batik Parang",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "Jawa Tengah & D.I. Yogyakarta",
+    region: "D.I. Yogyakarta",
+    province: "D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Larangan",
     philosophy:
@@ -324,8 +324,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_sekarjagad",
     name: "Sekar Jagad",
     fullName: "Batik Sekar Jagad",
-    region: "D.I. Yogyakarta & Surakarta (Mataram)",
-    province: "D.I. Yogyakarta & Jawa Tengah",
+    region: "D.I. Yogyakarta",
+    province: "D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -357,8 +357,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_sidoluhur",
     name: "Sido Luhur",
     fullName: "Batik Sido Luhur",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "Jawa Tengah & D.I. Yogyakarta",
+    region: "Surakarta (Solo)",
+    province: "Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -464,7 +464,7 @@ export const BATIK_DATASET_20: BatikMotif[] = [
       "Wujud satwa mitologi agung yang menggabungkan belalai gajah (Hindu), sayap garuda (Islam), kepala naga (Tiongkok), dan badan singa (Eropa). Menjadi simbol toleransi dan persahabatan antarbangsa di Keraton Kasepuhan Cirebon.",
     usage: "Kain pusaka kehormatan yang dipajang sebagai karya seni wastra agung atau dikenakan pada upacara budaya keraton.",
     visualTraits: "Komposisi utuh Kereta Kencana Singa Barong pusaka Panembahan Losari tahun 1549, menampilkan sepasang satwa mitologi berpayung kerajaan, roda pedati kencana, kawanan burung hong di angkasa, dan batu karang wadasan di dasarnya.",
-    image: "/images/motifs/batik_singa_barong.webp",
+    image: "/images/motifs/batik_singa_barong_v2.webp",
     variants: [
       {
         name: "Singa Barong Tatah Berulang",
@@ -489,8 +489,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_srikaton",
     name: "Srikaton",
     fullName: "Batik Srikaton",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "Jawa Tengah & D.I. Yogyakarta",
+    region: "D.I. Yogyakarta",
+    province: "D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -621,8 +621,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_wahyu_tumurun",
     name: "Wahyu Tumurun",
     fullName: "Batik Wahyu Tumurun",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "Jawa Tengah & D.I. Yogyakarta",
+    region: "Surakarta (Solo)",
+    province: "Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
@@ -654,8 +654,8 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_wirasat",
     name: "Wirasat",
     fullName: "Batik Wirasat",
-    region: "Surakarta & D.I. Yogyakarta (Mataram)",
-    province: "Jawa Tengah & D.I. Yogyakarta",
+    region: "Surakarta (Solo)",
+    province: "Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:

@@ -46,7 +46,7 @@ export const TIKA_CATALOG: TikaMotif[] = [
     category: "Batik Pesisiran (Alam)",
     description:
       "Gumpalan awan berlapis dengan gradasi warna tegas khas pesisir Cirebon. Melambangkan keluasan jiwa, keteduhan watak pemimpin, dan kesabaran dalam menghadapi cobaan hidup seperti awan yang menyejukkan bumi.",
-    image_url: "/images/motifs/batik_mega_mendung.webp",
+    image_url: "/images/motifs/batik_mega_mendung_v2.webp",
     focus_point: { x: 0.42, y: 0.38 },
     difficulty_multiplier: 1.1,
     clues: [
@@ -160,7 +160,7 @@ export const TIKA_CATALOG: TikaMotif[] = [
     category: "Batik Keraton (Mitos)",
     description:
       "Menggambarkan wujud kereta kencana Paksi Naga Liman dari Keraton Kasepuhan Cirebon. Perpaduan empat unsur budaya: belalai gajah (India), kepala naga (Tiongkok), sayap garuda (Islam/Jawa), dan badan singa (Eropa).",
-    image_url: "/images/motifs/batik_singa_barong.webp",
+    image_url: "/images/motifs/batik_singa_barong_v2.webp",
     focus_point: { x: 0.38, y: 0.42 },
     difficulty_multiplier: 1.5,
     clues: [
