@@ -28,6 +28,144 @@ interface Message {
   time: string;
 }
 
+function formatInlineMarkdown(text: string, isUser: boolean): React.ReactNode[] {
+  const regex = /(\*\*\*([^*]+)\*\*\*|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`)/g;
+  const elements: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      elements.push(text.slice(lastIndex, match.index));
+    }
+
+    if (match[2]) {
+      // ***bold italic***
+      elements.push(
+        <strong
+          key={`bi-${match.index}`}
+          className={`font-bold italic ${isUser ? "text-amber-200" : "text-[#713f2c]"}`}
+        >
+          {match[2]}
+        </strong>
+      );
+    } else if (match[3]) {
+      // **bold**
+      elements.push(
+        <strong
+          key={`b-${match.index}`}
+          className={`font-bold ${isUser ? "text-amber-100" : "text-[#713f2c]"}`}
+        >
+          {match[3]}
+        </strong>
+      );
+    } else if (match[4]) {
+      // *italic*
+      elements.push(
+        <em
+          key={`i-${match.index}`}
+          className={`italic ${isUser ? "text-amber-100/90" : "text-[#4a4039]"}`}
+        >
+          {match[4]}
+        </em>
+      );
+    } else if (match[5]) {
+      // `code`
+      elements.push(
+        <code
+          key={`c-${match.index}`}
+          className={`px-1.5 py-0.5 rounded text-xs font-mono ${
+            isUser ? "bg-white/20 text-white" : "bg-[#713f2c]/10 text-[#713f2c]"
+          }`}
+        >
+          {match[5]}
+        </code>
+      );
+    }
+
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    elements.push(text.slice(lastIndex));
+  }
+
+  return elements.length > 0 ? elements : [text];
+}
+
+function FormattedMessage({ content, isUser }: { content: string; isUser: boolean }) {
+  const lines = content.split("\n");
+
+  return (
+    <div className="space-y-2 font-narrative text-sm sm:text-[15px] leading-relaxed">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim();
+
+        if (!trimmed) {
+          return <div key={`spacer-${idx}`} className="h-1.5" />;
+        }
+
+        // Bullet point: •, -, or *
+        if (/^([•\-\*])\s+/.test(trimmed)) {
+          const bulletContent = trimmed.replace(/^([•\-\*])\s+/, "");
+          return (
+            <div key={`bullet-${idx}`} className="flex items-start gap-2.5 pl-1.5 my-1">
+              <span
+                className={`inline-block mt-2 w-1.5 h-1.5 rounded-full shrink-0 ${
+                  isUser ? "bg-amber-300" : "bg-[#713f2c]"
+                }`}
+              />
+              <div className="flex-1 leading-relaxed">
+                {formatInlineMarkdown(bulletContent, isUser)}
+              </div>
+            </div>
+          );
+        }
+
+        // Numbered list: 1., 2., etc.
+        const numMatch = trimmed.match(/^(\d+[\.\)])\s+(.*)/);
+        if (numMatch) {
+          return (
+            <div key={`num-${idx}`} className="flex items-start gap-2.5 pl-1.5 my-1">
+              <span
+                className={`font-display font-bold text-xs mt-0.5 shrink-0 ${
+                  isUser ? "text-amber-200" : "text-[#713f2c]"
+                }`}
+              >
+                {numMatch[1]}
+              </span>
+              <div className="flex-1 leading-relaxed">
+                {formatInlineMarkdown(numMatch[2], isUser)}
+              </div>
+            </div>
+          );
+        }
+
+        // Heading: ### or ##
+        if (/^#{1,4}\s+/.test(trimmed)) {
+          const headingContent = trimmed.replace(/^#{1,4}\s+/, "");
+          return (
+            <div
+              key={`head-${idx}`}
+              className={`font-display font-bold text-base mt-2.5 mb-1 ${
+                isUser ? "text-white" : "text-[#713f2c]"
+              }`}
+            >
+              {formatInlineMarkdown(headingContent, isUser)}
+            </div>
+          );
+        }
+
+        return (
+          <p key={`p-${idx}`} className="m-0 leading-relaxed">
+            {formatInlineMarkdown(line, isUser)}
+          </p>
+        );
+      })}
+    </div>
+  );
+}
+
 const QUICK_PROMPTS = [
   "Apa bedanya batik Solo dan Yogya?",
   "Motif apa yang cocok untuk resepsi pernikahan?",
@@ -556,9 +694,7 @@ export default function ChatPage() {
                           : "bg-white text-[#2d2b38] border border-[#d3ccc2]/80 rounded-tl-none"
                       }`}
                     >
-                      <p className="font-narrative text-sm sm:text-[15px] leading-relaxed whitespace-pre-wrap">
-                        {msg.content}
-                      </p>
+                      <FormattedMessage content={msg.content} isUser={msg.role === "user"} />
                       <span
                         className={`block text-[10px] mt-2 text-right font-display ${
                           msg.role === "user" ? "text-white/60" : "text-[#8d786a]"
