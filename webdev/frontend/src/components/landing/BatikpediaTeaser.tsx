@@ -34,7 +34,7 @@ const CARDS = [
     category: "Motif Pesisiran",
     stars: 3,
     isUnlocked: true,
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
     philosophy:
       "Awan pembawa hujan sebagai lambang kesabaran dan keteduhan jiwa, lahir dari akulturasi Cirebon dan Tiongkok.",
   },

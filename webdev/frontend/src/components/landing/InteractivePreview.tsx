@@ -21,7 +21,7 @@ const SAMPLE_MOTIFS: SampleMotif[] = [
     name: "Mega Mendung",
     region: "Cirebon, Jawa Barat",
     category: "Batik Pesisiran",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
     philosophy:
       "Awan pembawa hujan yang melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan pelindung di tengah terik.",
     recommendation: "Sangat luwes untuk pakaian kerja, busana semi-formal, maupun perayaan modern.",
