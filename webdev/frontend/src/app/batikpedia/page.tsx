@@ -41,10 +41,9 @@ const REGIONS: RegionData[] = [
     motifIds: [
       "batik_kawung",
       "batik_parang",
-      "batik_sekar_jagad",
+      "batik_sekarjagad",
       "batik_bokor_kencono",
       "batik_sidomulyo",
-      "batik_tambal",
     ],
   },
   {
@@ -57,6 +56,10 @@ const REGIONS: RegionData[] = [
       "batik_sidomukti",
       "batik_truntum",
       "batik_sidoluhur",
+      "batik_srikaton",
+      "batik_tribusono",
+      "batik_wahyu_tumurun",
+      "batik_wirasat",
     ],
   },
   {
@@ -103,43 +106,13 @@ const REGIONS: RegionData[] = [
     ],
   },
   {
-    id: "magetan",
-    name: "Magetan",
-    province: "Jawa Timur",
-    description:
-      "Sentra batik lereng Gunung Lawu di Desa Sidomukti. Khas dengan rumpun bambu (pring) yang melambangkan kerukunan, keteduhan, dan ketangguhan hidup berdampingan.",
-    motifIds: [
-      "batik_pring_sedapur",
-    ],
-  },
-  {
-    id: "ciamis",
-    name: "Ciamis / Priangan",
-    province: "Jawa Barat",
-    description:
-      "Batik Priangan beraura tenang dan teduh. Menampilkan simbol spiritual tasawuf Insan Kamil tentang kesempurnaan akhlak dan kesederhanaan hidup.",
-    motifIds: [
-      "batik_insan_kamil",
-    ],
-  },
-  {
     id: "kalimantan",
-    name: "Kalimantan Tengah",
-    province: "Kalimantan Tengah",
+    name: "Kalimantan",
+    province: "Kalimantan",
     description:
       "Wastra Dayak dengan stilasi Pohon Kehidupan (Batang Garing), tameng telawang, dan sulur pakis alam yang sarat penghormatan kepada semesta.",
     motifIds: [
       "batik_dayak",
-    ],
-  },
-  {
-    id: "papua",
-    name: "Papua",
-    province: "Papua",
-    description:
-      "Wastra khas Indonesia Timur dengan siluet burung Cendrawasih (Kasuari/Surga) dan ukiran tifa Asmat berwarna terakota tanah dan hitam arang.",
-    motifIds: [
-      "batik_cendrawasih",
     ],
   },
 ];
@@ -190,7 +163,11 @@ export default function BatikpediaPage() {
   const currentRegion = REGIONS.find((r) => r.id === activeRegion);
 
   const handleOpenMotif = (motif: BatikMotif) => {
-    setSelectedMotif(motif);
+    const fullMotif = motifMap.get(motif.id) || motif;
+    setSelectedMotif({
+      ...fullMotif,
+      variants: Array.isArray(fullMotif.variants) ? fullMotif.variants : [],
+    });
     setActiveVariantIndex(0);
   };
 
@@ -657,12 +634,12 @@ export default function BatikpediaPage() {
                           <p className="text-[#D4AF37] font-bold text-[11px] uppercase tracking-wider">
                             {activeVariantIndex === 0
                               ? "Motif Utama (Pewarnaan Tradisional)"
-                              : selectedMotif.variants[activeVariantIndex - 1]?.name}
+                              : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.name) || "Ragam Variasi"}
                           </p>
                           <p className="text-white/80 font-body text-[11px] mt-0.5">
                             {activeVariantIndex === 0
                               ? selectedMotif.visualTraits
-                              : selectedMotif.variants[activeVariantIndex - 1]?.description}
+                              : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.description) || selectedMotif.visualTraits}
                           </p>
                         </div>
                       </div>
@@ -697,7 +674,7 @@ export default function BatikpediaPage() {
                         </button>
 
                         {/* Thumbnail 1: Variant 1 */}
-                        {selectedMotif.variants[0] && (
+                        {selectedMotif.variants?.[0] && (
                           <button
                             type="button"
                             onClick={() => setActiveVariantIndex(1)}
@@ -721,7 +698,7 @@ export default function BatikpediaPage() {
                         )}
 
                         {/* Thumbnail 2: Variant 2 */}
-                        {selectedMotif.variants[1] && (
+                        {selectedMotif.variants?.[1] && (
                           <button
                             type="button"
                             onClick={() => setActiveVariantIndex(2)}
