@@ -32,7 +32,7 @@ npm start
   - `/play/zoom` — **Batik Zoom** (Observasi visual makro bertahap)
 - `/collection` — **Album Koleksi Wastra** (20 kartu motif dengan bingkai adaptif mastery)
 - `/batikpedia` — **Batik Pedia** (Ensiklopedia 20 ragam hias motif batik resmi)
-- `/chat` — **Batik Ask** (Tanya Sang Empu - Asisten Budaya Cerdas)
+- `/chat` — **Batik Ask** (Asisten Budaya Cerdas)
 
 ## Standalone Docker Build
 

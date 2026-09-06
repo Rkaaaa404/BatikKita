@@ -1,4 +1,4 @@
-# Product Requirement Document (PRD)
+﻿# Product Requirement Document (PRD)
 # Batik Kita — Interactive Batik Education & AI Cultural Experience Platform
 
 | Metadata | Detail |
@@ -16,7 +16,7 @@
 ## 1. Executive Summary & Vision
 
 ### 1.1 Product Vision
-**Batik Kita** adalah platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara. Dengan memadukan **Edu-Games Arcade**, **AI Vision Motif Scanner**, **Asisten Budaya Cerdas (Tanya Sang Empu)**, dan **Peta Geografis Interaktif**, platform ini mengubah pembelajaran sejarah dan filosofi batik dari konsumsi teks pasif menjadi petualangan visual yang menyenangkan, terukur, dan bermakna.
+**Batik Kita** adalah platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara. Dengan memadukan **Edu-Games Arcade**, **AI Vision Motif Scanner**, **Asisten Budaya Cerdas (Batik Ask)**, dan **Peta Geografis Interaktif**, platform ini mengubah pembelajaran sejarah dan filosofi batik dari konsumsi teks pasif menjadi petualangan visual yang menyenangkan, terukur, dan bermakna.
 
 ### 1.2 Problem Statement
 1. **Rendahnya Keterlibatan Generasi Muda (*Low Cultural Engagement*)**: Apresiasi batik saat ini mayoritas hanya sebatas pemakaian pakaian jadi (*passive wearing*) tanpa pemahaman makna simbolis di balik ragam hiasnya.
@@ -27,7 +27,7 @@
 ### 1.3 Value Proposition
 - **Play & Learn (Belajar Lewat Bermain)**: Memahami geometri dan isen-isen batik melalui mini-games *Jigsaw Puzzle* dan *Detektif Isen-Isen*.
 - **Instant Cultural Discovery**: Memindai pakaian batik pengguna sendiri menggunakan AI untuk langsung mengetahui motif, daerah asal, dan filosofinya.
-- **Interactive Storytelling**: Berdialog langsung dengan representasi budayawan batik melalui AI chatbot interaktif (*Tanya Sang Empu*).
+- **Interactive Storytelling**: Berdialog langsung dengan representasi budayawan batik melalui AI chatbot interaktif (*Batik Ask*).
 - **Gamified Cultural Collection**: Mengumpulkan kartu digital *Batikpedia* berpenampilan mewah yang memotivasi pengguna untuk terus belajar.
 
 ---
@@ -61,7 +61,7 @@
 │ • Batik Jigsaw Puzzle Engine      │ • E-Commerce Marketplace UMKM      │
 │ • Detektif Isen-Isen Spotting     │ • AR Fabric 3D Clothes Projection  │
 │ • AI Batik Lens / Image Scanner   │ • Multi-player Realtime Battle     │
-│ • Tanya Sang Empu AI Chatbot      │ • Mobile Native App (Flutter/RN)   │
+│ • Batik Ask AI Chatbot      │ • Mobile Native App (Flutter/RN)   │
 │ • Peta Interaktif 7 Sentra Batik  │ • Cetak Fisik Kain Otomatis        │
 │ • Batikpedia Card & XP System     │                                    │
 │ • Web Responsive Desktop & Mobile │                                    │
@@ -124,7 +124,7 @@
      - **Rekomendasi Pemakaian**: (Contoh: *Sangat luwes, pantas untuk busana kerja, santai, maupun pesta*).
   4. Tombol **"Simpan ke Koleksi Saya"** atau **"Tanya Lebih Lanjut ke Empu"**.
 
-#### Feature 2.2: "Tanya Sang Empu" (AI Conversational Agent)
+#### Feature 2.2: "Batik Ask" (AI Conversational Agent)
 - **User Story**: *Sebagai pengguna, saya ingin bertanya apa saja mengenai sejarah dan etika batik kepada asisten AI yang berwawasan budaya luas.*
 - **Spesifikasi Alur**:
   1. Antarmuka chat interaktif bertema pendopo Jawa klasik yang elegan.
@@ -169,7 +169,7 @@
   - Menyelesaikan Jigsaw Puzzle: **+100 XP**
   - Menyelesaikan Detektif Isen: **+80 XP**
   - Melakukan Scan AI Batik: **+50 XP**
-  - Bertanya ke Tanya Sang Empu: **+30 XP**
+  - Bertanya ke Batik Ask: **+30 XP**
 - **Tingkatan Gelar**:
   1. *Pelajar Budaya* (0 – 250 XP)
   2. *Penjelajah Ragam Hias* (251 – 600 XP)
@@ -287,7 +287,7 @@ CREATE TABLE game_logs (
 | Hari | Target Pekerjaan | Penanggung Jawab |
 |:---:|---|:---:|
 | **Hari 1–2** | Inisialisasi Next.js, Setup Tailwind & Shadcn UI, Implementasi Engine Jigsaw Drag-and-Drop + Game Detektif Isen. | **Rayka & Rayhan** |
-| **Hari 3–4** | Integrasi API Google Gemini ("Tanya Sang Empu") & Modul Pemindai AI Batik Lens, kurasi 7 motif utama. | **Rayka & Haekal** |
+| **Hari 3–4** | Integrasi API Google Gemini ("Batik Ask") & Modul Pemindai AI Batik Lens, kurasi 7 motif utama. | **Rayka & Haekal** |
 | **Hari 5–6** | Pembuatan Peta Interaktif Nusantara, Halaman Batikpedia Card Album, dan integrasi database Supabase XP/Leaderboard. | **Rayka & Rayhan** |
 | **Hari 7** | Finishing UI/UX, uji coba responsivitas perangkat, QA testing bug-free, deployment ke Vercel. | **Seluruh Tim** |
 | **Hari 8** | Finalisasi naskah proposal PDF 30 halaman (Haekal) & pembuatan slide Pitch Deck (Rayhan/Haekal). | **Haekal & Rayhan** |

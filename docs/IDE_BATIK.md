@@ -1,4 +1,4 @@
-# Batik Kita — Platform Edukasi dan Eksplorasi Batik Nusantara Interaktif Berbasis Edu-Games, AI Vision, dan Asisten Budaya Cerdas
+﻿# Batik Kita — Platform Edukasi dan Eksplorasi Batik Nusantara Interaktif Berbasis Edu-Games, AI Vision, dan Asisten Budaya Cerdas
 
 > **Dokumen Inti Ide Proposal — HoloDev HOLOGY 9.0**  
 > Subtema: **Pendidikan** — Transformasi pendidikan dengan teknologi adaptif, inklusif, dan pembelajaran sepanjang hayat.
@@ -18,7 +18,7 @@ Batik Indonesia telah diakui oleh UNESCO sebagai Warisan Budaya Takbenda Kemanus
 **Batik Kita** hadir sebagai platform web edukasi interaktif yang mentransformasi pembelajaran warisan budaya batik menjadi pengalaman yang menyenangkan, terukur, dan bermakna. Platform ini memadukan tiga pilar utama:
 1. **Interactive Edu-Games Arcade**: Mini-games edukatif meliputi *Batik Jigsaw Puzzle* (rekonstruksi potongan geometri motif), *Detektif Isen-Isen* (*spot the pattern element*), dan *Quick Draw Canvas* (latihan menggambar pola dasar dengan umpan balik visual).
 2. **AI-Powered Cultural Lens & Scanner**: Fitur pemindaian citra berbasis Computer Vision yang mengenali motif batik dari foto pakaian/kain pengguna, mengungkap asal daerah, filosofi simbolis, hingga etika penggunaannya.
-3. **"Tanya Sang Empu" (AI Cultural Chatbot)**: Asisten cerdas bertenaga Large Language Model (LLM) dengan persona budayawan/empu batik lokal yang siap menjawab pertanyaan kultural secara interaktif.
+3. **"Batik Ask" (AI Cultural Chatbot)**: Asisten cerdas bertenaga Large Language Model (LLM) dengan persona budayawan/empu batik lokal yang siap menjawab pertanyaan kultural secara interaktif.
 4. **Peta Interaktif Batik Nusantara & Album Koleksi**: Eksplorasi geografis gaya batik (Keraton vs. Pesisiran) yang terintegrasi dengan sistem lencana dan kartu koleksi bermakna (*Batikpedia*).
 
 Dengan pendekatan *playful learning* yang didukung teknologi modern, Batik Kita mendemokratisasi akses edukasi budaya, menumbuhkan rasa bangga generasi muda terhadap warisan nusantara, dan mendukung pelestarian budaya berbasis transformasi digital.
@@ -43,7 +43,7 @@ Riset dalam bidang *Educational Technology* (EdTech) membuktikan bahwa metode pe
 Dengan memanfaatkan teknologi web modern dan AI:
 - **Gamifikasi Rekonstruksi (Puzzle & Spotting)** melatih daya ingat visual pengguna terhadap anatomi motif dan ornamen pengisi (*isen-isen*).
 - **Computer Vision (AI Scanner)** menghubungkan dunia nyata pengguna (baju batik yang dikenakan) langsung ke database pengetahuan budaya secara instan.
-- **Generative AI ("Tanya Sang Empu")** menghidupkan dialog budaya dua arah yang kontekstual, ramah, dan mendalam.
+- **Generative AI ("Batik Ask")** menghidupkan dialog budaya dua arah yang kontekstual, ramah, dan mendalam.
 
 ---
 
@@ -52,7 +52,7 @@ Dengan memanfaatkan teknologi web modern dan AI:
 ### d.1 Tujuan
 1. Membangun portal web edukasi batik interaktif yang mengintegrasikan mini-games edukatif untuk mengenalkan ragam hias dan filosofi batik nusantara.
 2. Mengimplementasikan fitur pemindai cerdas (*AI Batik Lens*) untuk mendeteksi motif kain pengguna dan memaparkan konteks kulturalnya.
-3. Menyediakan asisten virtual edukasi budaya (*Tanya Sang Empu*) berbasis AI guna menjawab pertanyaan seputar sejarah, makna, dan etika pemakaian batik.
+3. Menyediakan asisten virtual edukasi budaya (*Batik Ask*) berbasis AI guna menjawab pertanyaan seputar sejarah, makna, dan etika pemakaian batik.
 4. Meningkatkan keterlibatan generasi muda dalam pelestarian warisan budaya melalui sistem koleksi kartu digital (*Batikpedia Cards*) dan pencapaian level.
 
 ### d.2 Manfaat
@@ -94,7 +94,7 @@ Dengan memanfaatkan teknologi web modern dan AI:
    - Fitur unggah foto atau tangkapan kamera kain batik pengguna.
    - Menganalisis dan menampilkan nama motif, asal daerah, filosofi makna, serta rekomendasi penggunaannya.
 
-5. **🧙‍♂️ "Tanya Sang Empu" (AI Cultural Chatbot)**
+5. **🧙‍♂️ "Batik Ask" (AI Cultural Chatbot)**
    - Chatbot edukatif dengan persona budayawan/empu batik tradisional yang ramah dan bijak.
    - Pengguna dapat bertanya seputar filosofi motif, sejarah batik daerah, rekomendasi busana adat, hingga teknik pembuatan.
 
@@ -115,14 +115,14 @@ Dengan memanfaatkan teknologi web modern dan AI:
 2. **Strukturisasi Taksonomi Batik**: Mengelompokkan motif berdasarkan rumpun geometri, jenis isen-isen, asal geografis, dan makna filosofis.
 3. **Penyusunan Dataset & Prompt Engineering**:
    - Kurasi citra representatif motif batik untuk model pengenal citra (*image classifier*).
-   - Perancangan *system prompt* dan *cultural knowledge base* untuk chatbot "Tanya Sang Empu".
+   - Perancangan *system prompt* dan *cultural knowledge base* untuk chatbot "Batik Ask".
 
 ### f.2 Metode Desain & Pengembangan Perangkat Lunak
 - **Pendekatan Pengembangan**: *Agile Scrum* dengan siklus iterasi cepat (Sprint 1–3) untuk menjamin stabilitas MVP.
 - **Tech Stack Terpilih**:
   - **Frontend & Framework**: Next.js 14/15 (React, TypeScript), Tailwind CSS, Shadcn UI.
   - **Animasi & Interaktivitas Game**: Framer Motion, HTML5 Canvas API, Lucide Icons.
-  - **AI Services**: Google Gemini API (untuk "Tanya Sang Empu") & Lightweight Vision Classifier.
+  - **AI Services**: Google Gemini API (untuk "Batik Ask") & Lightweight Vision Classifier.
   - **Backend & Database**: Supabase (PostgreSQL, Auth, User Progress, Unlocked Cards Storage).
   - **Deployment**: Vercel (Frontend) & Supabase Cloud.
 
@@ -137,7 +137,7 @@ Dengan memanfaatkan teknologi web modern dan AI:
 | **FR-01** | Jigsaw Puzzle Engine | Wajib | Pengguna dapat melakukan drag-and-drop potongan motif hingga tersusun rapi. |
 | **FR-02** | Detektif Isen-Isen | Wajib | Sistem mendeteksi klik koordinat pada area isen-isen yang tepat dan menghitung skor. |
 | **FR-03** | AI Batik Scanner | Wajib | Pengguna dapat mengunggah foto kain dan sistem menampilkan hasil klasifikasi motif & filosofi. |
-| **FR-04** | Tanya Sang Empu (Chat) | Wajib | Pengguna dapat mengirim pesan pertanyaan dan menerima jawaban berbasis pengetahuan budaya. |
+| **FR-04** | Batik Ask (Chat) | Wajib | Pengguna dapat mengirim pesan pertanyaan dan menerima jawaban berbasis pengetahuan budaya. |
 | **FR-05** | Peta Interaktif Nusantara | Wajib | Pengguna dapat memilih daerah pada peta dan membuka katalog batik daerah tersebut. |
 | **FR-06** | Album Koleksi & Gamifikasi | Wajib | Sistem menyimpan daftar kartu yang telah di-unlock dan progres level pengguna. |
 | **FR-07** | Autentikasi Pengguna | Opsional (MVP) | Pengguna dapat masuk menggunakan akun untuk menyimpan riwayat progres di cloud. |
@@ -208,10 +208,10 @@ Dengan memanfaatkan teknologi web modern dan AI:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### i.2 Halaman Fitur "Tanya Sang Empu" (AI Chatbot)
+### i.2 Halaman Fitur "Batik Ask" (AI Chatbot)
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  🧙‍♂️ TANYA SANG EMPU                  Status: Online (Siap Membantu)│
+│  🧙‍♂️ Batik Ask                  Status: Online (Siap Membantu)│
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
 │  [Empu Batik]:                                                  │
@@ -242,7 +242,7 @@ Dengan memanfaatkan teknologi web modern dan AI:
 | Fase | Durasi | Aktivitas Utama | Output |
 |:---:|:---:|---|---|
 | **Fase 1: Fondasi & UI** | Hari 1–3 | Setup Next.js, perancangan tema desain *Modern Heritage*, pembuatan komponen puzzle drag-and-drop dan kanvas interaktif. | Kerangka web dan engine game dasar. |
-| **Fase 2: AI & Konten** | Hari 4–6 | Integrasi Gemini API untuk "Tanya Sang Empu", implementasi AI Batik Lens scanner, kurasi konten ensiklopedia & audio. | Fitur AI dan mini-games fungsional. |
+| **Fase 2: AI & Konten** | Hari 4–6 | Integrasi Gemini API untuk "Batik Ask", implementasi AI Batik Lens scanner, kurasi konten ensiklopedia & audio. | Fitur AI dan mini-games fungsional. |
 | **Fase 3: Backend & Polish** | Hari 7–8 | Integrasi Supabase (Auth, Progress, Leaderboard), polish animasi (Framer Motion), responsivitas mobile, dan deployment Vercel. | MVP ter-deploy dan siap diuji. |
 | **Fase 4: Submission** | Hari 9 | Finalisasi proposal PDF 30 halaman, produksi video demo 10 menit, pengumpulan berkas HOLOGY 9.0. | Berkas submission lengkap. |
 

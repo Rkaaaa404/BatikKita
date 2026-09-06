@@ -1,4 +1,4 @@
-# 📋 Laporan QA/QC — Batik Kita
+﻿# 📋 Laporan QA/QC — Batik Kita
 
 > **Tanggal Audit:** 6 September 2026
 > **Platform:** Batik Kita (MembatikKita)
@@ -33,7 +33,7 @@ Audit QA (Quality Assurance) dan QC (Quality Control) menyeluruh terhadap **9 ha
 | 🟡 Medium | Arcade → Level Permainan | Jelas apakah level Menengah/Ahli terkunci (perlu XP) atau bebas dimainkan | Tidak ada indikator visual lock/unlock yang jelas pada card level Menengah & Ahli | 1. Buka `/play` → 2. Amati card level Menengah & Ahli |
 | 🟢 Low | Batik Lens → Hasil Analisis | Persentase akurasi AI bersifat dinamis dari API | Badge "AKURASI AI: 96%" tampak statis/hard-coded — tidak jelas apakah nilai ini dinamis atau placeholder | 1. Buka `/scan` → 2. Pilih sample "Mega Mendung" → 3. Amati badge akurasi |
 | 🟢 Low | BatikPedia → Layout | Navbar fixed tampil rapi tanpa gap di semua halaman | Terdapat jeda hitam tipis antara navbar dan area konten saat scroll perlahan dari atas | 1. Buka `/batikpedia` → 2. Scroll perlahan dari posisi paling atas |
-| 🟢 Low | Sang Empu → Responsif | Teks hero terbaca penuh di semua ukuran layar | Judul hero "Tanya Sang Empu: Falsafah & Makna Wastra Nusantara." terpotong di viewport < 768px | Buka `/chat` dengan lebar browser di bawah 768px |
+| 🟢 Low | Sang Empu → Responsif | Teks hero terbaca penuh di semua ukuran layar | Judul hero "Batik Ask: Falsafah & Makna Wastra Nusantara." terpotong di viewport < 768px | Buka `/chat` dengan lebar browser di bawah 768px |
 | 🟢 Low | Navigasi Global | Semua item nav memiliki visual treatment yang konsisten | Tab "Sang Empu" hanya teks, sedangkan beberapa item lain memiliki ikon pendukung | Amati navbar di seluruh halaman |
 | 💬 Info | Batik Lens → Upload | Ada preview thumbnail gambar sebelum analisis berjalan | Upload file berhasil dan langsung memicu analisis — tanpa preview thumbnail terlebih dahulu | Klik "Pilih dari Perangkat" → pilih file |
 | 💬 Info | Sang Empu → Topic Chips | Ada indikator jumlah/progress topik yang dapat di-scroll | Arrow kiri/kanan (< >) berfungsi baik, namun tidak ada dots/progress indicator untuk menunjukkan posisi scroll | Buka `/chat` → amati area TOPIK PILIHAN |
@@ -79,7 +79,7 @@ Audit QA (Quality Assurance) dan QC (Quality Control) menyeluruh terhadap **9 ha
 - Tombol "Pilih dari Perangkat" memicu file picker sistem
 - 3 sample pill berfungsi: **Mega Mendung**, Parang Rusak Barong, Kawung Picis
 - Hasil analisis menampilkan: nama motif, asal, badge akurasi, filosofi & makna kultural, konteks rekomendasi pemakaian
-- CTA "Tanya Sang Empu Lebih Lanjut" dan "Mainkan di Arcade" tersedia di card hasil
+- CTA "Batik Ask Lebih Lanjut" dan "Mainkan di Arcade" tersedia di card hasil
 - ⚠️ **Catatan:** Kamera modal terbuka tapi viewport hitam (browser butuh HTTPS untuk WebRTC, normal di localhost)
 
 ### ✅ 7. Sang Empu — AI Chatbot (`/chat`)
