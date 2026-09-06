@@ -825,6 +825,7 @@ export default function TebakMotifPage() {
                     src={currentMotif.image}
                     alt={currentMotif.name}
                     fill
+                    sizes="(max-width: 640px) 100vw, 672px"
                     className="object-cover"
                   />
                   <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md border border-[#D4AF37]/50 text-[#D4AF37] font-display font-extrabold text-sm px-3.5 py-1 rounded-full shadow-md">

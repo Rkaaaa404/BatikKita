@@ -833,6 +833,7 @@ export default function SortirPetaPage() {
                       src={currentCard.image}
                       alt={currentCard.name}
                       fill
+                      sizes="75px"
                       className="object-cover"
                     />
                   </div>
@@ -872,6 +873,7 @@ export default function SortirPetaPage() {
                         src={currentCard.image}
                         alt={currentCard.name}
                         fill
+                        sizes="(max-width: 640px) 64px, 80px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -1002,6 +1004,7 @@ export default function SortirPetaPage() {
                           src={card.image}
                           alt={card.name}
                           fill
+                          sizes="36px"
                           className="object-cover"
                         />
                       </div>

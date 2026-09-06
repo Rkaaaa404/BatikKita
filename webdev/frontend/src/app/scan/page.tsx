@@ -442,6 +442,7 @@ export default function ScannerPage() {
                       src={preset.image}
                       alt={preset.name}
                       fill
+                      sizes="48px"
                       className="object-cover group-hover:scale-110 transition-transform"
                     />
                   </div>
@@ -546,6 +547,7 @@ export default function ScannerPage() {
                     src={preview}
                     alt="Batik Preview"
                     fill
+                    sizes="(max-width: 1024px) 100vw, 420px"
                     className="object-cover"
                   />
 
