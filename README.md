@@ -21,7 +21,7 @@
 
 **Batik Kita** adalah platform edukasi budaya interaktif berbasis kecerdasan buatan (*Artificial Intelligence*) yang mentransformasikan cara generasi muda mempelajari, mengapresiasi, dan melestarikan seni wastra batik Nusantara (Warisan Budaya Takbenda UNESCO sejak 2009).
 
-Melalui perpaduan harmonis antara **Edge AI Computer Vision langsung di peramban web**, **Edu-Games Arcade Berbasis Gamifikasi Otentik**, **Ensiklopedia Batik Pedia Multiragam**, dialog kultural **Tanya Sang Empu (Batik Ask)**, serta **Album Koleksi Wastra** dengan sistem bingkai kemahiran (*mastery borders*), Batik Kita menghadirkan pengalaman belajar yang imersif, ilmiah, dan berakar pada filosofi luhur bangsa.
+Melalui perpaduan harmonis antara **Edge AI Computer Vision langsung di peramban web**, **Edu-Games Arcade Berbasis Gamifikasi**, **Ensiklopedia Batik Pedia**, asisten kultural **Batik Ask**, serta **Album Koleksi Motif** dengan sistem bingkai kemahiran (*mastery borders*), Batik Kita menghadirkan pengalaman belajar yang imersif, ilmiah, dan berakar pada filosofi luhur bangsa.
 
 ---
 
@@ -38,7 +38,7 @@ Seluruh layanan di dalam Batik Kita dirancang secara modular dan menggunakan tat
 | **Batik Map** | `/play/map` | Tebak Sentra Peta | Game mencocokkan kartu motif batik ke daerah asalnya di peta interaktif 7 Sentra Batik Nusantara (MapLibre GL). |
 | **Batik Zoom** | `/play/zoom` | Uji Hafalan Pola | Game menguji seberapa hafal pemain dengan pola batik dari gambar yang di-zoom in dekat (800%), lalu ditebak sebelum gambarnya perlahan diperkecil (*zoom out*). |
 | **Batik Pedia** | `/batikpedia` | Ensiklopedia Digital | Katalog 20 motif resmi terlengkap yang memuat filosofi mendalam, asal-usul sentra, klasifikasi corak, panduan etika pemakaian, dan 3 ragam visual per motif. |
-| **Batik Ask** | `/chat` | Conversational AI | Asisten dialog interaktif "Sang Empu" untuk berdiskusi sejarah, makna filosofis ornamen, hingga tata krama busana batik adat. |
+| **Batik Ask** | `/chat` | Conversational AI | Asisten dialog interaktif budaya batik untuk berdiskusi sejarah, makna filosofis ornamen, hingga tata krama busana batik adat. |
 | **Album Koleksi** | `/collection` | Progresi & Mastery | Galeri kartu pencapaian wastra berbingkai adaptif (*Dynamic Mastery Borders*): Zamrud, Perunggu, Perak, dan Emas Berkilau Hologram. |
 
 ---
@@ -67,7 +67,7 @@ graph TD
     
     subgraph "Cultural Knowledge & Mastery Layer"
         Landing --> Pedia[Batik Pedia: 20 Motif & 3 Ragam Visual]
-        Landing --> Ask[Batik Ask: Tanya Sang Empu]
+        Landing --> Ask[Batik Ask]
         Landing --> Collection[Album Koleksi Wastra: Tiered Mastery Borders]
         Cap -.->|Buka Tier Mastery| Collection
         ArcadeHub -.->|Akumulasi XP & Rank| Collection
@@ -87,7 +87,7 @@ graph TD
 ### 2. Puzzle Balok Polyomino (Batik Cap)
 * **Gameplay Block Puzzle:** Terinspirasi dari mekanisme puzzle balok (seperti *Block Blast*), pemain menyusun potongan-potongan balok batik ke kisi kanvas 6 × 6 hingga motif terbentuk utuh.
 * **Partisi Balok Dinamis (BFS):** Potongan balok dipotong secara acak menggunakan algoritma partisi polimino (*Breadth-First Search*), sehingga variasi balok di setiap sesi permainan selalu berbeda.
-* **Meja Kerja 3 Balok (Anti-Pusing):** Meja kerja hanya menampilkan 3 balok aktif. Begitu 1 balok dipasang, posisi balok tersebut langsung diisi balok baru dari antrean tanpa perlu repot geser halaman (*no pagination*).
+* **Meja Kerja 3 Balok:** Meja kerja hanya menampilkan 3 balok aktif. Begitu 1 balok dipasang, posisi balok tersebut langsung diisi balok baru dari antrean tanpa perlu repot geser halaman (*no pagination*).
 * **Sensitivitas Magnetik Presisi:** Ambang batas tarik magnetik diperketat (`0.85` unit grid) agar balok menempel pas pada rongga yang tepat.
 * **Skalabilitas Kesulitan:**
   * **Mudah:** 5–6 kepingan balok (+100 XP).
@@ -147,7 +147,7 @@ Platform ini berpegang teguh pada kurasi saintifik 20 motif mahakarya dari sentr
 | 17 | **Batik Wirasat** | Surakarta | Pesan dan wejangan leluhur kepada generasi penerus agar teguh mengarungi samudra kehidupan. |
 | 18 | **Batik Liong** | Lasem | Perpaduan naga Tionghoa dan ornamen pesisir Jawa, simbol keberanian, perlindungan, dan keselarasan. |
 | 19 | **Batik Dayak** | Kalimantan | Guratan sulur tumbuhan hutan tropis dan motif Batang Garing yang melambangkan pohon kehidupan kosmis. |
-| 20 | **Batik Pamiluto** | Surakarta | Simbol ikatan tali kasih suci yang mengikat dua insan dalam kesetiaan abadi (*miluto* = memikat hati). |
+| 20 | **Batik Tribusono** | Surakarta | Paduan tiga motif pusaka Mataram dalam satu kain — lambang kesatuan tiga kekuatan: alam, manusia, dan Yang Maha Kuasa. |
 
 ---
 
@@ -238,7 +238,7 @@ npm run build
 │       │   ├── app/                      # Next.js App Router (Rute Suite Resmi)
 │       │   │   ├── page.tsx              # Beranda Utama & Interactive Hero
 │       │   │   ├── scan/                 # Batik Lens (Edge AI Scanner)
-│       │   │   ├── chat/                 # Batik Ask (Tanya Sang Empu)
+│       │   │   ├── chat/                 # Batik Ask (Asisten Budaya Cerdas)
 │       │   │   ├── batikpedia/           # Batik Pedia (Ensiklopedia Motif)
 │       │   │   ├── collection/           # Album Koleksi Wastra (Mastery Cards)
 │       │   │   └── play/                 # Batik Arcade Hub
