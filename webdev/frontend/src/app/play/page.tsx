@@ -63,7 +63,7 @@ const GAMES = [
     desc: "Drag kartu motif batik ke pin daerah asalnya pada peta Nusantara sebelum waktu 90 detik berakhir!",
     xp: "+40 - 50 XP / motif",
     difficulty: "Tantangan Waktu",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
     accent: "#7dd3fc",
     badge: "8 SENTRA NUSANTARA",
     buttonText: "Jelajahi Peta",

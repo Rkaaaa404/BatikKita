@@ -50,12 +50,12 @@ const SAMPLE_PRESETS: MotifData[] = [
     philosophy:
       "Melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk di tengah terik matahari. Motif ini banyak dipengaruhi oleh budaya Tiongkok yang berbaur dengan tradisi Cirebon.",
     usage: "Sangat luwes, pantas untuk busana kerja, santai, maupun perhelatan resmi kontemporer.",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
   },
   {
     name: "Parang Rusak Barong",
     accuracy: 98,
-    region: "Surakarta & D.I. Yogyakarta",
+    region: "D.I. Yogyakarta",
     category: "Batik Keraton (Batik Larangan)",
     philosophy:
       "Garis diagonal ombak tak terputus yang melambangkan semangat pantang menyerah, keteguhan ksatria, serta kesinambungan budi pekerti luhur pemimpin.",
@@ -333,7 +333,7 @@ export default function ScannerPage() {
           usage:
             motifInfo?.usage ||
             "Sangat luwes dikenakan untuk upacara resmi kenegaraan, perhelatan adat sakral, maupun busana etnik modern.",
-          image: preview || motifInfo?.image || "/images/motifs/batik_mega_mendung.webp",
+          image: preview || motifInfo?.image || "/images/motifs/batik_mega_mendung_v2.webp",
         };
 
         setResult(detectedData);

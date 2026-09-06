@@ -38,7 +38,7 @@ const MOTIFS = [
     region: "Cirebon, Jawa Barat",
     category: "Batik Pesisiran",
     difficulty: "Lanjutan",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
     philosophy: "Awan pembawa hujan melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk.",
     xp: 200,
     color: "from-[#D4AF37] to-[#713f2c]",

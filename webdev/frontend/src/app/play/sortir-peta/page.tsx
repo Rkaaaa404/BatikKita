@@ -301,7 +301,7 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionLabel: "Cirebon",
     category: "Batik Pesisiran",
     philosophy: "Awan berundak penyejuk di tengah terik, lambang kesabaran dan ketenangan emosi.",
-    image: "/images/motifs/batik_mega_mendung.webp",
+    image: "/images/motifs/batik_mega_mendung_v2.webp",
   },
   {
     id: "batik_jlamprang",
@@ -346,7 +346,7 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionLabel: "Cirebon",
     category: "Batik Keraton",
     philosophy: "Kereta kencana Paksi Naga Liman Kasepuhan Cirebon, simbol akulturasi empat peradaban dunia.",
-    image: "/images/motifs/batik_singa_barong.webp",
+    image: "/images/motifs/batik_singa_barong_v2.webp",
   },
   {
     id: "batik_sidomukti",
