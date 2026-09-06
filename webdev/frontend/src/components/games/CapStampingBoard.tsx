@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageCircle, Sparkles, Eye, Grid, ChevronLeft, ChevronRight, Layers } from "lucide-react";
+import { MessageCircle, Sparkles, Eye, Grid } from "lucide-react";
 import {
   generateDynamicPuzzle,
   PuzzleResult,
@@ -141,8 +141,14 @@ export function CapStampingBoard({
   const currentShapeMap = puzzle.shapeMap;
   const currentPieceDefs = puzzle.pieces;
 
-  const [tray, setTray] = useState<number[]>([]);
-  const [trayPage, setTrayPage] = useState(0);
+  // 3-Slot Workbench: only 3 blocks active simultaneously in fixed slot positions
+  const [workbench, setWorkbench] = useState<{
+    activeSlots: (number | null)[];
+    queue: number[];
+  }>({
+    activeSlots: [null, null, null],
+    queue: [],
+  });
   const [placed, setPlaced] = useState<number[]>([]);
   const [selectedPiece, setSelectedPiece] = useState<number | null>(null);
   const [draggingPiece, setDraggingPiece] = useState<DraggingPieceState | null>(null);
@@ -163,28 +169,15 @@ export function CapStampingBoard({
   const boardRef = useRef<HTMLDivElement>(null);
   const startTime = useRef<number>(Date.now());
 
-  // 3-Block Active Workbench Queue Logic
-  const maxPage = Math.max(0, Math.ceil(tray.length / 3) - 1);
-  const activePage = Math.min(trayPage, maxPage);
-  const visibleTrayPieces = useMemo(() => {
-    return tray.slice(activePage * 3, activePage * 3 + 3);
-  }, [tray, activePage]);
-
-  const handlePrevBatch = useCallback(() => {
-    setTrayPage((p) => (p > 0 ? p - 1 : maxPage));
-  }, [maxPage]);
-
-  const handleNextBatch = useCallback(() => {
-    setTrayPage((p) => (p < maxPage ? p + 1 : 0));
-  }, [maxPage]);
-
   // Re-generate dynamic puzzle when image, difficulty or reset occurs
   useEffect(() => {
     const newPuzzle = generateDynamicPuzzle(GRID_SIZE, difficulty);
     setPuzzle(newPuzzle);
     const shuffled = newPuzzle.pieces.map((p) => p.id).sort(() => Math.random() - 0.5);
-    setTray(shuffled);
-    setTrayPage(0);
+    setWorkbench({
+      activeSlots: [shuffled[0] ?? null, shuffled[1] ?? null, shuffled[2] ?? null],
+      queue: shuffled.slice(3),
+    });
     setPlaced([]);
     setSelectedPiece(null);
     setDraggingPiece(null);
@@ -228,7 +221,21 @@ export function CapStampingBoard({
       const isDirectMatch = forceSuccess || def.cells.some((c) => c.x === dropX && c.y === dropY);
 
       if (isDirectMatch) {
-        setTray((prev) => prev.filter((id) => id !== pieceId));
+        // The newly placed block's exact slot is immediately replaced by the next block from queue
+        setWorkbench((prev) => {
+          const slotIdx = prev.activeSlots.indexOf(pieceId);
+          if (slotIdx === -1) return prev;
+
+          const nextSlots = [...prev.activeSlots];
+          const nextPiece = prev.queue.length > 0 ? prev.queue[0] : null;
+          nextSlots[slotIdx] = nextPiece;
+
+          return {
+            activeSlots: nextSlots,
+            queue: prev.queue.slice(1),
+          };
+        });
+
         setPlaced((prev) => [...prev, pieceId]);
         setSelectedPiece(null);
         setGuidePiece(null);
@@ -363,14 +370,21 @@ export function CapStampingBoard({
       if (selectedPiece !== null) {
         attemptPlace(selectedPiece, x, y);
       } else {
-        setSelectedPiece(pid);
-        setFeedback({
-          message: `Rongga ini membutuhkan keping cap yang pas. Pilih kepingan cap di baki bawah, lalu klik di sini.`,
-          type: "idle",
-        });
+        if (workbench.activeSlots.includes(pid)) {
+          setSelectedPiece(pid);
+          setFeedback({
+            message: `Kepingan cap untuk rongga ini sudah tersedia di meja kerja. Pasang ke sini sekarang!`,
+            type: "idle",
+          });
+        } else {
+          setFeedback({
+            message: `Rongga ini membutuhkan keping cap yang masih di antrean. Pasang salah satu dari 3 kepingan yang ada di meja kerja terlebih dahulu.`,
+            type: "idle",
+          });
+        }
       }
     },
-    [selectedPiece, placed, attemptPlace, currentShapeMap]
+    [currentShapeMap, placed, selectedPiece, attemptPlace, workbench.activeSlots]
   );
 
   const magneticInfo = useMemo(() => {
@@ -429,26 +443,27 @@ export function CapStampingBoard({
       </motion.div>
 
       {/* Progress & Mode Bar */}
-      <div className="flex items-center justify-between px-2">
-        <div
-          className={`flex items-center gap-2 text-xs ${
-            isDark ? "text-white/70" : "text-stone-600"
+      <div className="relative flex items-center justify-center px-2">
+        <p
+          className={`text-center font-display text-xs sm:text-sm font-medium ${
+            isDark ? "text-white/80" : "text-stone-700"
           }`}
         >
-          <span className="font-display font-semibold text-[#D4AF37]">Proses Canting Cap:</span>
-          <span>
-            {placed.length} dari {currentPieceDefs.length} Kepingan Terpasang
-          </span>
-        </div>
+          <span className="text-[#D4AF37] font-bold font-display">{placed.length}</span>{" "}
+          dari{" "}
+          <span className="font-bold">{currentPieceDefs.length}</span> Kepingan Terpasang
+        </p>
 
         {solved && (
-          <button
-            onClick={() => setShowGridOverlay((prev) => !prev)}
-            className="flex items-center gap-1.5 text-xs font-display font-semibold text-[#D4AF37] hover:text-[#e5c358] bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-all"
-          >
-            {showGridOverlay ? <Eye className="w-3.5 h-3.5" /> : <Grid className="w-3.5 h-3.5" />}
-            {showGridOverlay ? "Tampilkan Kain Utuh" : "Tampilkan Garis Sambungan"}
-          </button>
+          <div className="absolute right-0">
+            <button
+              onClick={() => setShowGridOverlay((prev) => !prev)}
+              className="flex items-center gap-1.5 text-xs font-display font-semibold text-[#D4AF37] hover:text-[#e5c358] bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 px-3 py-1.5 rounded-lg transition-all"
+            >
+              {showGridOverlay ? <Eye className="w-3.5 h-3.5" /> : <Grid className="w-3.5 h-3.5" />}
+              {showGridOverlay ? "Tampilkan Kain Utuh" : "Tampilkan Garis Sambungan"}
+            </button>
+          </div>
         )}
       </div>
 
@@ -625,7 +640,7 @@ export function CapStampingBoard({
         </p>
       </div>
 
-      {/* Piece Tray (Baki Cap Tembaga - 3 Keping Aktif) */}
+      {/* Piece Tray (Baki Meja Kerja Cap Tembaga - 3 Slot Aktif) */}
       <div
         className={`rounded-2xl p-4 sm:p-5 border shadow-xl max-w-2xl mx-auto w-full transition-colors ${
           isDark
@@ -633,168 +648,111 @@ export function CapStampingBoard({
             : "bg-white border-[#E2DDD5] text-[#2D2B38] shadow-md"
         }`}
       >
-        {/* Tray Top Bar: Title, Queue Counter & Pagination Controls */}
-        <div
-          className={`flex items-center justify-between gap-3 mb-4 pb-3 border-b ${
-            isDark ? "border-white/10" : "border-[#E2DDD5]"
-          }`}
-        >
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37]">
-              <Layers className="w-4 h-4" />
-            </div>
-            <div>
-              <h4 className="text-xs font-display font-bold uppercase tracking-wider text-[#D4AF37]">
-                Meja Canting Cap (3 Keping Aktif)
-              </h4>
-              <p
-                className={`text-[11px] ${
-                  isDark ? "text-white/50" : "text-stone-500"
-                }`}
-              >
-                {tray.length > 0 ? (
-                  <>
-                    Menampilkan <strong>{visibleTrayPieces.length} keping</strong>
-                    {tray.length > 3 && (
-                      <span> · Sisa antrean: {Math.max(0, tray.length - 3)} keping</span>
-                    )}
-                  </>
-                ) : (
-                  "Semua kepingan telah terpasang"
-                )}
-              </p>
-            </div>
+        {workbench.activeSlots.every((s) => s === null) ? (
+          <div className="text-center py-5">
+            <p className="text-[#D4AF37] text-sm font-display font-semibold flex items-center justify-center gap-2">
+              <Sparkles className="w-4 h-4" /> Seluruh kepingan cap tembaga telah terpasang sempurna!
+            </p>
           </div>
-
-          {/* Pagination buttons if queue > 3 */}
-          {tray.length > 3 && (
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={handlePrevBatch}
-                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
-                  isDark
-                    ? "bg-white/5 hover:bg-white/10 border-white/10 text-white/80 hover:text-white"
-                    : "bg-stone-100 hover:bg-stone-200 border-[#E2DDD5] text-stone-700 hover:text-stone-900"
-                }`}
-                title="Kepingan Sebelumnya"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <span
-                className={`text-[11px] font-display font-semibold px-1 ${
-                  isDark ? "text-white/60" : "text-stone-600"
-                }`}
-              >
-                {activePage + 1}/{maxPage + 1}
-              </span>
-              <button
-                type="button"
-                onClick={handleNextBatch}
-                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
-                  isDark
-                    ? "bg-white/5 hover:bg-white/10 border-white/10 text-white/80 hover:text-white"
-                    : "bg-stone-100 hover:bg-stone-200 border-[#E2DDD5] text-stone-700 hover:text-stone-900"
-                }`}
-                title="Kepingan Berikutnya"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* 3-Slot Workbench Grid */}
-        <div className="flex flex-wrap justify-center items-center gap-6 min-h-[130px]">
-          <AnimatePresence mode="popLayout">
-            {visibleTrayPieces.map((pieceId) => {
-              const def = currentPieceDefs.find((p) => p.id === pieceId);
-              if (!def) return null;
-              const isSelected = selectedPiece === pieceId;
-              const isBeingDragged = draggingPiece?.id === pieceId;
+        ) : (
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center justify-items-center min-h-[130px]">
+            {workbench.activeSlots.map((pieceId, slotIdx) => {
+              const def = pieceId !== null ? currentPieceDefs.find((p) => p.id === pieceId) : null;
+              const isSelected = pieceId !== null && selectedPiece === pieceId;
+              const isBeingDragged = pieceId !== null && draggingPiece?.id === pieceId;
               const cellSize = 30;
 
               return (
-                <motion.div
-                  key={pieceId}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{
-                    opacity: isBeingDragged ? 0.3 : 1,
-                    scale: isSelected && !isBeingDragged ? 1.08 : 1,
-                    boxShadow:
-                      isSelected && !isBeingDragged
-                        ? "0 0 20px rgba(212,175,55,0.75)"
-                        : isDark
-                        ? "0 4px 12px rgba(0,0,0,0.5)"
-                        : "0 2px 8px rgba(0,0,0,0.08)",
-                  }}
-                  exit={{ opacity: 0, scale: 0.4 }}
-                  onPointerDown={(e) => handlePiecePointerDown(e, pieceId)}
-                  onClick={() => setSelectedPiece((prev) => (prev === pieceId ? null : pieceId))}
-                  className={`flex items-center justify-center p-3.5 rounded-2xl border transition-all cursor-grab active:cursor-grabbing select-none touch-none ${
-                    isSelected
-                      ? "bg-[#D4AF37]/20 border-[#D4AF37]"
-                      : isDark
-                      ? "bg-[#25201C] border-white/15 hover:border-[#D4AF37]/50 hover:bg-[#2b2520]"
-                      : "bg-[#FAF8F5] border-[#E2DDD5] hover:border-[#D4AF37]/60 hover:bg-stone-100 shadow-xs"
-                  }`}
+                <div
+                  key={`slot-${slotIdx}`}
+                  className="w-full flex items-center justify-center min-h-[110px]"
                 >
-                  <div
-                    className="relative pointer-events-none"
-                    style={{
-                      width: def.width * cellSize,
-                      height: def.height * cellSize,
-                    }}
-                  >
-                    <div
-                      className="absolute inset-0 grid"
-                      style={{
-                        gridTemplateColumns: `repeat(${def.width}, 1fr)`,
-                        gridTemplateRows: `repeat(${def.height}, 1fr)`,
-                      }}
-                    >
-                      {Array.from({ length: def.width * def.height }, (_, i) => {
-                        const lx = i % def.width;
-                        const ly = Math.floor(i / def.width);
-                        const isCellActive = def.localCells.some((c) => c.x === lx && c.y === ly);
-
-                        if (!isCellActive) return <div key={i} className="pointer-events-none" />;
-
-                        const origX = def.minX + lx;
-                        const origY = def.minY + ly;
-                        const bgPosX = `${(origX / (GRID_SIZE - 1)) * 100}%`;
-                        const bgPosY = `${(origY / (GRID_SIZE - 1)) * 100}%`;
-
-                        return (
+                  <AnimatePresence mode="wait">
+                    {pieceId !== null && def ? (
+                      <motion.div
+                        key={pieceId}
+                        initial={{ opacity: 0, scale: 0.7 }}
+                        animate={{
+                          opacity: isBeingDragged ? 0.3 : 1,
+                          scale: isSelected && !isBeingDragged ? 1.08 : 1,
+                          boxShadow:
+                            isSelected && !isBeingDragged
+                              ? "0 0 20px rgba(212,175,55,0.75)"
+                              : isDark
+                              ? "0 4px 12px rgba(0,0,0,0.5)"
+                              : "0 2px 8px rgba(0,0,0,0.08)",
+                        }}
+                        exit={{ opacity: 0, scale: 0.4 }}
+                        transition={{ duration: 0.25 }}
+                        onPointerDown={(e) => handlePiecePointerDown(e, pieceId)}
+                        onClick={() =>
+                          setSelectedPiece((prev) => (prev === pieceId ? null : pieceId))
+                        }
+                        className={`flex items-center justify-center p-2.5 sm:p-3.5 rounded-2xl border transition-all cursor-grab active:cursor-grabbing select-none touch-none ${
+                          isSelected
+                            ? "bg-[#D4AF37]/20 border-[#D4AF37]"
+                            : isDark
+                            ? "bg-[#25201C] border-white/15 hover:border-[#D4AF37]/50 hover:bg-[#2b2520]"
+                            : "bg-[#FAF8F5] border-[#E2DDD5] hover:border-[#D4AF37]/60 hover:bg-stone-100 shadow-xs"
+                        }`}
+                      >
+                        <div
+                          className="relative pointer-events-none"
+                          style={{
+                            width: def.width * cellSize,
+                            height: def.height * cellSize,
+                          }}
+                        >
                           <div
-                            key={i}
-                            className="relative overflow-hidden rounded-[3px]"
+                            className="absolute inset-0 grid"
                             style={{
-                              backgroundImage: `url(${image})`,
-                              backgroundSize: "600% 600%",
-                              backgroundPosition: `${bgPosX} ${bgPosY}`,
-                              border: isSelected
-                                ? "1.5px solid #D4AF37"
-                                : "1px solid rgba(212,175,55,0.4)",
-                              boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
+                              gridTemplateColumns: `repeat(${def.width}, 1fr)`,
+                              gridTemplateRows: `repeat(${def.height}, 1fr)`,
                             }}
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-                </motion.div>
+                          >
+                            {Array.from({ length: def.width * def.height }, (_, i) => {
+                              const lx = i % def.width;
+                              const ly = Math.floor(i / def.width);
+                              const isCellActive = def.localCells.some(
+                                (c) => c.x === lx && c.y === ly
+                              );
+
+                              if (!isCellActive)
+                                return (
+                                  <div key={i} className="pointer-events-none bg-transparent" />
+                                );
+
+                              const origX = def.minX + lx;
+                              const origY = def.minY + ly;
+                              const bgPosX = `${(origX / (GRID_SIZE - 1)) * 100}%`;
+                              const bgPosY = `${(origY / (GRID_SIZE - 1)) * 100}%`;
+
+                              return (
+                                <div
+                                  key={i}
+                                  className="relative overflow-hidden rounded-[3px]"
+                                  style={{
+                                    backgroundImage: `url(${image})`,
+                                    backgroundSize: "600% 600%",
+                                    backgroundPosition: `${bgPosX} ${bgPosY}`,
+                                    border: isSelected
+                                      ? "1.5px solid #D4AF37"
+                                      : "1px solid rgba(212,175,55,0.4)",
+                                    boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
+                                  }}
+                                />
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </motion.div>
+                    ) : null}
+                  </AnimatePresence>
+                </div>
               );
             })}
-          </AnimatePresence>
-
-          {tray.length === 0 && !solved && (
-            <p className="text-[#D4AF37] text-sm font-display font-semibold">
-              Semua cap motif sudah tertempel sempurna!
-            </p>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Floating Dragged Polyomino Piece */}
