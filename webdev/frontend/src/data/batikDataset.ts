@@ -32,20 +32,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Pesisiran",
     philosophy:
-      "Mencerminkan keterbukaan dan kehangatan warga Batavia dalam menyambut keberagaman etnis. Ornamen Ondel-ondel dan pucuk rebung menjadi simbol penangkal bala serta harapan agar warga selalu berkembang lurus ke atas seperti tunas bambu.",
+      "Mencerminkan keterbukaan dan kehangatan warga Batavia dalam menyambut keberagaman etnis. Ornamen Ondel-ondel dan pucuk rebung menjadi simbol penangkal bala serta harapan agar kehidupan warga selalu berkembang lurus ke atas seperti tunas bambu muda.",
     usage: "Busana resmi festival Abang None Jakarta, seragam seremonial hari ulang tahun kota, dan busana santai pesta adat.",
-    visualTraits: "Warna kontras mencolok seperti jingga terang, merah delima, dan kuning kunyit. Menampilkan motif Ondel-ondel, kembang kelapa, atau tumpal segitiga pucuk rebung.",
+    visualTraits: "Figur sepasang boneka raksasa Ondel-ondel (pria berbusana merah dan wanita berbusana kuning jingga) berhiaskan kembang kelapa di kepala, diapit lajur pinggiran flora warna-warni di atas latar kain hitam pekat.",
     image: "/images/motifs/batik_betawi.webp",
     variants: [
       {
-        name: "Varian Ondel-Ondel & Pucuk Rebung",
+        name: "Pucuk Rebung Tumpal Merah-Toska",
         image: "/images/motifs/batik_betawi_var1.webp",
-        description: "Pewarnaan merah jingga cerah khas pesisir Batavia dengan ikon budaya Jakarta.",
+        description: "Deretan tumpal segitiga pucuk rebung berwarna biru toska dan kuning emas di atas latar merah menyala, melambangkan pertumbuhan lurus dan penolak bala.",
       },
       {
-        name: "Varian Kembang Kelapa Kontemporer",
+        name: "Panorama Kampung Batavia & Rumah Kebaya",
         image: "/images/motifs/batik_betawi_var2.webp",
-        description: "Latar dasar kontras dengan ornamen kembang kelapa penolak bala.",
+        description: "Lukisan narasi perkampungan Betawi berlatar merah-jingga dengan rumah adat kebaya, pohon kelapa, dan keceriaan warga pesisir.",
       },
     ],
     hints: [
@@ -60,25 +60,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_bokor_kencono",
     name: "Bokor Kencono",
     fullName: "Batik Bokor Kencono",
-    region: "D.I. Yogyakarta & Surakarta",
-    province: "D.I. Yogyakarta",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "D.I. Yogyakarta & Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Bokor bermakna wadah logam sesaji, sedangkan kencono berarti emas murni. Motif ini memuat doa agar pemakainya menjadi wadah yang menampung kebajikan, rezeki halal, serta menjaga kejernihan hati.",
+      "Bokor bermakna wadah logam sesaji, sedangkan kencono berarti emas murni. Motif pusaka Mataram ini memuat doa agar pemakainya menjadi wadah yang menampung kebajikan, rezeki halal, serta menjaga kejernihan hati dalam mengabdi.",
     usage: "Dikenakan oleh sesepuh dan keluarga bangsawan dalam upacara adat midodareni dan pertemuan seremonial kraton.",
-    visualTraits: "Pola ceplok belah ketupat berulang yang diisi ornamen wadah bertutup, sulur tanaman melingkar, dan untaian bunga teratur.",
+    visualTraits: "Pola ceplok teratur berlatar cokelat soga dengan ornamen wadah bertutup bersepuh oranye keemasan, dikelilingi sulur dedaunan melengkung simetris.",
     image: "/images/motifs/batik_bokor_kencono.webp",
     variants: [
       {
-        name: "Bokor Kencono Babaran Sogan",
+        name: "Bokor Kencono Babaran Wedelan Biru-Putih",
         image: "/images/motifs/batik_bokor_kencono_var1.webp",
-        description: "Warna cokelat soga Mataram dengan isen cecek halus di sekeliling wadah emas.",
+        description: "Pewarnaan babaran wedelan biru nila dengan aksen isen putih pethak halus di sekeliling wadah kencana.",
       },
       {
-        name: "Ceplok Belah Ketupat Alus",
+        name: "Bokor Kencono Sulur Keemasan Solo",
         image: "/images/motifs/batik_bokor_kencono_var2.webp",
-        description: "Geometri simetris dengan garis luar tegas berlatar mori pethak.",
+        description: "Dominasi warna kuning soga keemasan dengan sulur tanaman melingkar yang anggun khas sentra Surakarta.",
       },
     ],
     hints: [
@@ -100,18 +100,18 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     philosophy:
       "Berasal dari kata Belanda boeket yang berarti karangan bunga. Mencerminkan keindahan tanaman mekar, keramahan, dan perpaduan gaya seni Art Nouveau Eropa dengan keahlian mencanting pembatik Pekalongan.",
     usage: "Pilihan favorit untuk kebaya pesta, wisuda, perhelatan keluarga, dan busana kerja semi-formal.",
-    visualTraits: "Rangkaian karangan bunga mawar, tulip, atau seruni berukuran besar, ditemani burung merak atau kupu-kupu yang bertebaran di latar warna pastel lembut.",
+    visualTraits: "Rangkaian karangan bunga seruni dan iris dengan sentuhan warna pastel merah muda dan ungu lilac, dipadu bidang selang-seling khas kain pesisiran.",
     image: "/images/motifs/batik_buketan.webp",
     variants: [
       {
-        name: "Buket Pastel Pekalongan",
+        name: "Buket Biru Porselen Latar Pethak",
         image: "/images/motifs/batik_buketan_var1.webp",
-        description: "Rangkaian bunga seruni dan tulip berwarna merah muda berlatar cerah.",
+        description: "Rangkaian bunga biru berlatar kain putih gading menyerupai keanggunan keramik porselen Tiongkok-Eropa.",
       },
       {
-        name: "Buket Kupu-Kupu & Merak",
+        name: "Buket Krisan & Kupu-kupu Latar Gelap",
         image: "/images/motifs/batik_buketan_var2.webp",
-        description: "Komposisi karangan bunga dengan burung merak bergaya Indo-Belanda abad ke-19.",
+        description: "Karangan bunga krisan merah-oranye yang ditemani kupu-kupu terbang di atas latar biru malam pekat.",
       },
     ],
     hints: [
@@ -127,31 +127,31 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     name: "Dayak",
     fullName: "Batik Dayak",
     region: "Palangka Raya & Balikpapan",
-    province: "Kalimantan Tengah",
+    province: "Kalimantan Tengah & Timur",
     island: "Kalimantan",
     category: "Batik Nusantara",
     philosophy:
-      "Pohon Batang Garing menggambarkan hubungan manusia dengan Sang Pencipta (Ranying Hatalla) serta keharusan menjaga keseimbangan rimba raya. Tameng telawang melambangkan perlindungan diri dari ancaman mara bahaya.",
+      "Pohon Batang Garing menggambarkan hubungan manusia dengan Sang Pencipta (Ranying Hatalla) serta keharusan menjaga kelestarian rimba raya. Tameng telawang dan sulur kelakai melambangkan perlindungan diri dan ketangguhan hidup di pedalaman Borneo.",
     usage: "Busana upacara adat Tiwah, festival budaya Isen Mulang, serta pakaian dinas resmi instansi di Kalimantan.",
-    visualTraits: "Garis lengkung sulur khas ukiran kayu Dayak Ngaju, ornamen tameng telawang segitiga, dan siluet burung enggang gading.",
+    visualTraits: "Latar merah menyala berpadu dengan ornamen sulur lengkung khas ukir kayu Dayak berwarna biru elektrik dan krem keemasan, dibingkai motif tumpal runcing di bagian tepinya.",
     image: "/images/motifs/batik_dayak.webp",
     variants: [
       {
-        name: "Batang Garing (Pohon Kehidupan)",
+        name: "Kelakai & Tumpal Tameng Telawang Hitam",
         image: "/images/motifs/batik_dayak_var1.webp",
-        description: "Pohon kehidupan dengan cabang sulur vertikal dan buah lambang kemakmuran.",
+        description: "Sulur tanaman pakis kelakai berwarna jingga dan putih di atas latar hitam arang, dilengkapi border geometris tameng telawang.",
       },
       {
-        name: "Ukiran Telawang & Burung Enggang",
+        name: "Batang Garing & Rumah Betang Rimba",
         image: "/images/motifs/batik_dayak_var2.webp",
-        description: "Pola perisai suku pedalaman yang dipadukan dengan paruh burung enggang.",
+        description: "Pohon kehidupan suci Batang Garing dan arsitektur Rumah Betang di atas latar hijau lumut gelap lambang keagungan rimba Kalimantan.",
       },
     ],
     hints: [
       "Lahir dari kearifan suku penghuni pedalaman hutan tropis terbesar di Indonesia.",
       "Memadukan teknik canting lilin dengan ragam ukir kayu khas perisai dan rumah betang.",
       "Banyak diproduksi di Palangka Raya, Pontianak, dan Balikpapan.",
-      "Memuat gambar Batang Garing (Pohon Kehidupan) dan burung enggang berparuh panjang.",
+      "Memuat gambar Batang Garing (Pohon Kehidupan) dan sulur ukiran melengkung berulang.",
     ],
   },
   {
@@ -164,20 +164,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Pesisiran",
     philosophy:
-      "Terinspirasi dari tenun sutra Patola asal Gujarat, India. Pola bintang delapan penjuru melambangkan keteraturan arah mata angin pembawa berkah, tanpa menggambar makhluk bernyawa sesuai anjuran syariat para saudagar muslim.",
+      "Terinspirasi dari tenun sutra Patola asal Gujarat, India. Pola bintang delapan penjuru melambangkan keteraturan arah mata angin pembawa berkah, tanpa menggambar makhluk bernyawa sesuai anjuran syariat para saudagar muslim di pesisir utara.",
     usage: "Kain upacara sedekah laut di pesisir utara, perayaan hari besar Islam, dan busana formal pria.",
-    visualTraits: "Rangkaian lingkaran dan roset bintang delapan simetris dengan batas-batas titik tegas, menyerupai mandala geometris.",
+    visualTraits: "Pola lingkaran roset geometris padat dengan taburan titik-titik simetris berlatar kuning cerah, diisi warna merah menyala, hijau toska, dan biru tua khas pesisir Pekalongan.",
     image: "/images/motifs/batik_jlamprang.webp",
     variants: [
       {
-        name: "Jlamprang Patola Roset",
+        name: "Jlamprang Roset Tiga Warna Merah-Hijau-Biru",
         image: "/images/motifs/batik_jlamprang_var1.webp",
-        description: "Bintang delapan penjuru simetris dalam lingkaran ceplok berlatar gelap.",
+        description: "Bintang delapan kelopak di dalam lingkaran mandala modern dengan warna merah marun, hijau toska, dan biru laut berlatar putih perak.",
       },
       {
-        name: "Jlamprang Geometris Cokelat",
+        name: "Jlamprang Geometris Hitam-Emas Klasik",
         image: "/images/motifs/batik_jlamprang_var2.webp",
-        description: "Komposisi titik dan garis lurus menyerupai tenunan Gujarat kuno.",
+        description: "Garis luar lingkaran lingkaran hitam tegas berpadu rona cokelat keemasan menyerupai tenun Patola Gujarat abad pertengahan.",
       },
     ],
     hints: [
@@ -192,25 +192,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_kawung",
     name: "Kawung",
     fullName: "Batik Kawung",
-    region: "D.I. Yogyakarta & Surakarta",
-    province: "D.I. Yogyakarta",
+    region: "D.I. Yogyakarta & Surakarta (Mataram)",
+    province: "D.I. Yogyakarta & Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Empat kelopak buah aren yang menyentuh titik poros melambangkan Sedulur Papat Lima Pancer: empat arah mata angin yang bermuara pada satu pusat kesadaran batin. Mengajarkan kejujuran, keadilan, dan pengendalian diri.",
+      "Empat kelopak buah aren yang menyentuh titik poros melambangkan Sedulur Papat Lima Pancer: empat arah mata angin yang bermuara pada satu pusat kesadaran batin. Mengajarkan kejujuran, keadilan, dan pengendalian diri lahir batin.",
     usage: "Busana keraton abdi dalem, pertemuan dinas resmi, wisuda sarjana, dan busana kemeja kerja pria.",
-    visualTraits: "Empat elips lonjong bersilang menyentuh lingkaran poros pusat, menyerupai irisan buah kolang-kaling yang tersusun diagonal teratur.",
+    visualTraits: "Irisan empat elips buah aren lonjong bersilang menyentuh lingkaran poros pusat berlatar sogan cokelat keemasan hangat, dihiasi titik isen cecek rapi di setiap sudut.",
     image: "/images/motifs/batik_kawung.webp",
     variants: [
       {
-        name: "Kawung Picis Tradisional",
+        name: "Kawung Latar Pethak / Krem Cerah",
         image: "/images/motifs/batik_kawung_var1.webp",
-        description: "Kelopak bulat kecil sebesar koin picis dengan isen titik cecek rapi.",
+        description: "Kelopak elips dengan garis kontur cokelat tua kemerahan di atas latar putih gading (pethak) khas gaya Ngayogyakarta.",
       },
       {
-        name: "Kawung Sen & Beton",
+        name: "Kawung Wedelan Latar Ireng / Hitam",
         image: "/images/motifs/batik_kawung_var2.webp",
-        description: "Bentuk kelopak lebih besar lonjong menyerupai biji buah nangka tua.",
+        description: "Kontras tegas kelopak kawung putih bersinar di atas latar kain hitam kelengan (wedelan) pekat.",
       },
     ],
     hints: [
@@ -230,20 +230,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Pesisiran",
     philosophy:
-      "Makhluk naga sakral (Liong) melambangkan keberuntungan, kekuasaan alam, dan perlindungan dari marabahaya. Memperlihatkan keterbukaan kota Lasem sebagai tempat bertemunya tradisi canting Jawa dengan budaya Tionghoa.",
+      "Makhluk naga sakral (Liong) melambangkan keberuntungan, kekuasaan alam, dan perlindungan dari marabahaya. Memperlihatkan keterbukaan kota Lasem sebagai tempat bertemunya tradisi canting Jawa dengan kebudayaan Tionghoa peranakan.",
     usage: "Perayaan Tahun Baru Imlek, resepsi pernikahan peranakan Tionghoa-Jawa, dan festival budaya pesisir utara.",
-    visualTraits: "Sosok naga berkumis panjang dan bertanduk yang meliuk gagah, diapit burung phoenix (burung hong), gumpalan awan, dan warna merah getih pitik khas Lasem.",
+    visualTraits: "Sosok naga langit perkasa meliuk bebas dengan sisik toska-keemasan di atas hamparan kain merah menyala getih pitik khas Lasem, ditemani kuncup bunga krisan mekar.",
     image: "/images/motifs/batik_liong.webp",
     variants: [
       {
-        name: "Liong Naga Merah Getih Pitik",
+        name: "Liong Lasem Merah Marun Pesisir",
         image: "/images/motifs/batik_liong_var1.webp",
-        description: "Pewarnaan akar mengkudu merah darah ayam khas rumah pembatik Lasem.",
+        description: "Naga berkumis meliuk anggun di atas kain merah marun tua dengan taburan bunga seruni warna-warni yang luwes.",
       },
       {
-        name: "Liong & Burung Hong Berawan",
+        name: "Sunggingan Kepala Naga Latar Pethak",
         image: "/images/motifs/batik_liong_var2.webp",
-        description: "Naga langit yang meliuk berpasangan dengan burung phoenix di antara mega.",
+        description: "Goresan canting detail pada kepala naga bertanduk dan bertaring tajam di atas latar kain mori putih bersih.",
       },
     ],
     hints: [
@@ -265,18 +265,18 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     philosophy:
       "Gumpalan awan mendung pembawa hujan menyimbolkan kepala dingin, kesabaran jiwa, dan kemampuan meredam emosi saat menghadapi persoalan, seperti awan sejuk yang membasahi bumi panas.",
     usage: "Busana kerja kantor pria dan wanita, kemeja santai etnik, syal, serta busana panggung diplomasi budaya.",
-    visualTraits: "Lapisan awan horizontal berundak dengan garis segitiga lancip, menampilkan gradasi 5 hingga 7 tingkat warna dari biru pekat ke putih atau merah menyala.",
+    visualTraits: "Lapis-lapis awan mendung horizontal berundak dengan ujung segitiga lancip, menampilkan gradasi tujuh tingkat warna dari biru pekat menuju biru langit dan putih bersih.",
     image: "/images/motifs/batik_mega_mendung.webp",
     variants: [
       {
-        name: "Gradasi Biru Klasik Cirebon",
+        name: "Mega Mendung Biru Latar Putih Pethak",
         image: "/images/motifs/batik_mega_mendung_var1.webp",
-        description: "Gradasi tujuh undak warna biru tua ke putih terang khas perajin Trusmi.",
+        description: "Gumpalan awan mendung biru bergradasi anggun di atas latar kain putih bersih (pethak) yang menonjolkan ketajaman siluet awan.",
       },
       {
-        name: "Mega Mendung Merah Mas Pesisir",
+        name: "Mega Mendung Latar Merah Menyala",
         image: "/images/motifs/batik_mega_mendung_var2.webp",
-        description: "Varian warna jingga merah marun yang merefleksikan kehangatan laut Cirebon.",
+        description: "Paduan kontras awan gradasi biru-putih di atas latar merah menyala (abang) khas pesisir Cirebon yang berani dan energik.",
       },
     ],
     hints: [
@@ -291,25 +291,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_parang",
     name: "Parang",
     fullName: "Batik Parang",
-    region: "Surakarta & D.I. Yogyakarta",
-    province: "Jawa Tengah",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "Jawa Tengah & D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Larangan",
     philosophy:
-      "Deretan ombak laut selatan yang tak pernah surut memecah karang terjal. Melambangkan semangat pantang menyerah, keteguhan watak ksatria, dan kepemimpinan berwibawa yang tidak boleh terputus.",
+      "Deretan ombak laut selatan yang tak pernah surut memecah karang terjal. Melambangkan semangat pantang menyerah, keteguhan watak ksatria, dan kepemimpinan berwibawa yang tidak boleh terputus dalam mengarungi gelombang kehidupan.",
     usage: "Pakaian wajib raja, pangeran, dan wisudawan kehormatan dalam upacara resmi kenegaraan serta upacara wisuda.",
-    visualTraits: "Larik-larik diagonal miring bersudut 45 derajat menyerupai susunan huruf S berkait tanpa jeda, diselingi ornamen taji mlinjon tajam di sela-selanya.",
+    visualTraits: "Larik-larik diagonal miring bersudut 45 derajat menyerupai susunan huruf S berkait tajam berlatar gelap pekat, diselingi ornamen taji mlinjon putih tegas di sela-selanya.",
     image: "/images/motifs/batik_parang.webp",
     variants: [
       {
-        name: "Parang Rusak Barong Keraton",
+        name: "Parang Klitik Sogan Keemasan",
         image: "/images/motifs/batik_parang_var1.webp",
-        description: "Ukuran larik diagonal di atas 8 cm yang dahulu khusus dikenakan oleh raja.",
+        description: "Susunan larik diagonal lebih rapat dan halus dengan pewarnaan kuning sogan keemasan khas sentra Surakarta Hadiningrat.",
       },
       {
-        name: "Parang Klitik Alus",
+        name: "Parang Latar Pethak / Putih Bersih",
         image: "/images/motifs/batik_parang_var2.webp",
-        description: "Susunan larik lebih kecil dan halus, biasa dikenakan para putri keraton.",
+        description: "Bentuk larik diagonal cokelat gelap berlatar mori putih bersih (pethak) khas gaya Ngayogyakarta yang berkarakter gagah.",
       },
     ],
     hints: [
@@ -324,25 +324,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_sekarjagad",
     name: "Sekar Jagad",
     fullName: "Batik Sekar Jagad",
-    region: "D.I. Yogyakarta & Surakarta",
-    province: "D.I. Yogyakarta",
+    region: "D.I. Yogyakarta & Surakarta (Mataram)",
+    province: "D.I. Yogyakarta & Jawa Tengah",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Sekar bermakna bunga, jagad bermakna alam semesta. Menggambarkan keindahan keberagaman suku, bahasa, dan budaya dunia yang dapat hidup berdampingan secara damai dalam satu kesatuan.",
+      "Sekar bermakna bunga, jagad bermakna alam semesta. Menggambarkan keindahan keberagaman suku, bahasa, dan budaya dunia yang dapat hidup berdampingan secara damai dalam satu kesatuan yang utuh dan serasi.",
     usage: "Busana terhormat untuk pembicara seminar kebudayaan, pejabat negara, dan tamu undangan upacara adat.",
-    visualTraits: "Bidang-bidang berlekuk tak beraturan menyerupai peta kepulauan dunia, di mana setiap bidang diisi cuplikan motif batik berbeda seperti Kawung, Truntum, dan ceplok.",
+    visualTraits: "Bidang-bidang berlekuk menyerupai peta kepulauan dunia dalam balutan cokelat sogan hangat, di mana setiap bidang diisi motif ceplok berbeda seperti Truntum, Kawung, dan lereng kembang.",
     image: "/images/motifs/batik_sekarjagad.webp",
     variants: [
       {
-        name: "Sekar Jagad Peta Kepulauan",
+        name: "Sekar Jagad Latar Pethak Ngayogyakarta",
         image: "/images/motifs/batik_sekarjagad_var1.webp",
-        description: "Batas bidang bergelombang memuat cuplikan motif isen-isen yang berbeda tiap pulau.",
+        description: "Pulau-pulau motif berlekuk di atas latar putih gading (pethak) dengan isen ceplok hitam-putih yang kontras dan berwibawa.",
       },
       {
-        name: "Sekar Jagad Sogan Mataram",
+        name: "Sekar Jagad Pesisiran Merah Terakota",
         image: "/images/motifs/batik_sekarjagad_var2.webp",
-        description: "Pewarnaan cokelat soga tanah dengan garis pembatas kontur luwes.",
+        description: "Pewarnaan merah jingga terakota yang hangat dan menyala, memuat mozaik ornamen flora fauna yang dinamis.",
       },
     ],
     hints: [
@@ -357,25 +357,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_sidoluhur",
     name: "Sido Luhur",
     fullName: "Batik Sido Luhur",
-    region: "Surakarta & D.I. Yogyakarta",
-    province: "Jawa Tengah",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "Jawa Tengah & D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Sido berarti menjadi terus menerus, luhur bermakna berbudi pekerti mulia dan berderajat terhormat. Doa agar pemakainya mencapai keluhuran tingkah laku dan menjadi teladan bagi masyarakat sekitar.",
+      "Sido berarti menjadi terus menerus, luhur bermakna berbudi pekerti mulia dan berderajat terhormat. Doa restu agar pemakainya mencapai keluhuran budi, martabat tinggi, dan senantiasa menjadi panutan masyarakat.",
     usage: "Dikenakan calon pengantin putri pada malam midodareni dan upacara peringatan leluhur.",
-    visualTraits: "Pola kotak ceplok simetris yang memuat ornamen tahta atau bale, sayap burung garuda bersayap satu (lar), serta tanaman pohon hayat.",
+    visualTraits: "Pola kotak ceplok belah ketupat berulang berlatar sogan gelap pekat, memuat ornamen singgasana tahta kemuliaan dan sayap burung garuda bersayap tunggal (lar).",
     image: "/images/motifs/batik_sidoluhur.webp",
     variants: [
       {
-        name: "Ceplok Tahta & Pohon Hayat",
+        name: "Ceplok Tahta Sogan Keemasan",
         image: "/images/motifs/batik_sidoluhur_var1.webp",
-        description: "Kotak ceplok berisi singgasana kemuliaan berlatar cokelat soga khas Surakarta.",
+        description: "Bidang belah ketupat berbingkai garis sogan cokelat keemasan hangat berisi tahta singgasana di atas latar gelap.",
       },
       {
-        name: "Sido Luhur Lar Garuda",
+        name: "Sido Luhur Aksen Pethak Bersinar",
         image: "/images/motifs/batik_sidoluhur_var2.webp",
-        description: "Sayap burung garuda berselingan dengan ornamen tumbuhan semesta.",
+        description: "Pewarnaan sogan kemerahan berpadu aksen putih bersih pada sayap garuda dan tahta kemuliaan.",
       },
     ],
     hints: [
@@ -395,20 +395,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Mukti bermakna kemakmuran, kecukupan pangan sandang, dan kebahagiaan batin. Doa restu bagi pengantin baru agar bahtera rumah tangganya senantiasa dilimpahi rezeki dan ketenangan hidup.",
+      "Mukti bermakna kemakmuran, kecukupan pangan sandang, dan kebahagiaan batin. Doa restu bagi pengantin baru agar bahtera rumah tangganya senantiasa dilimpahi rezeki halal, kemuliaan hidup, dan ketenteraman jiwa.",
     usage: "Kain sakral wajib bagi kedua mempelai saat prosesi ijab kabul dan upacara panggih manten adat Jawa.",
-    visualTraits: "Kotak-kotak ceplok geometris berlatar cokelat sogan hangat, berisi ornamen kupu-kupu yang melambangkan kebahagiaan, singgasana tahta, dan sayap garuda.",
+    visualTraits: "Pola kotak ceplok diagonal berlatar sogan merah-cokelat Mataram, memuat ornamen kupu-kupu pembawa kabar gembira, singgasana tahta, dan sayap garuda bertabur isen cecek.",
     image: "/images/motifs/batik_sidomukti.webp",
     variants: [
       {
-        name: "Sido Mukti Pengantin Jawa",
+        name: "Sido Mukti Sogan Solo Alus Keemasan",
         image: "/images/motifs/batik_sidomukti_var1.webp",
-        description: "Kain upacara panggih manten dengan ornamen kupu-kupu dan burung garuda.",
+        description: "Pewarnaan soga kuning kecokelatan keemasan hangat khas Kasunanan Surakarta dengan isen cecek sangat rapat dan halus.",
       },
       {
-        name: "Sido Mukti Sogan Solo Alus",
+        name: "Sido Mukti Babaran Nila Biru (Wedelan)",
         image: "/images/motifs/batik_sidomukti_var2.webp",
-        description: "Pewarnaan soga kuning kecokelatan hangat dengan isen cecek rapat.",
+        description: "Varian wedelan bernuansa biru nila lembut berlatar cerah, menampilkan ornamen kupu-kupu dan singgasana tahta pengantin.",
       },
     ],
     hints: [
@@ -428,20 +428,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Mulyo bermakna mulia dan tenteram. Mengandung harapan agar keluarga baru yang dibina selalu dilimpahi ketenteraman batin, kejujuran budi, serta dihindarkan dari godaan pertikaian.",
+      "Mulyo bermakna mulia, terhormat, dan tenteram. Mengandung harapan agar keluarga baru yang dibina selalu dilimpahi ketenteraman batin, keluhuran budi, serta dihindarkan dari godaan pertikaian.",
     usage: "Dikenakan oleh kedua mempelai dalam upacara perkawinan adat gaya Kasultanan Yogyakarta.",
-    visualTraits: "Pola kotak ceplok berselang-seling dengan ornamen rumah adat (bale), gunung meru, dan sayap garuda di atas kain berlatar putih bersih (pethak).",
+    visualTraits: "Pola kotak ceplok berulang berlatar sogan keemasan hangat, memuat ornamen rumah adat pelindung (bale), pohon hayat, dan sayap burung garuda bersayap tunggal.",
     image: "/images/motifs/batik_sidomulyo.webp",
     variants: [
       {
-        name: "Sido Mulyo Latar Pethak",
+        name: "Sido Mulyo Latar Pethak Ngayogyakarta",
         image: "/images/motifs/batik_sidomulyo_var1.webp",
-        description: "Latar putih bersih (pethak) khas Yogyakarta dengan kontur hitam kecokelatan tegas.",
+        description: "Latar mori putih bersih (pethak) khas Yogyakarta dengan kontur hitam kecokelatan tegas berhias kupu-kupu dan bale adat.",
       },
       {
-        name: "Sido Mulyo Ornamen Bale",
+        name: "Sido Mulyo Ceplok Kontras Bale & Garuda",
         image: "/images/motifs/batik_sidomulyo_var2.webp",
-        description: "Ornamen rumah adat pelindung keluarga di dalam bidang ceplok geometris.",
+        description: "Garis batas belah ketupat tebal berwarna cokelat tua di atas latar putih gading dengan ornamen rumah pelindung keluarga.",
       },
     ],
     hints: [
@@ -461,20 +461,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Pesisiran",
     philosophy:
-      "Wujud satwa mitologi yang menggabungkan belalai gajah (Hindu), sayap garuda (Islam), kepala naga (Tiongkok), dan badan singa (Barat). Menjadi simbol toleransi dan persahabatan antarbangsa di pelabuhan Cirebon.",
-    usage: "Kain pusaka kehormatan yang dipajang sebagai karya seni dinding atau dikenakan pada upacara budaya agung.",
-    visualTraits: "Makhluk berbadan singa bersayap garuda, berkepala naga berbelalai gajah yang menggenggam senjata trisula di belalainya.",
+      "Wujud satwa mitologi agung yang menggabungkan belalai gajah (Hindu), sayap garuda (Islam), kepala naga (Tiongkok), dan badan singa (Eropa). Menjadi simbol toleransi dan persahabatan antarbangsa di Keraton Kasepuhan Cirebon.",
+    usage: "Kain pusaka kehormatan yang dipajang sebagai karya seni wastra agung atau dikenakan pada upacara budaya keraton.",
+    visualTraits: "Komposisi utuh Kereta Kencana Singa Barong pusaka Panembahan Losari tahun 1549, menampilkan sepasang satwa mitologi berpayung kerajaan, roda pedati kencana, kawanan burung hong di angkasa, dan batu karang wadasan di dasarnya.",
     image: "/images/motifs/batik_singa_barong.webp",
     variants: [
       {
-        name: "Singa Barong Kereta Kasepuhan",
+        name: "Singa Barong Tatah Berulang",
         image: "/images/motifs/batik_singa_barong_var1.webp",
-        description: "Mengacu pada wujud kereta kencana pusaka peninggalan Panembahan Losari tahun 1549.",
+        description: "Susunan lajur berulang satwa singa berkepala naga dan sayap garuda berlatar pethak dengan tumpal wadasan khas Cirebon.",
       },
       {
-        name: "Singa Barong Emas Pesisir",
+        name: "Detail Satwa Pusaka Singa Barong",
         image: "/images/motifs/batik_singa_barong_var2.webp",
-        description: "Pewarnaan latar tanah hangat dengan aksen trisula dan sayap garuda mengembang.",
+        description: "Sorotan dekat ornamen satwa mitologi berkepala naga belalai gajah memegang trisula di bawah naungan payung kerajaan.",
       },
     ],
     hints: [
@@ -489,25 +489,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_srikaton",
     name: "Srikaton",
     fullName: "Batik Srikaton",
-    region: "Surakarta & D.I. Yogyakarta",
-    province: "Jawa Tengah",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "Jawa Tengah & D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Sri bermakna cahaya kemakmuran dan keanggunan, katon bermakna tampak nyata. Menggambarkan pancaran kebaikan budi, kewibawaan lahiriah, dan ketenteraman yang terpancar dari diri pemakainya.",
+      "Sri bermakna cahaya kemakmuran dan keanggunan, katon bermakna tampak nyata. Menggambarkan pancaran kebaikan budi, kewibawaan lahiriah, dan ketenteraman yang terpancar nyata dari diri pemakainya.",
     usage: "Busana upacara adat keraton bagi putri bangsawan, wisuda, dan pertemuan keluarga besar.",
-    visualTraits: "Sepasang burung merak anggun berhadapan di samping pohon hayat rimbun, dinaungi ornamen mahkota kemuliaan berlatar cokelat soga halus.",
+    visualTraits: "Sepasang sayap burung merak dan mahkota keemasan yang memancarkan pendar kuning menyala, berpadu sulur daun rimbun di atas latar cokelat soga gelap pekat.",
     image: "/images/motifs/batik_srikaton.webp",
     variants: [
       {
-        name: "Srikaton Merak Berhadapan",
+        name: "Srikaton Babaran Wedelan Biru Malam",
         image: "/images/motifs/batik_srikaton_var1.webp",
-        description: "Sepasang merak dengan ekor meliuk di samping pohon kehidupan berbuah berkah.",
+        description: "Hamparan motif merak berulang dengan warna biru wedelan dan aksen putih pethak halus menyerupai langit malam penuh bintang.",
       },
       {
-        name: "Srikaton Sogan Alus",
+        name: "Srikaton Sogan Solo Alus Kupu-kupu & Lar",
         image: "/images/motifs/batik_srikaton_var2.webp",
-        description: "Pewarnaan cokelat tua alami dengan ornamen mahkota bersayap di bagian atas.",
+        description: "Goresan sogan Solo keemasan lembut yang menampilkan ornamen kupu-kupu diapit sepasang sayap garuda dan cecek rapat.",
       },
     ],
     hints: [
@@ -527,20 +527,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Tri bermakna tiga, busono bermakna busana atau keindahan budi. Mengingatkan tiga pilar moral manusia Jawa dalam bertindak: Cipta (kekuatan akal pikiran), Rasa (kepekaan hati nurani), dan Karsa (kehendak berbuat kebaikan).",
+      "Tri bermakna tiga, busono bermakna busana atau keindahan budi pekerti. Mengingatkan tiga pilar moral manusia Jawa dalam bertindak: Cipta (kekuatan akal pikiran), Rasa (kepekaan hati nurani), dan Karsa (kehendak teguh berbuat kebaikan).",
     usage: "Dikenakan dalam perhelatan adat penting, wisuda adat, dan upacara seremonial budaya Jawa.",
-    visualTraits: "Paduan harmonis tiga unsur alam: ragam flora dedaunan mekar, fauna burung garuda terbang, dan ornamen air tanah yang saling menopang.",
+    visualTraits: "Paduan harmonis satwa burung garuda terbang meliuk di antara dedaunan mekar dan pusaran air berlatar cokelat soga dengan semburat biru wedelan.",
     image: "/images/motifs/batik_tribusono.webp",
     variants: [
       {
-        name: "Tribusono Tiga Pilar Budi",
+        name: "Tribusono Garuda Lereng Alus",
         image: "/images/motifs/batik_tribusono_var1.webp",
-        description: "Komposisi ornamen burung, flora melingkar, dan aliran air yang berimbang.",
+        description: "Sayap burung garuda megah meliuk di atas lajur diagonal dengan isen cecek jala keemasan berlatar cokelat pekat.",
       },
       {
-        name: "Tribusono Sogan Surakarta",
+        name: "Tribusono Kupu-kupu & Kembang Latar Pethak",
         image: "/images/motifs/batik_tribusono_var2.webp",
-        description: "Pewarnaan soga matang dengan ornamen cecek halus di sekeliling bidang motif.",
+        description: "Ornamen kupu-kupu dan bunga seruni anggun berlatar krem cerah dengan goresan canting yang luwes dan lembut.",
       },
     ],
     hints: [
@@ -560,20 +560,20 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Tumaruntum berarti tumbuh bersemi kembali. Diciptakan oleh Kanjeng Ratu Beruk saat memandang taburan bintang di langit malam, melambangkan cinta sejati tanpa syarat yang selalu tumbuh mekar dan tak lekang oleh waktu.",
+      "Tumaruntum berarti tumbuh bersemi kembali. Diciptakan oleh Kanjeng Ratu Kencana (Ratu Beruk) saat memandang taburan bintang di langit malam, melambangkan cinta sejati tanpa syarat yang selalu tumbuh mekar dan tak pernah padam oleh waktu.",
     usage: "Busana wajib yang dikenakan oleh orang tua kedua mempelai pada hari upacara pernikahan adat Jawa.",
-    visualTraits: "Bunga melati kecil berbentuk roset menyerupai taburan bintang malam di atas latar kain moro hitam pekat, diberi isen titik cecek putih halus.",
+    visualTraits: "Taburan kuntum bunga melati roset kecil berwarna cokelat sogan keemasan di atas latar morodadi hitam pekat, menyerupai kemilau bintang malam di angkasa.",
     image: "/images/motifs/batik_truntum.webp",
     variants: [
       {
-        name: "Truntum Bintang Langit Malam",
+        name: "Truntum Wedelan Biru Malam",
         image: "/images/motifs/batik_truntum_var1.webp",
-        description: "Kuntum melati kecil menyerupai bintang bertabur di atas kain hitam pekat (morodadi).",
+        description: "Bintang melati bertabur putih-keemasan di atas babaran biru nila (indigo) pekat yang merefleksikan hamparan langit malam tempat Ratu Kencana merenung.",
       },
       {
-        name: "Truntum Sogan Orang Tua",
+        name: "Truntum Sogan Orang Tua Pengantin",
         image: "/images/motifs/batik_truntum_var2.webp",
-        description: "Varian soga cokelat matang yang melambangkan ketulusan doa restu orang tua pengantin.",
+        description: "Kuntum bintang melati berpadu intan belah ketupat putih dengan latar cokelat sogan hangat, busana sakral penuntun pernikahan adat Jawa.",
       },
     ],
     hints: [
@@ -595,18 +595,18 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     philosophy:
       "Tujuh unsur flora dan fauna yang berpadu serasi mencerminkan keterbukaan warga pesisir Pekalongan terhadap para pedagang dari Tiongkok, Arab, dan Eropa yang singgah di pelabuhan.",
     usage: "Busana pesta pernikahan modern, kemeja kerja kreatif, dan selendang peragaan busana etnik.",
-    visualTraits: "Tujuh ragam hias tumbuhan dan binatang (kupu-kupu, burung, daun pakis, kuncup bunga seruni) yang disusun dalam gradasi warna cerah semarak.",
+    visualTraits: "Rangkaian bunga seruni mekar dan kuncup daun anggun berhiaskan aksen biru toska dan jingga di atas latar hitam bertekstur isen cecek sulur.",
     image: "/images/motifs/batik_tujuh_rupa.webp",
     variants: [
       {
-        name: "Tujuh Rupa Pesisir Pekalongan",
+        name: "Tujuh Rupa Merak Toska & Kupu-kupu Cerah",
         image: "/images/motifs/batik_tujuh_rupa_var1.webp",
-        description: "Paduan tujuh ragam hias hayati dengan warna ungu, merah muda, dan toska cerah.",
+        description: "Paduan burung merak anggun bersayap toska keemasan, kupu-kupu, dan kuntum bunga mekar warna-warni yang sangat hidup.",
       },
       {
-        name: "Tujuh Rupa Flora Semarak",
+        name: "Tujuh Rupa Flora Semarak Pesisir",
         image: "/images/motifs/batik_tujuh_rupa_var2.webp",
-        description: "Kupu-kupu dan ranting bunga mekar yang mengisi seluruh bidang kain tanpa batas kaku.",
+        description: "Kupu-kupu dan ranting dedaunan mekar berlatar cokelat tanah dengan isen titik cecek yang menyelimuti seluruh helai kain.",
       },
     ],
     hints: [
@@ -621,25 +621,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_wahyu_tumurun",
     name: "Wahyu Tumurun",
     fullName: "Batik Wahyu Tumurun",
-    region: "D.I. Yogyakarta & Surakarta",
-    province: "D.I. Yogyakarta",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "Jawa Tengah & D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Wahyu berarti petunjuk dan anugerah Tuhan, tumurun berarti turun menghampiri. Memuat doa pengharapan agar pemakainya dikaruniai petunjuk hidup, kemudahan dalam menuntut ilmu, serta masa depan yang terang.",
+      "Wahyu berarti petunjuk dan anugerah Tuhan, tumurun berarti turun menghampiri. Memuat doa restu pengharapan agar pemakainya dikaruniai petunjuk hidup, kemudahan dalam menuntut ilmu, serta masa depan yang terang benderang.",
     usage: "Dikenakan saat wisuda perguruan tinggi, pelantikan jabatan pengabdian, dan doa permohonan restu keluarga.",
-    visualTraits: "Pola mahkota terbang bersayap (kanthil) yang dinaungi sepasang burung garuda atau merak berhadapan, serta ornamen pohon hayat di sela-selanya.",
+    visualTraits: "Pola mahkota terbang bersayap (kanthil) yang dinaungi sepasang burung garuda berhadapan dan ornamen pohon hayat berlatar cokelat soga tua klasik.",
     image: "/images/motifs/batik_wahyu_tumurun.webp",
     variants: [
       {
-        name: "Wahyu Tumurun Mahkota Kanthil",
+        name: "Wahyu Tumurun Sogan Solo Alus Isen Cecek",
         image: "/images/motifs/batik_wahyu_tumurun_var1.webp",
-        description: "Mahkota terbang diapit sepasang burung garuda penjemput anugerah masa depan.",
+        description: "Pewarnaan sogan cokelat keemasan hangat dengan goresan isen cecek rapat dan mahkota kanthil putih bersinar.",
       },
       {
-        name: "Wahyu Tumurun Sogan Alus",
+        name: "Wahyu Tumurun Latar Pethak / Krem Cerah",
         image: "/images/motifs/batik_wahyu_tumurun_var2.webp",
-        description: "Babaran cokelat soga keraton dengan garis ornamen pohon hayat menjulang.",
+        description: "Ornamen mahkota kanthil dan burung terbang di atas latar kain kuning gading cerah dengan garis kontur cokelat tegas.",
       },
     ],
     hints: [
@@ -654,25 +654,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     rawId: "batik_wirasat",
     name: "Wirasat",
     fullName: "Batik Wirasat",
-    region: "Surakarta & D.I. Yogyakarta",
-    province: "Jawa Tengah",
+    region: "Surakarta & D.I. Yogyakarta (Mataram)",
+    province: "Jawa Tengah & D.I. Yogyakarta",
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Wirasat bermakna firasat atau petuah nasihat orang tua kepada anak-anaknya. Mengingatkan agar anak selalu menempuh jalan kebajikan, menjaga nama baik keluarga, dan menjaga kerukunan hidup berpasangan.",
+      "Wirasat bermakna firasat atau petuah nasihat bijak orang tua kepada anak-anaknya. Mengingatkan agar anak selalu menempuh jalan kebajikan, menjaga kehormatan keluarga, dan memelihara kerukunan hidup berpasangan.",
     usage: "Dikenakan oleh ibu kedua mempelai pada saat malam midodareni dan prosesi ijab kabul.",
-    visualTraits: "Paduan beberapa motif ceplok keraton seperti Truntum, Sido Mukti, dan ceplok bintang yang disusun berselang-seling dalam bidang kotak simetris rapi.",
+    visualTraits: "Lajur belah ketupat bergelombang berlatar sogan cokelat kemerahan hangat, memuat ornamen ceplok selang-seling antara Truntum bintang dan dedaunan semesta.",
     image: "/images/motifs/batik_wirasat.webp",
     variants: [
       {
-        name: "Wirasat Ceplok Paduan",
+        name: "Wirasat Ceplok Truntum & Medalion Emas",
         image: "/images/motifs/batik_wirasat_var1.webp",
-        description: "Gabungan motif Truntum bintang dan Sido Mukti dalam kotak ceplok berselang.",
+        description: "Petak catur belah ketupat berselang-seling antara taburan bintang Truntum hitam dan ornamen medalion emas bersinar.",
       },
       {
-        name: "Wirasat Nasihat Ibu",
+        name: "Wirasat Babaran Wedelan Tiga Warna",
         image: "/images/motifs/batik_wirasat_var2.webp",
-        description: "Pewarnaan soga cokelat hangat yang melambangkan kelembutan nasihat orang tua.",
+        description: "Perpaduan warna biru wedelan indigo, sogan keemasan, dan latar pethak putih bersinar pada medalion ceplok geometris.",
       },
     ],
     hints: [

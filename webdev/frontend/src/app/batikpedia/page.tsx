@@ -37,13 +37,17 @@ const REGIONS: RegionData[] = [
     name: "Yogyakarta",
     province: "D.I. Yogyakarta",
     description:
-      "Pusat kebudayaan Mataram Islam. Ciri khas motifnya berkarakter tegas, sakral, dan bersahaja dengan dominasi warna putih pethak, sogan cokelat, dan biru tua wedelan.",
+      "Pusat kebudayaan Kasultanan Ngayogyakarta Hadiningrat. Ciri khas motifnya berkarakter gagah, sakral, dan bersahaja dengan dominasi latar mori putih bersih (pethak), sogan gelap Mataram, dan biru wedelan bergaris kontur tegas.",
     motifIds: [
+      "batik_sidomulyo",
       "batik_kawung",
       "batik_parang",
       "batik_sekarjagad",
       "batik_bokor_kencono",
-      "batik_sidomulyo",
+      "batik_sidoluhur",
+      "batik_wahyu_tumurun",
+      "batik_wirasat",
+      "batik_srikaton",
     ],
   },
   {
@@ -51,15 +55,19 @@ const REGIONS: RegionData[] = [
     name: "Surakarta (Solo)",
     province: "Jawa Tengah",
     description:
-      "Terkenal dengan soga cokelat keemasan hangat dan isen-isen cecek yang sangat halus. Menghasilkan motif berfilosofi doa restu dan keluhuran budi.",
+      "Sentra agung Kasunanan Surakarta Hadiningrat dan Mangkunegaran. Terkenal dengan latar cokelat sogan keemasan hangat, ornamen luwes mengalir, dan isen-isen cecek yang sangat halus berfilosofi doa restu.",
     motifIds: [
       "batik_sidomukti",
       "batik_truntum",
+      "batik_tribusono",
       "batik_sidoluhur",
       "batik_srikaton",
-      "batik_tribusono",
       "batik_wahyu_tumurun",
       "batik_wirasat",
+      "batik_kawung",
+      "batik_parang",
+      "batik_sekarjagad",
+      "batik_bokor_kencono",
     ],
   },
   {
@@ -359,7 +367,38 @@ export default function BatikpediaPage() {
 
           {/* ─── Mode 1: Sentra Kebudayaan Layout ─── */}
           {viewMode === "sentra" && (
-            <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="space-y-8">
+              {/* Mataram Heritage Educational Callout Banner */}
+              <div className="bg-gradient-to-r from-[#1E1B18] via-[#2A2420] to-[#1E1B18] border border-[#D4AF37]/35 rounded-2xl p-5 sm:p-6 text-white shadow-xl flex flex-col md:flex-row items-start md:items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/30 flex items-center justify-center shrink-0 text-[#D4AF37]">
+                  <Compass className="w-6 h-6" />
+                </div>
+                <div className="flex-1 space-y-1.5">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[11px] font-display font-bold uppercase tracking-widest text-[#D4AF37] bg-[#D4AF37]/15 px-2 py-0.5 rounded border border-[#D4AF37]/30">
+                      Konvergensi Budaya
+                    </span>
+                    <h4 className="font-display font-bold text-base sm:text-lg text-white">
+                      Akar Bersama Mataram: Mengapa Yogyakarta & Surakarta Berbagi Motif?
+                    </h4>
+                  </div>
+                  <p className="font-narrative text-xs text-white/80 leading-relaxed">
+                    Pasca <strong>Perjanjian Giyanti (1755)</strong> yang membagi Kerajaan Mataram Islam, motif keraton agung (seperti <em>Parang, Kawung, Sekar Jagad, Sido Luhur, Wahyu Tumurun,</em> dan <em>Wirasat</em>) diwariskan bersama. Perbedaan utamanya tercermin pada <strong>Gagrak (Gaya & Filosofi Warna)</strong>:
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px] font-narrative text-white/75">
+                    <div className="bg-black/30 rounded-lg p-2.5 border border-white/10">
+                      <span className="font-display font-bold text-[#D4AF37] block mb-0.5">Gagrak Ngayogyakarta:</span>
+                      Berkarakter gagah dengan dominasi latar mori putih bersih (<em>latar pethak</em>) dan garis kontur wedelan biru-hitam pekat yang tegas berwibawa.
+                    </div>
+                    <div className="bg-black/30 rounded-lg p-2.5 border border-white/10">
+                      <span className="font-display font-bold text-[#D4AF37] block mb-0.5">Gagrak Surakarta (Solo):</span>
+                      Berkarakter luwes dan anggun dengan latar cokelat sogan keemasan hangat (<em>sogan Solo</em>) serta isen-isen cecek yang sangat halus dan rapat.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-8 items-start">
               {/* Left: Sentra Cards */}
               <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
                 {filteredRegions.map((region) => {
@@ -521,6 +560,7 @@ export default function BatikpediaPage() {
                   </div>
                 )}
               </div>
+            </div>
             </div>
           )}
 
@@ -737,6 +777,18 @@ export default function BatikpediaPage() {
                       <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#2d2b38]">
                         {selectedMotif.fullName}
                       </h2>
+
+                      {selectedMotif.region.includes("Mataram") && (
+                        <div className="mt-2.5 bg-amber-50/90 border border-amber-200/90 rounded-xl p-2.5 text-xs">
+                          <span className="font-display font-bold text-amber-900 flex items-center gap-1.5 mb-0.5 text-[11px]">
+                            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            Pusaka Kembar Mataram (Gagrak Yogya & Solo):
+                          </span>
+                          <p className="font-narrative text-amber-800 leading-relaxed text-[11px]">
+                            Motif ini dilestarikan di Keraton Yogyakarta (Gagrak Ngayogyakarta: latar mori putih/pethak tegas) maupun Keraton Solo (Gagrak Surakarta: latar sogan keemasan luwes dengan cecek halus).
+                          </p>
+                        </div>
+                      )}
 
                       <div className="mt-4 space-y-3.5 text-xs">
                         <div>
