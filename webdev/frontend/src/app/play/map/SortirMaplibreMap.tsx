@@ -297,10 +297,13 @@ export default function SortirMaplibreMap({
     map.flyTo({ center: [reg.lng, reg.lat], zoom: 8, duration: 1000 });
   };
 
-  // Prepare dynamic GeoJSON mapping properties for regions with distinct rich colors per region (matching Image 2)
+  // Prepare dynamic GeoJSON mapping properties for active regions with distinct rich colors per region
   const interactiveGeoJson = useMemo(() => {
+    const activeIds = new Set(regions.map((r) => r.id));
     const featureCollection = { ...(regionsGeoData as any) };
-    featureCollection.features = featureCollection.features.map((feature: any) => {
+    featureCollection.features = featureCollection.features
+      .filter((feature: any) => activeIds.has(feature.properties.id))
+      .map((feature: any) => {
       const regionId = feature.properties.id;
       const placed = !!placedItems[regionId];
       const isHovered = hoveredRegionId === regionId;
