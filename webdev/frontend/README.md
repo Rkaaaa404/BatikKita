@@ -34,8 +34,6 @@ npm start
 - `/batikpedia` — **Batik Pedia** (Ensiklopedia 20 ragam hias motif batik resmi)
 - `/chat` — **Batik Ask** (Tanya Sang Empu - Asisten Budaya Cerdas)
 
-> Catatan: Tautan lama (`/play/tika`, `/play/cap-stamping`, `/play/sortir-peta`, `/play/tebak-motif`) telah dikonfigurasi dengan auto-redirect HTTP 308 pada `next.config.ts`.
-
 ## Standalone Docker Build
 
 Aplikasi ini telah dikonfigurasi dengan `output: "standalone"` pada `next.config.ts`. Untuk menjalankan via Docker Compose dari root proyek:

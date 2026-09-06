@@ -41,8 +41,6 @@ Seluruh layanan di dalam Batik Kita dirancang secara modular dan menggunakan tat
 | **Batik Ask** | `/chat` | Conversational AI | Asisten dialog interaktif "Sang Empu" untuk berdiskusi sejarah, makna filosofis ornamen, hingga tata krama busana batik adat. |
 | **Album Koleksi** | `/collection` | Progresi & Mastery | Galeri kartu pencapaian wastra berbingkai adaptif (*Dynamic Mastery Borders*): Zamrud, Perunggu, Perak, dan Emas Berkilau Hologram. |
 
-> **Catatan Kompatibilitas**: Rute warisan terdahulu (`/play/tika`, `/play/cap-stamping`, `/play/sortir-peta`, `/play/tebak-motif`) telah dikonfigurasi menggunakan HTTP 308 Permanent Redirect pada `next.config.ts` untuk memastikan kompatibilitas penuh tanpa *broken link*.
-
 ---
 
 ## ⚡ Sorotan Rekayasa & Inovasi Teknologi
