@@ -237,6 +237,7 @@ npm run build
 │       ├── src/
 │       │   ├── app/                      # Next.js App Router (Rute Suite Resmi)
 │       │   │   ├── page.tsx              # Beranda Utama & Interactive Hero
+│       │   │   ├── api/chat/             # Backend Route: Gemini 2.5 Flash Cultural Assistant
 │       │   │   ├── scan/                 # Batik Lens (Edge AI Scanner)
 │       │   │   ├── chat/                 # Batik Ask (Asisten Budaya Cerdas)
 │       │   │   ├── batikpedia/           # Batik Pedia (Ensiklopedia Motif)
@@ -252,7 +253,7 @@ npm run build
 │       │   │   └── shared/               # XpBar, GameNavbar, ThemeToggle
 │       │   ├── data/                     # Dataset 20 Motif, Wilayah, & GeoJSON
 │       │   ├── hooks/                    # Hook Kustom: useXp, useGameTheme
-│       │   └── lib/                      # onnxClassifier (Queue) & polyominoPartition
+│       │   └── lib/                      # onnxClassifier, polyominoPartition, & geminiKnowledge
 │       ├── Dockerfile                    # Container Multi-Stage Production Build
 │       └── next.config.ts                # Turbopack & HTTP 308 Auto-Redirects
 ├── docker-compose.yml                    # Orkestrasi Docker Standalone

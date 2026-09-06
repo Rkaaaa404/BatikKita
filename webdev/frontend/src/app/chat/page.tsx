@@ -171,34 +171,66 @@ export default function ChatPage() {
     chatSectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleSend = (text: string) => {
-    if (!text.trim()) return;
+  const handleSend = async (text: string) => {
+    if (!text.trim() || isTyping) return;
 
     const userMsg: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: text,
+      content: text.trim(),
       time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
-    setMessages((prev) => [...prev, userMsg]);
+
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
     setInput("");
     setIsTyping(true);
 
-    // Mock bot reply
-    setTimeout(() => {
-      setIsTyping(false);
-      const answer =
-        PRESET_ANSWERS[text] ||
-        `Matur nuwun atas pertanyaan luhur Ananda mengenai "${text}". Berdasarkan serat babad dan kearifan para empu, setiap guratan canting batik bukan sekadar hiasan ragam visual, melainkan doa yang terpatri pada kain mori. Teruslah mencintai dan melestarikan warisan leluhur kita.`;
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: nextMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Gagal terhubung ke bilik kearifan Batik Ask");
+      }
+
+      const data = await response.json();
+      const botMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "bot",
+        content:
+          data.content ||
+          PRESET_ANSWERS[text.trim()] ||
+          "Sugeng rawuh, Ananda. Silakan ajukan pertanyaan seputar batik nusantara.",
+        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      };
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (error) {
+      console.error("Chat error:", error);
+      const fallbackAnswer =
+        PRESET_ANSWERS[text.trim()] ||
+        `Matur nuwun atas pertanyaan luhur Ananda mengenai "${text.trim()}". Berdasarkan serat babad dan kearifan para empu, setiap guratan canting batik bukan sekadar hiasan ragam visual, melainkan doa yang terpatri pada kain mori. Teruslah mencintai dan melestarikan warisan leluhur kita.`;
 
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
         role: "bot",
-        content: answer,
+        content: fallbackAnswer,
         time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       };
       setMessages((prev) => [...prev, botMsg]);
-    }, 1200);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
