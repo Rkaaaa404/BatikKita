@@ -22,6 +22,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
+import { useGameTheme } from "@/hooks/useGameTheme";
 import type { RegionData, PlacedItem } from "./SortirMaplibreMap";
 
 // Dynamic import Leaflet map with ssr: false for Next.js 16 SSR safety
@@ -281,17 +282,17 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionId: "yogyakarta",
     regionLabel: "D.I. Yogyakarta",
     category: "Batik Keraton",
-    philosophy: "Empat kelopak aren melambangkan kemurnian hati dan harmoni semesta.",
-    image: "/images/batik-kawung.jpg",
+    philosophy: "Empat kelopak aren melambangkan kemurnian hati, keadilan, dan harmoni semesta.",
+    image: "/images/motifs/batik_kawung.webp",
   },
   {
     id: "batik_parang",
     name: "Batik Parang",
-    regionId: "surakarta",
-    regionLabel: "Surakarta (Solo)",
+    regionId: "yogyakarta",
+    regionLabel: "D.I. Yogyakarta",
     category: "Batik Larangan",
     philosophy: "Ombak samudra tak terputus lambang keteguhan kepemimpinan yang pantang surut.",
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
   },
   {
     id: "batik_mega_mendung",
@@ -300,7 +301,7 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionLabel: "Cirebon",
     category: "Batik Pesisiran",
     philosophy: "Awan berundak penyejuk di tengah terik, lambang kesabaran dan ketenangan emosi.",
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
   },
   {
     id: "batik_jlamprang",
@@ -308,8 +309,8 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionId: "pekalongan",
     regionLabel: "Pekalongan",
     category: "Batik Pesisiran",
-    philosophy: "Pola geometris 8 penjuru mata angin hasil akulturasi seni Patola India dan Arab.",
-    image: "/images/batik-kawung.jpg",
+    philosophy: "Pola geometris delapan penjuru mata angin hasil akulturasi seni Patola Gujarat dan Arab.",
+    image: "/images/motifs/batik_jlamprang.webp",
   },
   {
     id: "batik_betawi",
@@ -317,8 +318,8 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionId: "jakarta",
     regionLabel: "DKI Jakarta",
     category: "Batik Pesisiran",
-    philosophy: "Ornamen Ondel-ondel dan kembang kelapa riang menyuarakan keramahan warga ibu kota.",
-    image: "/images/batik-mega-mendung.jpg",
+    philosophy: "Ornamen Ondel-ondel dan pucuk rebung menyuarakan keramahan dan keceriaan warga ibu kota.",
+    image: "/images/motifs/batik_betawi.webp",
   },
   {
     id: "batik_liong",
@@ -326,8 +327,8 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionId: "lasem",
     regionLabel: "Lasem (Rembang)",
     category: "Batik Pesisiran",
-    philosophy: "Naga Liong dan warna merah getih pitik wujud akulturasi Tionghoa Jawa lambang kemakmuran.",
-    image: "/images/batik-parang-rusak.jpg",
+    philosophy: "Naga Liong dan warna merah getih pitik wujud akulturasi Tionghoa-Jawa lambang kemakmuran.",
+    image: "/images/motifs/batik_liong.webp",
   },
   {
     id: "batik_dayak",
@@ -335,35 +336,35 @@ export const MOTIF_CARDS: MotifCard[] = [
     regionId: "kalimantan",
     regionLabel: "Kalimantan",
     category: "Batik Nusantara",
-    philosophy: "Pohon Batang Garing dan tameng telawang penjaga keseimbangan alam dan manusia.",
-    image: "/images/batik-kawung.jpg",
+    philosophy: "Pohon Batang Garing dan tameng telawang penjaga keseimbangan alam dan kehidupan manusia.",
+    image: "/images/motifs/batik_dayak.webp",
   },
   {
-    id: "batik_madura",
-    name: "Batik Madura",
-    regionId: "madura",
-    regionLabel: "Bangkalan (Madura)",
+    id: "batik_singa_barong",
+    name: "Batik Singa Barong",
+    regionId: "cirebon",
+    regionLabel: "Cirebon",
+    category: "Batik Keraton",
+    philosophy: "Kereta kencana Paksi Naga Liman Kasepuhan Cirebon, simbol akulturasi empat peradaban dunia.",
+    image: "/images/motifs/batik_singa_barong.webp",
+  },
+  {
+    id: "batik_sidomukti",
+    name: "Batik Sido Mukti",
+    regionId: "surakarta",
+    regionLabel: "Surakarta (Solo)",
+    category: "Batik Keraton",
+    philosophy: "Sido Mukti melambangkan harapan hidup mulia, sejahtera lahir batin, dan berbudi pekerti.",
+    image: "/images/motifs/batik_sidomukti.webp",
+  },
+  {
+    id: "batik_buketan",
+    name: "Batik Buketan",
+    regionId: "pekalongan",
+    regionLabel: "Pekalongan",
     category: "Batik Pesisiran",
-    philosophy: "Warna tajam berani direndam berbulan-bulan, mencerminkan keteguhan karakter masyarakat pesisir.",
-    image: "/images/batik-mega-mendung.jpg",
-  },
-  {
-    id: "batik_bali",
-    name: "Batik Bali",
-    regionId: "bali",
-    regionLabel: "Denpasar (Bali)",
-    category: "Batik Nusantara",
-    philosophy: "Ragam hias flora sakral Dewata berpadu dengan keanggunan budaya Pulau Seribu Pura.",
-    image: "/images/batik-mega-mendung.jpg",
-  },
-  {
-    id: "batik_garut",
-    name: "Batik Garut",
-    regionId: "garut",
-    regionLabel: "Garut (Priangan)",
-    category: "Batik Pesisiran",
-    philosophy: "Batik Priangan Sunda warna gumading lembut bermotif Merak Ngibing yang penuh pesona.",
-    image: "/images/batik-kawung.jpg",
+    philosophy: "Rangkaian karangan bunga mekar cerah khas pesisir Pekalongan hasil pengaruh seni rupa Eropa.",
+    image: "/images/motifs/batik_buketan.webp",
   },
 ];
 
@@ -377,6 +378,7 @@ type GameState = "idle" | "playing" | "done";
 
 export default function SortirPetaPage() {
   const { addXp } = useXp();
+  const { isDark } = useGameTheme();
   const [gameState, setGameState] = useState<GameState>("idle");
   const [queue, setQueue] = useState<MotifCard[]>([]);
   const [currentCard, setCurrentCard] = useState<MotifCard | null>(null);
@@ -581,7 +583,11 @@ export default function SortirPetaPage() {
   const totalCards = MOTIF_CARDS.length;
 
   return (
-    <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden">
+    <div
+      className={`min-h-screen flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden transition-colors duration-200 ${
+        isDark ? "bg-[#141211] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
+      }`}
+    >
       <GameNavbar title="Sortir Motif ke Peta Basemap" />
 
       <main className="pt-14 sm:pt-16 flex-1 flex flex-col">
@@ -598,7 +604,13 @@ export default function SortirPetaPage() {
               className="max-w-3xl mx-auto px-4 py-12 flex flex-col items-center text-center gap-6"
             >
               <div className="relative">
-                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-[#713f2c]/40 via-[#4a2511]/30 to-[#1A1816] border-2 border-[#D4AF37]/40 flex items-center justify-center shadow-2xl shadow-[#D4AF37]/15">
+                <div
+                  className={`w-24 h-24 rounded-3xl border-2 flex items-center justify-center shadow-2xl ${
+                    isDark
+                      ? "bg-gradient-to-br from-[#713f2c]/40 via-[#4a2511]/30 to-[#1A1816] border-[#D4AF37]/40 shadow-[#D4AF37]/15"
+                      : "bg-gradient-to-br from-[#713f2c]/10 via-[#FAF8F4] to-white border-[#D4AF37]/50 shadow-[#D4AF37]/10"
+                  }`}
+                >
                   <Compass className="w-12 h-12 text-[#D4AF37] animate-pulse" />
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-[#D4AF37] text-[#1A1614] rounded-full p-1.5 shadow-md">
@@ -610,53 +622,101 @@ export default function SortirPetaPage() {
                 <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/25 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3 tracking-wider uppercase">
                   <MapPin className="w-3.5 h-3.5" /> Peta Geografis Basemap Interaktif
                 </div>
-                <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight mb-3">
+                <h1
+                  className={`font-display font-extrabold text-3xl sm:text-4xl md:text-5xl tracking-tight mb-3 ${
+                    isDark ? "text-white" : "text-[#2D2B38]"
+                  }`}
+                >
                   Sortir Motif ke <span className="text-[#D4AF37]">Basemap Nusantara</span>
                 </h1>
-                <p className="text-white/70 font-body max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
-                  Jelajahi peta bumi Nusantara berbasis Basemap geografis nyata.
-                  Cocokkan motif batik ke zona daerahnya masing-masing secara interaktif!
+                <p
+                  className={`font-body max-w-xl mx-auto text-sm sm:text-base leading-relaxed ${
+                    isDark ? "text-white/70" : "text-stone-600"
+                  }`}
+                >
+                  Jelajahi peta bumi Nusantara berbasis basemap geografis nyata.
+                  Cocokkan motif batik ke zona daerah asalnya masing-masing secara interaktif.
                 </p>
               </div>
 
               {/* Interactive Features Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl text-left">
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
-                  <p className="text-[11px] text-white/50 font-body">Mesin Peta</p>
+                <div
+                  className={`border rounded-2xl p-3.5 flex flex-col gap-1 ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                    Mesin Peta
+                  </p>
                   <p className="text-[#D4AF37] font-display font-bold text-xs">Real Basemap</p>
                 </div>
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
-                  <p className="text-[11px] text-white/50 font-body">Zona Wilayah</p>
-                  <p className="text-emerald-400 font-display font-bold text-xs">10 Sentra Asli</p>
+                <div
+                  className={`border rounded-2xl p-3.5 flex flex-col gap-1 ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                    Zona Wilayah
+                  </p>
+                  <p className="text-emerald-500 font-display font-bold text-xs">10 Sentra Asli</p>
                 </div>
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
-                  <p className="text-[11px] text-white/50 font-body">Snapping</p>
+                <div
+                  className={`border rounded-2xl p-3.5 flex flex-col gap-1 ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                    Snapping
+                  </p>
                   <p className="text-[#D4AF37] font-display font-bold text-xs">Deteksi Magnetis</p>
                 </div>
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3.5 flex flex-col gap-1">
-                  <p className="text-[11px] text-white/50 font-body">Durasi</p>
-                  <p className="text-purple-300 font-display font-bold text-xs">90 Detik</p>
+                <div
+                  className={`border rounded-2xl p-3.5 flex flex-col gap-1 ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                    Durasi
+                  </p>
+                  <p className="text-purple-500 font-display font-bold text-xs">90 Detik</p>
                 </div>
               </div>
 
               {/* Instructions Callout */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-4 max-w-xl text-left text-xs text-white/70 space-y-2">
-                <div className="flex items-center gap-2 text-white font-display font-bold">
+              <div
+                className={`border rounded-2xl p-4 max-w-xl text-left text-xs space-y-2 ${
+                  isDark
+                    ? "bg-white/5 border-white/10 text-white/70"
+                    : "bg-white border-[#E2DDD5] text-stone-700 shadow-xs"
+                }`}
+              >
+                <div
+                  className={`flex items-center gap-2 font-display font-bold ${
+                    isDark ? "text-white" : "text-[#2D2B38]"
+                  }`}
+                >
                   <Info className="w-4 h-4 text-[#D4AF37]" />
                   <span>Petunjuk Permainan:</span>
                 </div>
-                <ul className="space-y-1 pl-5 list-disc text-white/60">
+                <ul className={`space-y-1 pl-5 list-disc ${isDark ? "text-white/60" : "text-stone-600"}`}>
                   <li>
-                    <strong className="text-white">Peta Basemap Nyata:</strong> Drag dan pan peta
-                    ke seluruh pelosok Indonesia, atau gunakan tombol zoom dan preset fokus wilayah.
+                    <strong className={isDark ? "text-white" : "text-[#2D2B38]"}>
+                      Peta Basemap Nyata:
+                    </strong>{" "}
+                    Geser dan perbesar peta untuk meninjau letak kepulauan Indonesia.
                   </li>
                   <li>
-                    <strong className="text-white">Pencocokan Zona Daerah:</strong> Tarik kartu batik
-                    ke lingkaran zona wilayah di peta. Zona akan menyala saat kartu terdeteksi!
+                    <strong className={isDark ? "text-white" : "text-[#2D2B38]"}>
+                      Pencocokan Zona Daerah:
+                    </strong>{" "}
+                    Tarik kartu batik ke lingkaran zona wilayah di peta. Zona akan bereaksi saat kartu terdeteksi.
                   </li>
                   <li>
-                    <strong className="text-white">Mode Ketuk:</strong> Anda juga bisa mengetuk kartu
-                    lalu mengetuk lingkaran daerah tujuan di peta.
+                    <strong className={isDark ? "text-white" : "text-[#2D2B38]"}>
+                      Mode Ketuk:
+                    </strong>{" "}
+                    Anda juga dapat mengetuk kartu lalu mengetuk lingkaran daerah tujuan di peta.
                   </li>
                 </ul>
               </div>
@@ -685,16 +745,30 @@ export default function SortirPetaPage() {
               className="flex-1 flex flex-col max-w-6xl mx-auto w-full px-3 sm:px-6 py-1 sm:py-2 gap-2 sm:gap-2.5"
             >
               {/* Top Status Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-2.5 bg-[#1A1816] border border-white/10 rounded-2xl px-3.5 py-1.5 sm:py-2 shadow-lg">
+              <div
+                className={`flex flex-wrap items-center justify-between gap-2.5 border rounded-2xl px-3.5 py-1.5 sm:py-2 transition-colors ${
+                  isDark
+                    ? "bg-[#1A1816] border-white/10 text-white shadow-lg"
+                    : "bg-white/95 border-[#E2DDD5] text-[#2D2B38] shadow-sm"
+                }`}
+              >
                 {/* Timer */}
                 <div className="flex items-center gap-2.5">
                   <div className="flex items-center gap-1.5">
-                    <Timer className="w-4 h-4 text-blue-400" />
-                    <span className="font-display font-extrabold text-sm text-white">
+                    <Timer className="w-4 h-4 text-blue-500 dark:text-blue-400" />
+                    <span
+                      className={`font-display font-extrabold text-sm ${
+                        isDark ? "text-white" : "text-[#2D2B38]"
+                      }`}
+                    >
                       {timeLeft}s
                     </span>
                   </div>
-                  <div className="w-20 sm:w-32 h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div
+                    className={`w-20 sm:w-32 h-2 rounded-full overflow-hidden ${
+                      isDark ? "bg-white/10" : "bg-stone-200"
+                    }`}
+                  >
                     <motion.div
                       animate={{ width: `${timerPercent}%`, backgroundColor: timerColor }}
                       transition={{ duration: 0.3 }}
@@ -706,13 +780,17 @@ export default function SortirPetaPage() {
                 {/* Score & Streak */}
                 <div className="flex items-center gap-3">
                   {streak > 1 && (
-                    <span className="inline-flex items-center gap-1 text-[11px] font-display font-extrabold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full animate-bounce">
-                      <Flame className="w-3 h-3 fill-amber-400" />
+                    <span className="inline-flex items-center gap-1 text-[11px] font-display font-extrabold text-amber-500 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-full animate-bounce">
+                      <Flame className="w-3 h-3 fill-current text-amber-500" />
                       {streak}x Kombo
                     </span>
                   )}
 
-                  <div className="text-xs font-display font-semibold text-white/80">
+                  <div
+                    className={`text-xs font-display font-semibold ${
+                      isDark ? "text-white/80" : "text-stone-700"
+                    }`}
+                  >
                     Selesai:{" "}
                     <span className="text-[#60A5FA] font-bold">
                       {score}/{totalCards}
@@ -726,7 +804,11 @@ export default function SortirPetaPage() {
                   <button
                     type="button"
                     onClick={handleToggleSound}
-                    className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
+                    className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-colors cursor-pointer ${
+                      isDark
+                        ? "bg-white/5 border-white/10 text-white/70 hover:text-white"
+                        : "bg-stone-100 border-[#E2DDD5] text-stone-600 hover:text-stone-900"
+                    }`}
                     title={soundOn ? "Matikan Suara" : "Nyalakan Suara"}
                   >
                     {soundOn ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
@@ -795,7 +877,13 @@ export default function SortirPetaPage() {
 
               {/* ── BOTTOM DOCK: ACTIVE MOTIF CARD TRAY ── */}
               {currentCard && (
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-2.5 sm:p-3 flex items-center gap-3 sm:gap-4 shadow-xl">
+                <div
+                  className={`border rounded-2xl p-2.5 sm:p-3 flex items-center gap-3 sm:gap-4 shadow-xl transition-colors ${
+                    isDark
+                      ? "bg-[#1A1816] border-white/10"
+                      : "bg-white/95 border-[#E2DDD5] shadow-lg"
+                  }`}
+                >
                   {/* Draggable Active Card */}
                   <div className="flex items-center gap-2.5 shrink-0">
                     <motion.div
@@ -829,7 +917,11 @@ export default function SortirPetaPage() {
                       <span className="text-[9px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-1.5 py-0.5 rounded-full">
                         {currentCard.category}
                       </span>
-                      <h3 className="font-display font-bold text-sm text-white mt-0.5 truncate">
+                      <h3
+                        className={`font-display font-bold text-sm mt-0.5 truncate ${
+                          isDark ? "text-white" : "text-[#2D2B38]"
+                        }`}
+                      >
                         {currentCard.name}
                       </h3>
                     </div>
@@ -841,20 +933,36 @@ export default function SortirPetaPage() {
                       <span className="text-[10px] font-display font-bold text-[#D4AF37] bg-[#D4AF37]/15 border border-[#D4AF37]/30 px-2 py-0.5 rounded-full uppercase tracking-wider">
                         {currentCard.category}
                       </span>
-                      <span className="text-white/40 text-xs font-body">
+                      <span
+                        className={`text-xs font-body ${
+                          isDark ? "text-white/40" : "text-stone-400"
+                        }`}
+                      >
                         {queue.length + 1} motif tersisa
                       </span>
                     </div>
 
-                    <h3 className="hidden sm:block font-display font-bold text-base text-white truncate">
+                    <h3
+                      className={`hidden sm:block font-display font-bold text-base truncate ${
+                        isDark ? "text-white" : "text-[#2D2B38]"
+                      }`}
+                    >
                       {currentCard.name}
                     </h3>
 
-                    <p className="text-white/60 text-xs font-narrative mt-0.5 line-clamp-1 sm:line-clamp-2">
+                    <p
+                      className={`text-xs font-narrative mt-0.5 line-clamp-1 sm:line-clamp-2 ${
+                        isDark ? "text-white/60" : "text-stone-600"
+                      }`}
+                    >
                       {currentCard.philosophy}
                     </p>
 
-                    <p className="text-blue-300/80 text-[11px] font-display font-medium mt-0.5 hidden sm:flex items-center gap-1.5">
+                    <p
+                      className={`text-[11px] font-display font-medium mt-0.5 hidden sm:flex items-center gap-1.5 ${
+                        isDark ? "text-blue-300/80" : "text-blue-700"
+                      }`}
+                    >
                       <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                       <span>
                         {selectedCard
@@ -872,24 +980,42 @@ export default function SortirPetaPage() {
                       className={`text-xs font-display font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl border transition-all cursor-pointer flex items-center gap-1.5 ${
                         selectedCard
                           ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37] shadow-lg shadow-[#D4AF37]/30"
-                          : "bg-white/5 hover:bg-white/10 text-white border-white/15 hover:border-white/30"
+                          : isDark
+                          ? "bg-white/5 hover:bg-white/10 text-white border-white/15 hover:border-white/30"
+                          : "bg-stone-100 hover:bg-stone-200 text-[#2D2B38] border-[#E2DDD5]"
                       }`}
                     >
                       {selectedCard && <Check className="w-3.5 h-3.5 text-[#1A1614]" />}
                       <span>{selectedCard ? "Siap Pilih" : "Ketuk Pilih"}</span>
                     </button>
-                    <span className="text-[9px] text-white/40 font-body hidden sm:inline">
-                      atau Drag ke peta
+                    <span
+                      className={`text-[9px] font-body hidden sm:inline ${
+                        isDark ? "text-white/40" : "text-stone-400"
+                      }`}
+                    >
+                      atau drag ke peta
                     </span>
                   </div>
 
                   {/* Upcoming Queue Thumbnails */}
-                  <div className="hidden md:flex items-center gap-1.5 pl-3 border-l border-white/10 shrink-0">
+                  <div
+                    className={`hidden md:flex items-center gap-1.5 pl-3 border-l shrink-0 ${
+                      isDark ? "border-white/10" : "border-[#E2DDD5]"
+                    }`}
+                  >
                     <div className="text-right mr-1">
-                      <p className="text-[9px] font-display font-bold text-white/40 uppercase">
+                      <p
+                        className={`text-[9px] font-display font-bold uppercase ${
+                          isDark ? "text-white/40" : "text-stone-400"
+                        }`}
+                      >
                         Antrean:
                       </p>
-                      <p className="text-xs font-display font-bold text-white/70">
+                      <p
+                        className={`text-xs font-display font-bold ${
+                          isDark ? "text-white/70" : "text-stone-700"
+                        }`}
+                      >
                         {queue.length} motif
                       </p>
                     </div>
@@ -951,22 +1077,52 @@ export default function SortirPetaPage() {
                 <span className="text-xs font-display font-extrabold text-[#D4AF37] uppercase tracking-wider bg-[#D4AF37]/10 border border-[#D4AF37]/25 px-4 py-1 rounded-full mb-3 inline-block">
                   Sesi Sortir Peta Selesai
                 </span>
-                <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-white mb-2">
+                <h2
+                  className={`font-display font-extrabold text-3xl sm:text-4xl mb-2 ${
+                    isDark ? "text-white" : "text-[#2D2B38]"
+                  }`}
+                >
                   Penjelajah Wastra Nusantara
                 </h2>
-                <p className="text-white/70 font-body max-w-md mx-auto text-sm">
+                <p
+                  className={`font-body max-w-md mx-auto text-sm ${
+                    isDark ? "text-white/70" : "text-stone-600"
+                  }`}
+                >
                   {score === totalCards
-                    ? "Sempurna! Kamu berhasil menempatkan seluruh motif batik ke daerah asalnya dengan akurasi 100%."
-                    : `Kamu berhasil menempatkan ${score} dari total ${totalCards} motif batik ke daerah asalnya.`}
+                    ? "Sempurna! Anda berhasil menempatkan seluruh motif batik ke daerah asalnya dengan akurasi 100%."
+                    : `Anda berhasil menempatkan ${score} dari total ${totalCards} motif batik ke daerah asalnya.`}
                 </p>
               </div>
 
               {/* Statistics Grid */}
               <div className="grid grid-cols-3 gap-3 w-full">
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-4 text-center">
-                  <p className="text-white/40 text-[11px] font-body mb-1">Benar</p>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-white">{score}</p>
-                  <p className="text-white/40 text-[10px] font-body">dari {totalCards} motif</p>
+                <div
+                  className={`border rounded-2xl p-4 text-center ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p
+                    className={`text-[11px] font-body mb-1 ${
+                      isDark ? "text-white/40" : "text-stone-500"
+                    }`}
+                  >
+                    Benar
+                  </p>
+                  <p
+                    className={`font-display font-bold text-2xl sm:text-3xl ${
+                      isDark ? "text-white" : "text-[#2D2B38]"
+                    }`}
+                  >
+                    {score}
+                  </p>
+                  <p
+                    className={`text-[10px] font-body ${
+                      isDark ? "text-white/40" : "text-stone-400"
+                    }`}
+                  >
+                    dari {totalCards} motif
+                  </p>
                 </div>
 
                 <div className="bg-[#D4AF37]/10 border border-[#D4AF37]/25 rounded-2xl p-4 text-center">
@@ -977,18 +1133,42 @@ export default function SortirPetaPage() {
                   <p className="text-[#D4AF37]/50 text-[10px] font-body">XP Tambahan</p>
                 </div>
 
-                <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-4 text-center">
-                  <p className="text-white/40 text-[11px] font-body mb-1">Akurasi</p>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-emerald-400">
+                <div
+                  className={`border rounded-2xl p-4 text-center ${
+                    isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
+                  <p
+                    className={`text-[11px] font-body mb-1 ${
+                      isDark ? "text-white/40" : "text-stone-500"
+                    }`}
+                  >
+                    Akurasi
+                  </p>
+                  <p className="font-display font-bold text-2xl sm:text-3xl text-emerald-500">
                     {Math.round((score / totalCards) * 100)}%
                   </p>
-                  <p className="text-white/40 text-[10px] font-body">Ketepatan Sentra</p>
+                  <p
+                    className={`text-[10px] font-body ${
+                      isDark ? "text-white/40" : "text-stone-400"
+                    }`}
+                  >
+                    Ketepatan Sentra
+                  </p>
                 </div>
               </div>
 
               {/* Placed Showcase Chips */}
-              <div className="w-full bg-[#1A1816] border border-white/10 rounded-2xl p-4 text-left">
-                <p className="text-xs font-display font-bold text-white/70 mb-3 flex items-center gap-1.5">
+              <div
+                className={`w-full border rounded-2xl p-4 text-left ${
+                  isDark ? "bg-[#1A1816] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                }`}
+              >
+                <p
+                  className={`text-xs font-display font-bold mb-3 flex items-center gap-1.5 ${
+                    isDark ? "text-white/70" : "text-stone-700"
+                  }`}
+                >
                   <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                   Motif yang Berhasil Dipasangkan:
                 </p>
@@ -998,11 +1178,17 @@ export default function SortirPetaPage() {
                     return (
                       <span
                         key={regionId}
-                        className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-xl px-2.5 py-1 text-xs text-white/90"
+                        className={`inline-flex items-center gap-1.5 border rounded-xl px-2.5 py-1 text-xs ${
+                          isDark
+                            ? "bg-white/5 border-white/10 text-white/90"
+                            : "bg-stone-50 border-[#E2DDD5] text-stone-800"
+                        }`}
                       >
-                        <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
                         <strong>{item.cardName}</strong>
-                        <span className="text-white/40">({reg?.name})</span>
+                        <span className={isDark ? "text-white/40" : "text-stone-500"}>
+                          ({reg?.name})
+                        </span>
                       </span>
                     );
                   })}
@@ -1023,16 +1209,24 @@ export default function SortirPetaPage() {
                 <button
                   type="button"
                   onClick={() => setGameState("idle")}
-                  className="w-full flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-semibold py-3.5 px-4 rounded-xl transition-all hover:border-white/30 cursor-pointer"
+                  className={`w-full flex items-center justify-center gap-2 border font-display font-semibold py-3.5 px-4 rounded-xl transition-all cursor-pointer ${
+                    isDark
+                      ? "border-white/15 bg-white/5 hover:bg-white/10 text-white hover:border-white/30"
+                      : "border-[#E2DDD5] bg-stone-100 hover:bg-stone-200 text-[#2D2B38]"
+                  }`}
                 >
                   <Compass className="w-4 h-4 text-[#D4AF37]" />
                   <span>Halaman Awal</span>
                 </button>
                 <Link
                   href="/play"
-                  className="w-full flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-semibold py-3.5 px-4 rounded-xl transition-all hover:border-white/30 cursor-pointer"
+                  className={`w-full flex items-center justify-center gap-2 border font-display font-semibold py-3.5 px-4 rounded-xl transition-all cursor-pointer ${
+                    isDark
+                      ? "border-white/15 bg-white/5 hover:bg-white/10 text-white hover:border-white/30"
+                      : "border-[#E2DDD5] bg-stone-100 hover:bg-stone-200 text-[#2D2B38]"
+                  }`}
                 >
-                  <Trophy className="w-4 h-4 text-emerald-400" />
+                  <Trophy className="w-4 h-4 text-emerald-500" />
                   <span>Pilih Game Lain</span>
                 </Link>
               </div>

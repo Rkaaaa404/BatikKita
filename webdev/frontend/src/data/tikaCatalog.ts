@@ -27,13 +27,13 @@ export const TIKA_CATALOG: TikaMotif[] = [
     category: "Batik Keraton (Geometris)",
     description:
       "Terinspirasi dari buah aren atau kolang-kaling yang tersusun empat penjuru simetris. Melambangkan kesucian hati, keadilan, pengendalian hawa nafsu, dan empat arah mata angin sumber energi kehidupan.",
-    image_url: "/images/batik-kawung.jpg",
+    image_url: "/images/motifs/batik_kawung.webp",
     focus_point: { x: 0.5, y: 0.5 },
     difficulty_multiplier: 1.0,
     clues: [
-      "Bentuk empat elips lonjong yang merepresentasikan buah aren atau kolang-kaling.",
-      "Merupakan salah satu motif tertua di tanah Jawa yang tercatat sejak abad ke-13.",
-      "Kerap dikenakan oleh para ksatria dan abdi dalem berhati bersih dan bijaksana.",
+      "Empat elips lonjong yang merepresentasikan buah aren atau kolang-kaling.",
+      "Salah satu motif tertua di tanah Jawa yang tercatat sejak abad ke-13.",
+      "Kerap dikenakan oleh para ksatria dan abdi dalem berhati bersih.",
     ],
   },
   {
@@ -46,11 +46,11 @@ export const TIKA_CATALOG: TikaMotif[] = [
     category: "Batik Pesisiran (Alam)",
     description:
       "Gumpalan awan berlapis dengan gradasi warna tegas khas pesisir Cirebon. Melambangkan keluasan jiwa, keteduhan watak pemimpin, dan kesabaran dalam menghadapi cobaan hidup seperti awan yang menyejukkan bumi.",
-    image_url: "/images/batik-mega-mendung.jpg",
+    image_url: "/images/motifs/batik_mega_mendung.webp",
     focus_point: { x: 0.42, y: 0.38 },
     difficulty_multiplier: 1.1,
     clues: [
-      "Gradasi bentuk awan meliuk tujuh lapis yang terinspirasi dari akulturasi Tiongkok dan Cirebon.",
+      "Gradasi awan meliuk berlapis hasil akulturasi seni Tiongkok dan Cirebon.",
       "Warna khas menggunakan paduan biru langit dan merah membara.",
       "Lahir dari kearifan para pembatik Keraton Kasepuhan dan Kanoman di Cirebon.",
     ],
@@ -64,14 +64,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Tengah & D.I. Yogyakarta",
     category: "Batik Larangan (Geometris)",
     description:
-      "Garis diagonal tajam berkesinambungan menyerupai ombak samudra yang menghantam karang tanpa putus. Melambangkan semangat pantang menyerah, keteguhan hati, dan kewaspadaan spiritual.",
-    image_url: "/images/batik-parang-rusak.jpg",
+      "Garis diagonal tajam berkesinambungan menyerupai ombak samudra yang menghantam karang tanpa putus. Melambangkan semangat pantang menyerah, keteguhan hati, dan kewaspadaan diri.",
+    image_url: "/images/motifs/batik_parang.webp",
     focus_point: { x: 0.35, y: 0.65 },
     difficulty_multiplier: 1.2,
     clues: [
       "Lekukan garis diagonal miring menyerupai huruf S (lereng) yang saling menjalin tanpa putus.",
       "Diciptakan oleh Sultan Agung Hanyokrokusumo saat bertapa di pesisir Laut Selatan Jawa.",
-      "Dahulu termasuk Batik Larangan yang hanya boleh dikenakan oleh raja dan keluarga bangsawan.",
+      "Dahulu tergolong Batik Larangan yang hanya boleh dikenakan oleh raja dan keluarga bangsawan.",
     ],
   },
   {
@@ -83,14 +83,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Tengah",
     category: "Batik Pesisiran (Floral)",
     description:
-      "Berasal dari kata Belanda 'boeket' (rangkaian bunga). Menampilkan komposisi karangan bunga mekar cerah nan anggun, melambangkan kebahagiaan, kemekaran budi pekerti, dan perpaduan harmonis budaya Timur dan Barat.",
-    image_url: "/images/batik-mega-mendung.jpg",
+      "Berasal dari kata Belanda boeket (karangan bunga). Menampilkan komposisi karangan bunga mekar cerah nan anggun, melambangkan kebahagiaan, kemekaran budi pekerti, dan akulturasi budaya.",
+    image_url: "/images/motifs/batik_buketan.webp",
     focus_point: { x: 0.58, y: 0.45 },
     difficulty_multiplier: 1.3,
     clues: [
       "Menampilkan karangan bunga mawar, tulip, kupu-kupu, dan burung merak yang berlatar cerah.",
-      "Merupakan adikarya pembatik peranakan Belanda dan Tionghoa di pesisir utara Jawa.",
-      "Sangat digemari sebagai kain sarung kebaya pesta yang anggun nan semarak.",
+      "Karya pembatik peranakan Belanda dan Tionghoa di pesisir utara Jawa.",
+      "Sangat digemari sebagai kain sarung kebaya pesta yang anggun.",
     ],
   },
   {
@@ -102,14 +102,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Tengah",
     category: "Batik Keraton (Geometris)",
     description:
-      "Bintang-bintang kecil gemerlap di langit malam ciptaan Kanjeng Ratu Kencana. Truntum bermakna 'tumaruntum' (tumbuh bersemi kembali), simbol cinta kasih abadi, ketulusan, dan harapan yang selalu mekar.",
-    image_url: "/images/batik-kawung.jpg",
+      "Bintang-bintang kecil gemerlap di langit malam ciptaan Kanjeng Ratu Kencana. Truntum bermakna tumaruntum (tumbuh bersemi kembali), simbol cinta kasih tulus yang selalu bersemi.",
+    image_url: "/images/motifs/batik_truntum.webp",
     focus_point: { x: 0.52, y: 0.48 },
     difficulty_multiplier: 1.2,
     clues: [
-      "Pola taburan bunga melati kecil atau bintang berhamburan di langit malam gelap gulita.",
+      "Pola taburan bunga melati kecil atau bintang berhamburan di langit malam gelap.",
       "Diciptakan oleh permaisuri Sunan Pakubuwana III saat memandangi langit malam berbintang.",
-      "Tradisional wajib dikenakan oleh orang tua pengantin pada prosesi siraman dan ijab pernikahan adat Jawa.",
+      "Tradisional dikenakan oleh orang tua pengantin pada prosesi pernikahan adat Jawa.",
     ],
   },
   {
@@ -121,8 +121,8 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "D.I. Yogyakarta",
     category: "Batik Keraton (Campuran)",
     description:
-      "Berasal dari kata 'kar' (peta) dan 'jagad' (dunia), atau 'sekar' (bunga keindahan). Menggambarkan mozaik pulau-pulau di dunia yang masing-masing diisi aneka isen-isen motif berbeda, melambangkan keanekaragaman dunia yang mempesona.",
-    image_url: "/images/batik-kawung.jpg",
+      "Berasal dari kata kar (peta) dan jagad (dunia), atau sekar (bunga keindahan). Menggambarkan mozaik pulau-pulau di dunia yang masing-masing diisi aneka isen-isen motif berbeda.",
+    image_url: "/images/motifs/batik_sekar_jagad.webp",
     focus_point: { x: 0.45, y: 0.55 },
     difficulty_multiplier: 1.4,
     clues: [
@@ -140,14 +140,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Tengah",
     category: "Batik Keraton (Semen)",
     description:
-      "'Sido' bermakna menjadi atau terlaksana, 'Mukti' bermakna hidup mulia dan berkecukupan. Melambangkan doa agar pemakainya memperoleh kebahagiaan lahir batin, rezeki yang berkah, dan kedudukan terhormat.",
-    image_url: "/images/batik-kawung.jpg",
+      "Sido bermakna menjadi atau terlaksana, Mukti bermakna hidup mulia dan berkecukupan. Doa agar pemakainya memperoleh kebahagiaan lahir batin, rezeki halal, dan kedudukan terhormat.",
+    image_url: "/images/motifs/batik_sidomukti.webp",
     focus_point: { x: 0.55, y: 0.62 },
     difficulty_multiplier: 1.3,
     clues: [
       "Menggunakan pewarnaan soga alam cokelat kemerahan khas keraton Jawa Mataram.",
       "Dihiasi ornamen pohon hayat, garuda sayap satu (lar), dan singgasana mahkota.",
-      "Sering dikenakan kedua mempelai dalam upacara panggih pernikahan adat Surakarta.",
+      "Dikenakan kedua mempelai dalam upacara panggih pernikahan adat Surakarta.",
     ],
   },
   {
@@ -159,14 +159,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Barat",
     category: "Batik Keraton (Mitos)",
     description:
-      "Menggambarkan wujud kereta kencana Paksi Naga Liman dari Keraton Kasepuhan Cirebon. Mahakarya gabungan empat unsur budaya: belalai gajah (India), kepala naga (Tiongkok), sayap garuda (Islam/Jawa), dan badan singa (Eropa).",
-    image_url: "/images/batik-mega-mendung.jpg",
+      "Menggambarkan wujud kereta kencana Paksi Naga Liman dari Keraton Kasepuhan Cirebon. Perpaduan empat unsur budaya: belalai gajah (India), kepala naga (Tiongkok), sayap garuda (Islam/Jawa), dan badan singa (Eropa).",
+    image_url: "/images/motifs/batik_singa_barong.webp",
     focus_point: { x: 0.38, y: 0.42 },
     difficulty_multiplier: 1.5,
     clues: [
       "Hewan mitologis gabungan empat makhluk: gajah, naga, singa, dan burung garuda.",
       "Terinspirasi dari kereta pusaka kebesaran Sultan di Keraton Kasepuhan Cirebon.",
-      "Simbol kebesaran akulturasi empat peradaban dunia di pelabuhan nusantara.",
+      "Simbol keterbukaan pelabuhan Cirebon terhadap peradaban dunia.",
     ],
   },
   {
@@ -179,7 +179,7 @@ export const TIKA_CATALOG: TikaMotif[] = [
     category: "Batik Pesisiran (Geometris)",
     description:
       "Pola geometri simetris delapan arah mata angin terinspirasi dari kain tenun patola sutra Gujarat India. Melambangkan keselarasan manusia dengan semesta serta keteraturan spiritual yang damai.",
-    image_url: "/images/batik-kawung.jpg",
+    image_url: "/images/motifs/batik_jlamprang.webp",
     focus_point: { x: 0.5, y: 0.5 },
     difficulty_multiplier: 1.4,
     clues: [
@@ -197,8 +197,8 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Jawa Tengah",
     category: "Batik Pesisiran (Akulturasi)",
     description:
-      "Perpaduan seni batik Tiongkok Kecil di pesisir Lasem. Warna merah 'getih pitik' (darah ayam) yang khas dipadukan dengan ornamen naga liong dan burung hong melambangkan kemakmuran dan keberanian.",
-    image_url: "/images/batik-mega-mendung.jpg",
+      "Perpaduan seni batik di pesisir Lasem. Warna merah getih pitik (darah ayam) yang khas dipadukan dengan ornamen naga liong dan burung hong melambangkan kemakmuran dan keberanian.",
+    image_url: "/images/motifs/batik_liong.webp",
     focus_point: { x: 0.65, y: 0.35 },
     difficulty_multiplier: 1.4,
     clues: [
@@ -216,14 +216,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "DKI Jakarta",
     category: "Batik Pesisiran (Kultural)",
     description:
-      "Menggambarkan boneka raksasa ikonik Ondel-ondel Betawi yang dipadukan dengan pucuk rebung dan kembang kelapa. Melambangkan penolak bala, keterbukaan hati, dan kegembiraan warga Jakarta.",
-    image_url: "/images/batik-parang-rusak.jpg",
+      "Menggambarkan boneka raksasa Ondel-ondel Betawi yang dipadukan dengan pucuk rebung dan kembang kelapa. Melambangkan penolak bala, keterbukaan hati, dan keceriaan warga Jakarta.",
+    image_url: "/images/motifs/batik_betawi.webp",
     focus_point: { x: 0.48, y: 0.52 },
     difficulty_multiplier: 1.1,
     clues: [
-      "Warna-warna menyala riang gembira seperti kuning terang, merah oranye, dan hijau daun.",
+      "Warna-warna cerah seperti kuning terang, merah jingga, dan hijau daun.",
       "Menampilkan ikon boneka raksasa penjaga kota Jakarta dan ornamen pucuk rebung segitiga.",
-      "Batik khas ibu kota yang sering dikenakan pada perayaan HUT DKI Jakarta dan ajang Abang None.",
+      "Batik khas ibu kota yang sering dikenakan pada perayaan HUT DKI Jakarta dan Abang None.",
     ],
   },
   {
@@ -235,14 +235,14 @@ export const TIKA_CATALOG: TikaMotif[] = [
     province: "Kalimantan Tengah",
     category: "Batik Nusantara (Etnik)",
     description:
-      "Menggambarkan Batang Garing (Pohon Kehidupan) kosmologi Dayak Ngaju. Melambangkan keharmonisan hubungan manusia dengan Sang Maha Kuasa, sesama insan, dan kelestarian alam hutan tropis Borneo.",
-    image_url: "/images/batik-art-applying-wax-with-canting-tool-2026-03-25-04-45-42-utc.jpg",
+      "Menggambarkan Batang Garing (Pohon Kehidupan) kosmologi Dayak Ngaju. Melambangkan keseimbangan hubungan manusia dengan Sang Pencipta, sesama manusia, dan kelestarian alam hutan tropis Kalimantan.",
+    image_url: "/images/motifs/batik_dayak.webp",
     focus_point: { x: 0.45, y: 0.6 },
     difficulty_multiplier: 1.3,
     clues: [
       "Lengkungan sulur khas ukiran kayu Dayak berpadu dengan tameng telawang.",
-      "Menampilkan pohon kehidupan sakral Batang Garing dan burung enggang gading.",
-      "Batik etnik khas tanah Borneo yang sarat nilai spiritual persatuan dengan alam semesta.",
+      "Menampilkan pohon kehidupan Batang Garing dan burung enggang gading.",
+      "Batik etnik khas Kalimantan yang sarat nilai persatuan dengan alam semesta.",
     ],
   },
 ];

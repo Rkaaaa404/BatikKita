@@ -7,6 +7,7 @@ import { GameNavbar } from "@/components/shared/GameNavbar";
 import { CapStampingBoard } from "@/components/games/CapStampingBoard";
 import { WinModal } from "@/components/games/WinModal";
 import { useXp } from "@/hooks/useXp";
+import { useGameTheme } from "@/hooks/useGameTheme";
 
 const MOTIFS = [
   {
@@ -15,7 +16,7 @@ const MOTIFS = [
     region: "D.I. Yogyakarta",
     category: "Batik Keraton",
     difficulty: "Mudah",
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_kawung.webp",
     philosophy: "Pola 4 kelopak buah aren melambangkan empat penjuru mata angin, kesucian niat, dan kemurnian budi pekerti manusia.",
     xp: 100,
     color: "from-[#713f2c] to-[#8d786a]",
@@ -26,7 +27,7 @@ const MOTIFS = [
     region: "Surakarta & Yogyakarta",
     category: "Batik Larangan",
     difficulty: "Menengah",
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
     philosophy: "Garis diagonal ombak tak terputus melambangkan semangat pantang menyerah dan keteguhan pemimpin.",
     xp: 150,
     color: "from-[#1E3A8A] to-[#2d2b38]",
@@ -37,7 +38,7 @@ const MOTIFS = [
     region: "Cirebon, Jawa Barat",
     category: "Batik Pesisiran",
     difficulty: "Lanjutan",
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
     philosophy: "Awan pembawa hujan melambangkan kesabaran, kesejukan hati, dan ketenangan jiwa laksana awan penyejuk.",
     xp: 200,
     color: "from-[#D4AF37] to-[#713f2c]",
@@ -50,6 +51,7 @@ export default function CapStampingPage() {
   const [elapsed, setElapsed] = useState(0);
   const [winData, setWinData] = useState<{ open: boolean; time: number }>({ open: false, time: 0 });
   const { addXp } = useXp();
+  const { isDark } = useGameTheme();
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startTimer = useCallback(() => {
@@ -88,7 +90,11 @@ export default function CapStampingPage() {
   const secs = elapsed % 60;
 
   return (
-    <div className="min-h-screen bg-[#1A1614] text-white">
+    <div
+      className={`min-h-screen transition-colors duration-200 ${
+        isDark ? "bg-[#1A1614] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
+      }`}
+    >
       <GameNavbar title="Batik Cap Stamping" />
 
       <main className="pt-14 min-h-screen">
@@ -103,8 +109,18 @@ export default function CapStampingPage() {
               <div className="inline-flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4">
                 <Target className="w-3.5 h-3.5" /> PILIH KANVAS MOTIF
               </div>
-              <h1 className="font-display font-extrabold text-3xl md:text-4xl mb-3">Batik Cap Stamping</h1>
-              <p className="text-white/60 font-body max-w-md mx-auto">
+              <h1
+                className={`font-display font-extrabold text-3xl md:text-4xl mb-3 ${
+                  isDark ? "text-white" : "text-[#2D2B38]"
+                }`}
+              >
+                Batik Cap Stamping
+              </h1>
+              <p
+                className={`font-body max-w-md mx-auto text-sm ${
+                  isDark ? "text-white/60" : "text-stone-600"
+                }`}
+              >
                 Warnai sketsa batik dengan menempatkan kepingan motif (cap) di posisi yang tepat agar menyatu sempurna (*seamless*).
               </p>
             </motion.div>
@@ -117,7 +133,11 @@ export default function CapStampingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => handleSelect(motif)}
-                  className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#D4AF37]/50 transition-all hover:scale-[1.02] text-left"
+                  className={`group relative rounded-2xl overflow-hidden border transition-all hover:scale-[1.02] text-left cursor-pointer ${
+                    isDark
+                      ? "border-white/10 hover:border-[#D4AF37]/50"
+                      : "border-[#E2DDD5] hover:border-[#D4AF37] shadow-sm"
+                  }`}
                 >
                   {/* Image */}
                   <div
@@ -144,11 +164,27 @@ export default function CapStampingPage() {
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="font-display font-bold text-lg text-white">{selected.name}</h2>
-                <p className="text-white/50 text-xs">{selected.region} · {selected.category}</p>
+                <h2
+                  className={`font-display font-bold text-lg ${
+                    isDark ? "text-white" : "text-[#2D2B38]"
+                  }`}
+                >
+                  {selected.name}
+                </h2>
+                <p
+                  className={`text-xs ${
+                    isDark ? "text-white/50" : "text-stone-500"
+                  }`}
+                >
+                  {selected.region} · {selected.category}
+                </p>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5">
+                <div
+                  className={`flex items-center gap-1.5 border rounded-lg px-3 py-1.5 ${
+                    isDark ? "bg-white/5 border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
                   <Timer className="w-3.5 h-3.5 text-[#D4AF37]" />
                   <span className="font-display font-bold text-sm text-[#D4AF37]">
                     {mins > 0 ? `${mins}:${secs.toString().padStart(2, "0")}` : `${secs}s`}
@@ -156,7 +192,11 @@ export default function CapStampingPage() {
                 </div>
                 <button
                   onClick={handleReset}
-                  className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white border border-white/10 hover:border-white/20 rounded-lg px-3 py-1.5 transition-colors"
+                  className={`flex items-center gap-1.5 text-xs rounded-lg px-3 py-1.5 transition-colors cursor-pointer border ${
+                    isDark
+                      ? "text-white/50 hover:text-white border-white/10 hover:border-white/20"
+                      : "text-stone-600 hover:text-stone-900 border-[#E2DDD5] hover:border-stone-400 bg-white shadow-xs"
+                  }`}
                 >
                   <RefreshCw className="w-3.5 h-3.5" /> Acak Ulang
                 </button>

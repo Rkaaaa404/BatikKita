@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
+import { useGameTheme } from "@/hooks/useGameTheme";
 import {
   TikaMotif,
   TIKA_CATALOG,
@@ -162,6 +163,7 @@ interface GuessRecord {
 
 export default function TikaGamePage() {
   const { addXp } = useXp();
+  const { isDark } = useGameTheme();
 
   // Mode: Harian (Daily) atau Bebas (Endless)
   const [gameMode, setGameMode] = useState<"daily" | "endless">("daily");
@@ -398,21 +400,37 @@ export default function TikaGamePage() {
   const activeScale = gameStatus !== "playing" ? 1.0 : currentStageInfo.scale;
 
   return (
-    <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden">
+    <div
+      className={`min-h-screen flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] overflow-x-hidden transition-colors duration-200 ${
+        isDark ? "bg-[#141211] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
+      }`}
+    >
       <GameNavbar title="Tika: Tebak Batik Nusantara" />
 
       <main className="pt-16 sm:pt-20 pb-12 flex-1 flex flex-col max-w-2xl mx-auto w-full px-4 sm:px-6 gap-4">
         {/* ── Top Bar: Mode Switcher & Stats ── */}
-        <div className="flex items-center justify-between gap-3 bg-[#1A1816] border border-white/10 rounded-2xl px-4 py-2.5 shadow-lg">
+        <div
+          className={`flex items-center justify-between gap-3 border rounded-2xl px-4 py-2.5 shadow-lg transition-colors ${
+            isDark
+              ? "bg-[#1A1816] border-white/10 text-white"
+              : "bg-white/95 border-[#E2DDD5] text-[#2D2B38] shadow-sm"
+          }`}
+        >
           {/* Mode Pill Switcher */}
-          <div className="flex items-center gap-1 bg-black/40 border border-white/10 p-1 rounded-xl">
+          <div
+            className={`flex items-center gap-1 p-1 rounded-xl border ${
+              isDark ? "bg-black/40 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
+            }`}
+          >
             <button
               type="button"
               onClick={() => startNewGame("daily")}
               className={`text-xs font-display font-bold px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 gameMode === "daily"
                   ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-                  : "text-white/60 hover:text-white"
+                  : isDark
+                  ? "text-white/60 hover:text-white"
+                  : "text-stone-600 hover:text-stone-900"
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />
@@ -424,7 +442,9 @@ export default function TikaGamePage() {
               className={`text-xs font-display font-bold px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                 gameMode === "endless"
                   ? "bg-[#D4AF37] text-[#1A1614] shadow-md"
-                  : "text-white/60 hover:text-white"
+                  : isDark
+                  ? "text-white/60 hover:text-white"
+                  : "text-stone-600 hover:text-stone-900"
               }`}
             >
               <Compass className="w-3.5 h-3.5" />
@@ -435,7 +455,11 @@ export default function TikaGamePage() {
           {/* Current Potential Points & Sound */}
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <span className="text-[10px] uppercase font-display font-bold text-white/40 block leading-tight">
+              <span
+                className={`text-[10px] uppercase font-display font-bold block leading-tight ${
+                  isDark ? "text-white/40" : "text-stone-500"
+                }`}
+              >
                 Potensi Poin
               </span>
               <span className="text-xs sm:text-sm font-display font-extrabold text-[#D4AF37]">
@@ -446,7 +470,11 @@ export default function TikaGamePage() {
             <button
               type="button"
               onClick={handleToggleSound}
-              className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
+              className={`w-8 h-8 rounded-xl border flex items-center justify-center transition-colors cursor-pointer ${
+                isDark
+                  ? "bg-white/5 border-white/10 text-white/70 hover:text-white"
+                  : "bg-stone-100 border-[#E2DDD5] text-stone-600 hover:text-stone-900"
+              }`}
               title={soundOn ? "Matikan Suara" : "Nyalakan Suara"}
             >
               {soundOn ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
@@ -545,8 +573,18 @@ export default function TikaGamePage() {
           <div className="space-y-3">
             {/* Autocomplete Input Container */}
             <div className="relative">
-              <div className="flex items-center bg-[#1A1816] border-2 border-white/15 focus-within:border-[#D4AF37] rounded-2xl px-3.5 py-2 transition-all shadow-lg">
-                <Search className="w-4 h-4 text-white/40 mr-2 shrink-0" />
+              <div
+                className={`flex items-center border-2 rounded-2xl px-3.5 py-2 transition-all shadow-lg ${
+                  isDark
+                    ? "bg-[#1A1816] border-white/15 focus-within:border-[#D4AF37]"
+                    : "bg-white border-[#E2DDD5] focus-within:border-[#D4AF37] shadow-sm"
+                }`}
+              >
+                <Search
+                  className={`w-4 h-4 mr-2 shrink-0 ${
+                    isDark ? "text-white/40" : "text-stone-400"
+                  }`}
+                />
                 <input
                   ref={inputRef}
                   type="text"
@@ -559,7 +597,11 @@ export default function TikaGamePage() {
                   onFocus={() => setIsDropdownOpen(true)}
                   onKeyDown={handleKeyDown}
                   placeholder="Ketik minimal 2 huruf nama motif (misal: Kawung)..."
-                  className="w-full bg-transparent text-sm text-white placeholder:text-white/30 focus:outline-none font-display font-medium"
+                  className={`w-full bg-transparent text-sm font-display font-medium focus:outline-none ${
+                    isDark
+                      ? "text-white placeholder:text-white/30"
+                      : "text-stone-900 placeholder:text-stone-400"
+                  }`}
                 />
                 {inputValue && (
                   <button
@@ -569,7 +611,9 @@ export default function TikaGamePage() {
                       setSelectedCandidate(null);
                       inputRef.current?.focus();
                     }}
-                    className="text-white/40 hover:text-white p-1"
+                    className={`p-1 cursor-pointer ${
+                      isDark ? "text-white/40 hover:text-white" : "text-stone-400 hover:text-stone-700"
+                    }`}
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -584,9 +628,17 @@ export default function TikaGamePage() {
                     initial={{ opacity: 0, y: -6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
-                    className="absolute left-0 right-0 bottom-full mb-2 bg-[#1A1816] border-2 border-[#D4AF37]/40 rounded-2xl overflow-hidden shadow-2xl z-30 max-h-60 overflow-y-auto divide-y divide-white/5"
+                    className={`absolute left-0 right-0 bottom-full mb-2 border-2 border-[#D4AF37]/40 rounded-2xl overflow-hidden shadow-2xl z-30 max-h-60 overflow-y-auto divide-y ${
+                      isDark
+                        ? "bg-[#1A1816] divide-white/5 text-white"
+                        : "bg-white divide-stone-100 text-stone-900"
+                    }`}
                   >
-                    <div className="px-3 py-1.5 bg-black/40 text-[10px] font-display font-bold uppercase tracking-wider text-[#D4AF37]">
+                    <div
+                      className={`px-3 py-1.5 text-[10px] font-display font-bold uppercase tracking-wider text-[#D4AF37] ${
+                        isDark ? "bg-black/40" : "bg-stone-50"
+                      }`}
+                    >
                       Pilih Nama Motif dari Katalog:
                     </div>
                     {searchResults.map((item, idx) => {
@@ -601,8 +653,12 @@ export default function TikaGamePage() {
                             isSelected
                               ? "bg-[#D4AF37] text-[#1A1614]"
                               : isHighlighted
-                              ? "bg-white/10 text-white"
-                              : "hover:bg-white/5 text-white/90"
+                              ? isDark
+                                ? "bg-white/10 text-white"
+                                : "bg-stone-100 text-stone-900"
+                              : isDark
+                              ? "hover:bg-white/5 text-white/90"
+                              : "hover:bg-stone-50 text-stone-800"
                           }`}
                         >
                           <div>
@@ -611,7 +667,11 @@ export default function TikaGamePage() {
                             </p>
                             <p
                               className={`text-[11px] font-body ${
-                                isSelected ? "text-[#1A1614]/70" : "text-white/50"
+                                isSelected
+                                  ? "text-[#1A1614]/70"
+                                  : isDark
+                                  ? "text-white/50"
+                                  : "text-stone-500"
                               }`}
                             >
                               {item.origin} • {item.category}
@@ -631,7 +691,11 @@ export default function TikaGamePage() {
               <button
                 type="button"
                 onClick={handlePassStage}
-                className="w-full flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-bold py-3 px-4 rounded-xl transition-all cursor-pointer text-xs sm:text-sm hover:border-white/30"
+                className={`w-full flex items-center justify-center gap-2 border font-display font-bold py-3 px-4 rounded-xl transition-all cursor-pointer text-xs sm:text-sm ${
+                  isDark
+                    ? "border-white/15 bg-white/5 hover:bg-white/10 text-white hover:border-white/30"
+                    : "border-[#E2DDD5] bg-white hover:bg-stone-100 text-stone-800 shadow-sm"
+                }`}
               >
                 <FastForward className="w-4 h-4 text-[#D4AF37]" />
                 <span>Lewati (Zoom Out)</span>
@@ -644,7 +708,9 @@ export default function TikaGamePage() {
                 className={`w-full flex items-center justify-center gap-2 font-display font-extrabold py-3 px-4 rounded-xl transition-all text-xs sm:text-sm ${
                   selectedCandidate
                     ? "bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#D4AF37] text-[#1A1614] hover:brightness-105 shadow-lg shadow-[#D4AF37]/25 border border-[#D4AF37]/40 cursor-pointer"
-                    : "bg-white/5 text-white/30 border border-white/5 cursor-not-allowed"
+                    : isDark
+                    ? "bg-white/5 text-white/30 border border-white/5 cursor-not-allowed"
+                    : "bg-stone-200 text-stone-400 border border-stone-200 cursor-not-allowed"
                 }`}
               >
                 <Check className="w-4 h-4 stroke-[3]" />
@@ -656,39 +722,67 @@ export default function TikaGamePage() {
 
         {/* ── Guess History Chips ── */}
         {guesses.length > 0 && (
-          <div className="bg-[#1A1816] border border-white/10 rounded-2xl p-3 space-y-2">
-            <span className="text-[10px] font-display font-bold text-white/40 uppercase tracking-wider block">
+          <div
+            className={`border rounded-2xl p-3 space-y-2 transition-colors ${
+              isDark
+                ? "bg-[#1A1816] border-white/10 text-white"
+                : "bg-white border-[#E2DDD5] text-stone-900 shadow-sm"
+            }`}
+          >
+            <span
+              className={`text-[10px] font-display font-bold uppercase tracking-wider block ${
+                isDark ? "text-white/40" : "text-stone-500"
+              }`}
+            >
               Riwayat Percobaan:
             </span>
             <div className="space-y-1.5">
               {guesses.map((rec, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between text-xs px-3 py-1.5 rounded-lg bg-black/30 border border-white/5"
+                  className={`flex items-center justify-between text-xs px-3 py-1.5 rounded-lg border ${
+                    isDark
+                      ? "bg-black/30 border-white/5"
+                      : "bg-stone-50 border-[#E2DDD5]"
+                  }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-white/40 font-display font-semibold">#{rec.stage}</span>
+                    <span
+                      className={`font-display font-semibold ${
+                        isDark ? "text-white/40" : "text-stone-500"
+                      }`}
+                    >
+                      #{rec.stage}
+                    </span>
                     {rec.type === "pass" ? (
-                      <span className="text-amber-300/80 font-display font-medium">
+                      <span className="text-amber-500 font-display font-medium">
                         Dilewati (Zoom diperlebar)
                       </span>
                     ) : (
-                      <span className={rec.isCorrect ? "text-emerald-300 font-bold" : "text-white/80"}>
+                      <span
+                        className={
+                          rec.isCorrect
+                            ? "text-emerald-600 dark:text-emerald-300 font-bold"
+                            : isDark
+                            ? "text-white/80"
+                            : "text-stone-800"
+                        }
+                      >
                         {rec.guessName}
                       </span>
                     )}
                   </div>
                   <div>
                     {rec.isCorrect ? (
-                      <span className="inline-flex items-center gap-1 text-emerald-400 font-bold text-[11px]">
+                      <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold text-[11px]">
                         <Check className="w-3.5 h-3.5 stroke-[3]" /> Benar
                       </span>
                     ) : rec.type === "pass" ? (
-                      <span className="inline-flex items-center gap-1 text-amber-400 text-[11px]">
+                      <span className="inline-flex items-center gap-1 text-amber-500 text-[11px]">
                         <FastForward className="w-3 h-3" /> Pas
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-red-400 text-[11px]">
+                      <span className="inline-flex items-center gap-1 text-red-500 text-[11px]">
                         <X className="w-3.5 h-3.5" /> Salah
                       </span>
                     )}
@@ -706,7 +800,9 @@ export default function TikaGamePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-[#1A1816] border-2 border-[#D4AF37]/50 rounded-3xl p-5 sm:p-6 shadow-2xl text-center space-y-4"
+              className={`border-2 border-[#D4AF37]/50 rounded-3xl p-5 sm:p-6 shadow-2xl text-center space-y-4 transition-colors ${
+                isDark ? "bg-[#1A1816] text-white" : "bg-white text-stone-900 shadow-md"
+              }`}
             >
               {/* Outcome Badge */}
               <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full text-xs font-display font-extrabold uppercase tracking-wider bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37]">
@@ -715,10 +811,18 @@ export default function TikaGamePage() {
               </div>
 
               <div>
-                <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white">
+                <h2
+                  className={`text-2xl sm:text-3xl font-display font-extrabold ${
+                    isDark ? "text-white" : "text-stone-900"
+                  }`}
+                >
                   {currentMotif.batik_name}
                 </h2>
-                <p className="text-xs sm:text-sm text-white/60 font-body mt-1 flex items-center justify-center gap-1.5">
+                <p
+                  className={`text-xs sm:text-sm font-body mt-1 flex items-center justify-center gap-1.5 ${
+                    isDark ? "text-white/60" : "text-stone-600"
+                  }`}
+                >
                   <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
                   <span>
                     {currentMotif.origin} • {currentMotif.category}
@@ -728,27 +832,57 @@ export default function TikaGamePage() {
 
               {/* Statistics Grid */}
               <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                  <p className="text-[10px] text-white/40 font-body uppercase">Total Skor</p>
+                <div
+                  className={`border rounded-xl p-3 ${
+                    isDark ? "bg-white/5 border-white/10" : "bg-stone-50 border-[#E2DDD5]"
+                  }`}
+                >
+                  <p
+                    className={`text-[10px] font-body uppercase ${
+                      isDark ? "text-white/40" : "text-stone-500"
+                    }`}
+                  >
+                    Total Skor
+                  </p>
                   <p className="text-xl font-display font-extrabold text-[#D4AF37]">
                     {earnedScore} Poin
                   </p>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-xl p-3">
-                  <p className="text-[10px] text-white/40 font-body uppercase">XP Diperoleh</p>
-                  <p className="text-xl font-display font-extrabold text-emerald-400">
+                <div
+                  className={`border rounded-xl p-3 ${
+                    isDark ? "bg-white/5 border-white/10" : "bg-stone-50 border-[#E2DDD5]"
+                  }`}
+                >
+                  <p
+                    className={`text-[10px] font-body uppercase ${
+                      isDark ? "text-white/40" : "text-stone-500"
+                    }`}
+                  >
+                    XP Diperoleh
+                  </p>
+                  <p className="text-xl font-display font-extrabold text-emerald-600 dark:text-emerald-400">
                     +{earnedXp} XP
                   </p>
                 </div>
               </div>
 
               {/* Cultural Philosophy Callout */}
-              <div className="bg-black/30 border border-white/10 rounded-2xl p-4 text-left space-y-1.5 text-xs text-white/70">
-                <p className="font-display font-bold text-white flex items-center gap-1.5 text-xs">
+              <div
+                className={`border rounded-2xl p-4 text-left space-y-1.5 text-xs ${
+                  isDark
+                    ? "bg-black/30 border-white/10 text-white/70"
+                    : "bg-stone-50 border-[#E2DDD5] text-stone-700"
+                }`}
+              >
+                <p
+                  className={`font-display font-bold flex items-center gap-1.5 text-xs ${
+                    isDark ? "text-white" : "text-stone-900"
+                  }`}
+                >
                   <Info className="w-3.5 h-3.5 text-[#D4AF37]" />
                   Filosofi & Makna Motif:
                 </p>
-                <p className="font-narrative leading-relaxed text-white/80">
+                <p className="font-narrative leading-relaxed">
                   {currentMotif.description}
                 </p>
               </div>
@@ -767,7 +901,11 @@ export default function TikaGamePage() {
                 <button
                   type="button"
                   onClick={() => startNewGame("endless", getRandomTikaMotif(currentMotif.id))}
-                  className="flex-1 flex items-center justify-center gap-2 border border-white/15 bg-white/5 hover:bg-white/10 text-white font-display font-bold py-3 px-4 rounded-xl transition-all cursor-pointer text-xs sm:text-sm hover:border-white/30"
+                  className={`flex-1 flex items-center justify-center gap-2 border font-display font-bold py-3 px-4 rounded-xl transition-all cursor-pointer text-xs sm:text-sm ${
+                    isDark
+                      ? "border-white/15 bg-white/5 hover:bg-white/10 text-white hover:border-white/30"
+                      : "border-[#E2DDD5] bg-stone-100 hover:bg-stone-200 text-stone-800"
+                  }`}
                 >
                   <RotateCcw className="w-4 h-4 text-[#D4AF37]" />
                   <span>Main Lagi (Motif Lain)</span>
@@ -777,7 +915,9 @@ export default function TikaGamePage() {
               <div className="pt-1">
                 <Link
                   href="/play"
-                  className="text-xs text-white/50 hover:text-white transition-colors inline-flex items-center gap-1 font-display"
+                  className={`text-xs transition-colors inline-flex items-center gap-1 font-display ${
+                    isDark ? "text-white/50 hover:text-white" : "text-stone-500 hover:text-stone-900"
+                  }`}
                 >
                   <span>Kembali ke Pilihan Game</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -35,7 +35,7 @@ const GAMES = [
     desc: "Warnai sketsa batik dengan menempatkan kepingan motif (cap) secara tepat dan presisi agar menyatu sempurna.",
     xp: "+100 XP",
     difficulty: "Mudah → Lanjutan",
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_kawung.webp",
     accent: "#D4AF37",
     badge: "3 MOTIF TERSEDIA",
     buttonText: "Mulai Stamping",
@@ -49,7 +49,7 @@ const GAMES = [
     desc: "Uji pengetahuanmu! Tebak nama motif batik dari petunjuk bertahap, semakin sedikit petunjuk, semakin besar XP.",
     xp: "Max +100 XP",
     difficulty: "Semua Level",
-    image: "/images/batik-parang-rusak.jpg",
+    image: "/images/motifs/batik_parang.webp",
     accent: "#c4b5fd",
     badge: "9 MOTIF TERSEDIA",
     buttonText: "Tebak Motif",
@@ -63,7 +63,7 @@ const GAMES = [
     desc: "Drag kartu motif batik ke pin daerah asalnya pada peta Nusantara sebelum waktu 90 detik berakhir!",
     xp: "+40 - 50 XP / motif",
     difficulty: "Tantangan Waktu",
-    image: "/images/batik-mega-mendung.jpg",
+    image: "/images/motifs/batik_mega_mendung.webp",
     accent: "#7dd3fc",
     badge: "8 SENTRA NUSANTARA",
     buttonText: "Jelajahi Peta",
@@ -77,7 +77,7 @@ const GAMES = [
     desc: "Tebak nama motif batik dari potongan visual makro super detail (zoom 800% hingga 100%) sebelum kesempatan habis!",
     xp: "Max +100 XP",
     difficulty: "Tantangan Harian & Bebas",
-    image: "/images/batik-kawung.jpg",
+    image: "/images/motifs/batik_truntum.webp",
     accent: "#f59e0b",
     badge: "PROGRESSIVE ZOOM",
     buttonText: "Mainkan Tika",
@@ -128,11 +128,11 @@ export default function ArcadeHubPage() {
       <Navbar variant="transparent" />
 
       <main className="flex-1">
-        {/* ─── Hero Section with Dedicated Batik Tab Arcade.jpg to Highlight the Title ─── */}
+        {/* ─── Hero Section with Dedicated Batik Tab Arcade.webp to Highlight the Title ─── */}
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
-          {/* Background Image: Batik Tab Arcade.jpg */}
+          {/* Background Image: batik-tab-arcade.webp */}
           <Image
-            src="/images/batik-tab-arcade.jpg"
+            src="/images/batik-tab-arcade.webp"
             alt="Arena Arcade Batik Nusantara"
             fill
             sizes="100vw"

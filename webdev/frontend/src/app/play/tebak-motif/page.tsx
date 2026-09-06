@@ -26,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { useXp } from "@/hooks/useXp";
+import { useGameTheme } from "@/hooks/useGameTheme";
 
 // ── Web Audio Sound Synthesizer (No external audio files needed) ─────────────
 class SoundEffects {
@@ -122,6 +123,7 @@ type GameState = "idle" | "playing" | "round-complete";
 
 export default function TebakMotifPage() {
   const { addXp } = useXp();
+  const { isDark } = useGameTheme();
   const [gameState, setGameState] = useState<GameState>("idle");
   const [currentMotif, setCurrentMotif] = useState<BatikMotif | null>(null);
   const [revealedHints, setRevealedHints] = useState<number>(1);
@@ -309,7 +311,11 @@ export default function TebakMotifPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#141211] text-white flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614]">
+    <div
+      className={`min-h-screen flex flex-col font-body selection:bg-[#D4AF37] selection:text-[#1A1614] transition-colors duration-200 ${
+        isDark ? "bg-[#141211] text-white" : "bg-[#FAF8F4] text-[#2D2B38]"
+      }`}
+    >
       {/* Top Bar with back link and XP */}
       <GameNavbar title="Tebak Motif Berjenjang" />
 
@@ -324,7 +330,11 @@ export default function TebakMotifPage() {
                 setSoundOn(nextState);
                 sfx.enabled = nextState;
               }}
-              className="inline-flex items-center gap-1.5 text-xs text-white/70 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-full transition-all"
+              className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full transition-all border ${
+                isDark
+                  ? "bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border-white/10"
+                  : "bg-white hover:bg-stone-100 text-stone-700 hover:text-stone-900 border-[#E2DDD5] shadow-xs"
+              }`}
               title="Pengaturan Suara"
             >
               {soundOn ? <Volume2 className="w-3.5 h-3.5 text-[#D4AF37]" /> : <VolumeX className="w-3.5 h-3.5 text-red-400" />}
@@ -335,17 +345,17 @@ export default function TebakMotifPage() {
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-display font-bold px-3 py-1 rounded-full shadow-sm"
+                className="inline-flex items-center gap-1 bg-amber-500/20 border border-amber-500/40 text-amber-500 text-xs font-display font-bold px-3 py-1 rounded-full shadow-sm"
               >
-                <Flame className="w-3.5 h-3.5 fill-current text-amber-400 animate-bounce" />
+                <Flame className="w-3.5 h-3.5 fill-current text-amber-500 animate-bounce" />
                 <span>Streak {streak}x!</span>
               </motion.div>
             )}
           </div>
 
           <div className="flex items-center gap-4 text-xs font-display">
-            <span className="text-white/60">
-              Ronde: <strong className="text-white">#{roundCount + 1}</strong>
+            <span className={isDark ? "text-white/60" : "text-stone-500"}>
+              Ronde: <strong className={isDark ? "text-white" : "text-[#2D2B38]"}>#{roundCount + 1}</strong>
             </span>
             <span className="text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-3 py-1 rounded-full font-bold">
               Total: {totalXp} XP
@@ -364,7 +374,13 @@ export default function TebakMotifPage() {
               className="flex-1 flex flex-col items-center justify-center text-center max-w-xl mx-auto py-8"
             >
               {/* Animated Emblem */}
-              <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-br from-[#713f2c] via-[#8d786a] to-[#2d2b38] p-1 flex items-center justify-center mb-6 shadow-2xl border-2 border-[#D4AF37]/50">
+              <div
+                className={`relative w-24 h-24 rounded-3xl p-1 flex items-center justify-center mb-6 shadow-2xl border-2 ${
+                  isDark
+                    ? "bg-gradient-to-br from-[#713f2c] via-[#8d786a] to-[#2d2b38] border-[#D4AF37]/50"
+                    : "bg-gradient-to-br from-[#713f2c]/15 via-[#FAF8F4] to-white border-[#D4AF37]/50 shadow-md"
+                }`}
+              >
                 <Brain className="w-12 h-12 text-[#D4AF37] drop-shadow-md animate-pulse" />
                 <div className="absolute -top-2 -right-2 bg-[#D4AF37] text-[#1A1614] text-[10px] font-display font-extrabold px-2 py-0.5 rounded-full shadow-sm">
                   INTERAKTIF
@@ -375,12 +391,20 @@ export default function TebakMotifPage() {
                 <Sparkles className="w-3.5 h-3.5" /> ARENA UJI PENGETAHUAN BUDAYA
               </div>
 
-              <h1 className="font-display font-extrabold text-3xl sm:text-4xl text-white mb-3 tracking-tight">
+              <h1
+                className={`font-display font-extrabold text-3xl sm:text-4xl mb-3 tracking-tight ${
+                  isDark ? "text-white" : "text-[#2D2B38]"
+                }`}
+              >
                 Tebak Motif Berjenjang
               </h1>
 
-              <p className="font-narrative text-sm sm:text-base text-white/80 leading-relaxed mb-8">
-                Tatap kain misteri di pemidangan, amati detail isen-isen menggunakan kaca pembesar interaktif, dan tebak nama motif dari petunjuk bertahap. Semakin cepat kamu menebak, semakin melimpah XP yang diraih.
+              <p
+                className={`font-body text-sm sm:text-base leading-relaxed mb-8 ${
+                  isDark ? "text-white/80" : "text-stone-600"
+                }`}
+              >
+                Amati corak kain di pemidangan, gunakan kaca pembesar untuk melihat isen-isen halus, lalu tebak nama motifnya. Petunjuk bertahap akan terbuka bila Anda membutuhkan bantuan.
               </p>
 
               {/* Point Rules Card */}
@@ -393,13 +417,21 @@ export default function TebakMotifPage() {
                 ].map((tier, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#1f1a18] border border-[#713f2c]/40 rounded-xl p-3.5 text-center flex flex-col justify-between hover:border-[#D4AF37]/50 transition-colors"
+                    className={`border rounded-xl p-3.5 text-center flex flex-col justify-between transition-colors ${
+                      isDark
+                        ? "bg-[#1f1a18] border-[#713f2c]/40 hover:border-[#D4AF37]/50"
+                        : "bg-white border-[#E2DDD5] hover:border-[#D4AF37]/50 shadow-xs"
+                    }`}
                   >
-                    <span className="text-[11px] text-white/50 font-body">{tier.hint}</span>
+                    <span className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                      {tier.hint}
+                    </span>
                     <span className="font-display font-extrabold text-base text-[#D4AF37] my-1">
                       {tier.xp}
                     </span>
-                    <span className="text-[10px] text-white/70 font-display">{tier.desc}</span>
+                    <span className={`text-[10px] font-display ${isDark ? "text-white/70" : "text-stone-600"}`}>
+                      {tier.desc}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -407,7 +439,7 @@ export default function TebakMotifPage() {
               <button
                 type="button"
                 onClick={startGame}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-base px-10 py-4 rounded-xl hover:bg-[#c9a52f] transition-all shadow-xl shadow-[#D4AF37]/20 active:scale-98"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-base px-10 py-4 rounded-xl hover:bg-[#c9a52f] transition-all shadow-xl shadow-[#D4AF37]/20 active:scale-98 cursor-pointer"
               >
                 <span>Mulai Tantangan Sekarang</span>
                 <ArrowRight className="w-5 h-5" />
@@ -427,12 +459,26 @@ export default function TebakMotifPage() {
               {/* Left Column: Mystery Cloth Canvas with Interactive Loupe */}
               <div className="lg:col-span-5 flex flex-col gap-4">
                 {/* Visual Canvas Card */}
-                <div className="bg-[#1f1a18] border-2 border-[#713f2c]/50 rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col items-center">
-                  <div className="w-full flex items-center justify-between text-xs text-white/60 mb-3 px-1">
+                <div
+                  className={`border-2 rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col items-center transition-colors ${
+                    isDark
+                      ? "bg-[#1f1a18] border-[#713f2c]/50"
+                      : "bg-white border-[#E2DDD5] shadow-md"
+                  }`}
+                >
+                  <div
+                    className={`w-full flex items-center justify-between text-xs mb-3 px-1 ${
+                      isDark ? "text-white/60" : "text-stone-600"
+                    }`}
+                  >
                     <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold">
                       <ZoomIn className="w-3.5 h-3.5" /> Kain Misteri Pemidangan
                     </span>
-                    <span className="text-[11px] bg-white/10 px-2 py-0.5 rounded-full text-white/70">
+                    <span
+                      className={`text-[11px] px-2 py-0.5 rounded-full ${
+                        isDark ? "bg-white/10 text-white/70" : "bg-stone-100 text-stone-700"
+                      }`}
+                    >
                       Tingkat Keburaman: {5 - revealedHints}/4
                     </span>
                   </div>
@@ -499,7 +545,11 @@ export default function TebakMotifPage() {
                       type="button"
                       onClick={useLifeline5050}
                       disabled={used5050 || inputMode !== "choices"}
-                      className="flex items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 disabled:opacity-30 border border-white/10 py-2.5 px-3 rounded-xl text-xs font-display font-semibold text-[#D4AF37] transition-all"
+                      className={`flex items-center justify-center gap-1.5 disabled:opacity-30 border py-2.5 px-3 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
+                        isDark
+                          ? "bg-white/5 hover:bg-white/10 border-white/10 text-[#D4AF37]"
+                          : "bg-white hover:bg-stone-50 border-[#E2DDD5] text-[#713f2c] shadow-xs"
+                      }`}
                       title="Eliminasi 2 pilihan jawaban yang salah"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -510,7 +560,11 @@ export default function TebakMotifPage() {
                       type="button"
                       onClick={revealNextHint}
                       disabled={revealedHints >= 4}
-                      className="flex items-center justify-center gap-1.5 bg-[#713f2c]/40 hover:bg-[#713f2c]/70 disabled:opacity-40 border border-[#D4AF37]/30 py-2.5 px-3 rounded-xl text-xs font-display font-semibold text-white transition-all"
+                      className={`flex items-center justify-center gap-1.5 disabled:opacity-40 border py-2.5 px-3 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
+                        isDark
+                          ? "bg-[#713f2c]/40 hover:bg-[#713f2c]/70 border-[#D4AF37]/30 text-white"
+                          : "bg-[#713f2c] hover:bg-[#583122] border-[#713f2c] text-[#D4AF37] shadow-xs"
+                      }`}
                       title="Buka petunjuk teks berikutnya dengan penalti 25 XP"
                     >
                       <Lightbulb className="w-3.5 h-3.5 text-[#D4AF37]" />
@@ -523,17 +577,32 @@ export default function TebakMotifPage() {
               {/* Right Column: Progressive Hints & Answer Controls */}
               <div className="lg:col-span-7 flex flex-col gap-5">
                 {/* Potential Score Gauge */}
-                <div className="bg-[#1f1a18] border border-white/10 rounded-2xl p-4 shadow-md">
+                <div
+                  className={`border rounded-2xl p-4 shadow-md transition-colors ${
+                    isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  }`}
+                >
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs text-white/70 font-body flex items-center gap-1.5">
+                    <span
+                      className={`text-xs font-body flex items-center gap-1.5 ${
+                        isDark ? "text-white/70" : "text-stone-600"
+                      }`}
+                    >
                       <Trophy className="w-3.5 h-3.5 text-[#D4AF37]" />
                       Skor Potensial Ronde Ini:
                     </span>
                     <span className="text-sm font-display font-bold text-[#D4AF37]">
-                      {potentialScore} XP {inputMode === "type" && <span className="text-emerald-400 text-xs">(+20 Bonus)</span>}
+                      {potentialScore} XP{" "}
+                      {inputMode === "type" && (
+                        <span className="text-emerald-500 text-xs">(+20 Bonus)</span>
+                      )}
                     </span>
                   </div>
-                  <div className="h-2.5 bg-black/50 rounded-full overflow-hidden p-0.5 border border-white/10">
+                  <div
+                    className={`h-2.5 rounded-full overflow-hidden p-0.5 border ${
+                      isDark ? "bg-black/50 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
+                    }`}
+                  >
                     <motion.div
                       animate={{ width: `${potentialPercent}%` }}
                       transition={{ type: "spring", stiffness: 180, damping: 22 }}
@@ -544,7 +613,11 @@ export default function TebakMotifPage() {
 
                 {/* Progressive Hints Accordion */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs text-white/60 px-1">
+                  <div
+                    className={`flex items-center justify-between text-xs px-1 ${
+                      isDark ? "text-white/60" : "text-stone-600"
+                    }`}
+                  >
                     <span className="font-display font-bold uppercase tracking-wider text-[#D4AF37]">
                       Petunjuk Filosofi & Budaya:
                     </span>
@@ -558,8 +631,12 @@ export default function TebakMotifPage() {
                       animate={{ opacity: 1, x: 0 }}
                       className={`rounded-2xl border p-4 transition-all shadow-sm ${
                         i === revealedHints - 1
-                          ? "bg-[#28211e] border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20"
-                          : "bg-[#1b1716] border-white/10 opacity-70"
+                          ? isDark
+                            ? "bg-[#28211e] border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20"
+                            : "bg-[#FAF8F4] border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/30"
+                          : isDark
+                          ? "bg-[#1b1716] border-white/10 opacity-70"
+                          : "bg-white border-[#E2DDD5] opacity-80"
                       }`}
                     >
                       <div className="flex gap-3.5 items-start">
@@ -567,12 +644,18 @@ export default function TebakMotifPage() {
                           className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 text-xs font-display font-bold border ${
                             i === revealedHints - 1
                               ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37]"
-                              : "bg-white/10 text-white/70 border-white/15"
+                              : isDark
+                              ? "bg-white/10 text-white/70 border-white/15"
+                              : "bg-stone-100 text-stone-600 border-[#E2DDD5]"
                           }`}
                         >
                           {i + 1}
                         </div>
-                        <p className="font-narrative text-sm text-white/90 leading-relaxed pt-0.5">
+                        <p
+                          className={`font-narrative text-sm leading-relaxed pt-0.5 ${
+                            isDark ? "text-white/90" : "text-[#2D2B38]"
+                          }`}
+                        >
                           {hint}
                         </p>
                       </div>
@@ -581,19 +664,37 @@ export default function TebakMotifPage() {
                 </div>
 
                 {/* Answer Mode Tabs: Multiple Choice vs Type Mastery */}
-                <div className="mt-2 bg-[#1f1a18] border border-white/10 rounded-2xl p-5 shadow-xl">
-                  <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10">
-                    <span className="text-xs font-display font-bold text-white uppercase tracking-wider">
+                <div
+                  className={`mt-2 border rounded-2xl p-5 shadow-xl transition-colors ${
+                    isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5] shadow-sm"
+                  }`}
+                >
+                  <div
+                    className={`flex items-center justify-between pb-3 mb-4 border-b ${
+                      isDark ? "border-white/10" : "border-[#E2DDD5]"
+                    }`}
+                  >
+                    <span
+                      className={`text-xs font-display font-bold uppercase tracking-wider ${
+                        isDark ? "text-white" : "text-[#2D2B38]"
+                      }`}
+                    >
                       Tebak Nama Motif:
                     </span>
-                    <div className="flex gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
+                    <div
+                      className={`flex gap-1 p-1 rounded-xl border ${
+                        isDark ? "bg-black/40 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
+                      }`}
+                    >
                       <button
                         type="button"
                         onClick={() => setInputMode("choices")}
-                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all ${
+                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
                           inputMode === "choices"
                             ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
-                            : "text-white/60 hover:text-white"
+                            : isDark
+                            ? "text-white/60 hover:text-white"
+                            : "text-stone-600 hover:text-stone-900"
                         }`}
                       >
                         Pilihan Kartu
@@ -601,10 +702,12 @@ export default function TebakMotifPage() {
                       <button
                         type="button"
                         onClick={() => setInputMode("type")}
-                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all ${
+                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
                           inputMode === "type"
                             ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
-                            : "text-white/60 hover:text-white"
+                            : isDark
+                            ? "text-white/60 hover:text-white"
+                            : "text-stone-600 hover:text-stone-900"
                         }`}
                       >
                         Ketik Bebas (+20 XP)
@@ -625,12 +728,16 @@ export default function TebakMotifPage() {
                             whileTap={!isDisabled ? { scale: 0.98 } : {}}
                             onClick={() => submitAnswer(choiceName)}
                             disabled={isDisabled}
-                            className={`p-4 rounded-xl border text-left font-display font-bold text-sm transition-all flex items-center justify-between group ${
+                            className={`p-4 rounded-xl border text-left font-display font-bold text-sm transition-all flex items-center justify-between group cursor-pointer ${
                               isDisabled
-                                ? "bg-black/30 border-white/5 text-white/20 line-through cursor-not-allowed"
+                                ? isDark
+                                  ? "bg-black/30 border-white/5 text-white/20 line-through cursor-not-allowed"
+                                  : "bg-stone-100 border-[#E2DDD5] text-stone-400 line-through cursor-not-allowed"
                                 : wrongAttempt
-                                ? "bg-red-950/30 border-red-500/50 text-red-200"
-                                : "bg-[#28221f] hover:bg-[#713f2c]/50 border-white/15 hover:border-[#D4AF37] text-white shadow-md"
+                                ? "bg-red-950/30 border-red-500/50 text-red-400"
+                                : isDark
+                                ? "bg-[#28221f] hover:bg-[#713f2c]/50 border-white/15 hover:border-[#D4AF37] text-white shadow-md"
+                                : "bg-white hover:bg-stone-50 border-[#E2DDD5] hover:border-[#D4AF37] text-[#2D2B38] shadow-xs"
                             }`}
                           >
                             <span>{choiceName}</span>
@@ -645,10 +752,12 @@ export default function TebakMotifPage() {
                     /* Mode 2: Manual Typing Input with Autocomplete */
                     <div className="relative">
                       <div
-                        className={`flex gap-2 rounded-xl border overflow-hidden transition-all bg-black/40 ${
+                        className={`flex gap-2 rounded-xl border overflow-hidden transition-all ${
                           wrongAttempt
                             ? "border-red-500 ring-2 ring-red-500/30 animate-pulse"
-                            : "border-white/20 focus-within:border-[#D4AF37]"
+                            : isDark
+                            ? "bg-black/40 border-white/20 focus-within:border-[#D4AF37]"
+                            : "bg-stone-50 border-[#E2DDD5] focus-within:border-[#D4AF37]"
                         }`}
                       >
                         <input
@@ -670,15 +779,19 @@ export default function TebakMotifPage() {
                           onKeyDown={(e) => {
                             if (e.key === "Enter" && query.trim()) submitAnswer(query.trim());
                           }}
-                          placeholder="Ketik nama motif (contoh: Kawung, Parang Rusak, Mega Mendung)..."
-                          className="flex-1 bg-transparent px-4 py-3.5 text-sm text-white placeholder-white/40 focus:outline-hidden"
+                          placeholder="Ketik nama motif (contoh: Kawung, Parang, Mega Mendung)..."
+                          className={`flex-1 bg-transparent px-4 py-3.5 text-sm focus:outline-hidden ${
+                            isDark
+                              ? "text-white placeholder-white/40"
+                              : "text-[#2D2B38] placeholder-stone-400"
+                          }`}
                           autoComplete="off"
                         />
                         <button
                           type="button"
                           onClick={() => query.trim() && submitAnswer(query.trim())}
                           disabled={!query.trim()}
-                          className="px-5 bg-[#713f2c] hover:bg-[#583122] disabled:opacity-30 text-[#D4AF37] font-display font-bold text-sm transition-all"
+                          className="px-5 bg-[#713f2c] hover:bg-[#583122] disabled:opacity-30 text-[#D4AF37] font-display font-bold text-sm transition-all cursor-pointer"
                         >
                           Kirim
                         </button>
@@ -686,7 +799,13 @@ export default function TebakMotifPage() {
 
                       {/* Autocomplete Suggestions */}
                       {showSuggestions && suggestions.length > 0 && (
-                        <div className="absolute top-full left-0 right-0 mt-1.5 bg-[#231e1c] border border-[#D4AF37]/40 rounded-xl overflow-hidden shadow-2xl z-30">
+                        <div
+                          className={`absolute top-full left-0 right-0 mt-1.5 border rounded-xl overflow-hidden shadow-2xl z-30 ${
+                            isDark
+                              ? "bg-[#231e1c] border-[#D4AF37]/40"
+                              : "bg-white border-[#E2DDD5]"
+                          }`}
+                        >
                           {suggestions.map((sug) => (
                             <button
                               key={sug}
@@ -696,7 +815,11 @@ export default function TebakMotifPage() {
                                 setShowSuggestions(false);
                                 submitAnswer(sug);
                               }}
-                              className="w-full text-left px-4 py-2.5 text-xs text-white/90 hover:bg-[#713f2c] hover:text-[#D4AF37] transition-colors border-b border-white/5 last:border-none flex items-center justify-between"
+                              className={`w-full text-left px-4 py-2.5 text-xs transition-colors border-b last:border-none flex items-center justify-between cursor-pointer ${
+                                isDark
+                                  ? "text-white/90 hover:bg-[#713f2c] hover:text-[#D4AF37] border-white/5"
+                                  : "text-[#2D2B38] hover:bg-stone-100 hover:text-[#713f2c] border-[#E2DDD5]"
+                              }`}
                             >
                               <span>{sug}</span>
                               <Search className="w-3.5 h-3.5 text-[#D4AF37]" />
@@ -708,7 +831,7 @@ export default function TebakMotifPage() {
                   )}
 
                   {wrongAttempt && (
-                    <p className="text-xs text-red-400 mt-2.5 flex items-center gap-1.5 font-display animate-bounce">
+                    <p className="text-xs text-red-500 mt-2.5 flex items-center gap-1.5 font-display animate-bounce">
                       <XCircle className="w-4 h-4" />
                       Jawaban belum tepat, silakan coba tebakan motif lain.
                     </p>
@@ -727,13 +850,23 @@ export default function TebakMotifPage() {
               exit={{ opacity: 0 }}
               className="flex-1 max-w-2xl mx-auto w-full py-6 flex flex-col justify-center"
             >
-              <div className="bg-[#1f1a18] border-2 border-[#D4AF37]/60 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+              <div
+                className={`border-2 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden transition-colors ${
+                  isDark
+                    ? "bg-[#1f1a18] border-[#D4AF37]/60"
+                    : "bg-white border-[#D4AF37]/60 shadow-xl"
+                }`}
+              >
                 {/* Confetti Glow Header */}
                 <div className="text-center mb-6">
-                  <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3">
+                  <div className="inline-flex items-center gap-2 bg-emerald-500/20 border border-emerald-500/40 text-emerald-500 text-xs font-display font-bold px-4 py-1.5 rounded-full mb-3">
                     <CheckCircle2 className="w-4 h-4" /> TEBAKAN TEPAT
                   </div>
-                  <h2 className="font-display font-bold text-3xl sm:text-4xl text-white">
+                  <h2
+                    className={`font-display font-bold text-3xl sm:text-4xl ${
+                      isDark ? "text-white" : "text-[#2D2B38]"
+                    }`}
+                  >
                     {currentMotif.name}
                   </h2>
                   <p className="text-sm font-display text-[#D4AF37] mt-1">
@@ -755,12 +888,18 @@ export default function TebakMotifPage() {
                 </div>
 
                 {/* Cultural Philosophy Card */}
-                <div className="bg-[#28221f] rounded-2xl p-5 border border-white/10 mb-6">
+                <div
+                  className={`rounded-2xl p-5 border mb-6 ${
+                    isDark
+                      ? "bg-[#28221f] border-white/10 text-white/90"
+                      : "bg-[#FAF8F4] border-[#E2DDD5] text-stone-800"
+                  }`}
+                >
                   <h4 className="font-display font-bold text-xs uppercase tracking-wider text-[#D4AF37] mb-2 flex items-center gap-2">
                     <Sparkles className="w-4 h-4" />
                     Kearifan & Makna Filosofis
                   </h4>
-                  <p className="font-narrative text-sm text-white/90 leading-relaxed">
+                  <p className="font-narrative text-sm leading-relaxed">
                     {currentMotif.philosophy}
                   </p>
                 </div>
@@ -770,7 +909,7 @@ export default function TebakMotifPage() {
                   <button
                     type="button"
                     onClick={pickNewMotif}
-                    className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-sm py-3.5 rounded-xl hover:bg-[#c9a52f] transition-all shadow-lg shadow-[#D4AF37]/20"
+                    className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-sm py-3.5 rounded-xl hover:bg-[#c9a52f] transition-all shadow-lg shadow-[#D4AF37]/20 cursor-pointer"
                   >
                     <span>Lanjut ke Ronde Berikutnya</span>
                     <ArrowRight className="w-4 h-4" />
@@ -778,7 +917,11 @@ export default function TebakMotifPage() {
 
                   <Link
                     href="/play"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-display font-semibold text-sm py-3.5 px-6 rounded-xl border border-white/10 transition-colors"
+                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 font-display font-semibold text-sm py-3.5 px-6 rounded-xl border transition-colors cursor-pointer ${
+                      isDark
+                        ? "bg-white/10 hover:bg-white/20 text-white border-white/10"
+                        : "bg-stone-100 hover:bg-stone-200 text-[#2D2B38] border-[#E2DDD5]"
+                    }`}
                   >
                     Kembali ke Arena
                   </Link>
