@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MessageCircle, Sparkles, Eye, Grid } from "lucide-react";
+import { MessageCircle, Sparkles, Eye, Grid, ChevronLeft, ChevronRight, Layers } from "lucide-react";
 import {
   generateDynamicPuzzle,
   PuzzleResult,
@@ -11,6 +11,7 @@ import {
   Coord,
 } from "@/lib/polyominoPartition";
 import { useXp } from "@/hooks/useXp";
+import { useGameTheme } from "@/hooks/useGameTheme";
 
 const GRID_SIZE = 6;
 
@@ -92,9 +93,11 @@ function checkMagneticSnap(
   const shiftY = Math.abs(pieceTopPx - idealTargetTopPx) / cellHeight;
   const shiftHypot = Math.hypot(shiftX, shiftY);
 
-  const isMagnetized = centerHypot <= 2.2 || shiftHypot <= 2.0 || minCursorDist <= 2.0;
+  // Tight precision snapping: block must be brought closely within 0.85 cell units
+  const isMagnetized = centerHypot <= 0.85 || (shiftHypot <= 0.8 && minCursorDist <= 0.8);
 
-  const pullFactor = isMagnetized ? Math.max(0.3, 1 - centerHypot / 2.5) * 0.55 : 0;
+  // Gentle micro-assist pull when close
+  const pullFactor = isMagnetized ? Math.max(0.15, 1 - centerHypot / 0.9) * 0.35 : 0;
   const pullX = pieceLeftPx + (idealTargetLeftPx - pieceLeftPx) * pullFactor;
   const pullY = pieceTopPx + (idealTargetTopPx - pieceTopPx) * pullFactor;
 
@@ -128,6 +131,7 @@ export function CapStampingBoard({
   onSolve,
 }: CapStampingBoardProps) {
   const { unlockMotif } = useXp();
+  const { isDark } = useGameTheme();
 
   // Dynamic Randomized Polyomino Partitioning
   const [puzzle, setPuzzle] = useState<PuzzleResult>(() =>
@@ -138,6 +142,7 @@ export function CapStampingBoard({
   const currentPieceDefs = puzzle.pieces;
 
   const [tray, setTray] = useState<number[]>([]);
+  const [trayPage, setTrayPage] = useState(0);
   const [placed, setPlaced] = useState<number[]>([]);
   const [selectedPiece, setSelectedPiece] = useState<number | null>(null);
   const [draggingPiece, setDraggingPiece] = useState<DraggingPieceState | null>(null);
@@ -158,12 +163,28 @@ export function CapStampingBoard({
   const boardRef = useRef<HTMLDivElement>(null);
   const startTime = useRef<number>(Date.now());
 
+  // 3-Block Active Workbench Queue Logic
+  const maxPage = Math.max(0, Math.ceil(tray.length / 3) - 1);
+  const activePage = Math.min(trayPage, maxPage);
+  const visibleTrayPieces = useMemo(() => {
+    return tray.slice(activePage * 3, activePage * 3 + 3);
+  }, [tray, activePage]);
+
+  const handlePrevBatch = useCallback(() => {
+    setTrayPage((p) => (p > 0 ? p - 1 : maxPage));
+  }, [maxPage]);
+
+  const handleNextBatch = useCallback(() => {
+    setTrayPage((p) => (p < maxPage ? p + 1 : 0));
+  }, [maxPage]);
+
   // Re-generate dynamic puzzle when image, difficulty or reset occurs
   useEffect(() => {
     const newPuzzle = generateDynamicPuzzle(GRID_SIZE, difficulty);
     setPuzzle(newPuzzle);
     const shuffled = newPuzzle.pieces.map((p) => p.id).sort(() => Math.random() - 0.5);
     setTray(shuffled);
+    setTrayPage(0);
     setPlaced([]);
     setSelectedPiece(null);
     setDraggingPiece(null);
@@ -198,7 +219,7 @@ export function CapStampingBoard({
     }
   }, [placed, solved, onSolve, philosophy, currentPieceDefs.length, motifId, difficulty, unlockMotif]);
 
-  // Attempt placement with generous magnetic sensitivity
+  // Attempt placement with tight, realistic stamping precision
   const attemptPlace = useCallback(
     (pieceId: number, dropX: number, dropY: number, forceSuccess = false) => {
       const def = currentPieceDefs.find((p) => p.id === pieceId);
@@ -219,25 +240,6 @@ export function CapStampingBoard({
           type: "perfect",
         });
       } else {
-        const minDistance = Math.min(
-          ...def.cells.map((c) => Math.max(Math.abs(c.x - dropX), Math.abs(c.y - dropY)))
-        );
-
-        if (minDistance <= 2) {
-          setTray((prev) => prev.filter((id) => id !== pieceId));
-          setPlaced((prev) => [...prev, pieceId]);
-          setSelectedPiece(null);
-          setGuidePiece(null);
-          setJustPlacedPiece(pieceId);
-          setTimeout(() => setJustPlacedPiece(null), 1000);
-
-          setFeedback({
-            message: `Tepat sekali, Ananda! Cap berhasil ditarik gaya magnetik kain mori.`,
-            type: "perfect",
-          });
-          return;
-        }
-
         setWrongSlot({ x: dropX, y: dropY });
         setTimeout(() => setWrongSlot(null), 700);
 
@@ -245,9 +247,7 @@ export function CapStampingBoard({
         setTimeout(() => setGuidePiece(null), 2500);
 
         setFeedback({
-          message: `Wah, sepertinya masih salah letak, Ananda. Kepingan ini diperuntukkan bagi ${
-            def.anatomy ?? "rongga yang sesuai"
-          }. Amati rongga sketsa yang berpendar emas.`,
+          message: `Wah, posisi cap belum tepat, Ananda. Arahkan lebih dekat ke rongga sketsa yang bersesuaian.`,
           type: "wrong_area",
         });
       }
@@ -392,15 +392,19 @@ export function CapStampingBoard({
         animate={{ opacity: 1, y: 0 }}
         className={`flex items-start gap-4 p-4 rounded-xl border shadow-md transition-colors ${
           feedback.type === "perfect"
-            ? "bg-[#10B981]/15 border-[#10B981]/40"
+            ? isDark ? "bg-[#10B981]/15 border-[#10B981]/40" : "bg-emerald-50 border-emerald-300"
             : feedback.type === "near_miss"
-            ? "bg-[#F59E0B]/15 border-[#F59E0B]/40"
+            ? isDark ? "bg-[#F59E0B]/15 border-[#F59E0B]/40" : "bg-amber-50 border-amber-300"
             : feedback.type === "wrong_area"
-            ? "bg-[#EF4444]/15 border-[#EF4444]/40"
-            : "bg-[#D4AF37]/15 border-[#D4AF37]/40"
+            ? isDark ? "bg-[#EF4444]/15 border-[#EF4444]/40" : "bg-red-50 border-red-300"
+            : isDark ? "bg-[#D4AF37]/15 border-[#D4AF37]/40" : "bg-amber-50/70 border-amber-200"
         }`}
       >
-        <div className="shrink-0 w-11 h-11 rounded-full bg-[#1A1614] border-2 border-[#D4AF37] flex items-center justify-center overflow-hidden shadow-inner">
+        <div
+          className={`shrink-0 w-11 h-11 rounded-full border-2 border-[#D4AF37] flex items-center justify-center overflow-hidden shadow-inner ${
+            isDark ? "bg-[#1A1614]" : "bg-white"
+          }`}
+        >
           <MessageCircle className="w-5 h-5 text-[#D4AF37]" />
         </div>
         <div className="flex-1 min-w-0">
@@ -409,18 +413,28 @@ export function CapStampingBoard({
               Budayawan Nusantara
             </span>
             {feedback.type === "perfect" && (
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-500 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
                 <Sparkles className="w-3 h-3" /> Presisi Sempurna
               </span>
             )}
           </div>
-          <p className="text-sm font-body text-white/95 leading-relaxed">{feedback.message}</p>
+          <p
+            className={`text-sm font-body leading-relaxed ${
+              isDark ? "text-white/95" : "text-stone-800"
+            }`}
+          >
+            {feedback.message}
+          </p>
         </div>
       </motion.div>
 
       {/* Progress & Mode Bar */}
       <div className="flex items-center justify-between px-2">
-        <div className="flex items-center gap-2 text-xs text-white/70">
+        <div
+          className={`flex items-center gap-2 text-xs ${
+            isDark ? "text-white/70" : "text-stone-600"
+          }`}
+        >
           <span className="font-display font-semibold text-[#D4AF37]">Proses Canting Cap:</span>
           <span>
             {placed.length} dari {currentPieceDefs.length} Kepingan Terpasang
@@ -441,10 +455,12 @@ export function CapStampingBoard({
       {/* Main Cap Stamping Canvas */}
       <div className="relative w-full max-w-[460px] mx-auto select-none">
         <div
-          className={`relative w-full aspect-square rounded-2xl overflow-hidden border-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)] bg-[#1A1614] transition-all ${
+          className={`relative w-full aspect-square rounded-2xl overflow-hidden border-2 shadow-[0_12px_40px_rgba(0,0,0,0.3)] transition-all ${
             isMagnetized
               ? "border-[#10B981] shadow-[0_0_30px_rgba(16,185,129,0.4)]"
-              : "border-[#D4AF37]/60"
+              : isDark
+              ? "border-[#D4AF37]/60 bg-[#1A1614]"
+              : "border-[#D4AF37]/70 bg-[#FAF8F5] shadow-md"
           }`}
         >
           {/* Layer 1: Unified Completed Masterpiece Fabric when Solved */}
@@ -518,35 +534,39 @@ export function CapStampingBoard({
                         : {}
                     }
                     transition={
-                      isGuided ? { repeat: 3, duration: 0.6 } : { duration: 0.2 }
+                      isGuided
+                        ? { repeat: Infinity, duration: 0.9 }
+                        : { duration: 0.25 }
                     }
                     onClick={() => handleCellClick(x, y)}
-                    className={`relative cursor-pointer transition-all overflow-hidden ${
+                    className={`relative overflow-hidden transition-all duration-150 ${cutoutBorderClasses} ${
                       isUnplacedCutout
-                        ? `bg-[#FAF8F5] shadow-[inset_0_2px_8px_rgba(0,0,0,0.18)] ${cutoutBorderClasses}`
-                        : ""
-                    } ${isTargetMagnetized ? "ring-2 ring-emerald-400 z-10" : ""}`}
+                        ? "cursor-pointer hover:brightness-105"
+                        : isPlaced
+                        ? "cursor-default"
+                        : "cursor-default"
+                    }`}
                   >
-                    {/* 1. Base Colored Fabric */}
-                    {(!isPieceCell || isPlaced) && (
+                    {/* 1. Placed Piece: Authentic Full Color Fabric Pattern */}
+                    {isPlaced && (
                       <motion.div
-                        initial={
-                          isJustPlaced
-                            ? { opacity: 0, scale: 1.06, filter: "brightness(1.5)" }
-                            : false
-                        }
-                        animate={{ opacity: 1, scale: 1, filter: "brightness(1)" }}
-                        transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                        className="absolute inset-0 pointer-events-none"
-                        style={{
-                          backgroundImage: `url(${image})`,
-                          backgroundSize: "600% 600%",
-                          backgroundPosition: `${bgPosX} ${bgPosY}`,
-                        }}
+                        initial={isJustPlaced ? { scale: 0.94, opacity: 0.7 } : false}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                        className="absolute inset-0 overflow-hidden shadow-inner"
                       >
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: "600% 600%",
+                            backgroundPosition: `${bgPosX} ${bgPosY}`,
+                          }}
+                        />
+                        {/* Stamp Gold Impression Flash */}
                         {isJustPlaced && (
                           <motion.div
-                            initial={{ opacity: 0.8 }}
+                            initial={{ opacity: 0.9 }}
                             animate={{ opacity: 0 }}
                             transition={{ duration: 0.8 }}
                             className="absolute inset-0 bg-[#D4AF37]/40"
@@ -557,7 +577,7 @@ export function CapStampingBoard({
 
                     {/* 2. Unplaced Puzzle Cutout: High-Intensity B&W Grayscale Blueprint */}
                     {isUnplacedCutout && (
-                      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-[#FAF8F5]">
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-white/50">
                         <div
                           className="absolute inset-0 pointer-events-none"
                           style={{
@@ -594,100 +614,187 @@ export function CapStampingBoard({
 
       {/* Guide Note */}
       <div className="text-center px-4">
-        <p className="text-xs text-white/60 font-body">
+        <p
+          className={`text-xs font-body ${
+            isDark ? "text-white/60" : "text-stone-600"
+          }`}
+        >
           Tarik kepingan cap tembaga ke arah rongga sketsa hingga{" "}
-          <span className="text-emerald-400 font-semibold">berpendar hijau</span>, lalu lepaskan
+          <span className="text-emerald-500 font-semibold">berpendar hijau</span>, lalu lepaskan
           untuk mencap kain mori.
         </p>
       </div>
 
-      {/* Piece Tray (Baki Cap Tembaga) */}
-      <div className="flex flex-wrap justify-center items-center gap-6 min-h-[140px] bg-[#1A1614]/80 rounded-2xl p-6 border border-white/10 shadow-2xl max-w-2xl mx-auto w-full">
-        <AnimatePresence>
-          {tray.map((pieceId) => {
-            const def = currentPieceDefs.find((p) => p.id === pieceId);
-            if (!def) return null;
-            const isSelected = selectedPiece === pieceId;
-            const isBeingDragged = draggingPiece?.id === pieceId;
-            const cellSize = 28;
-
-            return (
-              <motion.div
-                key={pieceId}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: isBeingDragged ? 0.3 : 1,
-                  y: 0,
-                  scale: isSelected && !isBeingDragged ? 1.08 : 1,
-                  boxShadow:
-                    isSelected && !isBeingDragged
-                      ? "0 0 20px rgba(212,175,55,0.75)"
-                      : "0 4px 12px rgba(0,0,0,0.5)",
-                }}
-                exit={{ opacity: 0, scale: 0.4 }}
-                onPointerDown={(e) => handlePiecePointerDown(e, pieceId)}
-                onClick={() => setSelectedPiece((prev) => (prev === pieceId ? null : pieceId))}
-                className={`flex items-center justify-center p-3 rounded-xl border transition-all cursor-grab active:cursor-grabbing select-none touch-none ${
-                  isSelected
-                    ? "bg-[#D4AF37]/20 border-[#D4AF37]"
-                    : "bg-[#25201C] border-white/15 hover:border-[#D4AF37]/50 hover:bg-[#2b2520]"
+      {/* Piece Tray (Baki Cap Tembaga - 3 Keping Aktif) */}
+      <div
+        className={`rounded-2xl p-4 sm:p-5 border shadow-xl max-w-2xl mx-auto w-full transition-colors ${
+          isDark
+            ? "bg-[#1A1614]/90 border-white/10 text-white"
+            : "bg-white border-[#E2DDD5] text-[#2D2B38] shadow-md"
+        }`}
+      >
+        {/* Tray Top Bar: Title, Queue Counter & Pagination Controls */}
+        <div
+          className={`flex items-center justify-between gap-3 mb-4 pb-3 border-b ${
+            isDark ? "border-white/10" : "border-[#E2DDD5]"
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37]">
+              <Layers className="w-4 h-4" />
+            </div>
+            <div>
+              <h4 className="text-xs font-display font-bold uppercase tracking-wider text-[#D4AF37]">
+                Meja Canting Cap (3 Keping Aktif)
+              </h4>
+              <p
+                className={`text-[11px] ${
+                  isDark ? "text-white/50" : "text-stone-500"
                 }`}
               >
-                <div
-                  className="relative pointer-events-none"
-                  style={{
-                    width: def.width * cellSize,
-                    height: def.height * cellSize,
+                {tray.length > 0 ? (
+                  <>
+                    Menampilkan <strong>{visibleTrayPieces.length} keping</strong>
+                    {tray.length > 3 && (
+                      <span> · Sisa antrean: {Math.max(0, tray.length - 3)} keping</span>
+                    )}
+                  </>
+                ) : (
+                  "Semua kepingan telah terpasang"
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* Pagination buttons if queue > 3 */}
+          {tray.length > 3 && (
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={handlePrevBatch}
+                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
+                  isDark
+                    ? "bg-white/5 hover:bg-white/10 border-white/10 text-white/80 hover:text-white"
+                    : "bg-stone-100 hover:bg-stone-200 border-[#E2DDD5] text-stone-700 hover:text-stone-900"
+                }`}
+                title="Kepingan Sebelumnya"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span
+                className={`text-[11px] font-display font-semibold px-1 ${
+                  isDark ? "text-white/60" : "text-stone-600"
+                }`}
+              >
+                {activePage + 1}/{maxPage + 1}
+              </span>
+              <button
+                type="button"
+                onClick={handleNextBatch}
+                className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
+                  isDark
+                    ? "bg-white/5 hover:bg-white/10 border-white/10 text-white/80 hover:text-white"
+                    : "bg-stone-100 hover:bg-stone-200 border-[#E2DDD5] text-stone-700 hover:text-stone-900"
+                }`}
+                title="Kepingan Berikutnya"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* 3-Slot Workbench Grid */}
+        <div className="flex flex-wrap justify-center items-center gap-6 min-h-[130px]">
+          <AnimatePresence mode="popLayout">
+            {visibleTrayPieces.map((pieceId) => {
+              const def = currentPieceDefs.find((p) => p.id === pieceId);
+              if (!def) return null;
+              const isSelected = selectedPiece === pieceId;
+              const isBeingDragged = draggingPiece?.id === pieceId;
+              const cellSize = 30;
+
+              return (
+                <motion.div
+                  key={pieceId}
+                  layout
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{
+                    opacity: isBeingDragged ? 0.3 : 1,
+                    scale: isSelected && !isBeingDragged ? 1.08 : 1,
+                    boxShadow:
+                      isSelected && !isBeingDragged
+                        ? "0 0 20px rgba(212,175,55,0.75)"
+                        : isDark
+                        ? "0 4px 12px rgba(0,0,0,0.5)"
+                        : "0 2px 8px rgba(0,0,0,0.08)",
                   }}
+                  exit={{ opacity: 0, scale: 0.4 }}
+                  onPointerDown={(e) => handlePiecePointerDown(e, pieceId)}
+                  onClick={() => setSelectedPiece((prev) => (prev === pieceId ? null : pieceId))}
+                  className={`flex items-center justify-center p-3.5 rounded-2xl border transition-all cursor-grab active:cursor-grabbing select-none touch-none ${
+                    isSelected
+                      ? "bg-[#D4AF37]/20 border-[#D4AF37]"
+                      : isDark
+                      ? "bg-[#25201C] border-white/15 hover:border-[#D4AF37]/50 hover:bg-[#2b2520]"
+                      : "bg-[#FAF8F5] border-[#E2DDD5] hover:border-[#D4AF37]/60 hover:bg-stone-100 shadow-xs"
+                  }`}
                 >
                   <div
-                    className="absolute inset-0 grid"
+                    className="relative pointer-events-none"
                     style={{
-                      gridTemplateColumns: `repeat(${def.width}, 1fr)`,
-                      gridTemplateRows: `repeat(${def.height}, 1fr)`,
+                      width: def.width * cellSize,
+                      height: def.height * cellSize,
                     }}
                   >
-                    {Array.from({ length: def.width * def.height }, (_, i) => {
-                      const lx = i % def.width;
-                      const ly = Math.floor(i / def.width);
-                      const isCellActive = def.localCells.some((c) => c.x === lx && c.y === ly);
+                    <div
+                      className="absolute inset-0 grid"
+                      style={{
+                        gridTemplateColumns: `repeat(${def.width}, 1fr)`,
+                        gridTemplateRows: `repeat(${def.height}, 1fr)`,
+                      }}
+                    >
+                      {Array.from({ length: def.width * def.height }, (_, i) => {
+                        const lx = i % def.width;
+                        const ly = Math.floor(i / def.width);
+                        const isCellActive = def.localCells.some((c) => c.x === lx && c.y === ly);
 
-                      if (!isCellActive) return <div key={i} className="pointer-events-none" />;
+                        if (!isCellActive) return <div key={i} className="pointer-events-none" />;
 
-                      const origX = def.minX + lx;
-                      const origY = def.minY + ly;
-                      const bgPosX = `${(origX / (GRID_SIZE - 1)) * 100}%`;
-                      const bgPosY = `${(origY / (GRID_SIZE - 1)) * 100}%`;
+                        const origX = def.minX + lx;
+                        const origY = def.minY + ly;
+                        const bgPosX = `${(origX / (GRID_SIZE - 1)) * 100}%`;
+                        const bgPosY = `${(origY / (GRID_SIZE - 1)) * 100}%`;
 
-                      return (
-                        <div
-                          key={i}
-                          className="relative overflow-hidden rounded-[3px]"
-                          style={{
-                            backgroundImage: `url(${image})`,
-                            backgroundSize: "600% 600%",
-                            backgroundPosition: `${bgPosX} ${bgPosY}`,
-                            border: isSelected
-                              ? "1.5px solid #D4AF37"
-                              : "1px solid rgba(212,175,55,0.4)",
-                            boxShadow: "0 1px 3px rgba(0,0,0,0.4)",
-                          }}
-                        />
-                      );
-                    })}
+                        return (
+                          <div
+                            key={i}
+                            className="relative overflow-hidden rounded-[3px]"
+                            style={{
+                              backgroundImage: `url(${image})`,
+                              backgroundSize: "600% 600%",
+                              backgroundPosition: `${bgPosX} ${bgPosY}`,
+                              border: isSelected
+                                ? "1.5px solid #D4AF37"
+                                : "1px solid rgba(212,175,55,0.4)",
+                              boxShadow: "0 1px 3px rgba(0,0,0,0.25)",
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
 
-        {tray.length === 0 && !solved && (
-          <p className="text-[#D4AF37] text-sm font-display font-semibold">
-            Semua cap motif sudah tertempel sempurna!
-          </p>
-        )}
+          {tray.length === 0 && !solved && (
+            <p className="text-[#D4AF37] text-sm font-display font-semibold">
+              Semua cap motif sudah tertempel sempurna!
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Floating Dragged Polyomino Piece */}

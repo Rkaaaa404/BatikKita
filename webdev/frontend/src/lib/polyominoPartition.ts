@@ -24,9 +24,9 @@ export interface PuzzleResult {
 export type PuzzleDifficulty = "Mudah" | "Menengah" | "Sulit";
 
 const DIFFICULTY_PIECE_COUNT: Record<PuzzleDifficulty, { min: number; max: number }> = {
-  Mudah: { min: 3, max: 4 },
-  Menengah: { min: 5, max: 6 },
-  Sulit: { min: 7, max: 8 },
+  Mudah: { min: 5, max: 6 },
+  Menengah: { min: 8, max: 10 },
+  Sulit: { min: 12, max: 15 },
 };
 
 function getNeighbors(x: number, y: number, gridSize: number): Coord[] {
