@@ -204,12 +204,12 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     variants: [
       {
         name: "Kawung Latar Pethak / Krem Cerah",
-        image: "/images/motifs/batik_kawung_var1.webp",
+        image: "/images/motifs/batik_kawung_var1_v2.webp",
         description: "Kelopak elips dengan garis kontur cokelat tua kemerahan di atas latar putih gading (pethak) khas gaya Ngayogyakarta.",
       },
       {
         name: "Kawung Wedelan Latar Ireng / Hitam",
-        image: "/images/motifs/batik_kawung_var2.webp",
+        image: "/images/motifs/batik_kawung_var2_v2.webp",
         description: "Kontras tegas kelopak kawung putih bersinar di atas latar kain hitam kelengan (wedelan) pekat.",
       },
     ],
@@ -269,14 +269,14 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     image: "/images/motifs/batik_mega_mendung_v2.webp",
     variants: [
       {
-        name: "Mega Mendung Gradasi Royal Blue Klasik",
-        image: "/images/motifs/batik_mega_mendung_var1.webp",
-        description: "Pola awan mendung bergradasi tujuh lapis biru pekat dan biru langit di atas latar biru malam, melambangkan kedalaman kesabaran dan keteduhan jiwa.",
+        name: "Mega Mendung Awan Indigo Latar Scarlet",
+        image: "/images/motifs/batik_mega_mendung_var1_v2.webp",
+        description: "Liukan awan mendung biru indigo bergradasi dengan kontur putih tajam di atas hamparan latar merah scarlet, menampilkan akulturasi seni rupa Cirebon dan Tionghoa yang semarak.",
       },
       {
-        name: "Mega Mendung Awan Indigo Latar Scarlet",
-        image: "/images/motifs/batik_mega_mendung_var2.webp",
-        description: "Liukan awan biru indigo dengan kontur putih tajam di atas latar merah marun scarlet, menampilkan akulturasi seni rupa Cirebon dan Tionghoa yang semarak.",
+        name: "Mega Mendung Gradasi Royal Blue Klasik",
+        image: "/images/motifs/batik_mega_mendung_var2_v2.webp",
+        description: "Pola awan mendung bergradasi tujuh lapis biru pekat dan biru langit di atas latar biru malam, melambangkan kedalaman kesabaran dan keteduhan jiwa.",
       },
     ],
     hints: [
@@ -431,16 +431,16 @@ export const BATIK_DATASET_20: BatikMotif[] = [
       "Mulyo bermakna mulia, terhormat, dan tenteram. Mengandung harapan agar keluarga baru yang dibina selalu dilimpahi ketenteraman batin, keluhuran budi, serta dihindarkan dari godaan pertikaian.",
     usage: "Dikenakan oleh kedua mempelai dalam upacara perkawinan adat gaya Kasultanan Yogyakarta.",
     visualTraits: "Pola kotak ceplok berulang berlatar sogan keemasan hangat, memuat ornamen rumah adat pelindung (bale), pohon hayat, dan sayap burung garuda bersayap tunggal.",
-    image: "/images/motifs/batik_sidomulyo.webp",
+    image: "/images/motifs/batik_sidomulyo_v2.webp",
     variants: [
       {
         name: "Sido Mulyo Latar Pethak Ngayogyakarta",
-        image: "/images/motifs/batik_sidomulyo_var1.webp",
+        image: "/images/motifs/batik_sidomulyo_var1_v2.webp",
         description: "Latar mori putih bersih (pethak) khas Yogyakarta dengan kontur hitam kecokelatan tegas berhias kupu-kupu dan bale adat.",
       },
       {
         name: "Sido Mulyo Ceplok Kontras Bale & Garuda",
-        image: "/images/motifs/batik_sidomulyo_var2.webp",
+        image: "/images/motifs/batik_sidomulyo_var2_v2.webp",
         description: "Garis batas belah ketupat tebal berwarna cokelat tua di atas latar putih gading dengan ornamen rumah pelindung keluarga.",
       },
     ],
@@ -566,14 +566,14 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     image: "/images/motifs/batik_truntum.webp",
     variants: [
       {
-        name: "Truntum Wedelan Biru Malam",
-        image: "/images/motifs/batik_truntum_var1.webp",
-        description: "Bintang melati bertabur putih-keemasan di atas babaran biru nila (indigo) pekat yang merefleksikan hamparan langit malam tempat Ratu Kencana merenung.",
+        name: "Truntum Sogan Orang Tua Pengantin",
+        image: "/images/motifs/batik_truntum_var1_v2.webp",
+        description: "Kuntum bintang melati berpadu intan belah ketupat putih dengan latar cokelat sogan hangat, busana sakral penuntun pernikahan adat Jawa.",
       },
       {
-        name: "Truntum Sogan Orang Tua Pengantin",
-        image: "/images/motifs/batik_truntum_var2.webp",
-        description: "Kuntum bintang melati berpadu intan belah ketupat putih dengan latar cokelat sogan hangat, busana sakral penuntun pernikahan adat Jawa.",
+        name: "Truntum Wedelan Biru Malam",
+        image: "/images/motifs/batik_truntum_var2_v2.webp",
+        description: "Bintang melati bertabur putih-keemasan di atas babaran biru nila (indigo) pekat yang merefleksikan hamparan langit malam tempat Ratu Kencana merenung.",
       },
     ],
     hints: [
