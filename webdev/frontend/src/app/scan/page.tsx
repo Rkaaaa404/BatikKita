@@ -17,11 +17,19 @@ import {
   MessageSquare,
   FlipHorizontal,
   AlertCircle,
+  Cpu,
+  Zap,
+  BarChart2,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import {
+  classifyBatikImage,
+  preloadClassifier,
+  ClassificationResult,
+} from "@/lib/onnxClassifier";
 
 interface MotifData {
   name: string;
@@ -70,8 +78,15 @@ export default function ScannerPage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [scanStatus, setScanStatus] = useState<string>("Menganalisis Geometri & Isen-isen...");
   const [result, setResult] = useState<MotifData | null>(null);
+  const [aiResult, setAiResult] = useState<ClassificationResult | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Preload EfficientNet-B0 ONNX model in browser background
+  useEffect(() => {
+    preloadClassifier();
+  }, []);
 
   // ─── Camera States ───
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -221,6 +236,7 @@ export default function ScannerPage() {
       setIsCameraOpen(false);
       setPreview(dataUrl);
       setResult(null);
+      setAiResult(null);
 
       fetch(dataUrl)
         .then((res) => res.blob())
@@ -229,8 +245,12 @@ export default function ScannerPage() {
             type: "image/jpeg",
           });
           setFile(capturedFile);
+          triggerScan(capturedFile);
         })
-        .catch((e) => console.warn("Blob conversion error:", e));
+        .catch((e) => {
+          console.warn("Blob conversion error:", e);
+          triggerScan(dataUrl);
+        });
     }, 200);
   };
 
@@ -256,8 +276,11 @@ export default function ScannerPage() {
     if (e.target.files && e.target.files[0]) {
       const selected = e.target.files[0];
       setFile(selected);
-      setPreview(URL.createObjectURL(selected));
+      const url = URL.createObjectURL(selected);
+      setPreview(url);
       setResult(null);
+      setAiResult(null);
+      triggerScan(selected);
     }
   };
 
@@ -266,8 +289,11 @@ export default function ScannerPage() {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const selected = e.dataTransfer.files[0];
       setFile(selected);
-      setPreview(URL.createObjectURL(selected));
+      const url = URL.createObjectURL(selected);
+      setPreview(url);
       setResult(null);
+      setAiResult(null);
+      triggerScan(selected);
     }
   };
 
@@ -275,25 +301,64 @@ export default function ScannerPage() {
     setFile(null);
     setPreview(preset.image);
     setResult(null);
-    triggerScan(preset);
+    setAiResult(null);
+    triggerScan(preset.image, preset);
   };
 
-  const triggerScan = (predefinedResult?: MotifData) => {
+  const triggerScan = async (
+    sourceImage?: string | File | Blob | null,
+    predefinedResult?: MotifData
+  ) => {
     setIsScanning(true);
-    setTimeout(() => {
-      setIsScanning(false);
+    setScanStatus("Menyiapkan Neural Network EfficientNet-B0...");
+
+    try {
+      const target = sourceImage || file || preview;
+      if (target) {
+        setScanStatus("Menganalisis Geometri, Kontur & Isen-isen (ONNX)...");
+        const classification = await classifyBatikImage(target);
+        setAiResult(classification);
+
+        const top = classification.top1;
+        const motifInfo = top.motif;
+
+        const detectedData: MotifData = {
+          name: motifInfo ? motifInfo.fullName : top.name,
+          accuracy: Math.max(1, Math.min(99, Math.round(top.confidence))),
+          region: motifInfo?.region || "Nusantara",
+          category: motifInfo?.category || "Batik Nusantara",
+          philosophy:
+            motifInfo?.philosophy ||
+            "Kain batik bernilai luhur yang merefleksikan keanggunan dan kearifan budaya Nusantara.",
+          usage:
+            motifInfo?.usage ||
+            "Sangat luwes dikenakan untuk upacara resmi kenegaraan, perhelatan adat sakral, maupun busana etnik modern.",
+          image: preview || motifInfo?.image || "/images/batik-mega-mendung.jpg",
+        };
+
+        setResult(detectedData);
+      } else if (predefinedResult) {
+        setResult(predefinedResult);
+      } else {
+        setResult(SAMPLE_PRESETS[0]);
+      }
+    } catch (err) {
+      console.warn("ONNX inference fallback to preset:", err);
       if (predefinedResult) {
         setResult(predefinedResult);
       } else {
         setResult(SAMPLE_PRESETS[0]);
       }
-    }, 2000);
+    } finally {
+      setIsScanning(false);
+    }
   };
 
   const reset = () => {
     setFile(null);
     setPreview(null);
     setResult(null);
+    setAiResult(null);
     setIsScanning(false);
   };
 
@@ -495,9 +560,9 @@ export default function ScannerPage() {
                         transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
                       />
                       <div className="absolute inset-0 flex items-center justify-center z-20">
-                        <div className="bg-black/75 text-white font-display font-bold px-6 py-3.5 rounded-full flex items-center gap-3 backdrop-blur-md border border-[#D4AF37]/30 shadow-2xl">
+                        <div className="bg-black/85 text-white font-display font-bold px-6 py-3.5 rounded-full flex items-center gap-3 backdrop-blur-md border border-[#D4AF37]/40 shadow-2xl">
                           <RefreshCw className="w-5 h-5 animate-spin text-[#D4AF37]" />
-                          <span>Menganalisis Geometri & Isen...</span>
+                          <span>{scanStatus}</span>
                         </div>
                       </div>
                     </>
@@ -599,6 +664,52 @@ export default function ScannerPage() {
                             {result.usage}
                           </p>
                         </div>
+
+                        {/* AI Top-3 Probabilities & Model Telemetry */}
+                        {aiResult && (
+                          <div className="bg-[#FAF8F4] border border-[#d3ccc2]/80 rounded-2xl p-5 space-y-3.5">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Cpu className="w-4 h-4 text-[#713f2c]" />
+                                <span className="text-xs font-display font-bold text-[#2d2b38] uppercase tracking-wider">
+                                  Top-3 Analisis Probabilitas Motif
+                                </span>
+                              </div>
+                              <span className="text-[11px] font-mono text-[#713f2c] bg-[#713f2c]/10 px-2.5 py-0.5 rounded-md font-semibold flex items-center gap-1">
+                                <Zap className="w-3 h-3 text-[#D4AF37]" />
+                                {aiResult.inferenceTimeMs}ms • Edge AI
+                              </span>
+                            </div>
+
+                            <div className="space-y-2.5">
+                              {aiResult.top3.map((pred, idx) => {
+                                const isPrimary = idx === 0;
+                                return (
+                                  <div key={pred.classId} className="space-y-1">
+                                    <div className="flex items-center justify-between text-xs">
+                                      <span className={`font-display ${isPrimary ? "font-bold text-[#713f2c]" : "font-medium text-[#5c544d]"}`}>
+                                        {idx + 1}. {pred.name} {isPrimary && <span className="text-[10px] text-[#D4AF37] font-semibold ml-1">(Prediksi Utama)</span>}
+                                      </span>
+                                      <span className={`font-mono text-xs ${isPrimary ? "font-bold text-[#713f2c]" : "text-[#8d786a]"}`}>
+                                        {pred.confidence.toFixed(1)}%
+                                      </span>
+                                    </div>
+                                    <div className="h-2 w-full bg-[#e8e4dc] rounded-full overflow-hidden">
+                                      <div
+                                        className={`h-full rounded-full transition-all duration-500 ${
+                                          isPrimary
+                                            ? "bg-gradient-to-r from-[#D4AF37] to-[#713f2c]"
+                                            : "bg-[#b8aba0]"
+                                        }`}
+                                        style={{ width: `${Math.max(4, Math.min(100, pred.confidence))}%` }}
+                                      />
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
 
                         {/* Action buttons */}
                         <div className="pt-4 flex flex-col sm:flex-row items-center gap-3">
