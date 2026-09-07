@@ -381,7 +381,7 @@ export default function ChatPage() {
 
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik_Tab_Sang Empu.jpg to Highlight the Title ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-24 pb-14 sm:pt-32 sm:pb-24 px-4 sm:px-6 lg:px-16 min-h-[480px] lg:min-h-[640px] flex items-center">
           {/* Background Image: batik-tab-sang-empu.webp */}
           <Image
             src="/images/batik-tab-sang-empu.webp"
@@ -400,7 +400,7 @@ export default function ChatPage() {
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
 
-          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left column: Editorial copy highlighting the title */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -408,14 +408,14 @@ export default function ChatPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="flex items-center gap-2.5 mb-5">
-                <Sparkles className="w-5 h-5 text-[#D4AF37]" />
-                <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+              <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-xs sm:text-sm font-medium tracking-wide">
                   AI Budayawan • Dialog Kearifan Batik
                 </span>
               </div>
 
-              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
+              <h1 className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.12] sm:leading-[1.08] tracking-tight mb-4 sm:mb-5 drop-shadow-md">
                 <span className="font-philosopher tracking-wide">Batik Ask:</span>
                 <br />
                 <span
@@ -430,7 +430,7 @@ export default function ChatPage() {
                 Wastra Nusantara.
               </h1>
 
-              <p className="font-narrative text-base sm:text-lg text-white/85 leading-relaxed mb-8 max-w-xl drop-shadow-sm">
+              <p className="font-narrative text-sm sm:text-base lg:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 max-w-xl drop-shadow-sm">
                 Selami rahasia di balik setiap cantingan lilin malam. Tanyakan filosofi pakem keraton, sejarah ragam pesisiran, hingga tata krama busana adat bersama asisten AI budayawan penjaga warisan leluhur.
               </p>
 
@@ -536,8 +536,8 @@ export default function ChatPage() {
           id="ruang-dialog"
           className={
             isFullscreen
-              ? "fixed inset-0 z-[100] bg-[#faf8f4] p-4 sm:p-6 lg:p-8 flex flex-col h-screen overflow-hidden"
-              : "max-w-5xl mx-auto px-4 sm:px-6 py-12 w-full"
+              ? "fixed inset-0 z-[100] bg-[#faf8f4] p-3 sm:p-6 lg:p-8 flex flex-col h-screen overflow-hidden"
+              : "max-w-5xl mx-auto px-3.5 sm:px-6 py-8 sm:py-12 pb-28 md:pb-12 w-full"
           }
         >
           {/* Section Heading */}
@@ -549,7 +549,7 @@ export default function ChatPage() {
                   Ruang Konsultasi Aktif
                 </span>
               </div>
-              <h2 className="font-display font-bold text-2xl text-[#2d2b38] mt-1">
+              <h2 className="font-display font-bold text-xl sm:text-2xl text-[#2d2b38] mt-1">
                 Dialog Bersama Batik Ask
               </h2>
               <p className="font-narrative text-xs sm:text-sm text-[#8d786a]">
@@ -606,7 +606,7 @@ export default function ChatPage() {
                 onMouseMove={handleChipsMouseMove}
                 onMouseUp={handleChipsMouseUp}
                 onMouseLeave={handleChipsMouseUp}
-                className={`flex items-center gap-2 overflow-x-auto py-1 scrollbar-none scroll-smooth ${
+                className={`flex items-center gap-2 overflow-x-auto py-1 no-scrollbar scroll-smooth touch-pan-x ${
                   isDraggingChips ? "cursor-grabbing select-none" : "cursor-grab"
                 }`}
               >
@@ -654,22 +654,22 @@ export default function ChatPage() {
           {/* Chat Container Card */}
           <div className={`bg-white border border-[#d3ccc2] rounded-2xl shadow-md overflow-hidden flex flex-col ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
             {/* Header of Chat Card */}
-            <div className="bg-[#faf8f4] border-b border-[#d3ccc2] px-5 py-3.5 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#713f2c] text-[#D4AF37] flex items-center justify-center font-display font-bold text-xs shadow-xs relative overflow-hidden">
+            <div className="bg-[#faf8f4] border-b border-[#d3ccc2] px-4 sm:px-5 py-3 sm:py-3.5 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 rounded-lg bg-[#713f2c] text-[#D4AF37] flex items-center justify-center font-display font-bold text-xs shadow-xs relative overflow-hidden shrink-0">
                   <Image src="/images/Logo Tanya Sang Empu.png" alt="Sang Empu" fill sizes="32px" className="object-cover" />
                 </div>
                 <div>
-                  <span className="font-display font-bold text-sm text-[#2d2b38] block leading-tight">
+                  <span className="font-display font-bold text-xs sm:text-sm text-[#2d2b38] block leading-tight">
                     Batik Ask - Sang Empu Nusantara
                   </span>
-                  <span className="text-[11px] text-[#8d786a] font-narrative">
-                    Menjawab dengan bahasa santun & rujukan serat
+                  <span className="text-[10px] sm:text-[11px] text-[#8d786a] font-narrative">
+                    Menjawab dengan rujukan serat filosofis
                   </span>
                 </div>
               </div>
 
-              <span className="text-[11px] font-display font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1.5">
+              <span className="text-[10px] sm:text-[11px] font-display font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full flex items-center gap-1.5 shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                 Terhubung
               </span>
@@ -678,7 +678,7 @@ export default function ChatPage() {
             {/* Chat Messages Log */}
             <div
               ref={scrollRef}
-              className={`flex-1 overflow-y-auto space-y-5 p-5 sm:p-6 bg-[#fcfbf9] min-h-[380px] scrollbar-thin scrollbar-thumb-[#d3ccc2] scrollbar-track-transparent ${isFullscreen ? '' : 'max-h-[520px]'}`}
+              className={`flex-1 overflow-y-auto space-y-4 sm:space-y-5 p-3.5 sm:p-6 bg-[#fcfbf9] min-h-[300px] sm:min-h-[380px] scrollbar-thin scrollbar-thumb-[#d3ccc2] scrollbar-track-transparent ${isFullscreen ? '' : 'max-h-[520px]'}`}
             >
               <AnimatePresence initial={false}>
                 {messages.map((msg) => (
@@ -686,13 +686,13 @@ export default function ChatPage() {
                     key={msg.id}
                     initial={{ opacity: 0, y: 12, scale: 0.98 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className={`flex gap-3.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
+                    className={`flex gap-2.5 sm:gap-3.5 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                   >
                     {/* Avatar */}
                     <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border relative overflow-hidden ${
+                      className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center shrink-0 border relative overflow-hidden ${
                         msg.role === "user"
-                          ? "bg-[#2d2b38] text-white border-[#2d2b38]"
+                           ? "bg-[#2d2b38] text-white border-[#2d2b38]"
                           : "bg-[#713f2c] text-[#D4AF37] border-[#D4AF37]/40 shadow-xs"
                       }`}
                     >
@@ -701,7 +701,7 @@ export default function ChatPage() {
 
                     {/* Bubble */}
                     <div
-                      className={`max-w-[85%] sm:max-w-[80%] rounded-2xl px-5 py-4 shadow-xs ${
+                      className={`max-w-[88%] sm:max-w-[80%] rounded-2xl px-3.5 py-3 sm:px-5 sm:py-4 shadow-xs ${
                         msg.role === "user"
                           ? "bg-[#713f2c] text-white rounded-tr-none"
                           : "bg-white text-[#2d2b38] border border-[#d3ccc2]/80 rounded-tl-none"
@@ -725,12 +725,12 @@ export default function ChatPage() {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex gap-3.5 flex-row"
+                  className="flex gap-2.5 sm:gap-3.5 flex-row"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 shadow-xs relative overflow-hidden">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 shadow-xs relative overflow-hidden">
                     <Image src="/images/Logo Tanya Sang Empu.png" alt="Sang Empu" fill sizes="36px" className="object-cover" />
                   </div>
-                  <div className="bg-white border border-[#d3ccc2]/80 rounded-2xl rounded-tl-none px-5 py-4 flex items-center gap-2.5 shadow-xs">
+                  <div className="bg-white border border-[#d3ccc2]/80 rounded-2xl rounded-tl-none px-4 py-3 sm:px-5 sm:py-4 flex items-center gap-2.5 shadow-xs">
                     <span className="text-xs text-[#8d786a] font-narrative">
                       Batik Ask sedang menimbang petuah...
                     </span>
@@ -746,19 +746,19 @@ export default function ChatPage() {
                 e.preventDefault();
                 handleSend(input);
               }}
-              className="p-3 bg-white border-t border-[#d3ccc2] flex items-center gap-3 focus-within:ring-2 focus-within:ring-[#713f2c]/20 transition-all"
+              className="p-2.5 sm:p-3 bg-white border-t border-[#d3ccc2] flex items-center gap-2 sm:gap-3 focus-within:ring-2 focus-within:ring-[#713f2c]/20 transition-all"
             >
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Tanyakan makna motif, pakem busana adat, atau sejarah wastra Anda..."
-                className="flex-1 bg-[#faf8f4] border border-[#d3ccc2] px-4 py-3 rounded-xl text-sm text-[#2d2b38] placeholder-[#8d786a] focus:outline-hidden focus:border-[#713f2c] font-body"
+                placeholder="Tanyakan makna motif, filosofi, atau sejarah wastra..."
+                className="flex-1 bg-[#faf8f4] border border-[#d3ccc2] px-3.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm text-[#2d2b38] placeholder-[#8d786a] focus:outline-hidden focus:border-[#713f2c] font-body"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isTyping}
-                className="bg-[#713f2c] hover:bg-[#583122] disabled:opacity-40 text-[#D4AF37] px-5 py-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-2 font-display font-bold text-xs cursor-pointer disabled:cursor-not-allowed"
+                className="bg-[#713f2c] hover:bg-[#583122] disabled:opacity-40 text-[#D4AF37] px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-xl transition-all shadow-md shrink-0 flex items-center gap-2 font-display font-bold text-xs cursor-pointer disabled:cursor-not-allowed"
                 title="Kirim Pertanyaan"
               >
                 <span className="hidden sm:inline">Kirim</span>
@@ -768,7 +768,7 @@ export default function ChatPage() {
           </div>
 
           {/* Helpful cultural guidance note */}
-          <div className="mt-4 flex items-start gap-2.5 text-xs text-[#8d786a] bg-amber-50/60 border border-amber-200/60 rounded-xl p-3.5">
+          <div className="mt-4 flex items-start gap-2.5 text-xs text-[#8d786a] bg-amber-50/60 border border-amber-200/60 rounded-xl p-3 sm:p-3.5">
             <HelpCircle className="w-4 h-4 text-[#713f2c] shrink-0 mt-0.5" />
             <p className="font-narrative leading-relaxed">
               <strong>Tips Konsultasi:</strong> Anda dapat menanyakan filosofi motif tertentu (misal: <em>&quot;Apa makna motif Parang Rusak?&quot;</em>), kecocokan busana untuk momen adat (misal: <em>&quot;Batik apa yang tepat untuk lamaran?&quot;</em>), atau perbedaan teknik cap dan tulis.

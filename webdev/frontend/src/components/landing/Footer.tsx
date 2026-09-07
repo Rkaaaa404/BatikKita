@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="w-full bg-[#d3ccc2] border-t border-[#d8c2b8] py-12 px-6 lg:px-16">
+    <footer className="w-full bg-[#d3ccc2] border-t border-[#d8c2b8] pt-12 pb-24 md:py-12 px-4 sm:px-6 lg:px-16">
       <div className="max-w-[1280px] mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm text-[#8d786a]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-sm text-[#8d786a]">
 
           {/* Brand */}
           <div className="md:col-span-1">

@@ -548,15 +548,13 @@ export function CapStampingBoard({
             isDark ? "text-white/60" : "text-stone-600"
           }`}
         >
-          Tarik kepingan cap tembaga ke arah rongga sketsa hingga{" "}
-          <span className="text-emerald-500 font-semibold">berpendar hijau</span>, lalu lepaskan
-          untuk mencap kain mori.
+          Seret cap ke rongga sketsa hingga <span className="text-emerald-500 font-semibold">berpendar hijau</span>, atau ketuk kepingan lalu ketuk rongga kain.
         </p>
       </div>
 
       {/* Piece Tray (Baki Meja Kerja Cap Tembaga - 3 Slot Aktif) */}
       <div
-        className={`rounded-2xl p-4 sm:p-5 border shadow-xl max-w-2xl mx-auto w-full transition-colors ${
+        className={`rounded-2xl p-3 sm:p-5 border shadow-xl max-w-2xl mx-auto w-full transition-colors ${
           isDark
             ? "bg-[#1A1614]/90 border-white/10 text-white"
             : "bg-white border-[#E2DDD5] text-[#2D2B38] shadow-md"
@@ -569,12 +567,12 @@ export function CapStampingBoard({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 items-center justify-items-center min-h-[130px]">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-4 items-center justify-items-center min-h-[110px] sm:min-h-[130px]">
             {workbench.activeSlots.map((pieceId, slotIdx) => {
               const def = pieceId !== null ? currentPieceDefs.find((p) => p.id === pieceId) : null;
               const isSelected = pieceId !== null && selectedPiece === pieceId;
               const isBeingDragged = pieceId !== null && draggingPiece?.id === pieceId;
-              const cellSize = 30;
+              const cellSize = typeof window !== "undefined" && window.innerWidth < 380 ? 20 : typeof window !== "undefined" && window.innerWidth < 500 ? 24 : 30;
 
               return (
                 <div

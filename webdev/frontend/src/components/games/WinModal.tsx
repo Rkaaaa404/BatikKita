@@ -77,10 +77,10 @@ export function WinModal({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 24 }}
-            className="relative bg-[#faf8f4] rounded-2xl max-w-md w-full overflow-hidden shadow-2xl"
+            className="relative bg-[#faf8f4] rounded-2xl max-w-md w-full overflow-hidden shadow-2xl max-h-[92dvh] overflow-y-auto"
           >
             {/* Golden header strip */}
-            <div className="bg-gradient-to-r from-[#713f2c] to-[#D4AF37] px-6 pt-8 pb-6 text-center">
+            <div className="bg-gradient-to-r from-[#713f2c] to-[#D4AF37] px-6 pt-6 sm:pt-8 pb-5 sm:pb-6 text-center">
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}

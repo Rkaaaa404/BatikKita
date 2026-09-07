@@ -267,10 +267,9 @@ npm run build
 ## 👥 Tim Pengembang (HoloDev — HOLOGY 9.0)
 
 Proyek ini dikembangkan oleh **Tim HoloDev** dalam rangka kompetisi inovasi teknologi **HOLOGY 9.0 (Fakultas Ilmu Komputer, Universitas Brawijaya)**:
-
-* **Rayka** — *Tech Lead, Fullstack Architecture & Machine Learning Engineering*
-* **Rayhan** — *UI/UX Design, Asset Digital & Multimedia Engineering*
-* **Haekal** — *Business Analyst, Cultural Research & Strategic Proposal*
+* **Rayhan** — *UI/UX Design dan Asset Digital* (The Hipster)
+* **Rayka** — *Tech Lead, Fullstack Architecture & AI Engineering* (The Hacker)
+* **Haekal** — *Business Analyst & Strategic Proposal* (The Hustler)
 
 ---
 

@@ -149,11 +149,11 @@ export function InteractivePreview() {
   };
 
   return (
-    <section className="py-24 w-full bg-[#1A1614] relative overflow-hidden">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-16 space-y-28 relative z-10">
+    <section className="py-14 sm:py-20 lg:py-24 w-full bg-[#1A1614] relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16 space-y-12 sm:space-y-20 lg:space-y-28 relative z-10">
 
       {/* ── Section: Batik Ask (left) + AI Scanner (right) ── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
         {/* LEFT: Batik Ask Chat */}
         <motion.div 
@@ -161,10 +161,10 @@ export function InteractivePreview() {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white border border-[#d3ccc2] rounded-2xl p-6 shadow-sm"
+          className="bg-white border border-[#d3ccc2] rounded-2xl p-4 sm:p-6 shadow-sm"
         >
           {/* Chat Header */}
-          <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[#d3ccc2]">
+          <div className="flex items-center gap-3 pb-3 sm:pb-4 mb-3 sm:mb-4 border-b border-[#d3ccc2]">
             <div className="w-10 h-10 bg-[#713f2c] rounded-full flex items-center justify-center text-[#D4AF37] relative overflow-hidden border border-[#D4AF37]/30 shadow-sm">
               <Image src="/images/Logo Tanya Sang Empu.png" alt="Batik Ask Logo" fill sizes="40px" className="object-cover" />
             </div>

@@ -366,34 +366,34 @@ export default function ScannerPage() {
       <Navbar variant="transparent" />
 
       <main className="flex-1">
-        {/* ─── Hero Header Section with Dedicated Batik Lens Imagery (Full-bleed like Beranda) ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
-          {/* Full-bleed Background Art */}
+        {/* ─── Hero Section with Dedicated Batik Tab Scanner.webp ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-24 pb-12 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-16 min-h-0 lg:min-h-[520px] flex items-center">
+          {/* Background Image: batik-tab-scanner.webp */}
           <Image
-            src="/images/batik-tab-batik-lens.webp"
-            alt="AI Scanner Batik Lens Background"
+            src="/images/batik-tab-scanner.webp"
+            alt="AI Batik Lens Scanner"
             fill
             sizes="100vw"
             className="object-cover object-center"
             priority
           />
           {/* Contrast overlays for text legibility & smooth page transition */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/85 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/85 z-0" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60 z-0" />
 
           {/* Golden glow */}
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
 
-          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             <div className="lg:col-span-7 text-left">
-              <div className="flex items-center gap-2.5 mb-5">
-              <Sparkles className="w-5 h-5 text-[#D4AF37]" />
-              <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+              <div className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-5">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37]" />
+              <span className="text-white/90 font-display text-xs sm:text-sm font-medium tracking-wide">
                 Edge AI Classifier • On-Device Inference
               </span>
             </div>
 
-            <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
+            <h1 className="font-display font-bold text-2xl xs:text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-3 sm:mb-4">
               <span className="font-philosopher tracking-wide">Batik Lens:</span>
               <br />
               <span
@@ -407,7 +407,7 @@ export default function ScannerPage() {
               Instan
             </h1>
 
-            <p className="font-narrative text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
+            <p className="font-narrative text-sm sm:text-base lg:text-lg text-white/80 max-w-xl leading-relaxed mb-4 sm:mb-6">
               Arahkan kamera atau unggah foto kain batik Anda. Model Edge AI memproses citra langsung di perangkat Anda tanpa mengunggah foto ke server luar.
             </p>
             </div>
@@ -415,10 +415,10 @@ export default function ScannerPage() {
         </section>
 
         {/* ─── Scanner Workspace ─── */}
-        <section className="max-w-5xl mx-auto px-6 py-12">
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 pb-24 md:pb-12">
           {/* Preset Sample Motifs Bar */}
-          <div className="mb-10 bg-white border border-[#d3ccc2]/80 rounded-2xl p-5 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <div className="mb-6 sm:mb-10 bg-white border border-[#d3ccc2]/80 rounded-2xl p-4 sm:p-5 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-3 sm:mb-4">
               <div>
                 <span className="text-xs font-display font-bold text-[#713f2c] uppercase tracking-wider block">
                   Uji Coba Cepat
@@ -427,20 +427,20 @@ export default function ScannerPage() {
                   Pilih salah satu sampel motif batik nusantara di bawah untuk langsung menguji scanner:
                 </p>
               </div>
-              <span className="text-[11px] font-display text-[#8d786a] bg-[#faf8f4] border border-[#d3ccc2] px-3 py-1 rounded-full shrink-0">
+              <span className="text-[10px] sm:text-[11px] font-display text-[#8d786a] bg-[#faf8f4] border border-[#d3ccc2] px-3 py-1 rounded-full self-start sm:self-auto shrink-0">
                 3 Sampel Terverifikasi
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               {SAMPLE_PRESETS.map((preset) => (
                 <button
                   key={preset.name}
                   type="button"
                   onClick={() => handleSelectPreset(preset)}
-                  className="flex items-center gap-3 p-2.5 rounded-xl border border-[#d3ccc2]/70 hover:border-[#713f2c] hover:bg-[#faf8f4] transition-all text-left group bg-white shadow-xs"
+                  className="flex items-center gap-3 p-2 sm:p-2.5 rounded-xl border border-[#d3ccc2]/70 hover:border-[#713f2c] hover:bg-[#faf8f4] transition-all text-left group bg-white shadow-xs active:scale-98"
                 >
-                  <div className="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-[#d3ccc2]">
+                  <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg overflow-hidden shrink-0 border border-[#d3ccc2]">
                     <Image
                       src={preset.image}
                       alt={preset.name}
@@ -477,30 +477,30 @@ export default function ScannerPage() {
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className="border-2 border-dashed border-[#713f2c]/30 hover:border-[#D4AF37] rounded-3xl bg-white p-12 sm:p-16 text-center hover:bg-[#FFF8E7]/30 transition-all cursor-pointer shadow-md group relative overflow-hidden"
+                  className="border-2 border-dashed border-[#713f2c]/30 hover:border-[#D4AF37] rounded-2xl sm:rounded-3xl bg-white p-6 sm:p-12 text-center hover:bg-[#FFF8E7]/30 transition-all cursor-pointer shadow-md group relative overflow-hidden"
                 >
-                  <div className="w-20 h-20 bg-[#713f2c]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-[#713f2c] group-hover:text-[#D4AF37] text-[#713f2c] transition-all duration-300 shadow-sm">
-                    <Scan className="w-10 h-10" />
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#713f2c]/10 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 group-hover:bg-[#713f2c] group-hover:text-[#D4AF37] text-[#713f2c] transition-all duration-300 shadow-sm">
+                    <Scan className="w-8 h-8 sm:w-10 sm:h-10" />
                   </div>
 
-                  <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#2d2b38] mb-3">
-                    Unggah atau Seret Foto Kain Batik
+                  <h2 className="font-display font-bold text-xl sm:text-2xl sm:text-3xl text-[#2d2b38] mb-2 sm:mb-3">
+                    Unggah atau Foto Kain Batik
                   </h2>
-                  <p className="font-narrative text-sm sm:text-base text-[#8d786a] mb-8 max-w-md mx-auto leading-relaxed">
+                  <p className="font-narrative text-xs sm:text-sm sm:text-base text-[#8d786a] mb-6 sm:mb-8 max-w-md mx-auto leading-relaxed">
                     Mendukung format JPG, PNG, atau WEBP. Pastikan pencahayaan cukup dan pola kain terlihat jelas.
                   </p>
 
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-xl mx-auto">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 max-w-xl mx-auto w-full">
                     <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         openCamera();
                       }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/50 px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-all shadow-md cursor-pointer group"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/50 px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#583122] transition-all shadow-md cursor-pointer group active:scale-98"
                     >
                       <Camera className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition-transform" />
-                      Buka Kamera
+                      <span>Buka Kamera</span>
                     </button>
 
                     <button
@@ -509,10 +509,10 @@ export default function ScannerPage() {
                         e.stopPropagation();
                         fileInputRef.current?.click();
                       }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs cursor-pointer hover:border-[#713f2c]"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-[#713f2c] border border-[#d3ccc2] px-6 py-3.5 rounded-xl font-display font-bold text-sm hover:bg-[#faf8f4] transition-colors shadow-xs cursor-pointer hover:border-[#713f2c] active:scale-98"
                     >
                       <Upload className="w-4 h-4" />
-                      Pilih dari Perangkat
+                      <span>Pilih dari Perangkat</span>
                     </button>
                   </div>
 

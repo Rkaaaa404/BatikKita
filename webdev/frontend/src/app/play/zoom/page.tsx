@@ -376,7 +376,7 @@ export default function TikaGamePage() {
         </div>
 
         {/* ── Attempt Progress Indicator (Wordle Style) ── */}
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
           {ZOOM_STAGES.map((stg, idx) => {
             const guess = guesses.find((g) => g.stage === idx + 1);
             const isCurrent = idx === currentStageIdx && gameStatus === "playing";
@@ -410,33 +410,30 @@ export default function TikaGamePage() {
             return (
               <div
                 key={stg.stage}
-                className={`rounded-xl border p-2 flex flex-col items-center justify-center transition-all ${bgStyle}`}
+                className={`rounded-xl border p-1.5 sm:p-2 flex flex-col items-center justify-center transition-all ${bgStyle}`}
               >
-                <span className="text-[10px] font-display font-semibold uppercase tracking-wider">
+                <span className="text-[9px] sm:text-[10px] font-display font-semibold uppercase tracking-wider">
                   Tahap {stg.stage}
                 </span>
-                <span className="text-xs font-display font-bold mt-0.5">{statusText}</span>
+                <span className="text-[11px] sm:text-xs font-display font-bold mt-0.5">{statusText}</span>
               </div>
             );
           })}
         </div>
 
         {/* ── Progressive Reveal Viewport (Zoom Engine) ── */}
-        <div className="w-full max-w-[420px] aspect-square mx-auto rounded-3xl overflow-hidden relative border-4 border-[#D4AF37]/30 shadow-2xl bg-[#1A1816]">
+        <div className="w-full max-w-[340px] sm:max-w-[420px] aspect-square mx-auto rounded-3xl overflow-hidden relative border-4 border-[#D4AF37]/30 shadow-2xl bg-[#1A1816]">
           {/* Zoom Overlay Badges */}
-          <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-xl shadow-lg">
+          <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 px-2 sm:px-2.5 py-1 rounded-xl shadow-lg">
             <ZoomIn className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span className="text-xs font-display font-extrabold text-white">
+            <span className="text-[11px] sm:text-xs font-display font-extrabold text-white">
               {gameStatus === "playing" ? `${Math.round(activeScale * 100)}% Makro` : "100% Utuh"}
             </span>
           </div>
 
-          <div className="absolute top-3 right-3 z-10 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 px-2.5 py-1 rounded-xl shadow-lg">
-            <span className="text-[11px] font-display font-bold text-white/70">
-              Sisa Percobaan:{" "}
-              <strong className="text-[#D4AF37]">
-                {gameStatus === "playing" ? MAX_STAGES - currentStageIdx : 0}
-              </strong>
+          <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-10 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 px-2 sm:px-2.5 py-1 rounded-xl shadow-lg">
+            <span className="text-[10px] sm:text-[11px] font-display font-bold text-white/70">
+              Sisa: <strong className="text-[#D4AF37]">{gameStatus === "playing" ? MAX_STAGES - currentStageIdx : 0}</strong>
             </span>
           </div>
 

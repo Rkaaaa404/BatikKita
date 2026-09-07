@@ -18,7 +18,7 @@ export function GameNavbar({ title, backHref = "/play" }: GameNavbarProps) {
 
   return (
     <nav
-      className={`fixed top-0 inset-x-0 z-50 h-14 backdrop-blur-md border-b transition-colors duration-200 flex items-center px-4 lg:px-8 gap-3 sm:gap-4 ${
+      className={`fixed top-0 inset-x-0 z-50 h-13 sm:h-14 backdrop-blur-md border-b transition-colors duration-200 flex items-center px-2.5 sm:px-4 lg:px-8 gap-2 sm:gap-4 ${
         isDark
           ? "bg-[#1A1614]/95 border-white/10 text-white"
           : "bg-[#FAF8F4]/95 border-[#D3CCC2]/80 text-[#2D2B38]"
@@ -26,9 +26,10 @@ export function GameNavbar({ title, backHref = "/play" }: GameNavbarProps) {
     >
       <Link
         href={backHref}
-        className={`flex items-center gap-1.5 transition-colors text-sm shrink-0 ${
-          isDark ? "text-white/60 hover:text-white" : "text-[#713F2C] hover:text-[#583122]"
+        className={`flex items-center gap-1.5 transition-colors text-xs sm:text-sm shrink-0 p-1 rounded-lg ${
+          isDark ? "text-white/70 hover:text-white" : "text-[#713F2C] hover:text-[#583122]"
         }`}
+        aria-label="Kembali ke menu sebelumnya"
       >
         <ArrowLeft className="w-4 h-4" />
         <span className="hidden sm:inline font-medium">Kembali</span>
@@ -36,17 +37,17 @@ export function GameNavbar({ title, backHref = "/play" }: GameNavbarProps) {
 
       <div className={`h-4 w-px hidden sm:block ${isDark ? "bg-white/10" : "bg-[#D3CCC2]"}`} />
 
-      <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+      <Link href="/" className="flex items-center gap-2 shrink-0 group">
         <Image
           src="/images/logo-batik-kita.png"
           alt="Logo Batik Kita"
-          width={36}
-          height={36}
-          className="w-9 h-9 object-contain drop-shadow-sm group-hover:scale-105 transition-transform"
+          width={32}
+          height={32}
+          className="w-7 h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 object-contain drop-shadow-sm group-hover:scale-105 transition-transform"
           priority
         />
         <span
-          className={`font-philosopher font-bold text-xl sm:text-2xl hidden md:inline tracking-wide ${
+          className={`font-philosopher font-bold text-lg sm:text-xl hidden lg:inline tracking-wide ${
             isDark ? "text-white" : "text-[#2D2B38]"
           }`}
         >

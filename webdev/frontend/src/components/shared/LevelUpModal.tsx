@@ -58,7 +58,7 @@ export function LevelUpModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 15 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="relative w-full max-w-md bg-[#1A1614] border-2 border-[#D4AF37] rounded-3xl p-6 sm:p-8 text-white text-center shadow-[0_0_50px_rgba(212,175,55,0.4)] overflow-hidden"
+            className="relative w-full max-w-md bg-[#1A1614] border-2 border-[#D4AF37] rounded-3xl p-5 sm:p-8 text-white text-center shadow-[0_0_50px_rgba(212,175,55,0.4)] overflow-y-auto max-h-[92dvh]"
           >
             {/* Ambient gold glow */}
             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-48 h-48 bg-[#D4AF37]/20 rounded-full blur-3xl pointer-events-none" />

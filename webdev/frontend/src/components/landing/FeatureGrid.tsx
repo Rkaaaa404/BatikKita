@@ -46,17 +46,17 @@ export function FeatureGrid() {
   };
 
   return (
-    <section className="py-24 w-full bg-white relative border-b border-[#d3ccc2]">
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-16 overflow-hidden">
+    <section className="py-14 sm:py-20 lg:py-24 w-full bg-white relative border-b border-[#d3ccc2]">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16 overflow-hidden">
       {/* Section Header */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12"
+        className="text-center mb-8 sm:mb-12"
       >
-        <h2 className="font-display font-bold text-2xl text-[#713f2c] mb-2">
+        <h2 className="font-display font-bold text-xl sm:text-2xl text-[#713f2c] mb-2">
           Pilar Penjaga Tradisi
         </h2>
         <div className="w-16 h-0.5 bg-[#D4AF37] mx-auto rounded-full" />
@@ -68,13 +68,13 @@ export function FeatureGrid() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-50px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
+        className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
       >
         {pillars.map((p, idx) => (
           <motion.div
             key={idx}
             variants={cardVariants}
-            className={`bg-white border border-[#d3ccc2] rounded-xl p-8 hover:shadow-lg transition-all group ${
+            className={`bg-white border border-[#d3ccc2] rounded-2xl p-6 sm:p-8 hover:shadow-lg transition-all group ${
               idx === 1 ? "relative overflow-hidden" : ""
             }`}
           >
@@ -84,23 +84,23 @@ export function FeatureGrid() {
 
             {/* Icon */}
             <div
-              className={`w-14 h-14 ${p.iconBg} rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+              className={`w-12 h-12 sm:w-14 sm:h-14 ${p.iconBg} rounded-full flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}
             >
-              <p.icon className={`w-6 h-6 ${p.iconColor}`} />
+              <p.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${p.iconColor}`} />
             </div>
 
             {/* Text */}
-            <h3 className="font-display font-semibold text-lg text-[#2d2b38] mb-2">
+            <h3 className="font-display font-semibold text-base sm:text-lg text-[#2d2b38] mb-1.5 sm:mb-2">
               {p.title}
             </h3>
             <p
-              className={`font-body text-sm font-semibold mb-4 ${
+              className={`font-body text-xs sm:text-sm font-semibold mb-3 sm:mb-4 ${
                 p.subtitleColor || "text-[#8d786a]"
               }`}
             >
               {p.subtitle}
             </p>
-            <p className="font-narrative text-sm text-[#8d786a] leading-relaxed">
+            <p className="font-narrative text-xs sm:text-sm text-[#8d786a] leading-relaxed">
               {p.desc}
             </p>
           </motion.div>

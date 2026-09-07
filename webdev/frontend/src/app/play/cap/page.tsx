@@ -112,12 +112,12 @@ export default function CapStampingPage() {
             </motion.div>
 
             {/* Difficulty Selector Pills */}
-            <div className="flex flex-col items-center gap-3 mb-10">
-              <span className="text-xs font-display font-bold text-[#D4AF37] tracking-wider uppercase">
+            <div className="flex flex-col items-center gap-2.5 sm:gap-3 mb-8 sm:mb-10 px-2">
+              <span className="text-[11px] sm:text-xs font-display font-bold text-[#D4AF37] tracking-wider uppercase text-center">
                 PILIH TINGKAT KESULITAN BLOK:
               </span>
               <div
-                className={`inline-flex p-1.5 rounded-2xl border backdrop-blur-md gap-2 ${
+                className={`inline-flex flex-wrap justify-center p-1 sm:p-1.5 rounded-2xl border backdrop-blur-md gap-1.5 sm:gap-2 max-w-full ${
                   isDark ? "bg-black/20 border-white/10" : "bg-stone-100 border-[#E2DDD5] shadow-xs"
                 }`}
               >
@@ -128,7 +128,7 @@ export default function CapStampingPage() {
                       key={diff}
                       type="button"
                       onClick={() => setDifficulty(diff)}
-                      className={`px-5 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-3.5 sm:px-5 py-2 rounded-xl text-xs font-display font-bold transition-all cursor-pointer flex items-center gap-1 sm:gap-1.5 ${
                         isCur
                           ? "bg-[#D4AF37] text-[#1A1614] shadow-md shadow-[#D4AF37]/20 scale-105"
                           : isDark
@@ -138,7 +138,7 @@ export default function CapStampingPage() {
                     >
                       <span>{diff}</span>
                       <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+                        className={`text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full ${
                           isCur
                             ? "bg-black/20 text-[#1A1614]"
                             : isDark
@@ -152,7 +152,7 @@ export default function CapStampingPage() {
                   );
                 })}
               </div>
-              <p className={`text-xs ${isDark ? "text-white/60" : "text-stone-600"}`}>
+              <p className={`text-[11px] sm:text-xs text-center max-w-md ${isDark ? "text-white/60" : "text-stone-600"}`}>
                 {difficulty === "Mudah" && "5–6 kepingan presisi. Pilihan ideal untuk pemula."}
                 {difficulty === "Menengah" && "8–10 kepingan terukur. Menuntut ketelitian dan fokus."}
                 {difficulty === "Sulit" && "12–15 kepingan canting detail. Tantangan deduksi Empu sejati!"}
@@ -160,7 +160,7 @@ export default function CapStampingPage() {
             </div>
 
             {/* Motifs Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5 sm:gap-4">
               {BATIK_DATASET_20.map((motif, i) => (
                 <motion.button
                   key={motif.id}
