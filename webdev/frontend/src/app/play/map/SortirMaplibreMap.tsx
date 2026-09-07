@@ -680,8 +680,7 @@ export default function SortirMaplibreMap({
   return (
     <div
       ref={containerRef}
-      className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-[#D4AF37]/30 bg-[#1A1816]"
-      style={{ height: 460, minHeight: 400 }}
+      className="w-full relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-2 sm:border-4 border-[#D4AF37]/30 bg-[#1A1816] h-[320px] xs:h-[350px] sm:h-[420px] md:h-[460px]"
     >
       {/* Top Left: Map Tile Switcher */}
       <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#0F172A]/90 backdrop-blur-md border border-white/20 p-1 rounded-xl shadow-lg">

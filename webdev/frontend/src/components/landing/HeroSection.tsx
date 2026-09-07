@@ -25,7 +25,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full h-screen min-h-[600px] overflow-hidden">
+    <section className="relative w-full min-h-[100dvh] overflow-hidden flex items-center">
       {/* ─── Full-bleed Background Image ─── */}
       <Image
         src="/images/batik-hero-canting.webp"
@@ -37,14 +37,14 @@ export function HeroSection() {
       />
 
       {/* ─── Dark gradient overlay for text legibility ─── */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/30 to-transparent z-0" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-0" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent z-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-0" />
 
       {/* ─── 3D Golden Particles ─── */}
       <HeroParticles />
 
       {/* Text Content: centered on left */}
-      <div className="absolute inset-0 flex flex-col justify-center pt-20 pb-10 px-8 lg:px-20 z-20 pointer-events-none">
+      <div className="absolute inset-0 flex flex-col justify-center pt-24 pb-12 px-5 sm:px-8 lg:px-20 z-20 pointer-events-none">
         <motion.div 
           className="max-w-xl pointer-events-auto"
           variants={containerVariants}
@@ -52,22 +52,23 @@ export function HeroSection() {
           animate="visible"
         >
           {/* Trust badge */}
-          <motion.div variants={itemVariants} className="flex items-center gap-2.5 mb-5">
+          <motion.div variants={itemVariants} className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-5">
             <Image
               src="/images/logo-batik-kita.png"
               alt="Logo Batik Kita"
               width={26}
               height={26}
-              className="w-6 h-6 object-contain drop-shadow-sm"
+              className="w-5 h-5 sm:w-6 sm:h-6 object-contain drop-shadow-sm"
             />
-            <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+            <span className="text-white/90 font-display text-xs sm:text-sm font-medium tracking-wide">
               Platform Edukasi Batik Nusantara
             </span>
           </motion.div>
 
           {/* Headline */}
-          <motion.h1 variants={itemVariants} className="font-display font-bold text-[44px] sm:text-[52px] lg:text-[60px] leading-[1.05] text-white mb-4">
-            <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
+          <motion.h1 variants={itemVariants} className="font-display font-bold text-[32px] xs:text-[38px] sm:text-[50px] lg:text-[60px] leading-[1.08] text-white mb-3 sm:mb-4">
+            <span className="font-philosopher tracking-wide">Batik Kita:</span>
+            <br />
             <span
               style={{
                 color: "#D4AF37",
@@ -81,17 +82,17 @@ export function HeroSection() {
           </motion.h1>
 
           {/* Sub */}
-          <motion.p variants={itemVariants} className="font-narrative text-base text-white/80 leading-relaxed mb-8 max-w-md">
+          <motion.p variants={itemVariants} className="font-narrative text-sm sm:text-base text-white/80 leading-relaxed mb-6 sm:mb-8 max-w-md">
             Kenali ragam motif kain nusantara, telusuri filosofi di balik setiap goresan canting, dan asah kepekaan budayamu lewat permainan edukatif dan pengenal citra visual.
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 sm:gap-4">
             <a
               href="#arcade"
-              className="inline-flex items-center gap-2 bg-[#D4AF37] text-[#2d2b38] font-display font-bold text-sm px-7 py-3.5 rounded-full hover:bg-[#c9a52f] transition-all shadow-lg hover:shadow-[#D4AF37]/30"
+              className="inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#2d2b38] font-display font-bold text-xs sm:text-sm px-6 sm:px-7 py-3 sm:py-3.5 rounded-full hover:bg-[#c9a52f] transition-all shadow-lg hover:shadow-[#D4AF37]/30 active:scale-95"
             >
-              Mulai Jelajahi
+              <span>Mulai Jelajahi</span>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -109,17 +110,17 @@ export function HeroSection() {
 
             <a
               href="#demo"
-              className="inline-flex items-center gap-2.5 text-white/90 font-display font-semibold text-sm hover:text-white transition-colors group"
+              className="inline-flex items-center gap-2 text-white/90 font-display font-semibold text-xs sm:text-sm hover:text-white transition-colors group py-2"
             >
-              <div className="w-9 h-9 rounded-full border-2 border-white/70 flex items-center justify-center backdrop-blur-sm bg-white/10 group-hover:bg-white/20 transition-colors">
-                <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-white/70 flex items-center justify-center backdrop-blur-sm bg-white/10 group-hover:bg-white/20 transition-colors">
+                <Play className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white ml-0.5" />
               </div>
-              Tonton Video Demo
+              <span>Tonton Demo</span>
             </a>
           </motion.div>
 
           {/* Bottom info strip */}
-          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-6 mt-10 pt-6 border-t border-white/20">
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 sm:gap-6 mt-6 sm:mt-10 pt-4 sm:pt-6 border-t border-white/20">
             {[
               "Peta Interaktif Batik",
               "AI Identifikasi Motif",
@@ -127,9 +128,9 @@ export function HeroSection() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-1.5 text-white/70 text-xs font-display font-medium"
+                className="flex items-center gap-1.5 text-white/75 text-[11px] sm:text-xs font-display font-medium"
               >
-                <span className="w-1 h-1 rounded-full bg-[#D4AF37]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                 {item}
               </div>
             ))}

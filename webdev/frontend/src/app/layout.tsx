@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Source_Serif_4, Inter, Philosopher } from "next/font/google";
 import "./globals.css";
+import { MobileBottomNav } from "@/components/landing/MobileBottomNav";
 
 const philosopher = Philosopher({
   variable: "--font-philosopher",
@@ -72,6 +73,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-mori-fabric text-[#2d2b38] flex flex-col selection:bg-[#713f2c] selection:text-[#faf8f4]">
         {children}
+        <MobileBottomNav />
       </body>
     </html>
   );

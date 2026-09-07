@@ -175,10 +175,10 @@ export default function BatikpediaPage() {
 
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik Pedia WebP Imagery ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 min-h-[560px] lg:min-h-[620px] flex items-center">
-          {/* Background Image: batik-tab-batikpedia.webp */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-24 pb-14 sm:pt-32 sm:pb-24 px-4 sm:px-6 lg:px-16 min-h-[480px] lg:min-h-[620px] flex items-center">
+          {/* Background Image: batik-tab-batik pedia.jpg */}
           <Image
-            src="/images/batik-tab-batikpedia.webp"
+            src="/images/batik-tab-batik pedia.jpg"
             alt="Ensiklopedia Batik Pedia Nusantara"
             fill
             sizes="100vw"
@@ -194,20 +194,23 @@ export default function BatikpediaPage() {
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
 
-          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
-                <Sparkles className="w-4 h-4" />
-                <span>ENSIKLOPEDIA & SENTRA BUDAYA NUSANTARA</span>
+              <div className="flex items-center gap-2.5 mb-4 sm:mb-5">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-xs sm:text-sm font-medium tracking-wide">
+                  Ensiklopedia & Sentra Budaya Nusantara
+                </span>
               </div>
 
-              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
-                <span className="font-philosopher tracking-wide">Batik Pedia</span>:{" "}
+              <h1 className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.12] sm:leading-[1.08] tracking-tight mb-4 sm:mb-5">
+                <span className="font-philosopher tracking-wide">Batik Pedia:</span>
+                <br />
                 <span
                   style={{
                     color: "#D4AF37",
@@ -215,11 +218,12 @@ export default function BatikpediaPage() {
                   }}
                 >
                   Peta Sentra & Filosofi
-                </span>{" "}
+                </span>
+                <br />
                 Wastra Nusantara.
               </h1>
 
-              <p className="font-narrative text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
+              <p className="font-narrative text-sm sm:text-base lg:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
                 Telusuri persebaran geografis, akar akulturasi, dan kedalaman makna simbolik dari 20 motif tradisional Nusantara dari keraton Jawa hingga pesisir dan pedalaman Kalimantan.
               </p>
 
@@ -299,11 +303,11 @@ export default function BatikpediaPage() {
         </section>
 
         {/* ─── Interactive Explorer Section ─── */}
-        <section className="max-w-[1280px] mx-auto w-full px-6 lg:px-16 py-12 flex flex-col gap-8">
+        <section className="max-w-[1280px] mx-auto w-full px-4 sm:px-6 lg:px-16 py-8 sm:py-12 pb-28 md:pb-12 flex flex-col gap-6 sm:gap-8">
           {/* View Mode Toggle Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#713f2c]/10">
             <div>
-              <h2 className="font-display font-bold text-2xl text-[#2d2b38]">
+              <h2 className="font-display font-bold text-xl sm:text-2xl text-[#2d2b38]">
                 {viewMode === "sentra" ? "Sentra Kebudayaan Nusantara" : "Katalog 20 Motif Batik"}
               </h2>
               <p className="font-narrative text-xs sm:text-sm text-[#8d786a] mt-0.5">
@@ -357,78 +361,55 @@ export default function BatikpediaPage() {
           {/* ─── Mode 1: Sentra Kebudayaan Layout ─── */}
           {viewMode === "sentra" && (
             <div className="space-y-6">
-              <div className="flex flex-col lg:flex-row gap-8 items-start">
-              {/* Left: Sentra Cards */}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
-                {filteredRegions.map((region) => {
-                  const isSelected = activeRegion === region.id;
-                  const regionMotifs = region.motifIds
-                    .map((id) => motifMap.get(id))
-                    .filter((m): m is BatikMotif => Boolean(m));
-
-                  return (
-                    <div
-                      key={region.id}
-                      onClick={() => setActiveRegion(region.id)}
-                      className={`bg-white rounded-2xl p-6 border transition-all cursor-pointer flex flex-col justify-between ${
-                        isSelected
-                          ? "border-[#713f2c] shadow-lg ring-2 ring-[#713f2c]/20"
-                          : "border-[#d3ccc2]/80 hover:border-[#713f2c]/50 hover:shadow-md"
-                      }`}
-                    >
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-xs font-display font-bold text-[#713f2c] bg-[#faf8f4] border border-[#d3ccc2] px-3 py-1 rounded-full flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                            {region.name}
-                          </span>
-                          <span className="text-xs text-[#8d786a] font-body">
-                            {regionMotifs.length} Motif
-                          </span>
-                        </div>
-
-                        <h3 className="font-display font-bold text-xl text-[#2d2b38] mb-2">
-                          Sentra {region.name}
-                        </h3>
-
-                        <p className="font-narrative text-xs text-[#8d786a] leading-relaxed mb-4">
-                          {region.description}
-                        </p>
-
-                        {/* Motif Mini Preview Badges */}
-                        <div className="flex flex-wrap gap-1.5 mb-4">
-                          {regionMotifs.map((m) => (
-                            <span
-                              key={m.id}
-                              className="text-[11px] font-display font-medium bg-[#faf8f4] text-stone-700 border border-stone-200 px-2 py-0.5 rounded-md"
-                            >
-                              {m.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="pt-3 border-t border-[#713f2c]/10 flex items-center justify-between text-xs font-display font-semibold text-[#713f2c]">
-                        <span>Buka Koleksi Motif</span>
-                        <ChevronRight className="w-4 h-4" />
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* Mobile Quick Sentra Selector Tabs */}
+              <div className="lg:hidden space-y-2">
+                <div className="flex items-center justify-between text-xs font-display">
+                  <span className="font-bold text-[#713f2c] uppercase tracking-wider flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    Pilih Sentra Daerah:
+                  </span>
+                  <span className="text-stone-500 font-medium">{filteredRegions.length} Sentra</span>
+                </div>
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 touch-pan-x">
+                  {filteredRegions.map((region) => {
+                    const isSelected = activeRegion === region.id;
+                    return (
+                      <button
+                        key={region.id}
+                        type="button"
+                        onClick={() => {
+                          setActiveRegion(region.id);
+                          document.getElementById("sentra-showcase")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                        }}
+                        className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-display font-bold shrink-0 transition-all cursor-pointer ${
+                          isSelected
+                            ? "bg-[#713f2c] text-[#D4AF37] shadow-md border border-[#D4AF37] scale-105"
+                            : "bg-white text-stone-700 border border-[#d3ccc2] hover:border-[#713f2c]/50 active:scale-95"
+                        }`}
+                      >
+                        <span>{region.name}</span>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isSelected ? "bg-[#D4AF37] text-[#1A1614]" : "bg-stone-100 text-stone-600"}`}>
+                          {region.motifIds.length}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Right: Selected Region Motifs Column */}
-              <div className="w-full lg:w-[440px] shrink-0 sticky top-24 space-y-4">
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+              {/* Right/Top: Selected Region Motifs Column (order-first on mobile so it displays immediately!) */}
+              <div id="sentra-showcase" className="w-full lg:w-[440px] shrink-0 lg:sticky lg:top-24 space-y-4 order-first lg:order-last">
                 {currentRegion ? (
                   <div className="bg-white rounded-2xl border border-[#713f2c]/30 shadow-xl overflow-hidden">
-                    <div className="bg-[#713f2c] p-6 text-white relative">
-                      <span className="text-xs font-display font-bold text-[#D4AF37] uppercase tracking-wider block mb-1">
+                    <div className="bg-[#713f2c] p-5 sm:p-6 text-white relative">
+                      <span className="text-[11px] sm:text-xs font-display font-bold text-[#D4AF37] uppercase tracking-wider block mb-1">
                         Sentra Terpilih
                       </span>
-                      <h2 className="font-display font-bold text-2xl mb-1">
+                      <h2 className="font-display font-bold text-xl sm:text-2xl mb-1">
                         {currentRegion.name}
                       </h2>
-                      <p className="text-xs text-white/70 font-body mb-3">
+                      <p className="text-xs text-white/70 font-body mb-2.5">
                         Provinsi: {currentRegion.province}
                       </p>
                       <p className="font-narrative text-xs text-white/85 leading-relaxed">
@@ -436,7 +417,7 @@ export default function BatikpediaPage() {
                       </p>
                     </div>
 
-                    <div className="p-6 space-y-4">
+                    <div className="p-4 sm:p-6 space-y-3.5 sm:space-y-4">
                       <div className="flex items-center justify-between">
                         <h4 className="font-display font-bold text-xs uppercase tracking-wider text-stone-500">
                           Ragam Motif Khas ({currentRegion.motifIds.length}):
@@ -446,7 +427,7 @@ export default function BatikpediaPage() {
                         </span>
                       </div>
 
-                      <div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
+                      <div className="space-y-2.5 max-h-[380px] sm:max-h-[460px] overflow-y-auto pr-1 overscroll-contain">
                         {currentRegion.motifIds.map((motifId) => {
                           const motif = motifMap.get(motifId);
                           if (!motif) return null;
@@ -508,16 +489,84 @@ export default function BatikpediaPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="border-2 border-dashed border-[#d3ccc2] rounded-2xl bg-white/50 p-8 text-center min-h-[380px] flex flex-col items-center justify-center">
+                  <div className="border-2 border-dashed border-[#d3ccc2] rounded-2xl bg-white/50 p-6 sm:p-8 text-center min-h-[300px] flex flex-col items-center justify-center">
                     <Compass className="w-12 h-12 text-[#8d786a]/40 mb-3" />
                     <h3 className="font-display font-bold text-base text-[#2d2b38] mb-1">
                       Pilih Salah Satu Sentra
                     </h3>
                     <p className="font-narrative text-xs text-[#8d786a] max-w-xs leading-relaxed">
-                      Klik kartu sentra di sebelah kiri untuk melihat daftar motif khas dan varian warnanya.
+                      Klik kartu sentra untuk melihat daftar motif khas dan varian warnanya.
                     </p>
                   </div>
                 )}
+              </div>
+
+              {/* Left/Bottom: Sentra Cards Grid */}
+              <div className="flex-1 w-full space-y-3">
+                <div className="lg:hidden text-xs font-display font-bold uppercase tracking-wider text-stone-500 pt-2 flex items-center gap-1.5">
+                  <Compass className="w-3.5 h-3.5 text-[#713f2c]" />
+                  <span>Daftar 10 Sentra Nusantara Lengkap:</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 w-full">
+                {filteredRegions.map((region) => {
+                  const isSelected = activeRegion === region.id;
+                  const regionMotifs = region.motifIds
+                    .map((id) => motifMap.get(id))
+                    .filter((m): m is BatikMotif => Boolean(m));
+
+                  return (
+                    <div
+                      key={region.id}
+                      onClick={() => {
+                        setActiveRegion(region.id);
+                        document.getElementById("sentra-showcase")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                      }}
+                      className={`bg-white rounded-2xl p-5 sm:p-6 border transition-all cursor-pointer flex flex-col justify-between ${
+                        isSelected
+                          ? "border-[#713f2c] shadow-lg ring-2 ring-[#713f2c]/20 bg-[#fdfcf9]"
+                          : "border-[#d3ccc2]/80 hover:border-[#713f2c]/50 hover:shadow-md"
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-xs font-display font-bold text-[#713f2c] bg-[#faf8f4] border border-[#d3ccc2] px-3 py-1 rounded-full flex items-center gap-1.5">
+                            <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                            {region.name}
+                          </span>
+                          <span className="text-xs text-[#8d786a] font-body">
+                            {regionMotifs.length} Motif
+                          </span>
+                        </div>
+
+                        <h3 className="font-display font-bold text-lg sm:text-xl text-[#2d2b38] mb-2">
+                          Sentra {region.name}
+                        </h3>
+
+                        <p className="font-narrative text-xs text-[#8d786a] leading-relaxed mb-4">
+                          {region.description}
+                        </p>
+
+                        {/* Motif Mini Preview Badges */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {regionMotifs.map((m) => (
+                            <span
+                              key={m.id}
+                              className="text-[11px] font-display font-medium bg-[#faf8f4] text-stone-700 border border-stone-200 px-2 py-0.5 rounded-md"
+                            >
+                              {m.name}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-[#713f2c]/10 flex items-center justify-between text-xs font-display font-semibold text-[#713f2c]">
+                        <span>{isSelected ? "Sedang Ditampilkan Di Atas" : "Tampilkan Motif Sentra Ini"}</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
               </div>
             </div>
             </div>
@@ -525,7 +574,7 @@ export default function BatikpediaPage() {
 
           {/* ─── Mode 2: Katalog 20 Motif Grid ─── */}
           {viewMode === "katalog" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
               {filteredMotifs.map((motif) => (
                 <div
                   key={motif.id}
@@ -537,34 +586,34 @@ export default function BatikpediaPage() {
                       src={motif.image}
                       alt={motif.name}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-sm text-white text-[11px] font-display font-bold px-2.5 py-0.5 rounded-full border border-white/20">
+                    <div className="absolute top-2 left-2 sm:top-3 sm:left-3 bg-black/75 backdrop-blur-sm text-white text-[9px] sm:text-[11px] font-display font-bold px-2 sm:px-2.5 py-0.5 rounded-full border border-white/20">
                       {motif.region}
                     </div>
-                    <div className="absolute bottom-3 right-3 bg-[#D4AF37] text-[#1A1614] text-[10px] font-display font-extrabold px-2 py-0.5 rounded shadow">
-                      3 Ragam Visual
+                    <div className="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 bg-[#D4AF37] text-[#1A1614] text-[9px] sm:text-[10px] font-display font-extrabold px-1.5 sm:px-2 py-0.5 rounded shadow">
+                      3 Ragam
                     </div>
                   </div>
 
-                  <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center justify-between text-[11px] text-stone-500 font-display mb-1">
-                        <span>{motif.category}</span>
-                        <span>{motif.island}</span>
+                      <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-stone-500 font-display mb-1">
+                        <span className="truncate">{motif.category}</span>
+                        <span className="hidden xs:inline">{motif.island}</span>
                       </div>
-                      <h3 className="font-display font-bold text-lg text-[#2d2b38] group-hover:text-[#713f2c] transition-colors">
+                      <h3 className="font-display font-bold text-sm sm:text-base lg:text-lg text-[#2d2b38] group-hover:text-[#713f2c] transition-colors line-clamp-1">
                         {motif.name}
                       </h3>
-                      <p className="font-narrative text-xs text-[#8d786a] line-clamp-2 mt-1.5 leading-relaxed">
+                      <p className="font-narrative text-[11px] sm:text-xs text-[#8d786a] line-clamp-2 mt-1 leading-relaxed">
                         {motif.philosophy}
                       </p>
                     </div>
 
-                    <div className="pt-3 mt-3 border-t border-[#713f2c]/10 flex items-center justify-between text-xs font-display font-semibold text-[#713f2c]">
-                      <span>Ragam Warna & Ciri</span>
-                      <ChevronRight className="w-4 h-4" />
+                    <div className="pt-2 sm:pt-3 mt-2 sm:mt-3 border-t border-[#713f2c]/10 flex items-center justify-between text-[11px] sm:text-xs font-display font-semibold text-[#713f2c]">
+                      <span>Ragam & Ciri</span>
+                      <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
                   </div>
                 </div>
@@ -580,225 +629,235 @@ export default function BatikpediaPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm overflow-y-auto"
+              className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md"
               onClick={() => setSelectedMotif(null)}
             >
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden border-2 border-[#D4AF37]/30 my-8"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ type: "spring", damping: 28, stiffness: 300 }}
+                className="relative w-full max-w-4xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl border-t-2 sm:border-2 border-[#D4AF37]/50 max-h-[90dvh] flex flex-col overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Modal Close Button */}
-                <button
-                  type="button"
-                  onClick={() => setSelectedMotif(null)}
-                  className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors cursor-pointer"
+                {/* Modal Top Bar (Sticky) */}
+                <div className="bg-[#faf8f4] border-b border-[#d3ccc2] px-4 sm:px-6 py-3 flex items-center justify-between shrink-0">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-display font-bold text-[#D4AF37] bg-[#713f2c] px-2.5 py-0.5 rounded-full">
+                      {selectedMotif.category}
+                    </span>
+                    <span className="text-xs font-display font-semibold text-stone-600 flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      {selectedMotif.region}
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMotif(null)}
+                    className="w-8 h-8 rounded-full bg-stone-200 hover:bg-stone-300 text-stone-700 flex items-center justify-center transition-colors cursor-pointer"
+                    aria-label="Tutup dialog"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Scrollable Modal Content (Touch-friendly & Smooth) */}
+                <div
+                  className="flex-1 overflow-y-auto overscroll-contain touch-pan-y"
+                  style={{ WebkitOverflowScrolling: "touch" }}
                 >
-                  <X className="w-5 h-5" />
-                </button>
-
-                <div className="grid grid-cols-1 md:grid-cols-12">
-                  {/* Left Column: Interactive Image & Variant Thumbnails */}
-                  <div className="md:col-span-6 bg-stone-900 p-6 flex flex-col justify-between text-white relative">
-                    <div>
-                      {/* Active Variant Badges */}
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-[11px] font-display font-bold text-[#D4AF37] bg-white/10 px-3 py-1 rounded-full border border-[#D4AF37]/30">
-                          {selectedMotif.category}
-                        </span>
-                        <span className="text-xs text-white/60 font-display">
-                          {selectedMotif.region}
-                        </span>
-                      </div>
-
-                      {/* Large Active Image Preview */}
-                      <div className="relative aspect-square w-full rounded-2xl overflow-hidden border-2 border-white/15 bg-black/40 shadow-inner mb-4">
-                        <Image
-                          src={
-                            activeVariantIndex === 0
-                              ? selectedMotif.image
-                              : selectedMotif.variants[activeVariantIndex - 1]?.image ||
-                                selectedMotif.image
-                          }
-                          alt={selectedMotif.name}
-                          fill
-                          priority
-                          sizes="(max-width: 768px) 100vw, 420px"
-                          className="object-cover transition-opacity duration-300"
-                        />
-
-                        <div className="absolute bottom-3 left-3 right-3 bg-black/80 backdrop-blur-md p-2.5 rounded-xl border border-white/15 text-xs font-display">
-                          <p className="text-[#D4AF37] font-bold text-[11px] uppercase tracking-wider">
-                            {activeVariantIndex === 0
-                              ? "Motif Utama (Pewarnaan Tradisional)"
-                              : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.name) || "Ragam Variasi"}
-                          </p>
-                          <p className="text-white/80 font-body text-[11px] mt-0.5">
-                            {activeVariantIndex === 0
-                              ? selectedMotif.visualTraits
-                              : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.description) || selectedMotif.visualTraits}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Interactive Variant Thumbnails Gallery */}
-                    <div>
-                      <span className="text-[11px] font-display font-bold uppercase tracking-wider text-white/50 block mb-2">
-                        Pilih Ragam Warna & Variasi Motif:
-                      </span>
-                      <div className="grid grid-cols-3 gap-2.5">
-                        {/* Thumbnail 0: Primary Image */}
-                        <button
-                          type="button"
-                          onClick={() => setActiveVariantIndex(0)}
-                          className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                            activeVariantIndex === 0
-                              ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
-                              : "border-white/20 opacity-60 hover:opacity-100"
-                          }`}
-                        >
+                  <div className="grid grid-cols-1 md:grid-cols-12">
+                    {/* Left Column: Interactive Image & Variant Thumbnails */}
+                    <div className="md:col-span-6 bg-stone-900 p-4 sm:p-6 flex flex-col justify-between text-white relative">
+                      <div>
+                        {/* Image Preview */}
+                        <div className="relative aspect-[16/10] sm:aspect-square w-full rounded-2xl overflow-hidden border-2 border-white/15 bg-black/40 shadow-inner mb-3 sm:mb-4">
                           <Image
-                            src={selectedMotif.image}
-                            alt="Motif Utama"
+                            src={
+                              activeVariantIndex === 0
+                                ? selectedMotif.image
+                                : selectedMotif.variants[activeVariantIndex - 1]?.image ||
+                                  selectedMotif.image
+                            }
+                            alt={selectedMotif.name}
                             fill
-                            sizes="90px"
-                            className="object-cover"
+                            priority
+                            sizes="(max-width: 768px) 100vw, 420px"
+                            className="object-cover transition-opacity duration-300"
                           />
-                          <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-white rounded py-0.5 truncate px-1">
-                            Klasik
-                          </span>
-                        </button>
 
-                        {/* Thumbnail 1: Variant 1 */}
-                        {selectedMotif.variants?.[0] && (
-                          <button
-                            type="button"
-                            onClick={() => setActiveVariantIndex(1)}
-                            className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                              activeVariantIndex === 1
-                                ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
-                                : "border-white/20 opacity-60 hover:opacity-100"
-                            }`}
-                          >
-                            <Image
-                              src={selectedMotif.variants[0].image}
-                              alt={selectedMotif.variants[0].name}
-                              fill
-                              sizes="90px"
-                              className="object-cover"
-                            />
-                            <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-[#D4AF37] rounded py-0.5 truncate px-1">
-                              Ragam 1
-                            </span>
-                          </button>
-                        )}
-
-                        {/* Thumbnail 2: Variant 2 */}
-                        {selectedMotif.variants?.[1] && (
-                          <button
-                            type="button"
-                            onClick={() => setActiveVariantIndex(2)}
-                            className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
-                              activeVariantIndex === 2
-                                ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
-                                : "border-white/20 opacity-60 hover:opacity-100"
-                            }`}
-                          >
-                            <Image
-                              src={selectedMotif.variants[1].image}
-                              alt={selectedMotif.variants[1].name}
-                              fill
-                              sizes="90px"
-                              className="object-cover"
-                            />
-                            <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-[#D4AF37] rounded py-0.5 truncate px-1">
-                              Ragam 2
-                            </span>
-                          </button>
-                        )}
+                          <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 bg-black/80 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15 text-xs font-display">
+                            <p className="text-[#D4AF37] font-bold text-[10px] sm:text-[11px] uppercase tracking-wider">
+                              {activeVariantIndex === 0
+                                ? "Motif Utama (Pewarnaan Tradisional)"
+                                : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.name) || "Ragam Variasi"}
+                            </p>
+                            <p className="text-white/80 font-body text-[10px] sm:text-[11px] mt-0.5 line-clamp-2">
+                              {activeVariantIndex === 0
+                                ? selectedMotif.visualTraits
+                                : (selectedMotif.variants && selectedMotif.variants[activeVariantIndex - 1]?.description) || selectedMotif.visualTraits}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* Right Column: Cultural Details & Anti-AI Human Prose */}
-                  <div className="md:col-span-6 p-6 sm:p-7 flex flex-col justify-between space-y-5">
-                    <div>
-                      <div className="flex items-center gap-2 text-xs font-display text-stone-500 mb-1">
-                        <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                        <span>
-                          {selectedMotif.region} • {selectedMotif.province}
+                      {/* Interactive Variant Thumbnails Gallery */}
+                      <div>
+                        <span className="text-[10px] sm:text-[11px] font-display font-bold uppercase tracking-wider text-white/50 block mb-1.5 sm:mb-2">
+                          Pilih Ragam Warna & Variasi Motif:
                         </span>
-                      </div>
+                        <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+                          {/* Thumbnail 0: Primary Image */}
+                          <button
+                            type="button"
+                            onClick={() => setActiveVariantIndex(0)}
+                            className={`relative aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                              activeVariantIndex === 0
+                                ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
+                                : "border-white/20 opacity-60 hover:opacity-100"
+                            }`}
+                          >
+                            <Image
+                              src={selectedMotif.image}
+                              alt="Motif Utama"
+                              fill
+                              sizes="90px"
+                              className="object-cover"
+                            />
+                            <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-white rounded py-0.5 truncate px-1">
+                              Klasik
+                            </span>
+                          </button>
 
-                      <h2 className="font-display font-extrabold text-2xl sm:text-3xl text-[#2d2b38]">
-                        {selectedMotif.fullName}
-                      </h2>
+                          {/* Thumbnail 1: Variant 1 */}
+                          {selectedMotif.variants?.[0] && (
+                            <button
+                              type="button"
+                              onClick={() => setActiveVariantIndex(1)}
+                              className={`relative aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                                activeVariantIndex === 1
+                                  ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
+                                  : "border-white/20 opacity-60 hover:opacity-100"
+                              }`}
+                            >
+                              <Image
+                                src={selectedMotif.variants[0].image}
+                                alt={selectedMotif.variants[0].name}
+                                fill
+                                sizes="90px"
+                                className="object-cover"
+                              />
+                              <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-[#D4AF37] rounded py-0.5 truncate px-1">
+                                Ragam 1
+                              </span>
+                            </button>
+                          )}
 
-                      {selectedMotif.region.includes("Mataram") && (
-                        <div className="mt-2.5 bg-amber-50/90 border border-amber-200/90 rounded-xl p-2.5 text-xs">
-                          <span className="font-display font-bold text-amber-900 flex items-center gap-1.5 mb-0.5 text-[11px]">
-                            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                            Pusaka Kembar Mataram (Gagrak Yogya & Solo):
-                          </span>
-                          <p className="font-narrative text-amber-800 leading-relaxed text-[11px]">
-                            Motif ini dilestarikan di Keraton Yogyakarta (Gagrak Ngayogyakarta: latar mori putih/pethak tegas) maupun Keraton Solo (Gagrak Surakarta: latar sogan keemasan luwes dengan cecek halus).
-                          </p>
-                        </div>
-                      )}
-
-                      <div className="mt-4 space-y-3.5 text-xs">
-                        <div>
-                          <span className="font-display font-bold text-stone-800 flex items-center gap-1.5 mb-1 text-xs">
-                            <Info className="w-3.5 h-3.5 text-[#713f2c]" />
-                            Akar Sejarah & Makna Filosofis:
-                          </span>
-                          <p className="font-narrative text-stone-700 leading-relaxed bg-[#FAF8F4] p-3 rounded-xl border border-[#E2DDD5]">
-                            {selectedMotif.philosophy}
-                          </p>
-                        </div>
-
-                        <div>
-                          <span className="font-display font-bold text-stone-800 block mb-1 text-xs">
-                            Karakteristik Visual & Isen-isen:
-                          </span>
-                          <p className="font-narrative text-stone-600 leading-relaxed">
-                            {selectedMotif.visualTraits}
-                          </p>
-                        </div>
-
-                        <div>
-                          <span className="font-display font-bold text-stone-800 block mb-1 text-xs">
-                            Konteks Penggunaan Tradisional:
-                          </span>
-                          <p className="font-narrative text-stone-600 leading-relaxed">
-                            {selectedMotif.usage}
-                          </p>
+                          {/* Thumbnail 2: Variant 2 */}
+                          {selectedMotif.variants?.[1] && (
+                            <button
+                              type="button"
+                              onClick={() => setActiveVariantIndex(2)}
+                              className={`relative aspect-[4/3] sm:aspect-square rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                                activeVariantIndex === 2
+                                  ? "border-[#D4AF37] ring-2 ring-[#D4AF37]/50 scale-95"
+                                  : "border-white/20 opacity-60 hover:opacity-100"
+                              }`}
+                            >
+                              <Image
+                                src={selectedMotif.variants[1].image}
+                                alt={selectedMotif.variants[1].name}
+                                fill
+                                sizes="90px"
+                                className="object-cover"
+                              />
+                              <span className="absolute bottom-1 left-1 right-1 text-[9px] font-display font-bold bg-black/80 text-center text-[#D4AF37] rounded py-0.5 truncate px-1">
+                                Ragam 2
+                              </span>
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
 
-                    {/* Footer Actions */}
-                    <div className="pt-4 border-t border-stone-200 flex flex-col sm:flex-row gap-3">
-                      <Link
-                        href="/scan"
-                        className="flex-1 inline-flex items-center justify-center gap-2 bg-[#FAF8F4] hover:bg-stone-100 text-stone-800 border border-stone-300 font-display font-bold text-xs py-3 px-4 rounded-xl transition-all"
-                      >
-                        <Scan className="w-4 h-4 text-[#D4AF37]" />
-                        <span>Pindai di Scanner AI</span>
-                      </Link>
+                    {/* Right Column: Cultural Details & Philosophy */}
+                    <div className="md:col-span-6 p-4 sm:p-6 lg:p-7 flex flex-col justify-between space-y-4 sm:space-y-5">
+                      <div>
+                        <div className="flex items-center gap-2 text-xs font-display text-stone-500 mb-1">
+                          <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          <span>
+                            {selectedMotif.region} • {selectedMotif.province}
+                          </span>
+                        </div>
 
-                      <Link
-                        href="/play/guess"
-                        className="flex-1 inline-flex items-center justify-center gap-2 bg-[#713f2c] hover:bg-[#583122] text-[#D4AF37] font-display font-bold text-xs py-3 px-4 rounded-xl transition-all shadow-md"
-                      >
-                        <Gamepad2 className="w-4 h-4" />
-                        <span>Batik Guess</span>
-                      </Link>
+                        <h2 className="font-display font-extrabold text-xl sm:text-2xl lg:text-3xl text-[#2d2b38]">
+                          {selectedMotif.fullName}
+                        </h2>
+
+                        {selectedMotif.region.includes("Mataram") && (
+                          <div className="mt-2.5 bg-amber-50/90 border border-amber-200/90 rounded-xl p-2.5 text-xs">
+                            <span className="font-display font-bold text-amber-900 flex items-center gap-1.5 mb-0.5 text-[11px]">
+                              <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                              Pusaka Kembar Mataram (Gagrak Yogya & Solo):
+                            </span>
+                            <p className="font-narrative text-amber-800 leading-relaxed text-[11px]">
+                              Motif ini dilestarikan di Keraton Yogyakarta (Gagrak Ngayogyakarta: latar mori putih/pethak tegas) maupun Keraton Solo (Gagrak Surakarta: latar sogan keemasan luwes dengan cecek halus).
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="mt-3.5 space-y-3 text-xs">
+                          <div>
+                            <span className="font-display font-bold text-stone-800 flex items-center gap-1.5 mb-1 text-xs">
+                              <Info className="w-3.5 h-3.5 text-[#713f2c]" />
+                              Akar Sejarah & Makna Filosofis:
+                            </span>
+                            <p className="font-narrative text-stone-700 leading-relaxed bg-[#FAF8F4] p-3 rounded-xl border border-[#E2DDD5]">
+                              {selectedMotif.philosophy}
+                            </p>
+                          </div>
+
+                          <div>
+                            <span className="font-display font-bold text-stone-800 block mb-1 text-xs">
+                              Karakteristik Visual & Isen-isen:
+                            </span>
+                            <p className="font-narrative text-stone-600 leading-relaxed">
+                              {selectedMotif.visualTraits}
+                            </p>
+                          </div>
+
+                          <div>
+                            <span className="font-display font-bold text-stone-800 block mb-1 text-xs">
+                              Konteks Penggunaan Tradisional:
+                            </span>
+                            <p className="font-narrative text-stone-600 leading-relaxed">
+                              {selectedMotif.usage}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                </div>
+
+                {/* Sticky Bottom Actions */}
+                <div className="p-3 sm:p-4 bg-[#FAF8F4] border-t border-stone-200 shrink-0 flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  <Link
+                    href="/scan"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-100 text-stone-800 border border-stone-300 font-display font-bold text-xs py-2.5 sm:py-3 px-4 rounded-xl transition-all shadow-xs"
+                  >
+                    <Scan className="w-4 h-4 text-[#D4AF37]" />
+                    <span>Pindai di Scanner AI</span>
+                  </Link>
+
+                  <Link
+                    href="/play/guess"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-[#713f2c] hover:bg-[#583122] text-[#D4AF37] font-display font-bold text-xs py-2.5 sm:py-3 px-4 rounded-xl transition-all shadow-md"
+                  >
+                    <Gamepad2 className="w-4 h-4" />
+                    <span>Batik Guess</span>
+                  </Link>
                 </div>
               </motion.div>
             </motion.div>

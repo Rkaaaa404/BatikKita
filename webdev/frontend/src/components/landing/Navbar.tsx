@@ -50,14 +50,14 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isSolid
-          ? "bg-[#faf8f4]/95 backdrop-blur-md border-b border-[#713f2c]/10 py-3 shadow-sm"
-          : "bg-gradient-to-b from-black/60 via-black/25 to-transparent py-4"
+          ? "bg-[#faf8f4]/95 backdrop-blur-md border-b border-[#713f2c]/10 py-2.5 sm:py-3 shadow-sm"
+          : "bg-gradient-to-b from-black/60 via-black/25 to-transparent py-3 sm:py-4"
       }`}
     >
-      <div className="max-w-[1280px] mx-auto px-6 lg:px-16 flex items-center justify-between">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16 flex items-center justify-between">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-3.5 group">
-          <div className="relative w-11 h-11 md:w-13 md:h-13 flex items-center justify-center shrink-0">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group">
+          <div className="relative w-9 h-9 sm:w-11 sm:h-11 md:w-13 md:h-13 flex items-center justify-center shrink-0">
             <Image
               src="/images/logo-batik-kita.png"
               alt="Logo Batik Kita"
@@ -69,14 +69,14 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
           </div>
           <div className="flex flex-col">
             <span
-              className={`font-philosopher font-bold text-2xl md:text-3xl tracking-wide transition-colors leading-none ${
+              className={`font-philosopher font-bold text-xl sm:text-2xl md:text-3xl tracking-wide transition-colors leading-none ${
                 isSolid ? "text-[#713f2c]" : "text-white"
               }`}
             >
               Batik Kita
             </span>
             <span
-              className={`text-[10px] tracking-widest uppercase font-display font-medium transition-colors ${
+              className={`text-[9px] sm:text-[10px] tracking-widest uppercase font-display font-medium transition-colors ${
                 isSolid ? "text-[#8d786a]" : "text-[#D4AF37]"
               }`}
             >
@@ -156,11 +156,11 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
 
         {/* Mobile Toggle */}
         <button
-          className={`md:hidden p-2 rounded-lg transition-colors ${
-            isSolid ? "text-[#713f2c] hover:bg-[#713f2c]/5" : "text-white hover:bg-white/10"
+          className={`md:hidden p-2 rounded-xl transition-colors ${
+            isSolid ? "text-[#713f2c] hover:bg-[#713f2c]/10" : "text-white hover:bg-white/15"
           }`}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle Menu"
+          aria-label="Buka Menu Navigasi"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -168,7 +168,7 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#faf8f4] border-t border-[#713f2c]/10 px-6 py-5 space-y-3 shadow-xl animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden bg-[#faf8f4]/98 backdrop-blur-xl border-t border-[#713f2c]/10 px-5 py-4 space-y-2 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
           {NAV_LINKS.map((link) => {
             const active = isActive(link.href, link.exact);
             return (
@@ -176,13 +176,14 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`block text-sm py-2 px-3 rounded-lg transition-colors ${
+                className={`flex items-center justify-between text-sm py-2.5 px-3 rounded-xl transition-colors ${
                   active
-                    ? "bg-[#713f2c]/10 text-[#713f2c] font-bold"
-                    : "text-[#8d786a] hover:text-[#713f2c] hover:bg-[#faf8f4]"
+                    ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
+                    : "text-[#2d2b38] hover:text-[#713f2c] hover:bg-[#713f2c]/5"
                 }`}
               >
-                {link.label}
+                <span>{link.label}</span>
+                {active && <span className="w-2 h-2 rounded-full bg-[#D4AF37]" />}
               </Link>
             );
           })}
@@ -190,7 +191,7 @@ export function Navbar({ variant = "auto" }: NavbarProps) {
             <Link
               href="/play"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm px-4 py-2.5 rounded-xl text-center shadow-sm"
+              className="w-full inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] font-display font-semibold text-sm px-4 py-3 rounded-xl text-center shadow-md active:scale-98 transition-transform"
             >
               <Gamepad2 className="w-4 h-4" />
               Main Arcade Sekarang

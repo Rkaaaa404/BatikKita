@@ -287,7 +287,7 @@ export default function TebakMotifPage() {
               </p>
 
               {/* Point Rules Card */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full mb-6 sm:mb-8">
                 {[
                   { hint: "Petunjuk 1", xp: "+100 XP", desc: "Mata Elang" },
                   { hint: "Petunjuk 2", xp: "+75 XP", desc: "Paham Rumpun" },
@@ -296,19 +296,19 @@ export default function TebakMotifPage() {
                 ].map((tier, idx) => (
                   <div
                     key={idx}
-                    className={`border rounded-xl p-3.5 text-center flex flex-col justify-between transition-colors ${
+                    className={`border rounded-xl p-2.5 sm:p-3.5 text-center flex flex-col justify-between transition-colors ${
                       isDark
                         ? "bg-[#1f1a18] border-[#713f2c]/40 hover:border-[#D4AF37]/50"
                         : "bg-white border-[#E2DDD5] hover:border-[#D4AF37]/50 shadow-xs"
                     }`}
                   >
-                    <span className={`text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
+                    <span className={`text-[10px] sm:text-[11px] font-body ${isDark ? "text-white/50" : "text-stone-500"}`}>
                       {tier.hint}
                     </span>
-                    <span className="font-display font-extrabold text-base text-[#D4AF37] my-1">
+                    <span className="font-display font-extrabold text-sm sm:text-base text-[#D4AF37] my-0.5 sm:my-1">
                       {tier.xp}
                     </span>
-                    <span className={`text-[10px] font-display ${isDark ? "text-white/70" : "text-stone-600"}`}>
+                    <span className={`text-[9px] sm:text-[10px] font-display ${isDark ? "text-white/70" : "text-stone-600"}`}>
                       {tier.desc}
                     </span>
                   </div>
@@ -318,10 +318,10 @@ export default function TebakMotifPage() {
               <button
                 type="button"
                 onClick={startGame}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-base px-10 py-4 rounded-xl hover:bg-[#c9a52f] transition-all shadow-xl shadow-[#D4AF37]/20 active:scale-98 cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D4AF37] text-[#1A1614] font-display font-bold text-sm sm:text-base px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl hover:bg-[#c9a52f] transition-all shadow-xl shadow-[#D4AF37]/20 active:scale-98 cursor-pointer"
               >
                 <span>Mulai Tantangan Sekarang</span>
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </motion.div>
           )}
@@ -333,28 +333,28 @@ export default function TebakMotifPage() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+              className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start"
             >
               {/* Left Column: Mystery Heritage Card (Text-Based Culture Detective) */}
-              <div className="lg:col-span-5 flex flex-col gap-4">
+              <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-4">
                 {/* Visual Canvas Card */}
                 <div
-                  className={`border-2 rounded-3xl p-5 shadow-2xl relative overflow-hidden flex flex-col items-center transition-colors ${
+                  className={`border-2 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col items-center transition-colors ${
                     isDark
                       ? "bg-[#1f1a18] border-[#D4AF37]/40"
                       : "bg-white border-[#E2DDD5] shadow-md"
                   }`}
                 >
                   <div
-                    className={`w-full flex items-center justify-between text-xs mb-3 px-1 ${
+                    className={`w-full flex items-center justify-between text-xs mb-2.5 sm:mb-3 px-1 ${
                       isDark ? "text-white/60" : "text-stone-600"
                     }`}
                   >
-                    <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold">
+                    <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold text-[11px] sm:text-xs">
                       <Sparkles className="w-3.5 h-3.5" /> Pusaka Terselubung
                     </span>
                     <span
-                      className={`text-[11px] px-2.5 py-0.5 rounded-full font-display font-bold ${
+                      className={`text-[10px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 rounded-full font-display font-bold ${
                         isDark ? "bg-[#D4AF37]/15 text-[#D4AF37]" : "bg-amber-100 text-amber-800"
                       }`}
                     >
@@ -363,7 +363,7 @@ export default function TebakMotifPage() {
                   </div>
 
                   {/* Heritage Sealed Card */}
-                  <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-[#D4AF37]/40 bg-[#141211] select-none flex flex-col items-center justify-center p-6 text-center shadow-inner">
+                  <div className="relative w-full max-w-[280px] sm:max-w-none aspect-square rounded-2xl overflow-hidden border border-[#D4AF37]/40 bg-[#141211] select-none flex flex-col items-center justify-center p-4 sm:p-6 text-center shadow-inner">
                     {/* Background Decorative Batik Pattern */}
                     <div
                       className="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none"

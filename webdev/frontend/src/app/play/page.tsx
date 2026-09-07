@@ -136,7 +136,7 @@ export default function ArcadeHubPage() {
 
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik Tab Arcade.webp to Highlight the Title ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-24 pb-12 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-16 min-h-0 lg:min-h-[580px] flex items-center">
           {/* Background Image: batik-tab-arcade.webp */}
           <Image
             src="/images/batik-tab-arcade.webp"
@@ -148,14 +148,14 @@ export default function ArcadeHubPage() {
           />
 
           {/* Contrast overlays to prominently highlight the title & text */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-black/35 z-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-black/45 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60 z-0" />
 
           {/* Golden glow accents */}
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
 
-          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left column: Editorial copy highlighting the title */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -163,35 +163,38 @@ export default function ArcadeHubPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
-                <Gamepad2 className="w-4 h-4" />
-                <span>ARENA EDU-GAMES BATIK NUSANTARA</span>
+              <div className="flex items-center gap-2 sm:gap-2.5 mb-3 sm:mb-5">
+                <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-xs sm:text-sm font-medium tracking-wide">
+                  Platform Edukasi Batik Nusantara
+                </span>
               </div>
 
-              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
-                <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
+              <h1 className="font-display font-bold text-2xl xs:text-3xl sm:text-5xl lg:text-[54px] text-white leading-[1.1] tracking-tight mb-3 sm:mb-5 drop-shadow-md">
+                <span className="font-philosopher tracking-wide">Batik Arcade:</span>
+                <br />
                 <span
                   style={{
                     color: "#D4AF37",
                     textShadow: "0 2px 24px rgba(212,175,55,0.45)",
                   }}
                 >
-                  Belajar Ragam Hias
-                </span>{" "}
+                  Belajar Ragam Batik
+                </span>
                 <br />
                 Sambil Bermain.
               </h1>
 
-              <p className="font-narrative text-base sm:text-lg text-white/85 leading-relaxed mb-8 max-w-xl drop-shadow-sm">
-                Asah ketajaman mata terhadap ornamen tradisional, uji memori filosofis, petakan sentra Nusantara, hingga pecahkan tebakan makro visual melalui empat mini-game budaya berhadiah XP.
+              <p className="font-narrative text-sm sm:text-base lg:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8 max-w-xl drop-shadow-sm">
+                Asah ketajaman mata terhadap ornamen tradisional, uji memori filosofis, petakan sentra batik, hingga pecahkan tebakan makro visual melalui empat mini-game budaya berhadiah XP.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/80">
-                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 4 Mode Permainan Aktif
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-display text-white/80">
+                <span className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 4 Mode Permainan
                 </span>
-                <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
-                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Gamifikasi Berbasis Peringkat Budaya
+                <span className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
+                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Gamifikasi Peringkat Budaya
                 </span>
               </div>
             </motion.div>
@@ -203,7 +206,7 @@ export default function ArcadeHubPage() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="lg:col-span-5"
             >
-              <div className="bg-[#231e1c]/90 border border-[#D4AF37]/35 backdrop-blur-md rounded-2xl p-6 sm:p-7 shadow-2xl relative overflow-hidden group hover:border-[#D4AF37]/60 transition-all">
+              <div className="bg-[#231e1c]/90 border border-[#D4AF37]/35 backdrop-blur-md rounded-2xl p-4 sm:p-7 shadow-2xl relative overflow-hidden group hover:border-[#D4AF37]/60 transition-all">
                 {/* Subtle batik watermark corner ornament */}
                 <div className="absolute -right-8 -bottom-8 w-40 h-40 opacity-10 pointer-events-none">
                   <Image
@@ -259,20 +262,20 @@ export default function ArcadeHubPage() {
         </section>
 
         {/* ─── Main Games Grid Section (Clean Light Theme) ─── */}
-        <section className="max-w-[1280px] mx-auto px-6 lg:px-16 py-16">
+        <section className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-16 py-10 sm:py-16 pb-24 md:pb-16">
           {/* ─── Album Koleksi Promo Banner ─── */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-14 bg-gradient-to-r from-[#211b18] via-[#2f221c] to-[#211b18] rounded-3xl p-6 sm:p-8 border border-[#D4AF37]/50 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden text-white"
+            className="mb-10 sm:mb-14 bg-gradient-to-r from-[#211b18] via-[#2f221c] to-[#211b18] rounded-2xl sm:rounded-3xl p-5 sm:p-8 border border-[#D4AF37]/50 shadow-xl flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6 relative overflow-hidden text-white"
           >
             {/* Background Glow Accents */}
             <div className="absolute -top-16 -right-16 w-60 h-60 bg-[#D4AF37]/15 rounded-full blur-2xl pointer-events-none" />
 
-            <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <div className="w-16 h-16 rounded-2xl bg-[#713f2c] border-2 border-[#D4AF37]/60 flex items-center justify-center shadow-lg shrink-0">
-                <Layers className="w-8 h-8 text-[#D4AF37]" />
+            <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5 w-full md:w-auto">
+              <div className="w-13 h-13 sm:w-16 sm:h-16 rounded-2xl bg-[#713f2c] border-2 border-[#D4AF37]/60 flex items-center justify-center shadow-lg shrink-0">
+                <Layers className="w-7 h-7 sm:w-8 sm:h-8 text-[#D4AF37]" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1.5">
@@ -283,7 +286,7 @@ export default function ArcadeHubPage() {
                     <Sparkles className="w-3 h-3" /> 20 Motif Resmi
                   </span>
                 </div>
-                <h3 className="font-display font-extrabold text-2xl text-white mb-1">
+                <h3 className="font-display font-extrabold text-xl sm:text-2xl text-white mb-1">
                   Album Koleksi & Tingkat Mastery Cap
                 </h3>
                 <p className="text-xs sm:text-sm text-white/80 font-narrative max-w-xl">
@@ -293,12 +296,12 @@ export default function ArcadeHubPage() {
             </div>
 
             {/* Quick Stats & Button */}
-            <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto shrink-0">
-              <div className="bg-black/40 border border-white/10 rounded-2xl px-4 py-3 text-center sm:text-right w-full sm:w-auto">
+            <div className="relative z-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full md:w-auto shrink-0">
+              <div className="bg-black/40 border border-white/10 rounded-2xl px-4 py-2.5 sm:py-3 text-center sm:text-right w-full sm:w-auto">
                 <span className="text-[10px] text-white/60 font-display uppercase tracking-wider block">
                   Status Koleksi Anda
                 </span>
-                <span className="font-display font-extrabold text-lg text-[#D4AF37]">
+                <span className="font-display font-extrabold text-base sm:text-lg text-[#D4AF37]">
                   {totalUnlocked} / 20 Motif
                 </span>
                 {goldCount > 0 && (
@@ -310,7 +313,7 @@ export default function ArcadeHubPage() {
               </div>
               <Link
                 href="/collection"
-                className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#c49f2e] text-[#1A1614] font-display font-bold text-sm px-6 py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#D4AF37]/25 shrink-0"
+                className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#c49f2e] text-[#1A1614] font-display font-bold text-sm px-5 sm:px-6 py-3 sm:py-3.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#D4AF37]/25 shrink-0 active:scale-95"
               >
                 <span>Buka Album Koleksi</span>
                 <ArrowRight className="w-4 h-4" />
@@ -318,23 +321,23 @@ export default function ArcadeHubPage() {
             </div>
           </motion.div>
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-4 border-b border-[#713f2c]/10 gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 pb-4 border-b border-[#713f2c]/10 gap-3 sm:gap-4">
             <div>
               <div className="inline-flex items-center gap-2 text-[#713f2c] text-xs font-display font-bold tracking-wider uppercase mb-1">
                 <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
                 Katalog Permainan
               </div>
-              <h2 className="font-display font-extrabold text-3xl sm:text-4xl text-[#2d2b38] tracking-tight">
+              <h2 className="font-display font-extrabold text-2xl sm:text-3xl lg:text-4xl text-[#2d2b38] tracking-tight">
                 Pilih Tantangan Anda
               </h2>
             </div>
-            <p className="font-narrative text-sm text-[#8d786a] max-w-md">
+            <p className="font-narrative text-xs sm:text-sm text-[#8d786a] max-w-md">
               Selesaikan tantangan untuk mengumpulkan kartu koleksi dan membuka filosofi tersembunyi motif batik nusantara.
             </p>
           </div>
 
           {/* 2x2 Grid of 4 Games with Authentic Visuals */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
             {GAMES.map((game, i) => (
               <motion.div
                 key={game.id}
@@ -445,21 +448,19 @@ export default function ArcadeHubPage() {
                 return (
                   <div
                     key={r.name}
-                    className={`rounded-2xl p-6 border transition-all ${
-                      isCurrent
-                        ? "bg-white border-[#D4AF37] shadow-lg ring-2 ring-[#D4AF37]/30"
-                        : isUnlocked
+                    className={`rounded-2xl p-6 border transition-all ${isCurrent
+                      ? "bg-white border-[#D4AF37] shadow-lg ring-2 ring-[#D4AF37]/30"
+                      : isUnlocked
                         ? "bg-white/80 border-[#d3ccc2] shadow-sm"
                         : "bg-white/40 border-[#d3ccc2]/50 opacity-70"
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center justify-between mb-4">
                       <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
-                          isUnlocked
-                            ? "bg-[#713f2c] text-[#D4AF37] border-[#D4AF37]/40"
-                            : "bg-[#d3ccc2] text-[#8d786a] border-transparent"
-                        }`}
+                        className={`w-10 h-10 rounded-xl flex items-center justify-center border ${isUnlocked
+                          ? "bg-[#713f2c] text-[#D4AF37] border-[#D4AF37]/40"
+                          : "bg-[#d3ccc2] text-[#8d786a] border-transparent"
+                          }`}
                       >
                         <r.icon className="w-5 h-5" />
                       </div>

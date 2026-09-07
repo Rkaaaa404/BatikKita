@@ -110,3 +110,26 @@
 .animate-float-delayed {
   animation: float 4s ease-in-out 2s infinite;
 }
+
+/* Mobile & Touch Ergonomics Utilities */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.touch-pan-x {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.safe-bottom-dock {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+}
