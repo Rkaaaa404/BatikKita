@@ -1,300 +1,465 @@
-﻿# Product Requirement Document (PRD)
-# Batik Kita — Interactive Batik Education & AI Cultural Experience Platform
+# 📄 Product Requirements Document (PRD)
+## Batik Kita — Platform Edukasi Warisan Batik Nusantara
+**Versi:** 2.0 Final  
+**Tanggal:** September 2026  
+**Kompetisi:** HOLOGY 9.0 — HOLODev Web Development  
+**Tim:** Rkaaaa404  
 
-| Metadata | Detail |
+---
+
+## 1. Ringkasan Eksekutif
+
+**Batik Kita** adalah platform edukasi interaktif berbasis web yang menggabungkan teknologi Artificial Intelligence (AI), gamifikasi, dan desain *heritage modern* untuk mendekatkan generasi muda Indonesia dengan warisan budaya batik nusantara. Platform ini hadir sebagai respons terhadap semakin memudarnya literasi budaya tekstil di kalangan digital native.
+
+Dengan tagline **"Warisan Luhur dalam Sentuhan Digital"**, Batik Kita mengubah pengalaman belajar batik yang konvensional menjadi perjalanan budaya yang menarik, interaktif, dan terukur melalui empat mini-game, asisten AI berbasis LLM, klasifikasi motif berbasis computer vision, dan ensiklopedia batik yang komprehensif.
+
+---
+
+## 2. Latar Belakang & Permasalahan
+
+| Masalah | Dampak |
 |---|---|
-| **Product Name** | **Batik Kita** |
-| **Document Version** | v1.0.0 (MVP Release) |
-| **Status** | Approved for Development |
-| **Target Competition** | HoloDev — HOLOGY 9.0 (Universitas Brawijaya) |
-| **Target Subtheme** | **Pendidikan** (Transformasi Pendidikan Digital & Pembelajaran Sepanjang Hayat) |
-| **Team Composition** | **Rayka** (Tech Lead & Fullstack), **Rayhan** (UI/UX & Multimedia), **Haekal** (Business & Proposal) |
-| **Created Date** | September 2026 |
+| Rendahnya literasi batik di kalangan Generasi Z | Keterancaman keberlangsungan warisan budaya |
+| Konten edukasi batik yang monoton & tidak interaktif | Rendahnya engagement dan retensi pengguna |
+| Tidak adanya medium digital terintegrasi yang menggabungkan edukasi + hiburan | Kehilangan momentum digital untuk pelestarian budaya |
+| Akses pengetahuan motif yang tersebar dan tidak terstruktur | Sulit mencari referensi filosofi dan asal-usul motif secara cepat |
 
 ---
 
-## 1. Executive Summary & Vision
+## 3. Tujuan Produk
 
-### 1.1 Product Vision
-**Batik Kita** adalah platform edukasi budaya digital interaktif yang mentransformasi cara generasi muda mempelajari, mengapresiasi, dan mengeksplorasi seni batik nusantara. Dengan memadukan **Edu-Games Arcade**, **AI Vision Motif Scanner**, **Asisten Budaya Cerdas (Batik Ask)**, dan **Peta Geografis Interaktif**, platform ini mengubah pembelajaran sejarah dan filosofi batik dari konsumsi teks pasif menjadi petualangan visual yang menyenangkan, terukur, dan bermakna.
-
-### 1.2 Problem Statement
-1. **Rendahnya Keterlibatan Generasi Muda (*Low Cultural Engagement*)**: Apresiasi batik saat ini mayoritas hanya sebatas pemakaian pakaian jadi (*passive wearing*) tanpa pemahaman makna simbolis di balik ragam hiasnya.
-2. **Media Edukasi Monoton & Ketinggalan Zaman**: Sumber literasi batik daring didominasi oleh teks panjang atau video satu arah tanpa interaksi aktif.
-3. **Ketidaktahuan Makna & Etika Pemakaian**: Banyak masyarakat awam tidak memahami filosofi motif, asal daerah, maupun aturan etika pemakaian (seperti motif larangan keraton vs. motif perayaan).
-4. **Ketiadaan Alat Bantu Ajar yang Menyenangkan bagi Guru**: Guru seni budaya dan muatan lokal di sekolah kekurangan media digital interaktif untuk memperkenalkan batik kepada siswa.
-
-### 1.3 Value Proposition
-- **Play & Learn (Belajar Lewat Bermain)**: Memahami geometri dan isen-isen batik melalui mini-games *Jigsaw Puzzle* dan *Detektif Isen-Isen*.
-- **Instant Cultural Discovery**: Memindai pakaian batik pengguna sendiri menggunakan AI untuk langsung mengetahui motif, daerah asal, dan filosofinya.
-- **Interactive Storytelling**: Berdialog langsung dengan representasi budayawan batik melalui AI chatbot interaktif (*Batik Ask*).
-- **Gamified Cultural Collection**: Mengumpulkan kartu digital *Batikpedia* berpenampilan mewah yang memotivasi pengguna untuk terus belajar.
+1. **Meningkatkan literasi budaya batik** melalui pendekatan *edutainment* berbasis game
+2. **Mendemokan penerapan AI** (LLM + Computer Vision) dalam konteks pelestarian budaya
+3. **Membangun arsip digital** motif batik nusantara yang terstruktur dan dapat diakses secara bebas
+4. **Menciptakan engagement jangka panjang** melalui sistem gamifikasi XP dan peringkat budaya
 
 ---
 
-## 2. Target Audience & User Personas
+## 4. Target Pengguna
 
-### Persona 1: "Arka" — Mahasiswa / Gen Z Casual Learner (Primary)
-- **Profil**: Umur 19 tahun, melek digital, suka bermain game kasual di web/smartphone, sering memakai kemeja batik saat kuliah/acara formal namun tidak tahu nama dan makna motifnya.
-- **Kebutuhan**: Media interaktif yang cepat, visual, seru, dan tidak terasa seperti membaca buku pelajaran tebal.
-- **Tujuan**: Mengetahui motif batik yang dimilikinya dan menyelesaikan tantangan game puzzle batik.
-
-### Persona 2: "Ibu Ratna" — Guru Seni Budaya / Muatan Lokal (Secondary)
-- **Profil**: Umur 36 tahun, mengajar pelajaran Seni Budaya di SMP/SMA, mencari materi ajar digital untuk demonstrasi di kelas.
-- **Kebutuhan**: Media interaktif berbasis web yang bisa diakses siswa di lab komputer atau gawai tanpa perlu instalasi rumit.
-- **Tujuan**: Menjelaskan konsep ragam hias, isen-isen, dan perbedaan batik keraton vs. pesisiran secara visual dan interaktif.
-
-### Persona 3: "Dimas" — Penggemar Kriya & Wisatawan Nusantara (Tertiary)
-- **Profil**: Umur 27 tahun, suka jalan-jalan dan membeli kain wastra lokal saat berkunjung ke daerah-daerah Indonesia.
-- **Kebutuhan**: Direktori peta batik yang menjelaskan kekhasan motif tiap kota serta AI scanner untuk mengidentifikasi kain yang ditemuinya.
+| Segmen | Profil |
+|---|---|
+| **Primer** | Pelajar & mahasiswa usia 15–25 tahun yang aktif di platform digital |
+| **Sekunder** | Guru dan pendidik yang membutuhkan media ajar interaktif |
+| **Tersier** | Pecinta budaya, kolektor batik, dan komunitas pelestari budaya nusantara |
 
 ---
 
-## 3. Product Scope & MVP Strategy
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│                          Batik Kita MVP SCOPE                        │
-├───────────────────────────────────┬────────────────────────────────────┤
-│           IN-SCOPE (MVP)          │         OUT-OF-SCOPE (Post-MVP)    │
-├───────────────────────────────────┼────────────────────────────────────┤
-│ • Batik Jigsaw Puzzle Engine      │ • E-Commerce Marketplace UMKM      │
-│ • Detektif Isen-Isen Spotting     │ • AR Fabric 3D Clothes Projection  │
-│ • AI Batik Lens / Image Scanner   │ • Multi-player Realtime Battle     │
-│ • Batik Ask AI Chatbot      │ • Mobile Native App (Flutter/RN)   │
-│ • Peta Interaktif 7 Sentra Batik  │ • Cetak Fisik Kain Otomatis        │
-│ • Batikpedia Card & XP System     │                                    │
-│ • Web Responsive Desktop & Mobile │                                    │
-└───────────────────────────────────┴────────────────────────────────────┘
-```
-
----
-
-## 4. Detailed Feature Specifications & User Stories
-
-### Epic 1: Interactive Edu-Games Arcade
-
-#### Feature 1.1: Batik Jigsaw & Tangram Puzzle
-- **User Story**: *Sebagai pengguna, saya ingin menyusun potongan geometri motif batik agar saya memahami bentuk dasar dan simetri motif tersebut secara visual.*
-- **Spesifikasi Alur**:
-  1. Pengguna memilih level motif: **Kawung** (Dasar), **Truntum** (Menengah), **Mega Mendung** (Lanjutan), **Parang** (Mahir).
-  2. Layar menampilkan area target (*grid board*) dan nampan berisi potongan-potongan motif (*puzzle pieces*).
-  3. Pengguna melakukan aksi *drag-and-drop* (atau sentuh pada layar HP). Kepingan puzzle memiliki efek *snap-to-grid* saat diletakkan pada posisi yang benar.
-  4. Tersedia tombol **"Petunjuk / Hint"** yang menampilkan siluet transparan pola motif.
-  5. Saat seluruh kepingan tersusun sempurna:
-     - Muncul animasi *reveal* efek mekar dan partikel emas.
-     - Suara instrumen gamelan lembut berbunyi.
-     - Menampilkan modal pop-up: **Kartu Filosofi Budaya** + **+100 XP**.
-- **Kriteria Penerimaan (Acceptance Criteria)**:
-  - Puzzle dapat dimainkan mulus dengan mouse (desktop) dan sentuhan jari (mobile).
-  - Skor waktu penyelesaian dan jumlah langkah dihitung secara akurat.
-  - Kartu motif otomatis terbuka (*unlocked*) di album *Batikpedia*.
-
-#### Feature 1.2: Detektif Isen-Isen (*Spot the Element Challenge*)
-- **User Story**: *Sebagai pengguna, saya ingin mencari elemen pengisi (isen-isen) tersembunyi pada sebuah kain batik agar saya bisa mengenali anatomi detail motif batik.*
-- **Spesifikasi Alur**:
-  1. Pengguna disajikan tampilan kain batik resolusi tinggi dengan narasi misi: *"Temukan 4 Cecek (titik) dan 3 Sawut (garis) pada motif Parang ini!"*.
-  2. Pengguna mengklik/mengetuk area kain yang diduga merupakan elemen isen-isen target.
-  3. Jika benar: muncul lingkaran hijau beranimasi dan counter misi bertambah ($1/4 \rightarrow 2/4$).
-  4. Jika salah: muncul goyangan lembut (*shake animation*) pada pointer dan petunjuk teks: *"Itu ornamen utama, cari elemen titik pengisi!"*.
-  5. Selesai misi: mendapatkan skor ketelitian dan lencana *"Detektif Budaya"*.
-
-#### Feature 1.3: Quick Draw & Tracing Canvas
-- **User Story**: *Sebagai pengguna, saya ingin mencoba menjiplak atau menggambar bentuk dasar motif batik dengan kuas digital santai.*
-- **Spesifikasi Alur**:
-  1. Kanvas HTML5 interaktif dengan pilihan kuas malam, penghapus, dan ketebalan goresan.
-  2. Terdapat panduan garis bantu (*outline tracing*) yang memudar perlahan.
-  3. Tombol **"Cek Kemiripan"** menghitung skor kemiripan goresan pengguna terhadap pola referensi.
-
----
-
-### Epic 2: AI Intelligence Suite
-
-#### Feature 2.1: AI Batik Lens / Scanner
-- **User Story**: *Sebagai pengguna, saya ingin mengunggah foto kain batik saya agar saya dapat mengetahui nama motif, asal daerah, dan filosofinya secara instan.*
-- **Spesifikasi Alur**:
-  1. Pengguna memilih opsi: **Unggah Foto (PNG/JPG)** atau **Buka Kamera**.
-  2. Sistem memproses citra melalui AI Vision Engine (Next.js API Route terenkripsi).
-  3. Layar menampilkan hasil analisis instan:
-     - **Nama Motif**: (Contoh: *Mega Mendung*)
-     - **Confidence Score**: (Contoh: *Akurasi 94%*)
-     - **Asal Daerah**: (Contoh: *Cirebon, Jawa Barat*)
-     - **Rumpun Gaya**: (Contoh: *Batik Pesisiran*)
-     - **Makna Filosofis**: (Contoh: *Melambangkan kesabaran, ketenangan jiwa laksana awan penyejuk di tengah terik matahari*).
-     - **Rekomendasi Pemakaian**: (Contoh: *Sangat luwes, pantas untuk busana kerja, santai, maupun pesta*).
-  4. Tombol **"Simpan ke Koleksi Saya"** atau **"Tanya Lebih Lanjut ke Empu"**.
-
-#### Feature 2.2: "Batik Ask" (AI Conversational Agent)
-- **User Story**: *Sebagai pengguna, saya ingin bertanya apa saja mengenai sejarah dan etika batik kepada asisten AI yang berwawasan budaya luas.*
-- **Spesifikasi Alur**:
-  1. Antarmuka chat interaktif bertema pendopo Jawa klasik yang elegan.
-  2. Bot memiliki *system prompt persona*: **Empu Budayawan Batik** yang bijak, ramah, tutur kata santun, dan kaya wawasan sejarah nusantara.
-  3. Tersedia *Quick Prompt Chips* untuk pemula:
-     - *"Apa bedanya batik Solo dan Yogyakarta?"*
-     - *"Batik apa yang cocok untuk menghadiri resepsi pernikahan?"*
-     - *"Kenapa motif Parang Rusak dulu dilarang untuk rakyat biasa?"*
-  4. Respon dihasilkan dalam format teks terstruktur dengan gaya tutur hangat dan informatif.
-
----
-
-### Epic 3: Cultural Exploration & Geography
-
-#### Feature 3.1: Peta Interaktif Batik Nusantara
-- **User Story**: *Sebagai pengguna, saya ingin mengeksplorasi peta Indonesia untuk melihat ragam motif khas dari setiap sentra batik.*
-- **Spesifikasi Alur**:
-  1. Peta visual interaktif kepulauan Indonesia dengan titik sentra batik utama:
-     - **Yogyakarta**: Kawung, Parang, Nitik (Batik Keraton Mataram).
-     - **Surakarta (Solo)**: Sidomukti, Truntum, Sawat (Karakteristik Sogan Cokelat).
-     - **Pekalongan**: Batik Jlamprang, Buketan (Pesisiran multi-warna flora).
-     - **Cirebon**: Mega Mendung, Singa Barong (Pengaruh budaya Tiongkok & Timur Tengah).
-     - **Madura**: Batik Gentongan (Warna tegas merah/biru, motif flora-fauna berani).
-     - **Lasem**: Batik Tiga Negeri (Perpaduan harmonis Jawa, Tionghoa, dan Belanda).
-     - **Papua**: Motif Cenderawasih & Asmat (Corak modern etnik khas timur).
-  2. Mengklik titik daerah akan membuka *drawer panel* berisi sejarah daerah, ciri khas warna, galeri motif, dan tautan langsung ke game puzzle motif terkait.
-
----
-
-### Epic 4: Gamified Collection & Progression (Batikpedia)
-
-#### Feature 4.1: Batikpedia Collection Album
-- **User Story**: *Sebagai pengguna, saya ingin melihat koleksi kartu motif batik yang telah saya buka selama bermain.*
-- **Spesifikasi Alur**:
-  1. Halaman galeri kartu bertema *Heritage Collector's Album*.
-  2. Kartu yang belum terbuka berstatus terkunci (*locked with silhouette*).
-  3. Kartu yang sudah terbuka memiliki efek visual *hologram shimmer* saat di-hover, menampilkan foto motif, nama, asal daerah, dan audio narasi.
-  4. Pengguna dapat membagikan (*share*) kartu pencapaian ke media sosial.
-
-#### Feature 4.2: XP & Tingkatan Gelar Budaya
-- Pengguna mengumpulkan *Experience Points (XP)* dari setiap aktivitas:
-  - Menyelesaikan Jigsaw Puzzle: **+100 XP**
-  - Menyelesaikan Detektif Isen: **+80 XP**
-  - Melakukan Scan AI Batik: **+50 XP**
-  - Bertanya ke Batik Ask: **+30 XP**
-- **Tingkatan Gelar**:
-  1. *Pelajar Budaya* (0 – 250 XP)
-  2. *Penjelajah Ragam Hias* (251 – 600 XP)
-  3. *Kolektor Batik Nusantara* (601 – 1200 XP)
-  4. *Empu Batik Digital* (1201+ XP)
-
----
-
-## 5. Technical Architecture & Data Schema
+## 5. Arsitektur Teknis
 
 ### 5.1 Technology Stack
 
-| Layer | Pilihan Teknologi | Alasan Pemilihan |
-|---|---|---|
-| **Frontend Web** | **Next.js 14/15 (App Router, React 18/19, TypeScript)** | Performa tinggi, SSR/SSG untuk konten budaya yang SEO-friendly, dan arsitektur modular. |
-| **Styling & UI** | **Tailwind CSS + Shadcn UI** | Komponen UI modern, clean, mudah dikustomisasi tema *Modern Heritage*. |
-| **Motion & Interactivity** | **Framer Motion + HTML5 Canvas API** | Animasi drag-and-drop puzzle mulus 60 FPS dan kanvas menggambar interaktif. |
-| **AI LLM Service** | **Google Gemini API (`gemini-1.5-flash` / `gemini-pro`)** | Waktu inferensi sangat cepat (<1s), hemat token, pemahaman konteks budaya Indonesia sangat baik. |
-| **AI Vision / Classifier** | **Gemini Multimodal Vision API / Teachable Machine / Custom CNN** | Mendeteksi motif batik dari foto pengguna secara akurat dan mengembalikan penjelasan terstruktur. |
-| **Database & Auth** | **Supabase (PostgreSQL 16)** | Backend-as-a-Service cepat dengan PostgreSQL, penyimpanan sesi login, progres XP, dan kartu koleksi. |
-| **Deployment** | **Vercel** | Deployment otomatis zero-config dengan edge network global. |
+| Layer | Teknologi |
+|---|---|
+| **Framework** | Next.js 16.3.4 (App Router) |
+| **UI Runtime** | React 19.2 |
+| **Styling** | Tailwind CSS v4 |
+| **Animasi** | Motion (Framer Motion) v13 |
+| **AI / LLM** | Google Gemini 2.5 Flash API |
+| **Computer Vision** | ONNX Runtime Web v1.29 (EfficientNet B0 — *on-device inference*) |
+| **Peta Interaktif** | MapLibre GL v6.7 + react-map-gl |
+| **3D Graphics** | Three.js + React Three Fiber + Drei |
+| **Fuzzy Search** | Fuse.js v7.5 |
+| **Konfeti Animasi** | canvas-confetti |
+| **Ikon** | Lucide React |
 
-### 5.2 Database Entity Schema (Supabase PostgreSQL)
+### 5.2 Pola Arsitektur
 
-```sql
--- 1. Users Profile & Progression Table
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users PRIMARY KEY,
-  username TEXT NOT NULL,
-  avatar_url TEXT,
-  total_xp INTEGER DEFAULT 0,
-  current_rank TEXT DEFAULT 'Pelajar Budaya',
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-);
+- **Next.js App Router** dengan SSR selektif; semua halaman game menggunakan `"use client"` untuk interaktivitas penuh
+- **ONNX Model** di-load sekali sebagai singleton session dan dieksekusi melalui serialized queue untuk menghindari *WebAssembly concurrency errors*
+- **Gemini API** dipanggil melalui Next.js Route Handler (`/api/chat`) — kunci API tidak pernah terekspos ke client
+- **State gamifikasi** (XP, rank, koleksi kartu) disimpan di `localStorage` dan dikelola via custom hook `useXp`
 
--- 2. Motifs Master Knowledge Base
-CREATE TABLE motifs (
-  id TEXT PRIMARY KEY, -- e.g., 'kawung', 'mega_mendung', 'parang'
-  name TEXT NOT NULL,
-  region TEXT NOT NULL,
-  category TEXT NOT NULL, -- 'Keraton', 'Pesisiran', 'Modern'
-  philosophy TEXT NOT NULL,
-  usage_context TEXT NOT NULL,
-  image_url TEXT NOT NULL,
-  audio_url TEXT,
-  puzzle_difficulty TEXT NOT NULL -- 'easy', 'medium', 'hard'
-);
+---
 
--- 3. User Unlocked Cards (Collection)
-CREATE TABLE user_cards (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  motif_id TEXT REFERENCES motifs(id),
-  unlocked_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
-  best_puzzle_time INTEGER, -- in seconds
-  UNIQUE(user_id, motif_id)
-);
+## 6. Desain Sistem
 
--- 4. Game Activity Logs (Leaderboards & Analytics)
-CREATE TABLE game_logs (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  game_type TEXT NOT NULL, -- 'jigsaw', 'spotting', 'draw'
-  score INTEGER NOT NULL,
-  xp_earned INTEGER NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
-);
+### 6.1 Tema Visual: Modern Heritage
+
+Platform menggunakan estetika **"Modern Heritage"** — perpaduan antara:
+- **Palet warna batik klasik:** Soga coklat (`#713f2c`), indigo (`#2d2b38`), emas (`#D4AF37`), perunggu (`#B87333`)
+- **Tipografi:** Philosopher (serif heritage), Plus Jakarta Sans (display modern), sistem *font-narrative* untuk paragraf
+- **Latar halaman:** Krem hangat `#faf8f4` (light mode) dan `#1A1614` (dark hero sections)
+- **Micro-animations:** Framer Motion untuk transisi halaman, hover effect, dan particle system emas di hero
+
+### 6.2 Struktur Navigasi Global
+
+```
+Navbar Transparan
+├── Beranda        → /
+├── Batik Arcade   → /play
+├── Batik Lens     → /scan
+├── Batik Ask      → /chat
+├── Batik Pedia    → /batikpedia
+└── Koleksi        → /collection
 ```
 
-### 5.3 API Endpoints Specification (Next.js App Router)
+---
 
-1. `POST /api/ai/chat`
-   - **Payload**: `{ "messages": [{ "role": "user", "content": "..." }] }`
-   - **Action**: Memanggil Google Gemini API dengan *system prompt* budayawan batik.
-   - **Response**: `{ "reply": "Sugeng rawuh! ..." }`
-2. `POST /api/ai/scan`
-   - **Payload**: `{ "imageBase64": "data:image/jpeg;base64,..." }`
-   - **Action**: Menganalisis citra kain batik dan mencocokkan dengan basis data motif.
-   - **Response**: `{ "motifId": "mega_mendung", "name": "Mega Mendung", "confidence": 0.94, "region": "Cirebon", "philosophy": "..." }`
-3. `POST /api/game/complete`
-   - **Payload**: `{ "gameType": "jigsaw", "motifId": "kawung", "timeSeconds": 45 }`
-   - **Action**: Memperbarui total XP pengguna dan membuka kartu *Batikpedia*.
-   - **Response**: `{ "success": true, "xpEarned": 100, "newRank": "Penjelajah Ragam Hias", "cardUnlocked": true }`
+## 7. Fitur & Spesifikasi Detail
+
+### 7.1 Halaman Beranda (`/`)
+
+**Tujuan:** Titik masuk dan pengenalan platform  
+**Komponen utama:**
+
+| Seksi | Deskripsi |
+|---|---|
+| **Hero Section** | Full-bleed background foto pengrajin batik, copywriting editorial "Batik Kita: / Warisan Luhur / dalam Sentuhan Digital", 3D golden particle animation (Three.js/Fiber), CTA "Mulai Jelajahi" |
+| **Feature Grid** | Tiga pilar fitur: Edu-Games Arcade, AI Batik Lens, Batik Ask |
+| **Arcade Preview** | Preview interaktif 4 game dengan tile card motif dan quick stats |
+| **Interactive Preview** | Demonstrasi Batik Ask chat + Batik Lens scanner secara inline |
+| **BatikPedia Teaser** | Kartu motif pilihan sebagai teaser ensiklopedia |
+| **Footer** | Link navigasi, kredit, dan info platform |
 
 ---
 
-## 6. UI/UX Design System Guidelines
+### 7.2 Batik Arcade (`/play`)
 
-### 6.1 Color Palette (*Modern Heritage Theme*)
-- **Primary (Royal Sogan Brown)**: `#7A3E1D` / `#4A2511` (Nuansa warna pewarna alam soga klasik keraton).
-- **Accent (Heritage Gold / Kuningan)**: `#D4AF37` / `#F59E0B` (Aksen mewah untuk kartu koleksi dan lencana XP).
-- **Secondary (Indigofera Blue)**: `#1E3A8A` / `#2563EB` (Nuansa biru wedelan pesisiran Cirebon/Pekalongan).
-- **Background (Mori Fabric Cream)**: `#FDFBF7` / Dark Mode: `#18130E` (Tekstur lembut kain mori putih gading).
-- **Status Colors**: Success `#10B981`, Warning `#F59E0B`, Danger `#EF4444`.
-
-### 6.2 Typography
-- **Headings & Display**: `Plus Jakarta Sans` / `Outfit` (Bold, modern, elegan, mudah dibaca).
-- **Body & Story Text**: `Inter` / `Source Serif 4` (Memberikan kesan klasik budaya saat membaca filosofi dan narasi empu).
+**Tujuan:** Hub navigasi ke empat mini-game edukasi budaya  
+**Komponen utama:**
+- Hero section dengan info XP live (Paspor Budaya Digital card)
+- Grid 4 game card (Batik Cap, Batik Guess, Batik Map, Batik Zoom)
+- Banner promo Album Koleksi dengan status koleksi real-time
+- Tangga Peringkat Budaya (4 tingkat)
 
 ---
 
-## 7. Quality Assurance, Security & Ethical Guidelines
+### 7.3 Game 1: Batik Cap (`/play/cap`)
 
-1. **Non-Copyright Infringement & Asset Integrity**:
-   - Seluruh ilustrasi dan potongan geometri motif dibuat secara orisinal oleh tim / bersumber dari domain publik kebudayaan nasional yang bebas lisensi komersial.
-2. **Keamanan Kunci API**:
-   - Semua panggilan ke Gemini API dan Supabase Service Key berada di sisi server (*Server Actions / API Route*), tidak pernah terekspos di browser client.
-3. **Etika Representasi Budaya**:
-   - Konten sejarah dan filosofi dikurasi dari sumber terpercaya (BBSPJIKB & literatur budayawan resmi) untuk menghindari disinformasi makna motif sakral.
+**Tagline:** Presisi Canting Cap Tembaga  
+**Deskripsi:** Permainan puzzle *polyomino* di mana pengguna menyusun kepingan cap tembaga ke kanvas kain mori.
 
----
+**Spesifikasi:**
 
-## 8. Hackathon Execution Plan (Sprint Timeline)
-
-| Hari | Target Pekerjaan | Penanggung Jawab |
-|:---:|---|:---:|
-| **Hari 1–2** | Inisialisasi Next.js, Setup Tailwind & Shadcn UI, Implementasi Engine Jigsaw Drag-and-Drop + Game Detektif Isen. | **Rayka & Rayhan** |
-| **Hari 3–4** | Integrasi API Google Gemini ("Batik Ask") & Modul Pemindai AI Batik Lens, kurasi 7 motif utama. | **Rayka & Haekal** |
-| **Hari 5–6** | Pembuatan Peta Interaktif Nusantara, Halaman Batikpedia Card Album, dan integrasi database Supabase XP/Leaderboard. | **Rayka & Rayhan** |
-| **Hari 7** | Finishing UI/UX, uji coba responsivitas perangkat, QA testing bug-free, deployment ke Vercel. | **Seluruh Tim** |
-| **Hari 8** | Finalisasi naskah proposal PDF 30 halaman (Haekal) & pembuatan slide Pitch Deck (Rayhan/Haekal). | **Haekal & Rayhan** |
-| **Hari 9** | Perekaman dan editing video demonstrasi fitur 10 menit, pengecekan akhir berkas, final submission HOLOGY 9.0. | **Seluruh Tim** |
+| Parameter | Detail |
+|---|---|
+| **Dataset** | 20 motif batik resmi (BATIK_DATASET_20) |
+| **Tingkat Kesulitan** | Mudah / Menengah / Sulit (pilihan pengguna) |
+| **Algoritma** | Polyomino partition acak (`src/lib/polyominoPartition.ts`) |
+| **Reward XP** | Mudah: +100 XP, Menengah: +150 XP, Sulit: +200 XP |
+| **Unlock Koleksi** | Ya — berdasarkan motif yang diselesaikan & tingkat kesulitan |
+| **Mekanisme** | Drag & snap potongan ke slot kanvas; timer berjalan sejak motif dipilih |
+| **Feedback** | WinModal dengan konfeti + level-up modal jika XP threshold tercapai |
 
 ---
 
-## 9. Penutup
+### 7.4 Game 2: Batik Guess (`/play/guess`)
 
-PRD ini menjadi rujukan tunggal bagi seluruh anggota tim dalam merancang antarmuka, menulis kode program, menyusun proposal, serta memproduksi materi video demo untuk cabang lomba **HoloDev HOLOGY 9.0**.
+**Tagline:** Deduksi Budaya Berjenjang  
+**Deskripsi:** Permainan tebak motif melalui sistem petunjuk progresif berbasis 4 segel rahasia.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Dataset** | 20 motif (BATIK_DATASET_20 `.hints[4]` field) |
+| **Sistem Petunjuk** | 4 segel bertahap: Sentra Asal → Rumpun Filosofis → Ornamen Visual → Makna Simbolik |
+| **Poin Sistem** | Segel 1 = 100 XP, turun 20 XP setiap segel dibuka (min. 25 XP) |
+| **Mekanisme** | Pilihan ganda + input teks bebas dengan fuzzy matching |
+| **Sound Effects** | Web Audio API synthesizer (chime/error/level-up) — tanpa aset audio eksternal |
+| **Streak Bonus** | Jawaban benar berturut meningkatkan multiplier visual (Flame indicator) |
+
+---
+
+### 7.5 Game 3: Batik Map (`/play/map`)
+
+**Tagline:** Geografi Budaya Nusantara  
+**Deskripsi:** Permainan drag-and-drop motif batik ke pin sentra asal di peta interaktif Nusantara.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Peta** | MapLibre GL 6.7 (dinamis, SSR disabled) berbasis GeoJSON `regionsGeo.json` |
+| **Sentra** | 7 pin lokasi resmi batik nusantara |
+| **Mekanisme** | Kartu motif diseret ke wilayah peta; sistem validasi koordinat |
+| **Timer** | 90 detik countdown |
+| **Reward XP** | +40 – 50 XP per motif berhasil ditempatkan |
+| **Unlock Koleksi** | Ya |
+
+---
+
+### 7.6 Game 4: Batik Zoom (`/play/zoom`)
+
+**Tagline:** Observasi Visual Makro  
+**Deskripsi:** Permainan tebak motif dari gambar yang di-zoom dari 800% → 100% secara progresif.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Dataset** | `tikaCatalog.ts` (TIKA_CATALOG — set motif berbeda, mencakup deskripsi & `focus_point`) |
+| **Mode** | Tantangan Harian (seeded by date) + Mode Bebas (random) |
+| **Zoom Progresif** | Mulai dari 800% detail ekstrim, setiap *Skip* zoom out bertahap ke 100% |
+| **Mekanisme Jawab** | Input teks bebas dengan Fuse.js fuzzy matching + normalisasi alias nama |
+| **Reward XP** | Maks. +100 XP, berkurang proporsional dengan jumlah *Skip* |
+| **Sound Effects** | Web Audio API synthesizer |
+
+---
+
+### 7.7 Batik Lens (`/scan`)
+
+**Tagline:** Edge AI Classifier — On-Device Inference  
+**Deskripsi:** Fitur klasifikasi motif batik menggunakan computer vision yang berjalan sepenuhnya di sisi klien (tanpa mengirim data ke server eksternal).
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Model AI** | EfficientNet B0 — `batik_efficientnet.onnx` |
+| **Runtime** | ONNX Runtime Web 1.29 (WebAssembly, single-threaded) |
+| **Input** | Upload foto ATAU akses kamera perangkat (webcam/smartphone) |
+| **Preprocessing** | Resize + normalisasi tensor — seluruhnya di client-side canvas |
+| **Output** | Top-1 & Top-3 prediksi dengan confidence score (%), inferensi time (ms) |
+| **Mapping** | `class_mapping.json` → dikroscek ke `BATIK_DATASET_20` untuk data lengkap |
+| **Concurrency** | Serialized run queue untuk menghindari WebAssembly session conflict |
+| **Privasi** | **Zero upload** — foto tidak meninggalkan perangkat pengguna |
+
+---
+
+### 7.8 Batik Ask (`/chat`)
+
+**Tagline:** Tanya Sang Empu  
+**Deskripsi:** Asisten AI berkarakter "Sang Empu" — begawan batik nusantara yang menjawab pertanyaan seputar batik dengan bahasa Indonesia yang luhur dan penuh kearifan.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **LLM** | Google Gemini 2.5 Flash via `/api/chat` Route Handler |
+| **Persona** | "Sang Empu" — budayawan keraton Jawa, arif, berwibawa, santun |
+| **Knowledge Base** | System instruction + grounding 20 motif dari `BATIK_DATASET_20` |
+| **Guardrail** | Hard-coded boundary — menolak pertanyaan di luar topik wastra/budaya Indonesia |
+| **Temperature** | 0.7 — kreatif tapi terkontrol |
+| **Max Tokens** | 1000 token per respons |
+| **Riwayat Chat** | Multi-turn conversation dengan normalisasi role Gemini (user/model) |
+
+---
+
+### 7.9 Batik Pedia (`/batikpedia`)
+
+**Tagline:** Peta Sentra & Filosofi Batik Nusantara  
+**Deskripsi:** Ensiklopedia motif batik nusantara yang komprehensif dan dapat dicari.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Dataset** | 20 motif (`BATIK_DATASET_20`) |
+| **Atribut per Motif** | Nama, asal sentra, provinsi, pulau, kategori, filosofi, penggunaan pakem, ciri visual, varian |
+| **Fitur Pencarian** | Filter berdasarkan kategori & pencarian nama |
+| **Tampilan** | Card grid motif dengan gambar `.webp` versi 2 |
+| **Kategori** | Batik Keraton, Batik Pesisiran, Batik Larangan, Batik Nusantara |
+
+---
+
+### 7.10 Album Koleksi (`/collection`)
+
+**Tagline:** Album Koleksi Wastra Nusantara  
+**Deskripsi:** Halaman galeri kartu koleksi motif yang terbuka seiring kemajuan pengguna dalam game.
+
+**Spesifikasi:**
+
+| Parameter | Detail |
+|---|---|
+| **Dataset** | 20 motif — kartu terbuka/terkunci berdasarkan `useXp` state |
+| **Mastery Tiers** | Unlocked → Mudah (Perunggu) → Menengah (Perak) → Sulit (Emas) |
+| **Default Unlock** | 6 kartu starter otomatis terbuka tanpa perlu bermain |
+| **Bingkai Dinamis** | Bingkai kartu berubah warna & efek sesuai tier mastery |
+| **Progress Bar** | Visualisasi persentase koleksi terbuka secara real-time |
+| **Detail Modal** | Klik kartu terbuka → popup detail motif (filosofi, asal, varian, dll.) |
+
+---
+
+## 8. Sistem Gamifikasi
+
+### 8.1 Struktur XP
+
+| Aksi | XP |
+|---|---|
+| Batik Cap — Mudah | +100 XP |
+| Batik Cap — Menengah | +150 XP |
+| Batik Cap — Sulit | +200 XP |
+| Batik Guess — Benar di Segel 1 | +100 XP |
+| Batik Guess — Benar di Segel 4 | +25 XP |
+| Batik Map — Per Motif Benar | +40–50 XP |
+| Batik Zoom — Tanpa Skip | +100 XP |
+
+### 8.2 Tangga Peringkat Budaya
+
+| Peringkat | Range XP | Deskripsi |
+|---|---|---|
+| 🌿 Pelajar Budaya | 0 – 250 XP | Mengenal dasar ornamen geometris dan keindahan visual wastra |
+| 🧭 Penjelajah Ragam Hias | 251 – 600 XP | Memahami ragam motif pesisiran, keraton, dan filosofi maknanya |
+| 📖 Kolektor Batik Nusantara | 601 – 1.200 XP | Menguasai peta sentra budaya, observasi mikro, dan teknik cap |
+| 👑 Empu Batik Digital | 1.201+ XP | Pakar sejati pelestari warisan adiluhung batik Indonesia |
+
+### 8.3 Mekanisme Level-Up
+
+- Deteksi perubahan rank terjadi di `useXp.addXp()` secara real-time
+- Menampilkan `LevelUpModal` dengan animasi konfeti + pesan apresiasi budaya
+- State tersimpan persisten di `localStorage` (key: `batikkita_xp`, `batik_mastery_cards`, `batik_unlocked_cards`)
+
+---
+
+## 9. Dataset Konten
+
+### 9.1 Daftar 20 Motif Resmi Batik Kita
+
+| # | Motif | Kategori | Asal |
+|---|---|---|---|
+| 1 | Batik Betawi | Pesisiran | DKI Jakarta |
+| 2 | Batik Bokor Kencono | Keraton | D.I. Yogyakarta |
+| 3 | Batik Buketan | Pesisiran | Pekalongan, Jawa Tengah |
+| 4 | Batik Dayak | Nusantara | Kalimantan Tengah & Timur |
+| 5 | Batik Jlamprang | Pesisiran | Pekalongan, Jawa Tengah |
+| 6 | Batik Kawung | Keraton | D.I. Yogyakarta |
+| 7 | Batik Liong | Pesisiran | Lasem, Jawa Tengah |
+| 8 | Batik Mega Mendung | Pesisiran | Cirebon, Jawa Barat |
+| 9 | Batik Parang | Larangan | D.I. Yogyakarta |
+| 10 | Batik Sekar Jagad | Keraton | D.I. Yogyakarta |
+| 11 | Batik Sido Luhur | Keraton | Surakarta, Jawa Tengah |
+| 12 | Batik Sido Mukti | Keraton | Surakarta, Jawa Tengah |
+| 13 | Batik Sido Mulyo | Keraton | D.I. Yogyakarta |
+| 14 | Batik Singa Barong | Pesisiran | Cirebon, Jawa Barat |
+| 15 | Batik Srikaton | Keraton | D.I. Yogyakarta |
+| 16 | Batik Tribusono | Keraton | Surakarta, Jawa Tengah |
+| 17 | Batik Truntum | Keraton | Surakarta, Jawa Tengah |
+| 18 | Batik Tujuh Rupa | Pesisiran | Pekalongan, Jawa Tengah |
+| 19 | Batik Wahyu Tumurun | Keraton | Surakarta, Jawa Tengah |
+| 20 | Batik Wirasat | Keraton | Surakarta, Jawa Tengah |
+
+### 9.2 Struktur Data per Motif (`BatikMotif`)
+
+```typescript
+interface BatikMotif {
+  id: string;              // unique identifier
+  name: string;            // Nama pendek
+  fullName: string;        // "Batik Kawung"
+  region: string;          // Sentra asal
+  province: string;
+  island: string;
+  category: "Batik Keraton" | "Batik Pesisiran" | "Batik Larangan" | "Batik Nusantara";
+  philosophy: string;      // Makna filosofis panjang
+  usage: string;           // Konteks pemakaian & pakem
+  visualTraits: string;    // Ciri visual & ornamen
+  image: string;           // Primary .webp image path
+  variants: BatikVariant[]; // 2+ varian per motif
+  hints: [string, string, string, string]; // 4 petunjuk progresif (Batik Guess)
+}
+```
+
+---
+
+## 10. Komponen Shared & Reusable
+
+| Komponen | Lokasi | Fungsi |
+|---|---|---|
+| `Navbar` | `components/landing/Navbar.tsx` | Navigasi global transparan / solid |
+| `Footer` | `components/landing/Footer.tsx` | Footer landing page |
+| `GameNavbar` | `components/shared/GameNavbar.tsx` | Navbar khusus halaman game |
+| `XpBar` | `components/shared/XpBar.tsx` | Progress bar XP animatif |
+| `LevelUpModal` | `components/shared/LevelUpModal.tsx` | Popup level up dengan konfeti |
+| `WinModal` | `components/games/WinModal.tsx` | Popup kemenangan game |
+| `CapStampingBoard` | `components/games/CapStampingBoard.tsx` | Engine puzzle polyomino cap |
+| `HeroParticles` | `components/landing/HeroParticles.tsx` | 3D golden particles (Three.js) |
+
+---
+
+## 11. Peta Halaman & Rute
+
+```
+/                   → Landing Page (Beranda)
+/play               → Batik Arcade Hub
+/play/cap           → Game: Batik Cap (Polyomino Puzzle)
+/play/guess         → Game: Batik Guess (Progressive Hint Quiz)
+/play/map           → Game: Batik Map (Interactive Map Drag-and-Drop)
+/play/zoom          → Game: Batik Zoom (Macro Zoom Challenge)
+/scan               → Batik Lens (Edge AI Classifier)
+/chat               → Batik Ask (AI Chatbot "Sang Empu")
+/batikpedia         → Batik Pedia (Encyclopedia)
+/collection         → Album Koleksi (Achievement Gallery)
+/api/chat           → Route Handler: Gemini API Proxy
+```
+
+---
+
+## 12. Keunggulan Kompetitif & Nilai Jual
+
+### 12.1 Aspek Teknologi
+| Keunggulan | Detail |
+|---|---|
+| **On-Device AI** | Klasifikasi motif berjalan di browser tanpa server inference — zero data leak |
+| **Generative AI** | Persona "Sang Empu" berbasis Gemini 2.5 Flash dengan hard-boundary guardrail |
+| **Peta Interaktif** | MapLibre GL sebagai alternatif open-source Mapbox — lebih ringan & bebas biaya |
+| **Fuzzy Search** | Fuse.js memungkinkan pengguna mengetik nama motif dengan typo tetap terdeteksi |
+| **3D Particles** | Hero section bertenaga Three.js — visual premium tanpa library berat tambahan |
+
+### 12.2 Aspek Budaya & Edukasi
+| Keunggulan | Detail |
+|---|---|
+| **Dataset Autentik** | 20 motif dengan deskripsi filosofi, pakem pemakaian, dan ciri visual yang akurat |
+| **Gamifikasi Bermakna** | XP dan rank menggunakan terminologi budaya Jawa (Empu, Pelajar Budaya, dst.) |
+| **Aksesibilitas** | Berbasis web — tidak perlu install aplikasi, dapat diakses dari PC/HP |
+| **Zero Knowledge Barrier** | Bisa langsung bermain tanpa mendaftar akun |
+
+---
+
+## 13. Batasan & Lingkup yang Tidak Dicakup (Out of Scope)
+
+| Item | Alasan |
+|---|---|
+| Autentikasi pengguna (login/register) | Di luar scope kompetisi; localStorage cukup untuk demo |
+| Multiplayer / leaderboard online | Memerlukan backend tambahan |
+| Konten di luar 20 motif resmi | Membutuhkan validasi konten budaya lebih lanjut |
+| PWA / offline mode | Potensial untuk versi lanjutan |
+| Konten audio narasi (suara pengrajin) | Keterbatasan aset & bandwidth |
+
+---
+
+## 14. Metrik Keberhasilan
+
+| Metrik | Target |
+|---|---|
+| Jumlah game yang dapat dimainkan | 4 game penuh dan dapat diselesaikan |
+| Klasifikasi motif (Batik Lens) | Top-1 accuracy ≥ 70% pada 20 kelas |
+| Chatbot Batik Ask | Merespons setiap pertanyaan dalam ≤ 5 detik |
+| Performa halaman | Lighthouse Performance Score ≥ 85 |
+| Kelengkapan konten | 20 motif × data lengkap (filosofi, visual, hints, varian) |
+| Responsivitas | Berfungsi di viewport ≥ 375px (mobile) hingga desktop 1920px |
+
+---
+
+## 15. Roadmap & Status Implementasi
+
+| Fitur | Status |
+|---|---|
+| Landing Page (Beranda) | ✅ Selesai |
+| Batik Arcade Hub | ✅ Selesai |
+| Batik Cap (Polyomino) | ✅ Selesai |
+| Batik Guess (Progressive Hints) | ✅ Selesai |
+| Batik Map (MapLibre) | ✅ Selesai |
+| Batik Zoom (Macro Challenge) | ✅ Selesai |
+| Batik Lens (ONNX Classifier) | ✅ Selesai |
+| Batik Ask (Gemini Chatbot) | ✅ Selesai |
+| Batik Pedia (Encyclopedia) | ✅ Selesai |
+| Album Koleksi (Achievement) | ✅ Selesai |
+| Sistem Gamifikasi XP + Rank | ✅ Selesai |
+| Desain Modern Heritage (konsisten) | ✅ Selesai |
+| Dataset 20 Motif Resmi | ✅ Selesai |
+| Aset Gambar (.webp v2) | ✅ Selesai |
+
+---
+
+## 16. Referensi Teknis
+
+- [Next.js App Router Docs](https://nextjs.org/docs)
+- [ONNX Runtime Web](https://onnxruntime.ai/docs/get-started/with-javascript/web.html)
+- [Google Gemini API — Generative Language](https://ai.google.dev/gemini-api/docs)
+- [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
+- UNESCO. (2009). *Batik inscribed on UNESCO Intangible Cultural Heritage of Humanity.*
+
+---
+
+*Dokumen ini merupakan PRD resmi dan referensi teknis untuk Batik Kita v2.0 dalam rangka kompetisi HOLOGY 9.0 — HOLODev.*
