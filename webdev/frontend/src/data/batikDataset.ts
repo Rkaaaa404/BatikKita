@@ -68,9 +68,9 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Jawa",
     category: "Batik Keraton",
     philosophy:
-      "Bokor bermakna wadah logam sesaji, sedangkan kencono berarti emas murni. Motif pusaka Mataram ini memuat doa agar pemakainya menjadi wadah yang menampung kebajikan, rezeki halal, serta menjaga kejernihan hati dalam mengabdi.",
-    usage: "Dikenakan oleh sesepuh dan keluarga bangsawan dalam upacara adat midodareni dan pertemuan seremonial kraton.",
-    visualTraits: "Pola ceplok teratur berlatar cokelat soga dengan ornamen wadah bertutup bersepuh oranye keemasan, dikelilingi sulur dedaunan melengkung simetris.",
+      "Bokor bermakna wadah bejana logam sesaji pembawa berkah dan kembang setaman, sedangkan kencono berarti emas murni. Motif pusaka ceplok Mataram ini memuat doa agar pemakainya menjadi insan luhur yang mampu menampung kebajikan, menjemput rezeki halal, serta memelihara kesucian batin dalam pengabdian hidup.",
+    usage: "Dikenakan oleh sesepuh keluarga bangsawan dan orang tua dalam upacara adat siraman, malam midodareni, serta upacara seremonial keraton.",
+    visualTraits: "Pola ceplok belah ketupat teratur berlatar cokelat soga dengan ornamen bejana bokor bertutup bersepuh oranye keemasan, dikelilingi sulur dedaunan melengkung simetris yang luwes.",
     image: "/images/motifs/batik_bokor_kencono.webp",
     variants: [
       {
@@ -134,9 +134,9 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     island: "Kalimantan",
     category: "Batik Nusantara",
     philosophy:
-      "Pohon Batang Garing menggambarkan hubungan manusia dengan Sang Pencipta (Ranying Hatalla) serta keharusan menjaga kelestarian rimba raya. Tameng telawang dan sulur kelakai melambangkan perlindungan diri dan ketangguhan hidup di pedalaman Borneo.",
-    usage: "Busana upacara adat Tiwah, festival budaya Isen Mulang, serta pakaian dinas resmi instansi di Kalimantan.",
-    visualTraits: "Latar merah menyala berpadu dengan ornamen sulur lengkung khas ukir kayu Dayak berwarna biru elektrik dan krem keemasan, dibingkai motif tumpal runcing di bagian tepinya.",
+      "Dikenal dalam tradisi wastra perintang malam Kalimantan Tengah sebagai Batik Benang Bintik. Pohon Batang Garing melambangkan kosmologi keselarasan antara manusia, semesta alam, dan Sang Pencipta (Ranying Hatalla Langit). Diperkaya tameng telawang dan sulur kelakai sebagai simbol perisai perlindungan diri dan keteguhan jiwa menghadapi rimba kehidupan.",
+    usage: "Busana sakral upacara adat Tiwah, festival budaya Isen Mulang, serta seragam kehormatan aparatur pemerintahan dan pertemuan adat di Kalimantan.",
+    visualTraits: "Goresan lilin malam menampilkan ornamen ukir kayu Dayak meliuk luwes berwarna biru elektrik dan kuning keemasan, menghadirkan Batang Garing dan tameng telawang berhiaskan tumpal runcing di atas hamparan kain merah menyala.",
     image: "/images/motifs/batik_dayak.webp",
     variants: [
       {
@@ -300,7 +300,7 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     category: "Batik Larangan",
     philosophy:
       "Deretan ombak laut selatan yang tak pernah surut memecah karang terjal. Melambangkan semangat pantang menyerah, keteguhan watak ksatria, dan kepemimpinan berwibawa yang tidak boleh terputus dalam mengarungi gelombang kehidupan.",
-    usage: "Pakaian wajib raja, pangeran, dan wisudawan kehormatan dalam upacara resmi kenegaraan serta upacara wisuda.",
+    usage: "Busana agung raja dan pangeran (terutama ragam Parang Barong sebagai Awisan Dalem). Dalam perkembangan kontemporer, ragam Parang Klitik atau Parang Kusumo lazim dikenakan pada upacara resmi kenegaraan dan wisuda sarjana, namun menurut pakem adat pantang dikenakan oleh mempelai saat akad nikah.",
     visualTraits: "Larik-larik diagonal miring bersudut 45 derajat menyerupai susunan huruf S berkait tajam berlatar gelap pekat, diselingi ornamen taji mlinjon putih tegas di sela-selanya.",
     image: "/images/motifs/batik_parang.webp",
     variants: [
@@ -631,25 +631,25 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     philosophy:
       "Wahyu berarti petunjuk dan anugerah Tuhan, tumurun berarti turun menghampiri. Memuat doa restu pengharapan agar pemakainya dikaruniai petunjuk hidup, kemudahan dalam menuntut ilmu, serta masa depan yang terang benderang.",
     usage: "Dikenakan saat wisuda perguruan tinggi, pelantikan jabatan pengabdian, dan doa permohonan restu keluarga.",
-    visualTraits: "Pola mahkota terbang bersayap (kanthil) yang dinaungi sepasang burung garuda berhadapan dan ornamen pohon hayat berlatar cokelat soga tua klasik.",
+    visualTraits: "Pola mahkota terbang agung (makutha) dan kuncup bunga kanthil yang dinaungi sepasang burung garuda berhadapan serta ornamen pohon hayat berlatar cokelat soga tua klasik.",
     image: "/images/motifs/batik_wahyu_tumurun.webp",
     variants: [
       {
         name: "Wahyu Tumurun Sogan Solo Alus Isen Cecek",
         image: "/images/motifs/batik_wahyu_tumurun_var1.webp",
-        description: "Pewarnaan sogan cokelat keemasan hangat dengan goresan isen cecek rapat dan mahkota kanthil putih bersinar.",
+        description: "Pewarnaan sogan cokelat keemasan hangat dengan goresan isen cecek rapat serta ornamen makutha dan kanthil putih bersinar.",
       },
       {
         name: "Wahyu Tumurun Latar Pethak / Krem Cerah",
         image: "/images/motifs/batik_wahyu_tumurun_var2.webp",
-        description: "Ornamen mahkota kanthil dan burung terbang di atas latar kain kuning gading cerah dengan garis kontur cokelat tegas.",
+        description: "Ornamen mahkota makutha, kanthil, dan burung terbang di atas latar kain kuning gading cerah dengan garis kontur cokelat tegas.",
       },
     ],
     hints: [
       "Namanya bermakna turunnya wahyu atau petunjuk anugerah dari Sang Pencipta.",
       "Kerap dipilih sebagai busana upacara kelulusan wisuda dan upacara pelantikan jabatan penting.",
       "Populer di kedua pusat kebudayaan Jawa: Yogyakarta dan Surakarta.",
-      "Memiliki ornamen mahkota bersayap (kanthil) yang diapit sepasang burung garuda berhadapan.",
+      "Memiliki ornamen mahkota bersayap (makutha) dan kuncup kanthil yang diapit sepasang burung garuda berhadapan.",
     ],
   },
   {
