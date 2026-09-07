@@ -1,8 +1,8 @@
-﻿name: CI — Batik Kita Quality Gate
+name: CI — Batik Kita Quality Gate
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev, deployment]
     paths:
       - "webdev/frontend/**"
       - ".github/workflows/ci.yml"
