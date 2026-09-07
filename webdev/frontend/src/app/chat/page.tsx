@@ -22,6 +22,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { synthesizeOfflineEmpuResponse } from "@/lib/offlineEmpuKnowledge";
 
 interface Message {
   id: string;
@@ -357,10 +358,11 @@ export default function ChatPage() {
       };
       setMessages((prev) => [...prev, botMsg]);
     } catch (error) {
-      console.error("Chat error:", error);
+      console.warn("Koneksi jaringan terputus / chat fetch error, beralih ke nalar luring klien:", error);
       const fallbackAnswer =
+        synthesizeOfflineEmpuResponse(text.trim()) ||
         PRESET_ANSWERS[text.trim()] ||
-        `Matur nuwun atas pertanyaan luhur Ananda mengenai "${text.trim()}". Berdasarkan serat babad dan kearifan para empu, setiap guratan canting batik bukan sekadar hiasan ragam visual, melainkan doa yang terpatri pada kain mori. Teruslah mencintai dan melestarikan warisan leluhur kita.`;
+        "Sugeng rawuh, Ananda. Bilik kearifan lokal tetap siap mendampingi penjelajahan budaya Ananda.";
 
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),
