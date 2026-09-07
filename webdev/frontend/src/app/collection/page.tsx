@@ -25,6 +25,7 @@ import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
 import { BATIK_DATASET_20, BatikMotif } from "@/data/batikDataset";
 import { useXp, MasteryTier } from "@/hooks/useXp";
+import { AudioNarratorButton } from "@/components/shared/AudioNarratorButton";
 
 // Starter cards always visible for new visitors
 const STARTER_CARD_IDS = [
@@ -590,10 +591,17 @@ export default function CollectionPage() {
 
                   {/* Filosofi Section */}
                   <div>
-                    <h3 className="font-display font-bold text-xs sm:text-sm text-[#713f2c] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Makna Filosofis & Nilai Warisan
-                    </h3>
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <h3 className="font-display font-bold text-xs sm:text-sm text-[#713f2c] uppercase tracking-wider flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        Makna Filosofis & Nilai Warisan
+                      </h3>
+                      <AudioNarratorButton
+                        text={selectedMotif.philosophy}
+                        title={selectedMotif.fullName}
+                        variant="compact"
+                      />
+                    </div>
                     <p className="font-narrative text-xs sm:text-sm text-[#2d2b38] leading-relaxed bg-[#FAF8F4] p-3.5 rounded-xl border border-[#d3ccc2]/60">
                       {selectedMotif.philosophy}
                     </p>
