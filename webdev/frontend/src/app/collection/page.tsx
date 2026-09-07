@@ -13,14 +13,11 @@ import {
   Award,
   Crown,
   Shield,
-  Layers,
   Gamepad2,
   MessageSquare,
-  Camera,
   X,
   Check,
   Compass,
-  Info,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -50,7 +47,7 @@ const REGION_LIST = [
 ];
 
 export default function CollectionPage() {
-  const { xp = 0, rank = "Pelajar Budaya", unlockedCards = [], masteryCards = {} } = useXp();
+  const { unlockedCards = [], masteryCards = {} } = useXp();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("Semua Sentra");
@@ -60,7 +57,7 @@ export default function CollectionPage() {
   const [copiedNotification, setCopiedNotification] = useState(false);
 
   // Helper to determine if a motif is unlocked
-  const isCardUnlocked = (motif: BatikMotif): boolean => {
+  const isCardUnlocked = React.useCallback((motif: BatikMotif): boolean => {
     const safeUnlocked = Array.isArray(unlockedCards) ? unlockedCards : [];
     const safeMastery = masteryCards && typeof masteryCards === "object" ? masteryCards : {};
     return (
@@ -71,36 +68,28 @@ export default function CollectionPage() {
       Boolean(safeMastery[motif.rawId]) ||
       Boolean(safeMastery[motif.id])
     );
-  };
+  }, [unlockedCards, masteryCards]);
 
   // Helper to get mastery tier
-  const getCardMastery = (motif: BatikMotif): MasteryTier | "Locked" => {
+  const getCardMastery = React.useCallback((motif: BatikMotif): MasteryTier | "Locked" => {
     const safeMastery = masteryCards && typeof masteryCards === "object" ? masteryCards : {};
     const rawTier = safeMastery[motif.rawId] || safeMastery[motif.id];
     if (rawTier) return rawTier;
     if (isCardUnlocked(motif)) return "Unlocked";
     return "Locked";
-  };
+  }, [masteryCards, isCardUnlocked]);
 
   // Counts & Progress
   const totalCards = BATIK_DATASET_20.length;
   const unlockedCount = useMemo(() => {
     return BATIK_DATASET_20.filter(isCardUnlocked).length;
-  }, [unlockedCards, masteryCards]);
+  }, [isCardUnlocked]);
 
   const progressPercent = Math.round((unlockedCount / totalCards) * 100);
 
   const goldCount = useMemo(() => {
     return BATIK_DATASET_20.filter((m) => getCardMastery(m) === "Sulit").length;
-  }, [masteryCards]);
-
-  const silverCount = useMemo(() => {
-    return BATIK_DATASET_20.filter((m) => getCardMastery(m) === "Menengah").length;
-  }, [masteryCards]);
-
-  const bronzeCount = useMemo(() => {
-    return BATIK_DATASET_20.filter((m) => getCardMastery(m) === "Mudah").length;
-  }, [masteryCards]);
+  }, [getCardMastery]);
 
   // Filtered Motifs
   const filteredMotifs = useMemo(() => {
@@ -130,7 +119,7 @@ export default function CollectionPage() {
 
       return true;
     });
-  }, [searchQuery, selectedRegion, selectedTierFilter, unlockedCards, masteryCards]);
+  }, [searchQuery, selectedRegion, selectedTierFilter, getCardMastery]);
 
   const handleShare = async (motif: BatikMotif, e: React.MouseEvent) => {
     e.stopPropagation();

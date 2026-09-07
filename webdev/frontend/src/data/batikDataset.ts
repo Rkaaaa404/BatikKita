@@ -19,6 +19,9 @@ export interface BatikMotif {
   image: string; // Primary image e.g. "/images/motifs/batik_kawung.webp"
   variants: BatikVariant[];
   hints: [string, string, string, string]; // 4 progressive clues, zero em-dash
+  focusPoint?: { x: number; y: number };
+  difficultyMultiplier?: number;
+  aliases?: string[];
 }
 
 export const BATIK_DATASET_20: BatikMotif[] = [
@@ -204,12 +207,12 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     variants: [
       {
         name: "Kawung Latar Pethak / Krem Cerah",
-        image: "/images/motifs/batik_kawung_var1_v2.webp",
+        image: "/images/motifs/batik_kawung_var1.webp",
         description: "Kelopak elips dengan garis kontur cokelat tua kemerahan di atas latar putih gading (pethak) khas gaya Ngayogyakarta.",
       },
       {
         name: "Kawung Wedelan Latar Ireng / Hitam",
-        image: "/images/motifs/batik_kawung_var2_v2.webp",
+        image: "/images/motifs/batik_kawung_var2.webp",
         description: "Kontras tegas kelopak kawung putih bersinar di atas latar kain hitam kelengan (wedelan) pekat.",
       },
     ],
@@ -431,16 +434,16 @@ export const BATIK_DATASET_20: BatikMotif[] = [
       "Mulyo bermakna mulia, terhormat, dan tenteram. Mengandung harapan agar keluarga baru yang dibina selalu dilimpahi ketenteraman batin, keluhuran budi, serta dihindarkan dari godaan pertikaian.",
     usage: "Dikenakan oleh kedua mempelai dalam upacara perkawinan adat gaya Kasultanan Yogyakarta.",
     visualTraits: "Pola kotak ceplok berulang berlatar sogan keemasan hangat, memuat ornamen rumah adat pelindung (bale), pohon hayat, dan sayap burung garuda bersayap tunggal.",
-    image: "/images/motifs/batik_sidomulyo_v2.webp",
+    image: "/images/motifs/batik_sidomulyo.webp",
     variants: [
       {
         name: "Sido Mulyo Latar Pethak Ngayogyakarta",
-        image: "/images/motifs/batik_sidomulyo_var1_v2.webp",
+        image: "/images/motifs/batik_sidomulyo_var1.webp",
         description: "Latar mori putih bersih (pethak) khas Yogyakarta dengan kontur hitam kecokelatan tegas berhias kupu-kupu dan bale adat.",
       },
       {
         name: "Sido Mulyo Ceplok Kontras Bale & Garuda",
-        image: "/images/motifs/batik_sidomulyo_var2_v2.webp",
+        image: "/images/motifs/batik_sidomulyo_var2.webp",
         description: "Garis batas belah ketupat tebal berwarna cokelat tua di atas latar putih gading dengan ornamen rumah pelindung keluarga.",
       },
     ],
@@ -567,12 +570,12 @@ export const BATIK_DATASET_20: BatikMotif[] = [
     variants: [
       {
         name: "Truntum Sogan Orang Tua Pengantin",
-        image: "/images/motifs/batik_truntum_var1_v2.webp",
+        image: "/images/motifs/batik_truntum_var1.webp",
         description: "Kuntum bintang melati berpadu intan belah ketupat putih dengan latar cokelat sogan hangat, busana sakral penuntun pernikahan adat Jawa.",
       },
       {
         name: "Truntum Wedelan Biru Malam",
-        image: "/images/motifs/batik_truntum_var2_v2.webp",
+        image: "/images/motifs/batik_truntum_var2.webp",
         description: "Bintang melati bertabur putih-keemasan di atas babaran biru nila (indigo) pekat yang merefleksikan hamparan langit malam tempat Ratu Kencana merenung.",
       },
     ],
@@ -697,3 +700,73 @@ export function getBatikMotifById(id: string): BatikMotif | undefined {
 }
 
 export const ALL_20_MOTIF_NAMES = BATIK_DATASET_20.map((m) => m.name);
+
+// ── Tika (Batik Zoom) Compatibility & Engine ────────────────────────────────
+export interface TikaMotif {
+  id: string;
+  batik_name: string;
+  normalized_name: string;
+  aliases: string[];
+  origin: string;
+  province: string;
+  category: string;
+  description: string;
+  image_url: string;
+  focus_point: {
+    x: number;
+    y: number;
+  };
+  difficulty_multiplier: number;
+  clues: string[];
+}
+
+const CUSTOM_FOCUS_POINTS: Record<string, { x: number; y: number; mult: number }> = {
+  batik_kawung: { x: 0.5, y: 0.5, mult: 1.0 },
+  batik_mega_mendung: { x: 0.42, y: 0.38, mult: 1.1 },
+  batik_parang: { x: 0.48, y: 0.45, mult: 1.2 },
+  batik_sekarjagad: { x: 0.5, y: 0.5, mult: 1.2 },
+  batik_truntum: { x: 0.5, y: 0.52, mult: 1.15 },
+  batik_sidomulyo: { x: 0.52, y: 0.48, mult: 1.1 },
+  batik_jlamprang: { x: 0.5, y: 0.5, mult: 1.2 },
+  batik_liong: { x: 0.45, y: 0.4, mult: 1.25 },
+  batik_betawi: { x: 0.5, y: 0.45, mult: 1.05 },
+  batik_dayak: { x: 0.45, y: 0.6, mult: 1.3 },
+};
+
+export const TIKA_CATALOG: TikaMotif[] = BATIK_DATASET_20.map((m) => {
+  const custom = CUSTOM_FOCUS_POINTS[m.id];
+  return {
+    id: m.id,
+    batik_name: m.name,
+    normalized_name: m.name.toLowerCase(),
+    aliases: [
+      m.fullName.toLowerCase(),
+      m.name.toLowerCase(),
+      `batik ${m.name.toLowerCase()}`,
+      ...(m.aliases || []),
+    ],
+    origin: m.region,
+    province: m.province,
+    category: m.category,
+    description: m.philosophy,
+    image_url: m.image,
+    focus_point: custom ? { x: custom.x, y: custom.y } : (m.focusPoint || { x: 0.5, y: 0.5 }),
+    difficulty_multiplier: custom ? custom.mult : (m.difficultyMultiplier || 1.0),
+    clues: [...m.hints],
+  };
+});
+
+export function getDailyTikaMotif(): TikaMotif {
+  const now = new Date();
+  const dayOfYear = Math.floor(
+    (now.getTime() - new Date(now.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24)
+  );
+  const index = Math.abs(dayOfYear) % TIKA_CATALOG.length;
+  return TIKA_CATALOG[index];
+}
+
+export function getRandomTikaMotif(excludeId?: string): TikaMotif {
+  const pool = excludeId ? TIKA_CATALOG.filter((m) => m.id !== excludeId) : TIKA_CATALOG;
+  const randomIndex = Math.floor(Math.random() * pool.length);
+  return pool[randomIndex];
+}

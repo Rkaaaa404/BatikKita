@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Gamepad2, Sparkles, MapPin } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 
 const pillars = [
   {
@@ -33,16 +33,16 @@ const pillars = [
 ];
 
 export function FeatureGrid() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.2 },
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (

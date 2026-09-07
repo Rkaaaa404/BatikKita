@@ -3,12 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { Play } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 import { HeroParticles } from "@/components/landing/HeroParticles";
 
 export function HeroSection() {
   // Framer Motion variants
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -19,9 +19,9 @@ export function HeroSection() {
     },
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as any } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
   return (

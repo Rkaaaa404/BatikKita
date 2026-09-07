@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, Crown, ArrowRight, Trophy, Sprout, Compass, BookOpen } from "lucide-react";
+import { Sparkles, Crown, ArrowRight, Sprout, Compass, BookOpen } from "lucide-react";
 import confetti from "canvas-confetti";
 import { RANKS } from "@/hooks/useXp";
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Star, ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, type Variants } from "motion/react";
 
 const CARDS = [
   {
@@ -41,16 +41,16 @@ const CARDS = [
 ];
 
 export function BatikpediaTeaser() {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: {},
     visible: {
       transition: { staggerChildren: 0.15 },
     },
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" as any } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
   };
 
   return (

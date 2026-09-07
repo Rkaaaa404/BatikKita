@@ -1,3 +1,4 @@
+import type { InferenceSession } from "onnxruntime-web";
 import { BATIK_DATASET_20, BatikMotif } from "@/data/batikDataset";
 import classMappingData from "@/data/class_mapping.json";
 
@@ -22,24 +23,27 @@ export interface ClassificationResult {
 
 // Module-level cache for singleton ONNX session
 let ortModule: typeof import("onnxruntime-web") | null = null;
-let inferenceSession: any = null;
+let inferenceSession: InferenceSession | null = null;
 let isInitializing = false;
-let initPromise: Promise<any> | null = null;
+let initPromise: Promise<InferenceSession> | null = null;
 
 // Serialized queue to guarantee single-thread re-entrancy on WebAssembly runtime
-let runQueue: Promise<any> = Promise.resolve();
+let runQueue: Promise<unknown> = Promise.resolve();
 
 /**
  * Executes session.run in a strict sequential queue to prevent
  * "Session already started" and "Session mismatch" WebAssembly concurrency errors.
  */
-async function runSessionSerialized(session: any, feeds: Record<string, any>): Promise<any> {
+async function runSessionSerialized(
+  session: InferenceSession,
+  feeds: Parameters<InferenceSession["run"]>[0]
+): Promise<Awaited<ReturnType<InferenceSession["run"]>>> {
   const currentRun = runQueue.then(async () => {
     return await session.run(feeds);
   });
   // Maintain queue continuity even if an individual inference pass encounters an error
-  runQueue = currentRun.catch(() => {});
-  return currentRun;
+  runQueue = currentRun.catch(() => ({}));
+  return currentRun as Promise<Awaited<ReturnType<InferenceSession["run"]>>>;
 }
 
 /**

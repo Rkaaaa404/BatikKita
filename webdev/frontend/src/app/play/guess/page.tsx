@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Brain,
@@ -8,16 +8,12 @@ import {
   CheckCircle2,
   XCircle,
   Lightbulb,
-  RotateCcw,
   Trophy,
   Sparkles,
   Volume2,
   VolumeX,
-  HelpCircle,
   Flame,
   Search,
-  ZoomIn,
-  Eye,
   SlidersHorizontal,
   ArrowRight,
 } from "lucide-react";
@@ -28,90 +24,7 @@ import { GameNavbar } from "@/components/shared/GameNavbar";
 import { LevelUpModal } from "@/components/shared/LevelUpModal";
 import { useXp } from "@/hooks/useXp";
 import { useGameTheme } from "@/hooks/useGameTheme";
-
-// ── Web Audio Sound Synthesizer (No external audio files needed) ─────────────
-class SoundEffects {
-  private ctx: AudioContext | null = null;
-  public enabled: boolean = true;
-
-  private init() {
-    if (!this.ctx && typeof window !== "undefined") {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    }
-  }
-
-  playChime() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(587.33, now); // D5
-      osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.4);
-    } catch {
-      // Ignore audio failure
-    }
-  }
-
-  playWin() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
-      notes.forEach((freq, idx) => {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime + idx * 0.08;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.5);
-      });
-    } catch {
-      // Ignore
-    }
-  }
-
-  playWrong() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(220, now); // A3
-      osc.frequency.linearRampToValueAtTime(140, now + 0.25);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.28);
-    } catch {
-      // Ignore
-    }
-  }
-}
-
-const sfx = new SoundEffects();
+import { sfx } from "@/lib/soundEffects";
 
 // ── Data Motif Pool (Menggunakan 20 Dataset Resmi) ───────────────────────────
 import { BATIK_DATASET_20, ALL_20_MOTIF_NAMES, type BatikMotif } from "@/data/batikDataset";

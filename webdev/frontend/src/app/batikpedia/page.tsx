@@ -8,12 +8,9 @@ import {
   ChevronRight,
   X,
   Sparkles,
-  ArrowRight,
-  Palette,
   Layers,
   Info,
   Compass,
-  Check,
   Scan,
   Gamepad2,
 } from "lucide-react";

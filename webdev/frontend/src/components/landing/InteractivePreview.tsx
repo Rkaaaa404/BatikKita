@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { Scan, Sparkles, Send, CheckCircle2, Zap } from "lucide-react";
+import { Sparkles, Send, CheckCircle2, Zap } from "lucide-react";
 import { motion } from "motion/react";
-import { classifyBatikImage, preloadClassifier } from "@/lib/onnxClassifier";
+import { classifyBatikImage } from "@/lib/onnxClassifier";
 
 interface SampleMotif {
   id: string;

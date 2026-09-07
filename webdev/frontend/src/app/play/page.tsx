@@ -439,7 +439,7 @@ export default function ArcadeHubPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {RANKS.map((r, i) => {
+              {RANKS.map((r) => {
                 const isCurrent = rank === r.name;
                 const isUnlocked = xp >= r.minXp;
                 return (

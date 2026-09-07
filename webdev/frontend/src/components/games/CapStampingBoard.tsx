@@ -125,7 +125,7 @@ interface CapStampingBoardProps {
 
 export function CapStampingBoard({
   image,
-  philosophy,
+  philosophy: _philosophy,
   motifId,
   difficulty = "Mudah",
   onSolve,
@@ -158,7 +158,7 @@ export function CapStampingBoard({
   const [solved, setSolved] = useState(false);
   const [showGridOverlay, setShowGridOverlay] = useState(false);
   const boardRef = useRef<HTMLDivElement>(null);
-  const startTime = useRef<number>(Date.now());
+  const startTime = useRef<number>(0);
 
   // Re-generate dynamic puzzle when image, difficulty or reset occurs
   useEffect(() => {

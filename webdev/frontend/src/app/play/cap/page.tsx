@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useRef } from "react";
 import { motion } from "motion/react";
-import { RefreshCw, Timer, Target, Sparkles, Sliders, ChevronLeft } from "lucide-react";
+import { RefreshCw, Timer, Target, ChevronLeft } from "lucide-react";
 import { GameNavbar } from "@/components/shared/GameNavbar";
 import { CapStampingBoard } from "@/components/games/CapStampingBoard";
 import { WinModal } from "@/components/games/WinModal";

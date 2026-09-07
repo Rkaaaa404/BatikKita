@@ -2,7 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import { Heart } from "lucide-react";
 
 export function Footer() {
   return (

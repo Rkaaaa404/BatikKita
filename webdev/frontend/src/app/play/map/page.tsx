@@ -24,7 +24,9 @@ import { GameNavbar } from "@/components/shared/GameNavbar";
 import { LevelUpModal } from "@/components/shared/LevelUpModal";
 import { useXp } from "@/hooks/useXp";
 import { useGameTheme } from "@/hooks/useGameTheme";
-import type { RegionData, PlacedItem } from "./SortirMaplibreMap";
+import type { PlacedItem } from "./SortirMaplibreMap";
+import { REGIONS_DATA, MOTIF_CARDS, type MotifCard } from "@/data/regionsData";
+import { sfx } from "@/lib/soundEffects";
 
 // Dynamic import Leaflet map with ssr: false for Next.js 16 SSR safety
 const SortirMaplibreMap = dynamic(() => import("./SortirMaplibreMap"), {
@@ -41,300 +43,6 @@ const SortirMaplibreMap = dynamic(() => import("./SortirMaplibreMap"), {
     </div>
   ),
 });
-
-// ── Web Audio Sound Synthesizer ──────────────────────────────────────────────
-class SoundEffects {
-  private ctx: AudioContext | null = null;
-  public enabled: boolean = true;
-
-  private init() {
-    if (!this.ctx && typeof window !== "undefined") {
-      const AudioCtx =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext })
-          .webkitAudioContext;
-      if (AudioCtx) this.ctx = new AudioCtx();
-    }
-  }
-
-  playChime() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(587.33, now); // D5
-      osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
-      gain.gain.setValueAtTime(0.18, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.4);
-    } catch {
-      // Audio fallback
-    }
-  }
-
-  playSnap() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(660, now + 0.08);
-      gain.gain.setValueAtTime(0.08, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.12);
-    } catch {
-      // Ignore
-    }
-  }
-
-  playWin() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
-      notes.forEach((freq, idx) => {
-        if (!this.ctx) return;
-        const now = this.ctx.currentTime + idx * 0.08;
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(freq, now);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.5);
-      });
-    } catch {
-      // Ignore
-    }
-  }
-
-  playWrong() {
-    if (!this.enabled) return;
-    this.init();
-    if (!this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const osc = this.ctx.createOscillator();
-      const gain = this.ctx.createGain();
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(220, now);
-      osc.frequency.linearRampToValueAtTime(140, now + 0.25);
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-      osc.start(now);
-      osc.stop(now + 0.28);
-    } catch {
-      // Ignore
-    }
-  }
-}
-
-const sfx = new SoundEffects();
-
-// ── 7 Sentra Geografis Resmi Dataset (Koordinat Peta Nyata) ──────────────────
-export const REGIONS_DATA: RegionData[] = [
-  {
-    id: "jakarta",
-    name: "DKI Jakarta (Betawi)",
-    shortName: "Jakarta",
-    province: "DKI Jakarta",
-    island: "Jawa",
-    lat: -6.2088,
-    lng: 106.8456,
-    radiusMeters: 28000,
-    description: "Sentra Batik Betawi Ondel-ondel dan Pucuk Rebung",
-  },
-  {
-    id: "cirebon",
-    name: "Cirebon",
-    shortName: "Cirebon",
-    province: "Jawa Barat",
-    island: "Jawa",
-    lat: -6.732,
-    lng: 108.5523,
-    radiusMeters: 30000,
-    description: "Pesisir Utara, Sentra Mega Mendung dan Singa Barong",
-  },
-  {
-    id: "pekalongan",
-    name: "Pekalongan",
-    shortName: "Pekalongan",
-    province: "Jawa Tengah",
-    island: "Jawa",
-    lat: -6.8886,
-    lng: 109.6753,
-    radiusMeters: 32000,
-    description: "Kota Batik Dunia, Sentra Jlamprang dan Buketan",
-  },
-  {
-    id: "yogyakarta",
-    name: "D.I. Yogyakarta",
-    shortName: "Yogyakarta",
-    province: "D.I. Yogyakarta",
-    island: "Jawa",
-    lat: -7.7956,
-    lng: 110.3695,
-    radiusMeters: 32000,
-    description: "Keraton Mataram, Sentra Kawung, Parang, dan Sekar Jagad",
-  },
-  {
-    id: "surakarta",
-    name: "Surakarta (Solo)",
-    shortName: "Solo",
-    province: "Jawa Tengah",
-    island: "Jawa",
-    lat: -7.5755,
-    lng: 110.8243,
-    radiusMeters: 32000,
-    description: "Keraton Kasunanan, Sentra Sido Mukti, Truntum, dan Wirasat",
-  },
-  {
-    id: "lasem",
-    name: "Lasem (Rembang)",
-    shortName: "Lasem",
-    province: "Jawa Tengah",
-    island: "Jawa",
-    lat: -6.6917,
-    lng: 111.4528,
-    radiusMeters: 30000,
-    description: "Pusaka Tiongkok Kecil, Sentra Batik Liong Merah Getih Pitik",
-  },
-  {
-    id: "kalimantan",
-    name: "Kalimantan",
-    shortName: "Kalimantan",
-    province: "Kalimantan Tengah",
-    island: "Kalimantan",
-    lat: -1.6815,
-    lng: 113.3823,
-    radiusMeters: 75000,
-    description: "Wastra Dayak Batang Garing (Pohon Kehidupan) dan Tameng Telawang",
-  },
-];
-
-// ── 10 Kartu Motif Resmi Acuan Tim ───────────────────────────────────────────
-export interface MotifCard {
-  id: string;
-  name: string;
-  regionId: string;
-  regionLabel: string;
-  category: string;
-  philosophy: string;
-  image: string;
-}
-
-export const MOTIF_CARDS: MotifCard[] = [
-  {
-    id: "batik_kawung",
-    name: "Batik Kawung",
-    regionId: "yogyakarta",
-    regionLabel: "D.I. Yogyakarta",
-    category: "Batik Keraton",
-    philosophy: "Empat kelopak aren melambangkan kemurnian hati, keadilan, dan harmoni semesta.",
-    image: "/images/motifs/batik_kawung.webp",
-  },
-  {
-    id: "batik_parang",
-    name: "Batik Parang",
-    regionId: "yogyakarta",
-    regionLabel: "D.I. Yogyakarta",
-    category: "Batik Larangan",
-    philosophy: "Ombak samudra tak terputus lambang keteguhan kepemimpinan yang pantang surut.",
-    image: "/images/motifs/batik_parang.webp",
-  },
-  {
-    id: "batik_mega_mendung",
-    name: "Batik Mega Mendung",
-    regionId: "cirebon",
-    regionLabel: "Cirebon",
-    category: "Batik Pesisiran",
-    philosophy: "Awan berundak penyejuk di tengah terik, lambang kesabaran dan ketenangan emosi.",
-    image: "/images/motifs/batik_mega_mendung_v2.webp",
-  },
-  {
-    id: "batik_jlamprang",
-    name: "Batik Jlamprang",
-    regionId: "pekalongan",
-    regionLabel: "Pekalongan",
-    category: "Batik Pesisiran",
-    philosophy: "Pola geometris delapan penjuru mata angin hasil akulturasi seni Patola Gujarat dan Arab.",
-    image: "/images/motifs/batik_jlamprang.webp",
-  },
-  {
-    id: "batik_betawi",
-    name: "Batik Betawi",
-    regionId: "jakarta",
-    regionLabel: "DKI Jakarta",
-    category: "Batik Pesisiran",
-    philosophy: "Ornamen Ondel-ondel dan pucuk rebung menyuarakan keramahan dan keceriaan warga ibu kota.",
-    image: "/images/motifs/batik_betawi.webp",
-  },
-  {
-    id: "batik_liong",
-    name: "Batik Liong",
-    regionId: "lasem",
-    regionLabel: "Lasem (Rembang)",
-    category: "Batik Pesisiran",
-    philosophy: "Naga Liong dan warna merah getih pitik wujud akulturasi Tionghoa-Jawa lambang kemakmuran.",
-    image: "/images/motifs/batik_liong.webp",
-  },
-  {
-    id: "batik_dayak",
-    name: "Batik Dayak",
-    regionId: "kalimantan",
-    regionLabel: "Kalimantan",
-    category: "Batik Nusantara",
-    philosophy: "Pohon Batang Garing dan tameng telawang penjaga keseimbangan alam dan kehidupan manusia.",
-    image: "/images/motifs/batik_dayak.webp",
-  },
-  {
-    id: "batik_singa_barong",
-    name: "Batik Singa Barong",
-    regionId: "cirebon",
-    regionLabel: "Cirebon",
-    category: "Batik Keraton",
-    philosophy: "Kereta kencana Paksi Naga Liman Kasepuhan Cirebon, simbol akulturasi empat peradaban dunia.",
-    image: "/images/motifs/batik_singa_barong_v2.webp",
-  },
-  {
-    id: "batik_sidomukti",
-    name: "Batik Sido Mukti",
-    regionId: "surakarta",
-    regionLabel: "Surakarta (Solo)",
-    category: "Batik Keraton",
-    philosophy: "Sido Mukti melambangkan harapan hidup mulia, sejahtera lahir batin, dan berbudi pekerti.",
-    image: "/images/motifs/batik_sidomukti.webp",
-  },
-  {
-    id: "batik_buketan",
-    name: "Batik Buketan",
-    regionId: "pekalongan",
-    regionLabel: "Pekalongan",
-    category: "Batik Pesisiran",
-    philosophy: "Rangkaian karangan bunga mekar cerah khas pesisir Pekalongan hasil pengaruh seni rupa Eropa.",
-    image: "/images/motifs/batik_buketan.webp",
-  },
-];
 
 const ROUND_DURATION = 90;
 
@@ -366,7 +74,7 @@ export default function SortirPetaPage() {
   const [recentNotification, setRecentNotification] = useState<string | null>(null);
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const dropTimeRef = useRef<number>(Date.now());
+  const dropTimeRef = useRef<number>(0);
 
   const handleToggleSound = () => {
     const next = !soundOn;
@@ -494,7 +202,7 @@ export default function SortirPetaPage() {
         }, 900);
       }
     },
-    [currentCard, gameState, queue, streak, addXp, endGame]
+    [currentCard, gameState, queue, streak, addXp, endGame, unlockMotif]
   );
 
   const pointerStartPosRef = useRef({ x: 0, y: 0 });

@@ -9,7 +9,6 @@ import {
   Sparkles,
   MessageSquare,
   Compass,
-  ArrowRight,
   BookOpen,
   CheckCircle2,
   HelpCircle,

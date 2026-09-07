@@ -12,14 +12,12 @@ import {
   Sparkles,
   MapPin,
   Search,
-  CheckCircle2,
   ArrowRight,
   MessageSquare,
   FlipHorizontal,
   AlertCircle,
   Cpu,
   Zap,
-  BarChart2,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";

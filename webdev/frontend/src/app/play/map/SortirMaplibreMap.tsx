@@ -3,6 +3,7 @@
 import React, { useMemo, useState, useRef, useCallback, useEffect } from "react";
 import Map, { Source, Layer, Marker, NavigationControl, MapRef } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import type { StyleSpecification } from "maplibre-gl";
 import Image from "next/image";
 import { Check, Layers, ZoomIn, Sun, Moon, Satellite, Compass } from "lucide-react";
 import regionsGeoData from "@/data/regionsGeo.json";
@@ -40,7 +41,7 @@ interface SortirMaplibreMapProps {
 type TileTheme = "dark" | "satellite" | "osm";
 
 // Reliable, 100% free basemap tile styles (No API key needed)
-const BASEMAP_STYLES: Record<TileTheme, any> = {
+const BASEMAP_STYLES: Record<TileTheme, StyleSpecification> = {
   dark: {
     version: 8,
     sources: {
@@ -196,10 +197,30 @@ export const REGION_THEME_COLORS: Record<
   },
 };
 
+interface BoundaryParticle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  alpha: number;
+  decay: number;
+  color: string;
+}
+
+interface GeoJsonFeature {
+  type: "Feature";
+  properties: Record<string, unknown> & { id: string };
+  geometry: {
+    type: string;
+    coordinates: number[][][];
+  };
+}
+
 export default function SortirMaplibreMap({
   regions,
   placedItems,
-  activeCard,
+  activeCard: _activeCard,
   selectedCard,
   flashRegion,
   onSelectRegion,
@@ -209,6 +230,8 @@ export default function SortirMaplibreMap({
 }: SortirMaplibreMapProps) {
   const mapRef = useRef<MapRef | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const particleCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const particlesRef = useRef<BoundaryParticle[]>([]);
   const [theme, setTheme] = useState<TileTheme>("osm");
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
 
@@ -222,6 +245,126 @@ export default function SortirMaplibreMap({
     },
     [onHoverRegionChange]
   );
+
+  // Resize canvas to match map container
+  useEffect(() => {
+    const updateCanvasSize = () => {
+      if (containerRef.current && particleCanvasRef.current) {
+        particleCanvasRef.current.width = containerRef.current.clientWidth;
+        particleCanvasRef.current.height = containerRef.current.clientHeight;
+      }
+    };
+    updateCanvasSize();
+    window.addEventListener("resize", updateCanvasSize);
+    return () => window.removeEventListener("resize", updateCanvasSize);
+  }, []);
+
+  // Continuous animation loop for boundary particles radiating outward
+  useEffect(() => {
+    const canvas = particleCanvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Spawn boundary particles if hoveredRegionId && isDraggingCard
+      if (isDraggingCard && hoveredRegionId && mapRef.current) {
+        const map = mapRef.current.getMap();
+        if (map) {
+          const rawData = regionsGeoData as unknown as { features: GeoJsonFeature[] };
+          const feature = rawData.features.find((f) => f.properties.id === hoveredRegionId);
+          if (feature && feature.geometry.coordinates[0]) {
+            const coords = feature.geometry.coordinates[0];
+            for (let i = 0; i < 4; i++) {
+              const idx = Math.floor(Math.random() * (coords.length - 1));
+              const p1 = coords[idx];
+              const p2 = coords[idx + 1] || coords[0];
+              const t = Math.random();
+              const lng = p1[0] + (p2[0] - p1[0]) * t;
+              const lat = p1[1] + (p2[1] - p1[1]) * t;
+              const pt = map.project([lng, lat]);
+
+              const angle = Math.random() * Math.PI * 2;
+              const speed = Math.random() * 1.8 + 0.6;
+              const colors = ["#F59E0B", "#FCD34D", "#D97706", "#FFFFFF", "#FEF08A"];
+
+              particlesRef.current.push({
+                x: pt.x,
+                y: pt.y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed - 0.6,
+                radius: Math.random() * 2.5 + 1.2,
+                alpha: 1.0,
+                decay: Math.random() * 0.025 + 0.015,
+                color: colors[Math.floor(Math.random() * colors.length)],
+              });
+            }
+          }
+        }
+      }
+
+      // Update & render active particles
+      const alive: BoundaryParticle[] = [];
+      for (let i = 0; i < particlesRef.current.length; i++) {
+        const p = particlesRef.current[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+
+        if (p.alpha > 0) {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+          alive.push(p);
+        }
+      }
+      particlesRef.current = alive;
+
+      animId = requestAnimationFrame(render);
+    };
+
+    animId = requestAnimationFrame(render);
+    return () => cancelAnimationFrame(animId);
+  }, [isDraggingCard, hoveredRegionId]);
+
+  // Flash burst when drop occurs (success or error)
+  useEffect(() => {
+    if (!flashRegion || !mapRef.current) return;
+    const region = regions.find((r) => r.id === flashRegion.id);
+    if (!region) return;
+    const map = mapRef.current.getMap();
+    if (!map) return;
+    const pt = map.project([region.lng, region.lat]);
+    const isCorrect = flashRegion.status === "correct";
+    const colors = isCorrect
+      ? ["#10B981", "#34D399", "#F59E0B", "#FCD34D", "#FFFFFF"]
+      : ["#EF4444", "#F87171", "#DC2626", "#FCA5A5"];
+
+    for (let i = 0; i < 35; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 1.5;
+      particlesRef.current.push({
+        x: pt.x,
+        y: pt.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.2,
+        radius: Math.random() * 3 + 1.5,
+        alpha: 1.0,
+        decay: Math.random() * 0.025 + 0.015,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+  }, [flashRegion, regions]);
 
   // Real-time Drag Detection: as user moves the dragged card, query map polygon and marker proximity
   useEffect(() => {
@@ -240,7 +383,7 @@ export default function SortirMaplibreMap({
             layers: ["regions-fill"],
           });
           if (features && features.length > 0) {
-            const fid = features[0].properties?.id;
+            const fid = (features[0].properties as { id?: string })?.id;
             if (fid) {
               handleRegionHover(fid);
               return;
@@ -300,65 +443,68 @@ export default function SortirMaplibreMap({
   // Prepare dynamic GeoJSON mapping properties for active regions with distinct rich colors per region
   const interactiveGeoJson = useMemo(() => {
     const activeIds = new Set(regions.map((r) => r.id));
-    const featureCollection = { ...(regionsGeoData as any) };
-    featureCollection.features = featureCollection.features
-      .filter((feature: any) => activeIds.has(feature.properties.id))
-      .map((feature: any) => {
-      const regionId = feature.properties.id;
-      const placed = !!placedItems[regionId];
-      const isHovered = hoveredRegionId === regionId;
-      const isSelected = selectedCard?.regionId === regionId;
-      const isFlashCorrect = flashRegion?.id === regionId && flashRegion?.status === "correct";
-      const isFlashWrong = flashRegion?.id === regionId && flashRegion?.status === "wrong";
+    const rawData = regionsGeoData as unknown as { features: GeoJsonFeature[] };
+    const featureCollection = {
+      type: "FeatureCollection" as const,
+      features: rawData.features
+        .filter((feature) => activeIds.has(feature.properties.id))
+        .map((feature) => {
+          const regionId = feature.properties.id;
+          const placed = !!placedItems[regionId];
+          const isHovered = hoveredRegionId === regionId;
+          const isSelected = selectedCard?.regionId === regionId;
+          const isFlashCorrect = flashRegion?.id === regionId && flashRegion?.status === "correct";
+          const isFlashWrong = flashRegion?.id === regionId && flashRegion?.status === "wrong";
 
-      const themeColor = REGION_THEME_COLORS[regionId] || {
-        fill: "#0EA5E9",
-        border: "#0284C7",
-        glow: "#38BDF8",
-        name: regionId,
-      };
+          const themeColor = REGION_THEME_COLORS[regionId] || {
+            fill: "#0EA5E9",
+            border: "#0284C7",
+            glow: "#38BDF8",
+            name: regionId,
+          };
 
-      // Rich colorful polygon fill exactly like Image 2
-      let fillColor = themeColor.fill;
-      let fillOpacity = 0.55; // Rich translucent coverage: roads underneath visible, colors pop boldly!
-      let lineColor = themeColor.border;
-      let lineWidth = 3.0;
+          let fillColor = themeColor.fill;
+          let fillOpacity = 0.55;
+          let lineColor = themeColor.border;
+          let lineWidth = 3.0;
 
-      if (placed || isFlashCorrect) {
-        fillColor = "#10B981"; // Emerald green for successfully placed
-        fillOpacity = 0.65;
-        lineColor = "#059669";
-        lineWidth = 4.0;
-      } else if (isFlashWrong) {
-        fillColor = "#EF4444";
-        fillOpacity = 0.70;
-        lineColor = "#DC2626";
-        lineWidth = 4.0;
-      } else if (isHovered) {
-        fillColor = themeColor.glow;
-        fillOpacity = 0.75;
-        lineColor = "#FFFFFF"; // High-contrast crisp white border on hover
-        lineWidth = 4.5;
-      } else if (isSelected) {
-        fillColor = "#F59E0B";
-        fillOpacity = 0.70;
-        lineColor = "#FFFFFF";
-        lineWidth = 4.0;
-      }
+          if (placed || isFlashCorrect) {
+            fillColor = "#10B981";
+            fillOpacity = 0.65;
+            lineColor = "#059669";
+            lineWidth = 4.0;
+          } else if (isFlashWrong) {
+            fillColor = "#EF4444";
+            fillOpacity = 0.70;
+            lineColor = "#DC2626";
+            lineWidth = 4.0;
+          } else if (isHovered) {
+            fillColor = themeColor.glow;
+            fillOpacity = 0.75;
+            lineColor = "#FFFFFF";
+            lineWidth = 4.5;
+          } else if (isSelected) {
+            fillColor = "#F59E0B";
+            fillOpacity = 0.70;
+            lineColor = "#FFFFFF";
+            lineWidth = 4.0;
+          }
 
-      return {
-        ...feature,
-        properties: {
-          ...feature.properties,
-          fillColor,
-          fillOpacity,
-          lineColor,
-          lineWidth,
-        },
-      };
-    });
+          return {
+            ...feature,
+            type: "Feature" as const,
+            properties: {
+              ...feature.properties,
+              fillColor,
+              fillOpacity,
+              lineColor,
+              lineWidth,
+            },
+          };
+        }),
+    };
     return featureCollection;
-  }, [placedItems, hoveredRegionId, selectedCard, flashRegion]);
+  }, [regions, placedItems, hoveredRegionId, selectedCard, flashRegion]);
 
   return (
     <div
@@ -439,6 +585,12 @@ export default function SortirMaplibreMap({
         </button>
       </div>
 
+      {/* Boundary Particles & Burst FX Canvas Overlay */}
+      <canvas
+        ref={particleCanvasRef}
+        className="absolute inset-0 pointer-events-none z-10"
+      />
+
       <Map
         ref={mapRef}
         initialViewState={{
@@ -452,10 +604,10 @@ export default function SortirMaplibreMap({
         onLoad={() => {
           mapRef.current?.resize();
         }}
-        onMouseMove={(e: any) => {
+        onMouseMove={(e) => {
           if (isDraggingCard) return;
           if (e.features && e.features.length > 0) {
-            const featureId = e.features[0].properties?.id;
+            const featureId = (e.features[0].properties as { id?: string })?.id;
             if (featureId && featureId !== hoveredRegionId) {
               handleRegionHover(featureId);
             }
@@ -466,9 +618,9 @@ export default function SortirMaplibreMap({
         onMouseLeave={() => {
           if (!isDraggingCard) handleRegionHover(null);
         }}
-        onClick={(e: any) => {
+        onClick={(e) => {
           if (e.features && e.features.length > 0) {
-            const featureId = e.features[0].properties?.id;
+            const featureId = (e.features[0].properties as { id?: string })?.id;
             if (featureId) onSelectRegion(featureId);
           }
         }}
@@ -477,7 +629,7 @@ export default function SortirMaplibreMap({
         <NavigationControl position="bottom-right" />
 
         {/* Polygons with colorful area styling like the user's reference image */}
-        <Source id="regions-source" type="geojson" data={interactiveGeoJson}>
+        <Source id="regions-source" type="geojson" data={interactiveGeoJson as unknown as GeoJSON.FeatureCollection}>
           {/* Inner Fill with distinct rich area colors (matching Image 2) */}
           <Layer
             id="regions-fill"
@@ -531,7 +683,7 @@ export default function SortirMaplibreMap({
               longitude={region.lng}
               latitude={region.lat}
               anchor="center"
-              onClick={(e: any) => {
+              onClick={(e) => {
                 e.originalEvent.stopPropagation();
                 onSelectRegion(region.id);
                 flyToRegion(region);
