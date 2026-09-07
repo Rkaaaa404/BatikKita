@@ -367,7 +367,7 @@ export default function ScannerPage() {
 
       <main className="flex-1">
         {/* ─── Hero Header Section with Dedicated Batik Lens Imagery (Full-bleed like Beranda) ─── */}
-        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 text-center min-h-[520px] lg:min-h-[580px] flex items-center justify-center">
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-24 px-6 lg:px-16 min-h-[580px] lg:min-h-[640px] flex items-center">
           {/* Full-bleed Background Art */}
           <Image
             src="/images/batik-tab-batik-lens.webp"
@@ -382,12 +382,15 @@ export default function ScannerPage() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/60 z-0" />
 
           {/* Golden glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
 
-          <div className="max-w-3xl mx-auto relative z-10">
-            <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-4 backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>EDGE AI CLASSIFIER • ON-DEVICE INFERENCE</span>
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-7 text-left">
+              <div className="flex items-center gap-2.5 mb-5">
+              <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+              <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+                Edge AI Classifier • On-Device Inference
+              </span>
             </div>
 
             <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
@@ -404,9 +407,10 @@ export default function ScannerPage() {
               Instan
             </h1>
 
-            <p className="font-narrative text-base text-white/80 max-w-xl mx-auto leading-relaxed">
+            <p className="font-narrative text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
               Arahkan kamera atau unggah foto kain batik Anda. Model Edge AI memproses citra langsung di perangkat Anda tanpa mengunggah foto ke server luar.
             </p>
+            </div>
           </div>
         </section>
 
@@ -722,7 +726,7 @@ export default function ScannerPage() {
                             className="w-full sm:flex-1 text-center inline-flex items-center justify-center gap-2 bg-[#713f2c] text-[#D4AF37] font-display font-bold text-sm py-3.5 px-4 rounded-xl hover:bg-[#583122] transition-colors shadow-sm"
                           >
                             <MessageSquare className="w-4 h-4" />
-                            Batik Ask — Tanya Lebih Lanjut
+                            Batik Ask - Tanya Lebih Lanjut
                           </Link>
                           <Link
                             href="/play"

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { Sparkles, Send, CheckCircle2, Zap } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { classifyBatikImage } from "@/lib/onnxClassifier";
 
 interface SampleMotif {
@@ -164,8 +165,8 @@ export function InteractivePreview() {
         >
           {/* Chat Header */}
           <div className="flex items-center gap-3 pb-4 mb-4 border-b border-[#d3ccc2]">
-            <div className="w-10 h-10 bg-[#713f2c] rounded-full flex items-center justify-center text-[#D4AF37]">
-              <Sparkles className="w-5 h-5" />
+            <div className="w-10 h-10 bg-[#713f2c] rounded-full flex items-center justify-center text-[#D4AF37] relative overflow-hidden border border-[#D4AF37]/30 shadow-sm">
+              <Image src="/images/Logo Tanya Sang Empu.png" alt="Batik Ask Logo" fill sizes="40px" className="object-cover" />
             </div>
             <div>
               <h4 className="font-display font-semibold text-sm text-[#2d2b38]">Batik Ask</h4>

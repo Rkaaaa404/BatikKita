@@ -163,9 +163,11 @@ export default function ArcadeHubPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
-                <Gamepad2 className="w-4 h-4" />
-                <span>ARENA EDU-GAMES BATIK NUSANTARA</span>
+              <div className="flex items-center gap-2.5 mb-5">
+                <Gamepad2 className="w-5 h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+                  Platform Edukasi Batik Nusantara
+                </span>
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
@@ -177,7 +179,7 @@ export default function ArcadeHubPage() {
                     textShadow: "0 2px 24px rgba(212,175,55,0.45)",
                   }}
                 >
-                  Belajar Ragam Batik
+                  Belajar Ragam Hias
                 </span>
                 <br />
                 Sambil Bermain.
@@ -189,7 +191,7 @@ export default function ArcadeHubPage() {
 
               <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/80">
                 <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 4 Mode Permainan Aktif
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> 4 Mode Permainan Interaktif
                 </span>
                 <span className="flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-lg backdrop-blur-sm border border-white/10 shadow-xs">
                   <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" /> Gamifikasi Berbasis Peringkat Budaya

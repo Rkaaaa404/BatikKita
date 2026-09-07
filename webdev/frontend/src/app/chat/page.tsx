@@ -15,10 +15,13 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  Maximize,
+  Minimize,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
+import { Footer } from "@/components/landing/Footer";
 
 interface Message {
   id: string;
@@ -222,6 +225,7 @@ export default function ChatPage() {
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const chatSectionRef = useRef<HTMLDivElement>(null);
   const chipsRef = useRef<HTMLDivElement>(null);
@@ -404,9 +408,11 @@ export default function ChatPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
-                <Sparkles className="w-4 h-4" />
-                <span>AI BUDAYAWAN • DIALOG KEARIFAN BATIK</span>
+              <div className="flex items-center gap-2.5 mb-5">
+                <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+                  AI Budayawan • Dialog Kearifan Batik
+                </span>
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
@@ -464,11 +470,11 @@ export default function ChatPage() {
                   <div className="flex items-center gap-3">
                     <div className="relative w-14 h-14 rounded-2xl bg-[#713f2c] border-2 border-[#D4AF37]/50 p-1 flex items-center justify-center shrink-0 shadow-lg">
                       <Image
-                        src="/images/logo-batik-kita.png"
+                        src="/images/Logo Tanya Sang Empu.png"
                         alt="Logo Sang Empu"
                         width={48}
                         height={48}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover rounded-xl"
                       />
                       <span className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-[#1A1614]" />
                     </div>
@@ -489,29 +495,22 @@ export default function ChatPage() {
                 </div>
 
                 {/* Cultural Quote */}
-                <div className="bg-black/30 border border-[#D4AF37]/20 rounded-xl p-4 mb-5">
-                  <p className="font-narrative text-xs text-white/80 italic leading-relaxed">
-                    &ldquo;Saben lumping kain mori dadi papan donga, saben cantingan dadi sujud syukur. Takonana apa wae, ayo padha nguri-uri kabudayan luhur.&rdquo;
+                <div className="bg-black/30 border border-[#D4AF37]/20 rounded-xl p-4 mb-5 relative">
+                  <p className="font-narrative text-xs text-white/85 italic leading-relaxed relative z-10">
+                    &ldquo;Batik bukan sekadar gambar pada kain. Ia adalah perlambang kehidupan, doa yang digoreskan dengan canting dan malam.&rdquo;
                   </p>
-                  <span className="block text-[10px] text-[#D4AF37] font-display font-bold mt-2 text-right">
-                    — Petuah Sang Empu
+                  <span className="block text-[10px] text-[#D4AF37] font-display font-bold mt-3 text-right relative z-10">
+                    - Go Tik Swan (Panembahan Hardjonagoro)
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center">
-                    <span className="block text-[10px] font-display text-white/50 uppercase">
-                      Cakupan Pakem
+                <div className="mb-5">
+                  <div className="bg-emerald-500/10 border border-emerald-500/25 rounded-xl p-3 flex items-center justify-center gap-2.5 shadow-inner backdrop-blur-sm">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
                     </span>
-                    <span className="text-xs font-display font-bold text-[#D4AF37]">
-                      Solo, Yogya & Pesisir
-                    </span>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-xl p-2.5 text-center">
-                    <span className="block text-[10px] font-display text-white/50 uppercase">
-                      Ketersediaan
-                    </span>
-                    <span className="text-xs font-display font-bold text-emerald-400">
+                    <span className="text-[11px] font-display font-bold text-emerald-400 tracking-wider uppercase">
                       24 Jam Siap Menjawab
                     </span>
                   </div>
@@ -535,10 +534,14 @@ export default function ChatPage() {
         <section
           ref={chatSectionRef}
           id="ruang-dialog"
-          className="max-w-5xl mx-auto px-4 sm:px-6 py-12 w-full"
+          className={
+            isFullscreen
+              ? "fixed inset-0 z-[100] bg-[#faf8f4] p-4 sm:p-6 lg:p-8 flex flex-col h-screen overflow-hidden"
+              : "max-w-5xl mx-auto px-4 sm:px-6 py-12 w-full"
+          }
         >
           {/* Section Heading */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -554,13 +557,23 @@ export default function ChatPage() {
               </p>
             </div>
 
-            <Link
-              href="/play"
-              className="inline-flex items-center gap-1.5 text-xs font-display font-semibold text-[#713f2c] hover:text-white bg-[#faf8f4] hover:bg-[#713f2c] border border-[#713f2c]/30 px-3.5 py-2 rounded-xl transition-all shadow-xs shrink-0 self-start sm:self-auto"
-            >
-              <Compass className="w-3.5 h-3.5" />
-              <span>Jelajah Arena Arcade</span>
-            </Link>
+            <div className="flex items-center gap-2.5 self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                className="inline-flex items-center gap-1.5 text-xs font-display font-semibold text-[#713f2c] hover:text-white bg-[#faf8f4] hover:bg-[#713f2c] border border-[#713f2c]/30 px-3.5 py-2 rounded-xl transition-all shadow-xs shrink-0 cursor-pointer"
+              >
+                {isFullscreen ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
+                <span className="hidden sm:inline">{isFullscreen ? "Tutup Layar Penuh" : "Layar Penuh"}</span>
+              </button>
+              <Link
+                href="/play"
+                className="inline-flex items-center gap-1.5 text-xs font-display font-semibold text-[#713f2c] hover:text-white bg-[#faf8f4] hover:bg-[#713f2c] border border-[#713f2c]/30 px-3.5 py-2 rounded-xl transition-all shadow-xs shrink-0"
+              >
+                <Compass className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Jelajah Arena</span>
+              </Link>
+            </div>
           </div>
 
           {/* Quick Question Chips with Left/Right Scroll Controls */}
@@ -639,16 +652,16 @@ export default function ChatPage() {
           </div>
 
           {/* Chat Container Card */}
-          <div className="bg-white border border-[#d3ccc2] rounded-2xl shadow-md overflow-hidden flex flex-col">
+          <div className={`bg-white border border-[#d3ccc2] rounded-2xl shadow-md overflow-hidden flex flex-col ${isFullscreen ? 'flex-1 min-h-0' : ''}`}>
             {/* Header of Chat Card */}
-            <div className="bg-[#faf8f4] border-b border-[#d3ccc2] px-5 py-3.5 flex items-center justify-between">
+            <div className="bg-[#faf8f4] border-b border-[#d3ccc2] px-5 py-3.5 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-[#713f2c] text-[#D4AF37] flex items-center justify-center font-display font-bold text-xs shadow-xs">
-                  <Bot className="w-4 h-4" />
+                <div className="w-8 h-8 rounded-lg bg-[#713f2c] text-[#D4AF37] flex items-center justify-center font-display font-bold text-xs shadow-xs relative overflow-hidden">
+                  <Image src="/images/Logo Tanya Sang Empu.png" alt="Sang Empu" fill sizes="32px" className="object-cover" />
                 </div>
                 <div>
                   <span className="font-display font-bold text-sm text-[#2d2b38] block leading-tight">
-                    Batik Ask — Sang Empu Nusantara
+                    Batik Ask - Sang Empu Nusantara
                   </span>
                   <span className="text-[11px] text-[#8d786a] font-narrative">
                     Menjawab dengan bahasa santun & rujukan serat
@@ -665,7 +678,7 @@ export default function ChatPage() {
             {/* Chat Messages Log */}
             <div
               ref={scrollRef}
-              className="flex-1 overflow-y-auto space-y-5 p-5 sm:p-6 bg-[#fcfbf9] min-h-[380px] max-h-[520px] scrollbar-thin scrollbar-thumb-[#d3ccc2] scrollbar-track-transparent"
+              className={`flex-1 overflow-y-auto space-y-5 p-5 sm:p-6 bg-[#fcfbf9] min-h-[380px] scrollbar-thin scrollbar-thumb-[#d3ccc2] scrollbar-track-transparent ${isFullscreen ? '' : 'max-h-[520px]'}`}
             >
               <AnimatePresence initial={false}>
                 {messages.map((msg) => (
@@ -677,13 +690,13 @@ export default function ChatPage() {
                   >
                     {/* Avatar */}
                     <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border relative overflow-hidden ${
                         msg.role === "user"
                           ? "bg-[#2d2b38] text-white border-[#2d2b38]"
                           : "bg-[#713f2c] text-[#D4AF37] border-[#D4AF37]/40 shadow-xs"
                       }`}
                     >
-                      {msg.role === "user" ? <User className="w-4 h-4" /> : <Bot className="w-5 h-5" />}
+                      {msg.role === "user" ? <User className="w-4 h-4" /> : <Image src="/images/Logo Tanya Sang Empu.png" alt="Sang Empu" fill sizes="36px" className="object-cover" />}
                     </div>
 
                     {/* Bubble */}
@@ -714,8 +727,8 @@ export default function ChatPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="flex gap-3.5 flex-row"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 shadow-xs">
-                    <Bot className="w-5 h-5" />
+                  <div className="w-9 h-9 rounded-xl bg-[#713f2c] text-[#D4AF37] border border-[#D4AF37]/40 flex items-center justify-center shrink-0 shadow-xs relative overflow-hidden">
+                    <Image src="/images/Logo Tanya Sang Empu.png" alt="Sang Empu" fill sizes="36px" className="object-cover" />
                   </div>
                   <div className="bg-white border border-[#d3ccc2]/80 rounded-2xl rounded-tl-none px-5 py-4 flex items-center gap-2.5 shadow-xs">
                     <span className="text-xs text-[#8d786a] font-narrative">
@@ -763,6 +776,7 @@ export default function ChatPage() {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -201,9 +201,11 @@ export default function BatikpediaPage() {
               transition={{ duration: 0.6 }}
               className="lg:col-span-7 text-left"
             >
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
-                <Sparkles className="w-4 h-4" />
-                <span>ENSIKLOPEDIA & SENTRA BUDAYA NUSANTARA</span>
+              <div className="flex items-center gap-2.5 mb-5">
+                <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+                <span className="text-white/90 font-display text-sm font-medium tracking-wide">
+                  Ensiklopedia & Sentra Budaya Nusantara
+                </span>
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
