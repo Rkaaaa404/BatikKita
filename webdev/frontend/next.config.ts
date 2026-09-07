@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  /* Vercel handles serverless outputs natively. Standalone is only needed for Docker */
+  ...(process.env.BUILD_STANDALONE === "true" ? { output: "standalone" } : {}),
 };
 
 export default nextConfig;
