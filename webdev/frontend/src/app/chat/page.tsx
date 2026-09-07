@@ -410,7 +410,8 @@ export default function ChatPage() {
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
-                <span className="font-philosopher tracking-wide">Batik Ask</span>:{" "}
+                <span className="font-philosopher tracking-wide">Batik Ask:</span>
+                <br />
                 <span
                   style={{
                     color: "#D4AF37",

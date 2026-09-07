@@ -391,7 +391,8 @@ export default function ScannerPage() {
             </div>
 
             <h1 className="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight mb-4">
-              <span className="font-philosopher tracking-wide">Batik Lens</span>:{" "}
+              <span className="font-philosopher tracking-wide">Batik Lens:</span>
+              <br />
               <span
                 style={{
                   color: "#D4AF37",

@@ -22,6 +22,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
+import { Navbar } from "@/components/landing/Navbar";
 import { BATIK_DATASET_20, BatikMotif } from "@/data/batikDataset";
 import { useXp, MasteryTier } from "@/hooks/useXp";
 
@@ -158,68 +159,92 @@ export default function CollectionPage() {
         )}
       </AnimatePresence>
 
-      {/* Header */}
-      <header className="bg-white border-b border-[#d3ccc2] px-6 py-4 flex flex-wrap items-center justify-between sticky top-0 z-40 shadow-xs gap-4">
-        <div className="flex items-center gap-4">
-          <Link
-            href="/play"
-            className="w-10 h-10 rounded-full bg-[#f5f3ef] flex items-center justify-center text-[#713f2c] hover:bg-[#e8e5df] transition-colors border border-[#d3ccc2]/60"
-            title="Kembali ke Batik Arcade"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <div className="flex items-center gap-3">
-            <Image
-              src="/images/logo-batik-kita.png"
-              alt="Logo Batik Kita"
-              width={44}
-              height={44}
-              className="w-11 h-11 object-contain drop-shadow-xs"
-            />
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-philosopher font-bold text-xl text-[#713f2c]">Batik Kita</span>
-                <span className="text-xs text-[#d3ccc2]">/</span>
-                <h1 className="font-display font-bold text-base text-[#2d2b38]">Album Koleksi Wastra</h1>
+      {/* Global Navbar */}
+      <Navbar variant="transparent" />
+
+      <main className="flex-1 w-full">
+        {/* ─── Hero Section with Dedicated WebP Imagery ─── */}
+        <section className="relative w-full overflow-hidden bg-[#1A1614] pt-32 pb-20 px-6 lg:px-16 min-h-[480px] lg:min-h-[520px] flex items-center">
+          {/* Background Image: batik-tab-koleksi.jpg */}
+          <Image
+            src="/images/batik-tab-koleksi.jpg"
+            alt="Album Koleksi Wastra Nusantara"
+            fill
+            sizes="100vw"
+            className="object-cover object-center"
+            priority
+          />
+
+          {/* Contrast overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/65 to-black/30 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1614] via-transparent to-black/50 z-0" />
+
+          {/* Golden glow accents */}
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#713f2c]/25 rounded-full blur-3xl pointer-events-none z-0" />
+
+          <div className="max-w-[1280px] mx-auto w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-7 text-left"
+            >
+              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/15 border border-[#D4AF37]/35 text-[#D4AF37] text-xs font-display font-bold px-4 py-1.5 rounded-full mb-5 backdrop-blur-sm shadow-sm">
+                <Crown className="w-4 h-4" />
+                <span>PENCAPAIAN & TINGKAT MASTERY CAP</span>
               </div>
-              <p className="text-xs text-[#8d786a]">Kartu Pencapaian & Tingkat Mastery Cap</p>
-            </div>
-          </div>
-        </div>
 
-        {/* Progress Tracker & Badges */}
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Gold Mastery Count */}
-          <div className="hidden sm:flex items-center gap-1.5 bg-[#FFF9E6] border border-[#D4AF37]/40 px-3 py-1.5 rounded-xl text-xs font-display">
-            <Crown className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span className="font-bold text-[#713f2c]">{goldCount}</span>
-            <span className="text-[#8d786a] text-[10px]">Mahakarya</span>
-          </div>
+              <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
+                <span className="font-philosopher tracking-wide">Album Koleksi:</span>
+                <br />
+                <span
+                  style={{
+                    color: "#D4AF37",
+                    textShadow: "0 2px 20px rgba(212,175,55,0.4)",
+                  }}
+                >
+                  Wastra
+                </span>{" "}
+                Nusantara.
+              </h1>
 
-          {/* Progress Tracker */}
-          <div className="flex items-center gap-3 bg-[#f5f3ef] px-4 py-2 rounded-xl border border-[#d3ccc2]">
-            <div className="flex flex-col">
-              <span className="text-[10px] text-[#8d786a] font-display font-bold uppercase tracking-wider">
-                Koleksi Terbuka
-              </span>
-              <span className="text-sm font-bold text-[#713f2c]">
-                {unlockedCount} / {totalCards} Motif ({progressPercent}%)
-              </span>
-            </div>
-            <div className="w-24 sm:w-28 h-2 bg-[#d3ccc2] rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progressPercent}%` }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="h-full bg-gradient-to-r from-[#B87333] via-[#D4AF37] to-[#10B981]"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+              <p className="font-narrative text-base sm:text-lg text-white/80 max-w-xl leading-relaxed mb-6">
+                Telusuri koleksi kartu budaya yang telah Anda buka. Selesaikan tantangan Batik Cap tingkat mahakarya untuk mendapatkan bingkai emas berkilau.
+              </p>
 
-      {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto w-full p-6 lg:p-8 space-y-6">
+              <div className="flex flex-wrap items-center gap-4 text-xs font-display text-white/70">
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-2 rounded-lg border border-white/15">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-white/50 uppercase tracking-wider mb-0.5">Koleksi Terbuka</span>
+                    <span className="font-bold text-[#D4AF37] text-sm">{unlockedCount} / {totalCards} Motif ({progressPercent}%)</span>
+                  </div>
+                  <div className="w-20 sm:w-28 h-2 bg-white/20 rounded-full overflow-hidden ml-2">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${progressPercent}%` }}
+                      transition={{ duration: 0.8, ease: "easeOut" }}
+                      className="h-full bg-gradient-to-r from-[#B87333] via-[#D4AF37] to-[#10B981]"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 bg-[#FFF9E6]/10 px-3 py-2 rounded-lg border border-[#D4AF37]/30 backdrop-blur-sm">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-white/50 uppercase tracking-wider mb-0.5">Mahakarya Emas</span>
+                    <span className="font-bold text-[#D4AF37] text-sm flex items-center gap-1.5">
+                      <Crown className="w-3.5 h-3.5" />
+                      {goldCount} Kartu
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Content Section */}
+        <div className="max-w-[1280px] mx-auto w-full p-6 lg:p-8 space-y-6">
         {/* Tier Legend & Explanation Banner */}
         <div className="bg-white rounded-2xl p-5 border border-[#d3ccc2] shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -440,6 +465,7 @@ export default function CollectionPage() {
             })}
           </div>
         )}
+        </div>
       </main>
 
       {/* ── Motif Detail Popup Modal ── */}

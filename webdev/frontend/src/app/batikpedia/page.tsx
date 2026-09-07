@@ -176,9 +176,9 @@ export default function BatikpediaPage() {
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik Pedia WebP Imagery ─── */}
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-36 pb-24 px-6 lg:px-16 min-h-[560px] lg:min-h-[620px] flex items-center">
-          {/* Background Image: batik-tab-batikpedia.webp */}
+          {/* Background Image: batik-tab-batik pedia.jpg */}
           <Image
-            src="/images/batik-tab-batikpedia.webp"
+            src="/images/batik-tab-batik pedia.jpg"
             alt="Ensiklopedia Batik Pedia Nusantara"
             fill
             sizes="100vw"
@@ -207,7 +207,8 @@ export default function BatikpediaPage() {
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5">
-                <span className="font-philosopher tracking-wide">Batik Pedia</span>:{" "}
+                <span className="font-philosopher tracking-wide">Batik Pedia:</span>
+                <br />
                 <span
                   style={{
                     color: "#D4AF37",
@@ -215,7 +216,8 @@ export default function BatikpediaPage() {
                   }}
                 >
                   Peta Sentra & Filosofi
-                </span>{" "}
+                </span>
+                <br />
                 Wastra Nusantara.
               </h1>
 

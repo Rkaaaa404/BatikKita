@@ -67,7 +67,8 @@ export function HeroSection() {
 
           {/* Headline */}
           <motion.h1 variants={itemVariants} className="font-display font-bold text-[44px] sm:text-[52px] lg:text-[60px] leading-[1.05] text-white mb-4">
-            <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
+            <span className="font-philosopher tracking-wide">Batik Kita:</span>
+            <br />
             <span
               style={{
                 color: "#D4AF37",

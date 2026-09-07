@@ -169,15 +169,16 @@ export default function ArcadeHubPage() {
               </div>
 
               <h1 className="font-display font-bold text-4xl sm:text-5xl lg:text-[54px] text-white leading-[1.08] tracking-tight mb-5 drop-shadow-md">
-                <span className="font-philosopher tracking-wide">Batik Kita</span>:{" "}
+                <span className="font-philosopher tracking-wide">Batik Arcade:</span>
+                <br />
                 <span
                   style={{
                     color: "#D4AF37",
                     textShadow: "0 2px 24px rgba(212,175,55,0.45)",
                   }}
                 >
-                  Belajar Ragam Hias
-                </span>{" "}
+                  Belajar Ragam Batik
+                </span>
                 <br />
                 Sambil Bermain.
               </h1>
