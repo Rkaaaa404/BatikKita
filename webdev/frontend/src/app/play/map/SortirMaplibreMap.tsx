@@ -197,14 +197,28 @@ export const REGION_THEME_COLORS: Record<
   },
 };
 
-interface BoundaryParticle {
+interface CelebrationParticle {
   x: number;
   y: number;
   vx: number;
   vy: number;
-  radius: number;
+  size: number;
   alpha: number;
   decay: number;
+  color: string;
+  type: "spark" | "confetti" | "star";
+  rotation?: number;
+  rotSpeed?: number;
+  gravity?: number;
+  drag?: number;
+}
+
+interface CelebrationRing {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  alpha: number;
   color: string;
 }
 
@@ -231,7 +245,9 @@ export default function SortirMaplibreMap({
   const mapRef = useRef<MapRef | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const particleCanvasRef = useRef<HTMLCanvasElement | null>(null);
-  const particlesRef = useRef<BoundaryParticle[]>([]);
+  const particlesRef = useRef<CelebrationParticle[]>([]);
+  const ringsRef = useRef<CelebrationRing[]>([]);
+  const animFrameIdRef = useRef<number | null>(null);
   const [theme, setTheme] = useState<TileTheme>("osm");
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
 
@@ -259,85 +275,148 @@ export default function SortirMaplibreMap({
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, []);
 
-  // Continuous animation loop for boundary particles radiating outward
-  useEffect(() => {
-    const canvas = particleCanvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+  // Helper drawing functions for celebration particle types
+  const drawSparkle = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    size: number,
+    color: string,
+    alpha: number,
+    rotation = 0
+  ) => {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, alpha);
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.fillStyle = color;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = color;
+    ctx.beginPath();
+    ctx.moveTo(0, -size * 1.5);
+    ctx.quadraticCurveTo(0, 0, size * 1.5, 0);
+    ctx.quadraticCurveTo(0, 0, 0, size * 1.5);
+    ctx.quadraticCurveTo(0, 0, -size * 1.5, 0);
+    ctx.quadraticCurveTo(0, 0, 0, -size * 1.5);
+    ctx.fill();
+    ctx.restore();
+  };
 
-    let animId: number;
+  const drawConfetti = (ctx: CanvasRenderingContext2D, p: CelebrationParticle) => {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.translate(p.x, p.y);
+    if (p.rotation !== undefined) ctx.rotate(p.rotation);
+    ctx.fillStyle = p.color;
+    ctx.fillRect(-p.size / 2, -p.size / 3, p.size, (p.size / 3) * 2);
+    ctx.restore();
+  };
+
+  const drawSpark = (ctx: CanvasRenderingContext2D, p: CelebrationParticle) => {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.fillStyle = p.color;
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  const drawRing = (ctx: CanvasRenderingContext2D, ring: CelebrationRing) => {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, ring.alpha);
+    ctx.strokeStyle = ring.color;
+    ctx.lineWidth = 2.5;
+    ctx.shadowBlur = 12;
+    ctx.shadowColor = ring.color;
+    ctx.beginPath();
+    ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  // Dedicated celebration rendering loop
+  const startCelebrationLoop = useCallback(() => {
+    if (animFrameIdRef.current !== null) return;
 
     const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Spawn boundary particles if hoveredRegionId && isDraggingCard
-      if (isDraggingCard && hoveredRegionId && mapRef.current) {
-        const map = mapRef.current.getMap();
-        if (map) {
-          const rawData = regionsGeoData as unknown as { features: GeoJsonFeature[] };
-          const feature = rawData.features.find((f) => f.properties.id === hoveredRegionId);
-          if (feature && feature.geometry.coordinates[0]) {
-            const coords = feature.geometry.coordinates[0];
-            for (let i = 0; i < 4; i++) {
-              const idx = Math.floor(Math.random() * (coords.length - 1));
-              const p1 = coords[idx];
-              const p2 = coords[idx + 1] || coords[0];
-              const t = Math.random();
-              const lng = p1[0] + (p2[0] - p1[0]) * t;
-              const lat = p1[1] + (p2[1] - p1[1]) * t;
-              const pt = map.project([lng, lat]);
-
-              const angle = Math.random() * Math.PI * 2;
-              const speed = Math.random() * 1.8 + 0.6;
-              const colors = ["#F59E0B", "#FCD34D", "#D97706", "#FFFFFF", "#FEF08A"];
-
-              particlesRef.current.push({
-                x: pt.x,
-                y: pt.y,
-                vx: Math.cos(angle) * speed,
-                vy: Math.sin(angle) * speed - 0.6,
-                radius: Math.random() * 2.5 + 1.2,
-                alpha: 1.0,
-                decay: Math.random() * 0.025 + 0.015,
-                color: colors[Math.floor(Math.random() * colors.length)],
-              });
-            }
-          }
-        }
+      const canvas = particleCanvasRef.current;
+      if (!canvas) {
+        animFrameIdRef.current = null;
+        return;
+      }
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        animFrameIdRef.current = null;
+        return;
       }
 
-      // Update & render active particles
-      const alive: BoundaryParticle[] = [];
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Render & update expanding shockwave rings
+      const activeRings: CelebrationRing[] = [];
+      for (let i = 0; i < ringsRef.current.length; i++) {
+        const ring = ringsRef.current[i];
+        ring.radius += (ring.maxRadius - ring.radius) * 0.12 + 1.2;
+        ring.alpha -= 0.024;
+        if (ring.alpha > 0 && ring.radius < ring.maxRadius) {
+          drawRing(ctx, ring);
+          activeRings.push(ring);
+        }
+      }
+      ringsRef.current = activeRings;
+
+      // 2. Render & update active celebration particles
+      const alive: CelebrationParticle[] = [];
       for (let i = 0; i < particlesRef.current.length; i++) {
         const p = particlesRef.current[i];
+        p.vx *= p.drag ?? 0.96;
+        p.vy *= p.drag ?? 0.96;
+        if (p.gravity) p.vy += p.gravity;
         p.x += p.vx;
         p.y += p.vy;
+        if (p.rotation !== undefined && p.rotSpeed !== undefined) {
+          p.rotation += p.rotSpeed;
+        }
         p.alpha -= p.decay;
 
         if (p.alpha > 0) {
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, p.alpha);
-          ctx.fillStyle = p.color;
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = p.color;
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
+          if (p.type === "star") {
+            drawSparkle(ctx, p.x, p.y, p.size, p.color, p.alpha, p.rotation);
+          } else if (p.type === "confetti") {
+            drawConfetti(ctx, p);
+          } else {
+            drawSpark(ctx, p);
+          }
           alive.push(p);
         }
       }
       particlesRef.current = alive;
 
-      animId = requestAnimationFrame(render);
+      // Continue animating if there are active particles or rings
+      if (particlesRef.current.length > 0 || ringsRef.current.length > 0) {
+        animFrameIdRef.current = requestAnimationFrame(render);
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        animFrameIdRef.current = null;
+      }
     };
 
-    animId = requestAnimationFrame(render);
-    return () => cancelAnimationFrame(animId);
-  }, [isDraggingCard, hoveredRegionId]);
+    animFrameIdRef.current = requestAnimationFrame(render);
+  }, []);
 
-  // Flash burst when drop occurs (success or error)
+  // Cleanup animation frame on unmount
+  useEffect(() => {
+    return () => {
+      if (animFrameIdRef.current !== null) {
+        cancelAnimationFrame(animFrameIdRef.current);
+      }
+    };
+  }, []);
+
+  // Celebration burst when correct/wrong drop occurs
   useEffect(() => {
     if (!flashRegion || !mapRef.current) return;
     const region = regions.find((r) => r.id === flashRegion.id);
@@ -346,25 +425,117 @@ export default function SortirMaplibreMap({
     if (!map) return;
     const pt = map.project([region.lng, region.lat]);
     const isCorrect = flashRegion.status === "correct";
-    const colors = isCorrect
-      ? ["#10B981", "#34D399", "#F59E0B", "#FCD34D", "#FFFFFF"]
-      : ["#EF4444", "#F87171", "#DC2626", "#FCA5A5"];
 
-    for (let i = 0; i < 35; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 4 + 1.5;
-      particlesRef.current.push({
+    if (isCorrect) {
+      // 1. Dual Shockwave Rings (Golden & Emerald)
+      ringsRef.current.push({
         x: pt.x,
         y: pt.y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 1.2,
-        radius: Math.random() * 3 + 1.5,
-        alpha: 1.0,
-        decay: Math.random() * 0.025 + 0.015,
-        color: colors[Math.floor(Math.random() * colors.length)],
+        radius: 12,
+        maxRadius: 110,
+        alpha: 0.9,
+        color: "#D4AF37",
       });
+      ringsRef.current.push({
+        x: pt.x,
+        y: pt.y,
+        radius: 8,
+        maxRadius: 75,
+        alpha: 0.75,
+        color: "#10B981",
+      });
+
+      const celebrationColors = [
+        "#D4AF37", // Gold
+        "#F59E0B", // Amber
+        "#FCD34D", // Light Gold
+        "#10B981", // Emerald
+        "#34D399", // Light Emerald
+        "#8B5CF6", // Royal Purple
+        "#06B6D4", // Ocean Cyan
+        "#F43F5E", // Coral Crimson
+        "#FFFFFF", // Pearl Sparkle
+      ];
+
+      // 2. Stars & Shimmering Sparkles (28 particles)
+      for (let i = 0; i < 28; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 5.5 + 2.0;
+        particlesRef.current.push({
+          x: pt.x,
+          y: pt.y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.2,
+          size: Math.random() * 4 + 2,
+          alpha: 1.0,
+          decay: Math.random() * 0.02 + 0.012,
+          color: celebrationColors[Math.floor(Math.random() * celebrationColors.length)],
+          type: "star",
+          rotation: Math.random() * Math.PI,
+          rotSpeed: (Math.random() - 0.5) * 0.15,
+          drag: 0.94,
+        });
+      }
+
+      // 3. Floating Confetti Ribbons (30 particles)
+      for (let i = 0; i < 30; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4.0 + 1.2;
+        particlesRef.current.push({
+          x: pt.x,
+          y: pt.y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2.5,
+          size: Math.random() * 7 + 4,
+          alpha: 1.0,
+          decay: Math.random() * 0.018 + 0.01,
+          color: celebrationColors[Math.floor(Math.random() * celebrationColors.length)],
+          type: "confetti",
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.25,
+          gravity: 0.07,
+          drag: 0.97,
+        });
+      }
+
+      // 4. Upward Rising Golden Embers (18 particles)
+      for (let i = 0; i < 18; i++) {
+        const spreadX = (Math.random() - 0.5) * 40;
+        particlesRef.current.push({
+          x: pt.x + spreadX,
+          y: pt.y + (Math.random() - 0.5) * 20,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: -Math.random() * 2.8 - 0.8,
+          size: Math.random() * 2.5 + 1.2,
+          alpha: 1.0,
+          decay: Math.random() * 0.015 + 0.01,
+          color: Math.random() > 0.3 ? "#FBBF24" : "#FFFFFF",
+          type: "spark",
+          drag: 0.99,
+        });
+      }
+    } else {
+      // Wrong drop: gentle red cue, 12 subtle particles
+      for (let i = 0; i < 14; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 2.5 + 0.8;
+        particlesRef.current.push({
+          x: pt.x,
+          y: pt.y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 2.5 + 1.5,
+          alpha: 0.9,
+          decay: 0.035,
+          color: "#EF4444",
+          type: "spark",
+          drag: 0.95,
+        });
+      }
     }
-  }, [flashRegion, regions]);
+
+    startCelebrationLoop();
+  }, [flashRegion, regions, startCelebrationLoop]);
 
   // Real-time Drag Detection: as user moves the dragged card, query map polygon and marker proximity
   useEffect(() => {
