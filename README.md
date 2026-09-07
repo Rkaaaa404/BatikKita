@@ -31,15 +31,15 @@ Seluruh layanan di dalam Batik Kita dirancang secara modular dan menggunakan tat
 
 | Fitur | Rute URL | Tipe Layanan | Penjelasan & Gameplay |
 | :--- | :--- | :--- | :--- |
-| **Batik Lens** | `/scan` | Edge AI Vision | Pemindai motif batik berbasis **EfficientNet-B0 ONNX WebAssembly**. Inferensi 100% lokal pada peranti klien tanpa mengirim data foto ke server luar (privasi aman & bebas latensi). |
-| **Batik Arcade** | `/play` | Hub Game Edukasi | Hub utama arena game batik dengan sistem akumulasi XP dan 5 tingkatan peringkat (*Pelajar Budaya* hingga *Empu Batik Digital*). |
+| **Batik Lens** | `/scan` | Edge AI Vision | Pemindai motif batik berbasis **EfficientNet-B0 ONNX WebAssembly**. Inferensi 100% lokal pada peranti klien tanpa mengirim data foto ke server luar, dilengkapi **Audio Guide Museum berbahasa Indonesia alami** (`/api/tts` stream & Web Speech fallback). |
+| **Batik Arcade** | `/play` | Hub Game Edukasi | Hub utama arena game batik dengan sistem akumulasi XP dan 4 tingkatan peringkat (*Pelajar Budaya* hingga *Empu Batik Digital*). |
 | **Batik Cap** | `/play/cap` | Block Puzzle | Game puzzle balok polyomino ala *Block Blast*; pemain menyusun potongan balok motif ke kisi kanvas dengan meja kerja 3 balok yang otomatis terisi ulang saat dipasang. |
 | **Batik Guess** | `/play/guess` | Tebak Nama Motif | Game tebak nama motif batik ala Wordle dengan 4 petunjuk bertahap (daerah asal, ciri visual corak, filosofi makna, dan kisi tebak huruf). |
 | **Batik Map** | `/play/map` | Tebak Sentra Peta | Game mencocokkan kartu motif batik ke daerah asalnya di peta interaktif 7 Sentra Batik Nusantara (MapLibre GL). |
 | **Batik Zoom** | `/play/zoom` | Uji Hafalan Pola | Game menguji seberapa hafal pemain dengan pola batik dari gambar yang di-zoom in dekat (800%), lalu ditebak sebelum gambarnya perlahan diperkecil (*zoom out*). |
-| **Batik Pedia** | `/batikpedia` | Ensiklopedia Digital | Katalog 20 motif resmi terlengkap yang memuat filosofi mendalam, asal-usul sentra, klasifikasi corak, panduan etika pemakaian, dan 3 ragam visual per motif. |
-| **Batik Ask** | `/chat` | Conversational AI | Asisten dialog interaktif budaya batik untuk berdiskusi sejarah, makna filosofis ornamen, hingga tata krama busana batik adat. |
-| **Album Koleksi** | `/collection` | Progresi & Mastery | Galeri kartu pencapaian wastra berbingkai adaptif (*Dynamic Mastery Borders*): Zamrud, Perunggu, Perak, dan Emas Berkilau Hologram. |
+| **Batik Pedia** | `/batikpedia` | Ensiklopedia Digital | Katalog 20 motif resmi tervalidasi budayawan yang memuat filosofi mendalam, asal-usul sentra, klasifikasi corak, panduan etika pakem pemakaian, 3 ragam visual per motif, serta **Audio Storytelling berbahasa Indonesia**. |
+| **Batik Ask** | `/chat` | Conversational AI (Dual-Engine) | Asisten dialog interaktif budaya batik dengan **arsitektur dual-engine**: online via Google Gemini 2.5 Flash & otomatis beralih ke **Mode Empu Luring** (offline) jika kuota API habis atau luring. |
+| **Album Koleksi** | `/collection` | Progresi & Mastery | Galeri kartu pencapaian wastra berbingkai adaptif (*Dynamic Mastery Borders*): Zamrud, Perunggu, Perak, dan Emas Berkilau Hologram, lengkap dengan fitur dengarkan narasi audio. |
 
 ---
 
@@ -120,6 +120,21 @@ Seluruh antarmuka—termasuk kanvas mori, palet cap tembaga, papan deduksi Wordl
 * Semua komponen Next.js `<Image fill>` telah dilengkapi properti `sizes` responsif untuk mengeliminasi pemborosan bandwidth dan meningkatkan skor *Largest Contentful Paint* (LCP).
 * Asset gambar web berformat modern **WebP** dengan kompresi optimal.
 
+### 9. Dual-Engine Batik Ask: Mode Empu Luring (Offline Fallback)
+* **Arsitektur Dual-Engine:** Menggunakan Google Gemini 2.5 Flash saat daring.
+* **Offline Knowledge Fallback:** Jika perangkat luring atau kuota API habis (Error 429), sistem otomatis mengalihkan respons ke pustaka pengetahuan lokal (`offlineEmpuKnowledge.ts`) untuk menjawab pertanyaan seputar sejarah, filosofi, dan etika pemakaian 20 motif batik.
+
+### 10. Fitur Audio Guide Museum (Dual-Mode Native Indonesian TTS)
+* **Pengalaman Audio Guide:** Menghadirkan pengalaman layaknya panduan audio museum seni; pengguna dapat mengamati keindahan visual kain sambil mendengarkan narasi kisah dan filosofi motif (sangat membantu kenyamanan belajar bagi anak-anak maupun pengguna dengan disleksia atau kelelahan membaca teks panjang).
+* **Dual-Mode Streaming Engine:**
+  * **Primer:** Audio streaming berbahasa Indonesia alami (`audio/mpeg`) via endpoint `/api/tts` berbasis chunked Google Speech engine tanpa latensi sintetis robotik.
+  * **Sekunder:** Fallback otomatis ke peramban Web Speech API (`id-ID`) jika perangkat luring.
+* **Siklus Hidup Aman:** Dilengkapi proteksi *unmount cancellation* dan pembersihan instan audio buffer saat modal ditutup, bebas dari tumpang-tindih suara (*zero overlapping speech*).
+
+### 11. Stabilitas Ekosistem: Global ErrorBoundary & Heritage Fault-Tolerance
+* **Global ErrorBoundary:** Membungkus seluruh aplikasi web di `src/app/layout.tsx` untuk menangkap crash rendering tak terduga (misalnya kendala *context loss* WebGL pada perangkat tertentu).
+* **Heritage Fallback UI:** Halaman penanganan galat (`error.tsx`) dan halaman 404 (`not-found.tsx`) didesain serasi dengan tema *Modern Heritage*, dilengkapi navigasi pemulihan instan (*zero white-screen crash*).
+
 ---
 
 ## 📦 Dataset Terstandar 20 Motif Resmi Nusantara
@@ -128,26 +143,26 @@ Platform ini berpegang teguh pada kurasi saintifik 20 motif mahakarya dari sentr
 
 | No | Nama Motif Batik | Sentra Asal | Makna Filosofis & Karakteristik Visual |
 | :---: | :--- | :--- | :--- |
-| 1 | **Batik Betawi** | DKI Jakarta | Keceriaan dan keterbukaan multikultural masyarakat Betawi dengan ragam hias ikonik Monas dan Ondel-ondel. |
-| 2 | **Batik Mega Mendung** | Cirebon | Lambang kesabaran, kesejukan hati, dan ketenangan jiwa melalui bentuk awan bergaya gradasi warna Cina. |
-| 3 | **Batik Singa Barong** | Cirebon | Simbol akulturasi empat peradaban dunia: Islam, Hindu, Buddha, dan Tiongkok dalam wujud satwa mitologi. |
-| 4 | **Batik Jlamprang** | Pekalongan | Geometris khas Pekalongan berakar dari pola Patola Gujarat India, melambangkan keharmonisan semesta. |
-| 5 | **Batik Buketan** | Pekalongan | Pengaruh akulturasi Belanda berbentuk rangkaian bunga mekar semarak dan kepakan sayap kupu-kupu anggun. |
-| 6 | **Batik Tujuh Rupa** | Pekalongan | Harmoni flora dan fauna pesisiran yang mencerminkan pluralisme dan keluwesan hubungan antarbangsa. |
-| 7 | **Batik Kawung** | D.I. Yogyakarta | Bentuk geometris empat keping kolang-kaling bermakna pengendalian hawa nafsu, kemurnian, dan keadilan. |
-| 8 | **Batik Sekar Jagad** | D.I. Yogyakarta | Peta keindahan dunia (*kar jagad*), melambangkan keberagaman suku dan budaya yang berpadu serasi. |
-| 9 | **Batik Sido Mulyo** | D.I. Yogyakarta | Doa dan harapan agar pasangan yang mengenakannya mencapai kemuliaan hidup lahir dan batin. |
-| 10 | **Batik Srikaton** | D.I. Yogyakarta | Lambang keagungan dan daya tarik kemuliaan budi pekerti yang terpancar laksana istana keraton. |
-| 11 | **Batik Bokor Kencono** | D.I. Yogyakarta | Representasi wadah emas penampung berkah, lambang kewibawaan dan kejayaan pemimpin yang amanah. |
-| 12 | **Batik Parang** | Surakarta | Gulungan ombak samudra pantang menyerah; lambang kesinambungan perjuangan hidup dan keteguhan moral. |
-| 13 | **Batik Truntum** | Surakarta | Bintang bertabur di malam hening karya Ratu Kencana; melambangkan cinta tulus yang bersemi kembali. |
-| 14 | **Batik Sido Luhur** | Surakarta | Ajaran keluhuran budi, derajat tinggi, serta harapan agar pemakainya berbudi pekerti luhur bagi sesama. |
-| 15 | **Batik Sido Mukti** | Surakarta | Busana sakral pengantin Jawa bermakna harapan hidup makmur, berkecukupan, dan berbahagia selamanya. |
-| 16 | **Batik Wahyu Tumurun** | Surakarta | Berkah dan petunjuk luhur dari Yang Maha Kuasa bagi mereka yang berhati bersih dan tawaduk. |
-| 17 | **Batik Wirasat** | Surakarta | Pesan dan wejangan leluhur kepada generasi penerus agar teguh mengarungi samudra kehidupan. |
-| 18 | **Batik Liong** | Lasem | Perpaduan naga Tionghoa dan ornamen pesisir Jawa, simbol keberanian, perlindungan, dan keselarasan. |
-| 19 | **Batik Dayak** | Kalimantan | Guratan sulur tumbuhan hutan tropis dan motif Batang Garing yang melambangkan pohon kehidupan kosmis. |
-| 20 | **Batik Tribusono** | Surakarta | Paduan tiga motif pusaka Mataram dalam satu kain — lambang kesatuan tiga kekuatan: alam, manusia, dan Yang Maha Kuasa. |
+| 1 | **Batik Betawi** | DKI Jakarta | Keterbukaan multikultural warga ibu kota; ornamen Ondel-ondel dan pucuk rebung penangkal bala berlatar warna cerah menyala. |
+| 2 | **Batik Mega Mendung** | Cirebon | Lambang kesabaran dan keteduhan jiwa; gradasi awan mendung berundak 5–7 lapis dengan stilasi batu karang wadasan khas Trusmi. |
+| 3 | **Batik Singa Barong** | Cirebon | Akulturasi Kereta Kencana 1549 Panembahan Losari yang memadukan belalai gajah (Hindu), sayap garuda (Islam), naga (Tiongkok), dan singa (Eropa). |
+| 4 | **Batik Jlamprang** | Pekalongan | Pola geometris bintang delapan (roset) berakar dari tenun sutra Patola Gujarat India, menganut kaidah anikonik seni Islam pesisiran. |
+| 5 | **Batik Buketan** | Pekalongan | Seni pesisir era Art Nouveau buatan pengusaha Indo-Eropa (Eliza van Zuylen); rangkaian buket krisan, seruni, dan kepakan kupu-kupu anggun. |
+| 6 | **Batik Tujuh Rupa** | Pekalongan | Harmoni tujuh unsur flora fauna pesisiran yang mencerminkan keterbukaan niaga maritim dengan Tiongkok, Arab, dan Eropa. |
+| 7 | **Batik Kawung** | D.I. Yogyakarta | Irisan buah aren melambangkan konsep *Sedulur Papat Lima Pancer*; simbol kejujuran, keadilan, dan pengendalian hawa nafsu batin. |
+| 8 | **Batik Sekar Jagad** | D.I. Yogyakarta | Peta keindahan dunia (*kar jagad*); mozaik pulau-pulau motif berlekuk yang melambangkan keharmonisan keberagaman semesta. |
+| 9 | **Batik Sido Mulyo** | D.I. Yogyakarta | Busana pengantin Ngayogyakarta; doa agar keluarga dilimpahi ketenteraman batin dan kemuliaan hidup melalui ornamen bale pelindung dan garuda. |
+| 10 | **Batik Srikaton** | D.I. Yogyakarta | Lambang kemakmuran dan keanggunan budi pekerti yang terpancar nyata laksana kemuliaan keraton; ornamen sepasang merak dan mahkota. |
+| 11 | **Batik Bokor Kencono** | D.I. Yogyakarta | Bejana logam bokor emas suci penampung kembang setaman dan beras kuning upacara siraman/midodareni; lambang wadah kebajikan dan rezeki halal. |
+| 12 | **Batik Parang** | Yogyakarta / Solo | Renungan Sultan Agung atas ombak Laut Selatan; semangat ksatria pantang menyerah. Menjadi *Batik Larangan (Awisan Dalem)* istana yang pantang dikenakan saat akad nikah. |
+| 13 | **Batik Truntum** | Surakarta | Karya sakral Kanjeng Ratu Kencana (PB III) bertabur bintang malam; lambang cinta kasih yang bersemi kembali (*tumaruntum*), busana wajib orang tua kedua mempelai. |
+| 14 | **Batik Sido Luhur** | Surakarta | Pola ceplok tahta dan sayap garuda lar; doa restu pada malam midodareni agar pemakainya berbudi luhur, terhormat, dan menjadi teladan sesama. |
+| 15 | **Batik Sido Mukti** | Surakarta | Busana sakral mempelai saat ijab kabul dan panggih adat Jawa; ornamen kupu-kupu dan tahta berlatar sogan keemasan sebagai doa kemakmuran lahir batin. |
+| 16 | **Batik Wahyu Tumurun** | Surakarta | Simbol turunnya petunjuk anugerah Ilahi; memuat mahkota terbang agung (*makutha*) dan kuncup bunga *kanthil* yang dinaungi sepasang burung garuda. |
+| 17 | **Batik Wirasat** | Surakarta | Firasat dan petuah wejangan orang tua bagi mempelai; perpaduan harmonis motif Truntum bintang dan medalion Sido di dalam kotak berulang. |
+| 18 | **Batik Liong** | Lasem (Rembang) | Akulturasi Tionghoa-Jawa di Tiongkok Kecil; liukan naga langit perkasa di atas hamparan merah legendaris *getih pitik* fermentasi akar mengkudu. |
+| 19 | **Batik Dayak** | Kalimantan | Tradisi *Batik Benang Bintik* berbasis kosmologi suci pohon kehidupan *Batang Garing*, perisai pelindung *Telawang*, dan sulur tanaman kelakai. |
+| 20 | **Batik Tribusono** | Surakarta | Menyelaraskan tiga pilar moral manusia Jawa: *Cipta* (akal), *Rasa* (hati nurani), dan *Karsa* (kehendak berbuat kebaikan) melalui satwa garuda, flora, dan tirta. |
 
 ---
 
@@ -192,6 +207,7 @@ cd webdev/frontend
 
 # 2. Siapkan konfigurasi environment
 cp .env.example .env.local
+# (Opsional) Isi GEMINI_API_KEY di .env.local untuk mengaktifkan fitur Batik Ask (chatbot AI)
 
 # 3. Pasang seluruh dependensi paket
 npm install
@@ -220,6 +236,7 @@ npm run build
 ├── docs/                                 # Dokumentasi Spesifikasi & Panduan Kultural
 │   ├── PRD_BATIK_KITA.md                 # Product Requirement Document (PRD) Utama
 │   ├── PRD_ARENA_GAMES_REVISI.md         # PRD Teknis Edu-Games Arcade
+│   ├── SCRIPT_VIDEO_DEMO.md              # Naskah Demonstrasi & Proof of Work Video
 │   ├── ANTI_AI_COPYWRITING_GUIDE.md      # Panduan Narasi & Tone of Voice Otentik
 │   ├── IDE_BATIK.md                      # Riset Kultural & Filosofi Wastra
 │   └── LAPORAN_QA_QC.md                  # Dokumentasi Quality Assurance & Audit
@@ -237,12 +254,26 @@ npm run build
 │       ├── src/
 │       │   ├── app/                      # Next.js App Router (Rute Suite Resmi)
 │       │   │   ├── page.tsx              # Beranda Utama & Interactive Hero
-│       │   │   ├── api/chat/             # Backend Route: Gemini 2.5 Flash Cultural Assistant
-│       │   │   ├── scan/                 # Batik Lens (Edge AI Scanner)
-│       │   │   ├── chat/                 # Batik Ask (Asisten Budaya Cerdas)
-│       │   │   ├── batikpedia/           # Batik Pedia (Ensiklopedia Motif)
+│       │   │   ├── layout.tsx            # Root Layout dengan Global ErrorBoundary
+│       │   │   ├── error.tsx             # Route Error Boundary (Modern Heritage UI)
+│       │   │   ├── not-found.tsx         # Halaman 404 Kultural Beraksen Emas
+│       │   │   ├── api/chat/route.ts     # Backend Route: Gemini 2.5 Flash + Mode Empu Luring
+│       │   │   ├── api/tts/route.ts      # Backend Route: Natural Indonesian Audio Streaming
+│       │   │   ├── scan/                 # Batik Lens (Edge AI Scanner + Audio Narrator)
+│       │   │   │   ├── page.tsx
+│       │   │   │   └── layout.tsx
+│       │   │   ├── chat/                 # Batik Ask (Chatbot Budaya)
+│       │   │   │   ├── page.tsx
+│       │   │   │   └── layout.tsx
+│       │   │   ├── batikpedia/           # Batik Pedia (Ensiklopedia + Audio Storytelling)
+│       │   │   │   ├── page.tsx
+│       │   │   │   └── layout.tsx
 │       │   │   ├── collection/           # Album Koleksi Wastra (Mastery Cards)
+│       │   │   │   ├── page.tsx
+│       │   │   │   └── layout.tsx
 │       │   │   └── play/                 # Batik Arcade Hub
+│       │   │       ├── page.tsx
+│       │   │       ├── layout.tsx
 │       │   │       ├── cap/              # Batik Cap (Simulasi Canting Cap 3 Slot)
 │       │   │       ├── guess/            # Batik Guess (Deduksi 4 Jenjang)
 │       │   │       ├── map/              # Batik Map (Peta 7 Sentra MapLibre GL)
@@ -250,10 +281,10 @@ npm run build
 │       │   ├── components/               # Komponen Antarmuka Modern Heritage
 │       │   │   ├── games/                # Mesin Game: Cap, Guess, Map, Zoom, WinModal
 │       │   │   ├── landing/              # Hero, Fitur, Teaser, Navbar, Footer
-│       │   │   └── shared/               # XpBar, GameNavbar, ThemeToggle
+│       │   │   └── shared/               # AudioNarratorButton, ErrorBoundary, XpBar, GameNavbar
 │       │   ├── data/                     # Dataset 20 Motif, Wilayah, & GeoJSON
 │       │   ├── hooks/                    # Hook Kustom: useXp, useGameTheme
-│       │   └── lib/                      # onnxClassifier, polyominoPartition, & geminiKnowledge
+│       │   └── lib/                      # onnxClassifier, offlineEmpuKnowledge, geminiKnowledge
 │       ├── Dockerfile                    # Container Multi-Stage Production Build
 │       └── next.config.ts                # Turbopack & HTTP 308 Auto-Redirects
 ├── docker-compose.yml                    # Orkestrasi Docker Standalone
