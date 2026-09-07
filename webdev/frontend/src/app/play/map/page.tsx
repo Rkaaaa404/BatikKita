@@ -138,6 +138,17 @@ export default function SortirPetaPage() {
 
   useEffect(() => () => stopTimer(), [stopTimer]);
 
+  // Auto-end game immediately when all motif cards are placed
+  useEffect(() => {
+    if (
+      gameState === "playing" &&
+      (score >= MOTIF_CARDS.length || (!currentCard && queue.length === 0 && score > 0))
+    ) {
+      stopTimer();
+      endGame();
+    }
+  }, [gameState, score, currentCard, queue.length, stopTimer, endGame]);
+
   // Drop card on region logic
   const handleDropOnRegion = useCallback(
     (regionId: string) => {
@@ -186,8 +197,11 @@ export default function SortirPetaPage() {
         setHoveredRegionId(null);
         dropTimeRef.current = Date.now();
 
-        if (!nextCard) {
-          setTimeout(() => endGame(), 700);
+        // Stop immediately when the last motif is matched
+        if (!nextCard || score + 1 >= MOTIF_CARDS.length) {
+          stopTimer();
+          endGame();
+          return;
         }
       } else {
         sfx.playWrong();
@@ -202,7 +216,7 @@ export default function SortirPetaPage() {
         }, 900);
       }
     },
-    [currentCard, gameState, queue, streak, addXp, endGame, unlockMotif]
+    [currentCard, gameState, queue, streak, addXp, endGame, unlockMotif, score, stopTimer]
   );
 
   const pointerStartPosRef = useRef({ x: 0, y: 0 });
