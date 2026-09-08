@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Source_Serif_4, Inter, Philosopher } from "next/font/google";
 import "./globals.css";
 import { MobileBottomNav } from "@/components/landing/MobileBottomNav";
+import { ErrorBoundary } from "@/components/shared/ErrorBoundary";
 
 const philosopher = Philosopher({
   variable: "--font-philosopher",
@@ -72,7 +73,9 @@ export default function RootLayout({
       className={`${philosopher.variable} ${plusJakartaSans.variable} ${sourceSerif4.variable} ${inter.variable} scroll-smooth antialiased`}
     >
       <body className="min-h-screen bg-mori-fabric text-[#2d2b38] flex flex-col selection:bg-[#713f2c] selection:text-[#faf8f4]">
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
         <MobileBottomNav />
       </body>
     </html>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SANG_EMPU_SYSTEM_INSTRUCTION } from "@/lib/geminiKnowledge";
+import { synthesizeOfflineEmpuResponse } from "@/lib/offlineEmpuKnowledge";
 
 interface IncomingMessage {
   role: "user" | "bot" | "assistant" | "model";
@@ -16,6 +17,8 @@ interface GeminiContent {
 }
 
 export async function POST(req: NextRequest) {
+  let lastUserMsgContent = "";
+
   try {
     const body = await req.json();
     const incomingMessages: IncomingMessage[] = body.messages || [];
@@ -27,27 +30,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const lastUserMsg = incomingMessages.filter((m) => m.role === "user").pop();
+    lastUserMsgContent = lastUserMsg?.content || "";
+
     const apiKey =
       process.env.GEMINI_API_KEY ||
       process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
+    // Jika API Key tidak terpasang, beralih mulus ke Mode Empu Luring (Offline Heritage Synthesizer)
     if (!apiKey) {
-      console.warn("GEMINI_API_KEY tidak ditemukan di environment variable.");
+      console.warn("GEMINI_API_KEY tidak terpasang. Mengaktifkan Mode Empu Luring.");
+      const fallbackResponse = synthesizeOfflineEmpuResponse(lastUserMsgContent);
       return NextResponse.json(
         {
           role: "bot",
-          content:
-            "Sugeng rawuh, Ananda. Kunci gerbang pengetahuan digital belum terpasang di sistem. Silakan periksa konfigurasi GEMINI_API_KEY pada berkas .env Anda.",
+          content: fallbackResponse,
         },
         { status: 200 }
       );
     }
 
     // Format riwayat chat ke struktur Gemini API
-    // Aturan Gemini API:
-    // 1. Role harus "user" atau "model"
-    // 2. Tidak boleh diawali pesan "model" tanpa user terlebih dahulu
-    // 3. Pesan berturut-turut dengan role sama sebaiknya digabung
     const formattedContents: GeminiContent[] = [];
 
     for (const msg of incomingMessages) {
@@ -70,14 +73,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Pastikan minimal ada 1 pesan user
-    if (!formattedContents.length) {
-      const lastUserMsg = incomingMessages.filter((m) => m.role === "user").pop();
-      if (lastUserMsg) {
-        formattedContents.push({
-          role: "user",
-          parts: [{ text: lastUserMsg.content }],
-        });
-      }
+    if (!formattedContents.length && lastUserMsgContent) {
+      formattedContents.push({
+        role: "user",
+        parts: [{ text: lastUserMsgContent }],
+      });
     }
 
     const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
@@ -109,11 +109,12 @@ export async function POST(req: NextRequest) {
       const errText = await response.text();
       console.error("Gemini API Error Response:", response.status, errText);
 
+      // Fallback otomatis ke mesin pengetahuan Empu luring jika kuota habis / error 429
+      const fallbackResponse = synthesizeOfflineEmpuResponse(lastUserMsgContent);
       return NextResponse.json(
         {
           role: "bot",
-          content:
-            "Sugeng rawuh, Ananda. Nampaknya bilik kearifan kami sedang mengalami lonjakan pengunjung sejenak. Namun ketahuilah, setiap helai wastra nusantara senantiasa memancarkan doa luhur para leluhur. Sudilah kiranya Ananda mengulang pertanyaan sejenak lagi.",
+          content: fallbackResponse,
         },
         { status: 200 }
       );
@@ -123,7 +124,7 @@ export async function POST(req: NextRequest) {
     const candidate = data.candidates?.[0];
     const generatedText =
       candidate?.content?.parts?.[0]?.text?.trim() ||
-      "Sugeng rawuh, Ananda. Jawaban bijak telah terpatri, namun belum tertangkap sempurna oleh layar. Silakan utarakan kembali rasa penasaranmu tentang batik nusantara.";
+      synthesizeOfflineEmpuResponse(lastUserMsgContent);
 
     return NextResponse.json({
       role: "bot",
@@ -133,11 +134,11 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("Chat API Route Internal Error:", message);
 
+    const fallbackResponse = synthesizeOfflineEmpuResponse(lastUserMsgContent);
     return NextResponse.json(
       {
         role: "bot",
-        content:
-          "Nyuwun sewu, Ananda. Terjadi sedikit kendala teknis dalam membaca serat pustaka wastra. Silakan coba kembali dalam beberapa saat.",
+        content: fallbackResponse,
       },
       { status: 200 }
     );

@@ -19,6 +19,7 @@ import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 import { BATIK_DATASET_20, BatikMotif } from "@/data/batikDataset";
+import { AudioNarratorButton } from "@/components/shared/AudioNarratorButton";
 
 interface RegionData {
   id: string;
@@ -809,10 +810,17 @@ export default function BatikpediaPage() {
 
                         <div className="mt-3.5 space-y-3 text-xs">
                           <div>
-                            <span className="font-display font-bold text-stone-800 flex items-center gap-1.5 mb-1 text-xs">
-                              <Info className="w-3.5 h-3.5 text-[#713f2c]" />
-                              Akar Sejarah & Makna Filosofis:
-                            </span>
+                            <div className="flex items-center justify-between gap-2 mb-1.5">
+                              <span className="font-display font-bold text-stone-800 flex items-center gap-1.5 text-xs">
+                                <Info className="w-3.5 h-3.5 text-[#713f2c]" />
+                                Akar Sejarah & Makna Filosofis:
+                              </span>
+                              <AudioNarratorButton
+                                text={selectedMotif.philosophy}
+                                title={selectedMotif.fullName}
+                                variant="compact"
+                              />
+                            </div>
                             <p className="font-narrative text-stone-700 leading-relaxed bg-[#FAF8F4] p-3 rounded-xl border border-[#E2DDD5]">
                               {selectedMotif.philosophy}
                             </p>

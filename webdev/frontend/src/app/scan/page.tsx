@@ -23,6 +23,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
+import { AudioNarratorButton } from "@/components/shared/AudioNarratorButton";
 import {
   classifyBatikImage,
   preloadClassifier,
@@ -368,9 +369,9 @@ export default function ScannerPage() {
       <main className="flex-1">
         {/* ─── Hero Section with Dedicated Batik Tab Scanner.webp ─── */}
         <section className="relative w-full overflow-hidden bg-[#1A1614] pt-24 pb-12 sm:pt-32 sm:pb-20 px-4 sm:px-6 lg:px-16 min-h-0 lg:min-h-[520px] flex items-center">
-          {/* Background Image: batik-tab-scanner.webp */}
+          {/* Background Image: batik-tab-batik-lens.webp */}
           <Image
-            src="/images/batik-tab-scanner.webp"
+            src="/images/batik-tab-batik-lens.webp"
             alt="AI Batik Lens Scanner"
             fill
             sizes="100vw"
@@ -649,10 +650,17 @@ export default function ScannerPage() {
                       {/* Result Body */}
                       <div className="p-6 sm:p-7 space-y-6">
                         <div>
-                          <h4 className="font-display font-bold text-[#713f2c] text-xs uppercase tracking-wider mb-2 flex items-center gap-2">
-                            <Search className="w-4 h-4 text-[#D4AF37]" />
-                            Filosofi & Makna Kultural
-                          </h4>
+                          <div className="flex items-center justify-between gap-2 mb-2">
+                            <h4 className="font-display font-bold text-[#713f2c] text-xs uppercase tracking-wider flex items-center gap-2">
+                              <Search className="w-4 h-4 text-[#D4AF37]" />
+                              Filosofi & Makna Kultural
+                            </h4>
+                            <AudioNarratorButton
+                              text={result.philosophy}
+                              title={result.name}
+                              variant="compact"
+                            />
+                          </div>
                           <p className="font-narrative text-[#2d2b38] text-sm sm:text-base leading-relaxed">
                             {result.philosophy}
                           </p>

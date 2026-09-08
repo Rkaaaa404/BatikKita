@@ -326,87 +326,54 @@ export default function TebakMotifPage() {
             </motion.div>
           )}
 
-          {/* ── 2. ACTIVE PLAYING STAGE ── */}
+          {/* ── 2. ACTIVE PLAYING STAGE (FOCUSED CULTURE DETECTIVE) ── */}
           {gameState === "playing" && currentMotif && (
             <motion.div
               key="playing"
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start"
+              className="flex-1 max-w-3xl mx-auto w-full flex flex-col gap-4 sm:gap-6"
             >
-              {/* Left Column: Mystery Heritage Card (Text-Based Culture Detective) */}
-              <div className="lg:col-span-5 flex flex-col gap-3 sm:gap-4">
-                {/* Visual Canvas Card */}
-                <div
-                  className={`border-2 rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-2xl relative overflow-hidden flex flex-col items-center transition-colors ${
-                    isDark
-                      ? "bg-[#1f1a18] border-[#D4AF37]/40"
-                      : "bg-white border-[#E2DDD5] shadow-md"
-                  }`}
-                >
-                  <div
-                    className={`w-full flex items-center justify-between text-xs mb-2.5 sm:mb-3 px-1 ${
-                      isDark ? "text-white/60" : "text-stone-600"
-                    }`}
-                  >
-                    <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold text-[11px] sm:text-xs">
-                      <Sparkles className="w-3.5 h-3.5" /> Pusaka Terselubung
+              {/* Top Control Bar: Status, XP Gauge & Lifelines */}
+              <div
+                className={`border rounded-2xl p-4 sm:p-5 shadow-lg transition-colors ${
+                  isDark
+                    ? "bg-[#1f1a18] border-white/10"
+                    : "bg-white border-[#E2DDD5] shadow-xs"
+                }`}
+              >
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-3">
+                  {/* Left: Round Clue Badge & Potential XP */}
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    <span className="inline-flex items-center gap-1.5 text-[#D4AF37] font-display font-bold text-xs sm:text-sm">
+                      <Sparkles className="w-4 h-4" /> Pusaka Terselubung
                     </span>
                     <span
-                      className={`text-[10px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 rounded-full font-display font-bold ${
+                      className={`text-xs px-2.5 py-0.5 rounded-full font-display font-bold ${
                         isDark ? "bg-[#D4AF37]/15 text-[#D4AF37]" : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      Jenjang {revealedHints} dari 4 (+{XP_PER_HINT[revealedHints]} XP)
+                      Jenjang {revealedHints} dari 4
+                    </span>
+                    <span className="text-xs font-display font-extrabold text-[#D4AF37] ml-auto sm:ml-0">
+                      Potensi: +{potentialScore} XP{" "}
+                      {inputMode === "type" && (
+                        <span className="text-emerald-500 text-[11px] font-bold">(+20 Bonus)</span>
+                      )}
                     </span>
                   </div>
 
-                  {/* Heritage Sealed Card */}
-                  <div className="relative w-full max-w-[280px] sm:max-w-none aspect-square rounded-2xl overflow-hidden border border-[#D4AF37]/40 bg-[#141211] select-none flex flex-col items-center justify-center p-4 sm:p-6 text-center shadow-inner">
-                    {/* Background Decorative Batik Pattern */}
-                    <div
-                      className="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none"
-                      style={{ backgroundImage: `url(/images/motifs/batik_kawung.webp)` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/85 pointer-events-none" />
-
-                    {/* Central Royal Wax Seal */}
-                    <div className="relative z-10 flex flex-col items-center gap-3">
-                      <motion.div
-                        animate={{ scale: [1, 1.05, 1] }}
-                        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-                        className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D4AF37] via-[#B8860B] to-[#713f2c] p-1 shadow-[0_0_30px_rgba(212,175,55,0.4)] flex items-center justify-center"
-                      >
-                        <div className="w-full h-full rounded-full bg-[#1A1614] border-2 border-[#D4AF37]/80 flex items-center justify-center shadow-inner">
-                          <Sparkles className="w-8 h-8 text-[#D4AF37]" />
-                        </div>
-                      </motion.div>
-
-                      <h3 className="font-display font-bold text-base sm:text-lg text-white">
-                        Kain Wastra Terkunci
-                      </h3>
-                      <p className="text-xs text-white/70 max-w-xs leading-relaxed font-body">
-                        Deduksikan nama motif dari 4 petunjuk filosofis bertahap di sebelah kanan. Semakin sedikit petunjuk yang dibuka, semakin tinggi XP yang Anda raih!
-                      </p>
-
-                      {/* Potential Reward Badge */}
-                      <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-xs font-display font-extrabold">
-                        <Trophy className="w-3.5 h-3.5" /> Hadiah Saat Ini: +{XP_PER_HINT[revealedHints]} XP
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Lifeline Buttons */}
-                  <div className="w-full grid grid-cols-2 gap-2.5 mt-4">
+                  {/* Right: Lifeline Action Buttons */}
+                  <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={useLifeline5050}
                       disabled={used5050 || inputMode !== "choices"}
-                      className={`flex items-center justify-center gap-1.5 disabled:opacity-30 border py-2.5 px-3 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
+                      className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 disabled:opacity-30 border py-2 px-3 sm:px-3.5 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
                         isDark
                           ? "bg-white/5 hover:bg-white/10 border-white/10 text-[#D4AF37]"
-                          : "bg-white hover:bg-stone-50 border-[#E2DDD5] text-[#713f2c] shadow-xs"
+                          : "bg-stone-50 hover:bg-stone-100 border-[#E2DDD5] text-[#713f2c] shadow-xs"
                       }`}
                       title="Eliminasi 2 pilihan jawaban yang salah"
                     >
@@ -418,9 +385,9 @@ export default function TebakMotifPage() {
                       type="button"
                       onClick={revealNextHint}
                       disabled={revealedHints >= 4}
-                      className={`flex items-center justify-center gap-1.5 disabled:opacity-40 border py-2.5 px-3 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
+                      className={`flex-1 sm:flex-initial flex items-center justify-center gap-1.5 disabled:opacity-40 border py-2 px-3 sm:px-3.5 rounded-xl text-xs font-display font-semibold transition-all cursor-pointer ${
                         isDark
-                          ? "bg-[#713f2c]/40 hover:bg-[#713f2c]/70 border-[#D4AF37]/30 text-white"
+                          ? "bg-[#713f2c]/50 hover:bg-[#713f2c]/80 border-[#D4AF37]/40 text-white"
                           : "bg-[#713f2c] hover:bg-[#583122] border-[#713f2c] text-[#D4AF37] shadow-xs"
                       }`}
                       title="Buka petunjuk teks berikutnya dengan penalti 25 XP"
@@ -430,78 +397,56 @@ export default function TebakMotifPage() {
                     </button>
                   </div>
                 </div>
-              </div>
 
-              {/* Right Column: Progressive Hints & Answer Controls */}
-              <div className="lg:col-span-7 flex flex-col gap-5">
-                {/* Potential Score Gauge */}
+                {/* Potential Score Progress Gauge */}
                 <div
-                  className={`border rounded-2xl p-4 shadow-md transition-colors ${
-                    isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5] shadow-xs"
+                  className={`h-2 rounded-full overflow-hidden p-0.5 border ${
+                    isDark ? "bg-black/50 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
                   }`}
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <span
-                      className={`text-xs font-body flex items-center gap-1.5 ${
-                        isDark ? "text-white/70" : "text-stone-600"
-                      }`}
-                    >
-                      <Trophy className="w-3.5 h-3.5 text-[#D4AF37]" />
-                      Skor Potensial Ronde Ini:
-                    </span>
-                    <span className="text-sm font-display font-bold text-[#D4AF37]">
-                      {potentialScore} XP{" "}
-                      {inputMode === "type" && (
-                        <span className="text-emerald-500 text-xs">(+20 Bonus)</span>
-                      )}
-                    </span>
-                  </div>
-                  <div
-                    className={`h-2.5 rounded-full overflow-hidden p-0.5 border ${
-                      isDark ? "bg-black/50 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
-                    }`}
-                  >
-                    <motion.div
-                      animate={{ width: `${potentialPercent}%` }}
-                      transition={{ type: "spring", stiffness: 180, damping: 22 }}
-                      className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-amber-300 shadow-sm"
-                    />
-                  </div>
+                  <motion.div
+                    animate={{ width: `${potentialPercent}%` }}
+                    transition={{ type: "spring", stiffness: 180, damping: 22 }}
+                    className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-amber-300 shadow-sm"
+                  />
+                </div>
+              </div>
+
+              {/* Progressive Hints Accordion / Cards */}
+              <div className="space-y-3">
+                <div
+                  className={`flex items-center justify-between text-xs px-1 ${
+                    isDark ? "text-white/60" : "text-stone-600"
+                  }`}
+                >
+                  <span className="font-display font-bold uppercase tracking-wider text-[#D4AF37] flex items-center gap-1.5">
+                    <Brain className="w-3.5 h-3.5" /> Petunjuk Filosofi & Karakteristik:
+                  </span>
+                  <span className="font-display text-xs">{revealedHints} dari 4 Terbuka</span>
                 </div>
 
-                {/* Progressive Hints Accordion */}
-                <div className="space-y-3">
-                  <div
-                    className={`flex items-center justify-between text-xs px-1 ${
-                      isDark ? "text-white/60" : "text-stone-600"
-                    }`}
-                  >
-                    <span className="font-display font-bold uppercase tracking-wider text-[#D4AF37]">
-                      Petunjuk Filosofi & Budaya:
-                    </span>
-                    <span>{revealedHints} dari 4 Terbuka</span>
-                  </div>
-
+                <div className="flex flex-col gap-2.5">
                   {hints.slice(0, revealedHints).map((hint, i) => (
                     <motion.div
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className={`rounded-2xl border p-4 transition-all shadow-sm ${
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className={`rounded-2xl border p-4 sm:p-5 transition-all shadow-sm ${
                         i === revealedHints - 1
                           ? isDark
-                            ? "bg-[#28211e] border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20"
-                            : "bg-[#FAF8F4] border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/30"
+                            ? "bg-[#28211e] border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/30 shadow-md"
+                            : "bg-[#FAF8F4] border-[#D4AF37]/70 ring-1 ring-[#D4AF37]/40 shadow-sm"
                           : isDark
-                          ? "bg-[#1b1716] border-white/10 opacity-70"
+                          ? "bg-[#1b1716] border-white/10 opacity-75"
                           : "bg-white border-[#E2DDD5] opacity-80"
                       }`}
                     >
-                      <div className="flex gap-3.5 items-start">
+                      <div className="flex gap-3.5 sm:gap-4 items-start">
                         <div
-                          className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 text-xs font-display font-bold border ${
+                          className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 text-xs sm:text-sm font-display font-bold border ${
                             i === revealedHints - 1
-                              ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37]"
+                              ? "bg-[#D4AF37] text-[#1A1614] border-[#D4AF37] shadow-sm"
                               : isDark
                               ? "bg-white/10 text-white/70 border-white/15"
                               : "bg-stone-100 text-stone-600 border-[#E2DDD5]"
@@ -510,8 +455,8 @@ export default function TebakMotifPage() {
                           {i + 1}
                         </div>
                         <p
-                          className={`font-narrative text-sm leading-relaxed pt-0.5 ${
-                            isDark ? "text-white/90" : "text-[#2D2B38]"
+                          className={`font-narrative text-sm sm:text-base leading-relaxed pt-0.5 ${
+                            isDark ? "text-white/95" : "text-[#2D2B38]"
                           }`}
                         >
                           {hint}
@@ -520,181 +465,177 @@ export default function TebakMotifPage() {
                     </motion.div>
                   ))}
                 </div>
+              </div>
 
-                {/* Answer Mode Tabs: Multiple Choice vs Type Mastery */}
+              {/* Answer Mode Tabs: Multiple Choice vs Type Mastery */}
+              <div
+                className={`border rounded-2xl p-4 sm:p-6 shadow-xl transition-colors ${
+                  isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5] shadow-sm"
+                }`}
+              >
                 <div
-                  className={`mt-2 border rounded-2xl p-5 shadow-xl transition-colors ${
-                    isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5] shadow-sm"
+                  className={`flex items-center justify-between pb-3 mb-4 border-b ${
+                    isDark ? "border-white/10" : "border-[#E2DDD5]"
                   }`}
                 >
-                  <div
-                    className={`flex items-center justify-between pb-3 mb-4 border-b ${
-                      isDark ? "border-white/10" : "border-[#E2DDD5]"
+                  <span
+                    className={`text-xs sm:text-sm font-display font-bold uppercase tracking-wider ${
+                      isDark ? "text-white" : "text-[#2D2B38]"
                     }`}
                   >
-                    <span
-                      className={`text-xs font-display font-bold uppercase tracking-wider ${
-                        isDark ? "text-white" : "text-[#2D2B38]"
+                    Tebak Nama Motif:
+                  </span>
+                  <div
+                    className={`flex gap-1 p-1 rounded-xl border ${
+                      isDark ? "bg-black/40 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setInputMode("choices")}
+                      className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
+                        inputMode === "choices"
+                          ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
+                          : isDark
+                          ? "text-white/60 hover:text-white"
+                          : "text-stone-600 hover:text-stone-900"
                       }`}
                     >
-                      Tebak Nama Motif:
-                    </span>
+                      Pilihan Kartu
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setInputMode("type")}
+                      className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
+                        inputMode === "type"
+                          ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
+                          : isDark
+                          ? "text-white/60 hover:text-white"
+                          : "text-stone-600 hover:text-stone-900"
+                      }`}
+                    >
+                      Ketik Bebas (+20 XP)
+                    </button>
+                  </div>
+                </div>
+
+                {/* Mode 1: Interactive Choice Cards */}
+                {inputMode === "choices" ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
+                    {choices.map((choiceName) => {
+                      const isDisabled = disabledChoices.includes(choiceName);
+                      return (
+                        <motion.button
+                          key={choiceName}
+                          type="button"
+                          whileHover={!isDisabled ? { scale: 1.015 } : {}}
+                          whileTap={!isDisabled ? { scale: 0.985 } : {}}
+                          onClick={() => submitAnswer(choiceName)}
+                          disabled={isDisabled}
+                          className={`p-4 rounded-xl border text-left font-display font-bold text-sm sm:text-base transition-all flex items-center justify-between group cursor-pointer ${
+                            isDisabled
+                              ? isDark
+                                ? "bg-black/30 border-white/5 text-white/20 line-through cursor-not-allowed"
+                                : "bg-stone-100 border-[#E2DDD5] text-stone-400 line-through cursor-not-allowed"
+                              : wrongAttempt
+                              ? "bg-red-950/30 border-red-500/50 text-red-400"
+                              : isDark
+                              ? "bg-[#28221f] hover:bg-[#713f2c]/50 border-white/15 hover:border-[#D4AF37] text-white shadow-md"
+                              : "bg-white hover:bg-stone-50 border-[#E2DDD5] hover:border-[#D4AF37] text-[#2D2B38] shadow-xs"
+                          }`}
+                        >
+                          <span>{choiceName}</span>
+                          {!isDisabled && (
+                            <ChevronRight className="w-4 h-4 text-[#D4AF37] opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                          )}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  /* Mode 2: Manual Typing Input with Autocomplete */
+                  <div className="relative">
                     <div
-                      className={`flex gap-1 p-1 rounded-xl border ${
-                        isDark ? "bg-black/40 border-white/10" : "bg-stone-100 border-[#E2DDD5]"
+                      className={`flex gap-2 rounded-xl border overflow-hidden transition-all ${
+                        wrongAttempt
+                          ? "border-red-500 ring-2 ring-red-500/30 animate-pulse"
+                          : isDark
+                          ? "bg-black/40 border-white/20 focus-within:border-[#D4AF37]"
+                          : "bg-stone-50 border-[#E2DDD5] focus-within:border-[#D4AF37]"
                       }`}
                     >
+                      <input
+                        type="text"
+                        value={query}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setQuery(val);
+                          if (val.length > 0) {
+                            const filtered = ALL_MOTIF_NAMES.filter((n) =>
+                              n.toLowerCase().includes(val.toLowerCase())
+                            );
+                            setSuggestions(filtered);
+                            setShowSuggestions(true);
+                          } else {
+                            setShowSuggestions(false);
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && query.trim()) submitAnswer(query.trim());
+                        }}
+                        placeholder="Ketik nama motif (contoh: Kawung, Parang, Mega Mendung)..."
+                        className={`flex-1 bg-transparent px-4 py-3.5 text-sm focus:outline-hidden ${
+                          isDark
+                            ? "text-white placeholder-white/40"
+                            : "text-[#2D2B38] placeholder-stone-400"
+                        }`}
+                        autoComplete="off"
+                      />
                       <button
                         type="button"
-                        onClick={() => setInputMode("choices")}
-                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
-                          inputMode === "choices"
-                            ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
-                            : isDark
-                            ? "text-white/60 hover:text-white"
-                            : "text-stone-600 hover:text-stone-900"
-                        }`}
+                        onClick={() => query.trim() && submitAnswer(query.trim())}
+                        disabled={!query.trim()}
+                        className="bg-[#D4AF37] hover:bg-[#c9a52f] text-[#1A1614] px-5 py-3.5 font-display font-bold text-xs flex items-center gap-1.5 transition-all disabled:opacity-30 cursor-pointer"
                       >
-                        Pilihan Kartu
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setInputMode("type")}
-                        className={`text-xs px-3 py-1 rounded-lg font-display transition-all cursor-pointer ${
-                          inputMode === "type"
-                            ? "bg-[#713f2c] text-[#D4AF37] font-bold shadow-xs"
-                            : isDark
-                            ? "text-white/60 hover:text-white"
-                            : "text-stone-600 hover:text-stone-900"
-                        }`}
-                      >
-                        Ketik Bebas (+20 XP)
+                        <span>Tebak</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </button>
                     </div>
-                  </div>
 
-                  {/* Mode 1: Interactive Choice Cards */}
-                  {inputMode === "choices" ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {choices.map((choiceName) => {
-                        const isDisabled = disabledChoices.includes(choiceName);
-                        return (
-                          <motion.button
-                            key={choiceName}
+                    {showSuggestions && suggestions.length > 0 && (
+                      <div
+                        className={`absolute top-full left-0 right-0 mt-1 rounded-xl border shadow-xl z-20 max-h-48 overflow-y-auto ${
+                          isDark ? "bg-[#1f1a18] border-white/10" : "bg-white border-[#E2DDD5]"
+                        }`}
+                      >
+                        {suggestions.map((sug) => (
+                          <button
+                            key={sug}
                             type="button"
-                            whileHover={!isDisabled ? { scale: 1.02 } : {}}
-                            whileTap={!isDisabled ? { scale: 0.98 } : {}}
-                            onClick={() => submitAnswer(choiceName)}
-                            disabled={isDisabled}
-                            className={`p-4 rounded-xl border text-left font-display font-bold text-sm transition-all flex items-center justify-between group cursor-pointer ${
-                              isDisabled
-                                ? isDark
-                                  ? "bg-black/30 border-white/5 text-white/20 line-through cursor-not-allowed"
-                                  : "bg-stone-100 border-[#E2DDD5] text-stone-400 line-through cursor-not-allowed"
-                                : wrongAttempt
-                                ? "bg-red-950/30 border-red-500/50 text-red-400"
-                                : isDark
-                                ? "bg-[#28221f] hover:bg-[#713f2c]/50 border-white/15 hover:border-[#D4AF37] text-white shadow-md"
-                                : "bg-white hover:bg-stone-50 border-[#E2DDD5] hover:border-[#D4AF37] text-[#2D2B38] shadow-xs"
+                            onClick={() => {
+                              setQuery(sug);
+                              setShowSuggestions(false);
+                              submitAnswer(sug);
+                            }}
+                            className={`w-full text-left px-4 py-2.5 text-xs font-display flex items-center justify-between cursor-pointer transition-colors ${
+                              isDark ? "hover:bg-white/5 text-white" : "hover:bg-stone-50 text-stone-800"
                             }`}
                           >
-                            <span>{choiceName}</span>
-                            {!isDisabled && (
-                              <ChevronRight className="w-4 h-4 text-[#D4AF37] opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                            )}
-                          </motion.button>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    /* Mode 2: Manual Typing Input with Autocomplete */
-                    <div className="relative">
-                      <div
-                        className={`flex gap-2 rounded-xl border overflow-hidden transition-all ${
-                          wrongAttempt
-                            ? "border-red-500 ring-2 ring-red-500/30 animate-pulse"
-                            : isDark
-                            ? "bg-black/40 border-white/20 focus-within:border-[#D4AF37]"
-                            : "bg-stone-50 border-[#E2DDD5] focus-within:border-[#D4AF37]"
-                        }`}
-                      >
-                        <input
-                          type="text"
-                          value={query}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setQuery(val);
-                            if (val.length > 0) {
-                              const filtered = ALL_MOTIF_NAMES.filter((n) =>
-                                n.toLowerCase().includes(val.toLowerCase())
-                              );
-                              setSuggestions(filtered);
-                              setShowSuggestions(true);
-                            } else {
-                              setShowSuggestions(false);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" && query.trim()) submitAnswer(query.trim());
-                          }}
-                          placeholder="Ketik nama motif (contoh: Kawung, Parang, Mega Mendung)..."
-                          className={`flex-1 bg-transparent px-4 py-3.5 text-sm focus:outline-hidden ${
-                            isDark
-                              ? "text-white placeholder-white/40"
-                              : "text-[#2D2B38] placeholder-stone-400"
-                          }`}
-                          autoComplete="off"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => query.trim() && submitAnswer(query.trim())}
-                          disabled={!query.trim()}
-                          className="px-5 bg-[#713f2c] hover:bg-[#583122] disabled:opacity-30 text-[#D4AF37] font-display font-bold text-sm transition-all cursor-pointer"
-                        >
-                          Kirim
-                        </button>
+                            <span>{sug}</span>
+                            <Search className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          </button>
+                        ))}
                       </div>
+                    )}
+                  </div>
+                )}
 
-                      {/* Autocomplete Suggestions */}
-                      {showSuggestions && suggestions.length > 0 && (
-                        <div
-                          className={`absolute top-full left-0 right-0 mt-1.5 border rounded-xl overflow-hidden shadow-2xl z-30 ${
-                            isDark
-                              ? "bg-[#231e1c] border-[#D4AF37]/40"
-                              : "bg-white border-[#E2DDD5]"
-                          }`}
-                        >
-                          {suggestions.map((sug) => (
-                            <button
-                              key={sug}
-                              type="button"
-                              onClick={() => {
-                                setQuery(sug);
-                                setShowSuggestions(false);
-                                submitAnswer(sug);
-                              }}
-                              className={`w-full text-left px-4 py-2.5 text-xs transition-colors border-b last:border-none flex items-center justify-between cursor-pointer ${
-                                isDark
-                                  ? "text-white/90 hover:bg-[#713f2c] hover:text-[#D4AF37] border-white/5"
-                                  : "text-[#2D2B38] hover:bg-stone-100 hover:text-[#713f2c] border-[#E2DDD5]"
-                              }`}
-                            >
-                              <span>{sug}</span>
-                              <Search className="w-3.5 h-3.5 text-[#D4AF37]" />
-                            </button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-
-                  {wrongAttempt && (
-                    <p className="text-xs text-red-500 mt-2.5 flex items-center gap-1.5 font-display animate-bounce">
-                      <XCircle className="w-4 h-4" />
-                      Jawaban belum tepat, silakan coba tebakan motif lain.
-                    </p>
-                  )}
-                </div>
+                {wrongAttempt && (
+                  <p className="text-xs text-red-500 mt-2.5 flex items-center gap-1.5 font-display animate-bounce">
+                    <XCircle className="w-4 h-4" />
+                    Jawaban belum tepat, silakan coba tebakan motif lain.
+                  </p>
+                )}
               </div>
             </motion.div>
           )}
