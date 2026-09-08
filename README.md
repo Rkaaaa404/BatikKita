@@ -34,7 +34,7 @@ Seluruh layanan di dalam Batik Kita dirancang secara modular dan menggunakan tat
 | **Batik Lens** | `/scan` | Edge AI Vision | Pemindai motif batik berbasis **EfficientNet-B0 ONNX WebAssembly**. Inferensi 100% lokal pada peranti klien tanpa mengirim data foto ke server luar, dilengkapi **Audio Guide Museum berbahasa Indonesia alami** (`/api/tts` stream & Web Speech fallback). |
 | **Batik Arcade** | `/play` | Hub Game Edukasi | Hub utama arena game batik dengan sistem akumulasi XP dan 4 tingkatan peringkat (*Pelajar Budaya* hingga *Empu Batik Digital*). |
 | **Batik Cap** | `/play/cap` | Block Puzzle | Game puzzle balok polyomino ala *Block Blast*; pemain menyusun potongan balok motif ke kisi kanvas dengan meja kerja 3 balok yang otomatis terisi ulang saat dipasang. |
-| **Batik Guess** | `/play/guess` | Tebak Nama Motif | Game tebak nama motif batik ala Wordle dengan 4 petunjuk bertahap (daerah asal, ciri visual corak, filosofi makna, dan kisi tebak huruf). |
+| **Batik Guess** | `/play/guess` | Mode Detektif Budaya | Game deduksi wastra berformat 1 kolom terpusat dengan 4 jenjang petunjuk filosofis, pilihan kartu 2×2, ketik bebas dengan autolengkap, serta bantuan 50:50. |
 | **Batik Map** | `/play/map` | Tebak Sentra Peta | Game mencocokkan kartu motif batik ke daerah asalnya di peta interaktif 7 Sentra Batik Nusantara (MapLibre GL). |
 | **Batik Zoom** | `/play/zoom` | Uji Hafalan Pola | Game menguji seberapa hafal pemain dengan pola batik dari gambar yang di-zoom in dekat (800%), lalu ditebak sebelum gambarnya perlahan diperkecil (*zoom out*). |
 | **Batik Pedia** | `/batikpedia` | Ensiklopedia Digital | Katalog 20 motif resmi tervalidasi budayawan yang memuat filosofi mendalam, asal-usul sentra, klasifikasi corak, panduan etika pakem pemakaian, 3 ragam visual per motif, serta **Audio Storytelling berbahasa Indonesia**. |
@@ -94,8 +94,11 @@ graph TD
   * **Menengah:** 8–10 kepingan balok (+150 XP).
   * **Sulit:** 12–15 kepingan balok (+200 XP).
 
-### 3. Tebak Nama Motif Ala Wordle (Batik Guess)
-* Pemain menebak nama motif batik dengan bantuan 4 petunjuk bertahap: daerah asal motif, karakteristik visual corak, makna filosofisnya, dan kisi tebak huruf ala Wordle.
+### 3. Mode Detektif Budaya (Batik Guess)
+* **Layout Terpusat 1 Kolom:** Mengeliminasi elemen visual statis untuk menghadirkan alur deduksi budaya yang terfokus (*above the fold*) tanpa perlu scroll.
+* **4 Jenjang Petunjuk Filosofis:** Petunjuk dibuka bertahap (makna filosofis, sentra asal, ciri visual corak, dan penggunaan tradisi). Semakin sedikit petunjuk yang dibuka, semakin besar reward XP (+100, +75, +50, +25 XP).
+* **Dual Input Mode:** Mendukung mode Pilihan Kartu interaktif serta mode Ketik Bebas dengan *live autocomplete* (+20 bonus XP).
+* **Fitur Bantuan (*Lifelines*):** Dilengkapi tombol Bantuan 50:50 (mengeliminasi 2 opsi salah) dan tombol Buka Petunjuk berikutnya.
 
 ### 4. Peta Tebak Sentra Nusantara (Batik Map)
 * Peta interaktif berbasis **MapLibre GL** yang menantang pemain menyeret kartu motif batik dan menempatkannya ke salah satu dari **7 Sentra Batik Nusantara** (*DKI Jakarta, Cirebon, Pekalongan, D.I. Yogyakarta, Surakarta, Lasem, dan Kalimantan*).
