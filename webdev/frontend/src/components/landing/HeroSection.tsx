@@ -109,7 +109,9 @@ export function HeroSection() {
             </a>
 
             <a
-              href="#demo"
+              href="https://drive.google.com/file/d/10wYwC7uparS5deE57DmuNSLMzMT1B3x_/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-white/90 font-display font-semibold text-xs sm:text-sm hover:text-white transition-colors group py-2"
             >
               <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border-2 border-white/70 flex items-center justify-center backdrop-blur-sm bg-white/10 group-hover:bg-white/20 transition-colors">

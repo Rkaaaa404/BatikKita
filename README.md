@@ -300,7 +300,7 @@ npm run build
 
 ## 👥 Tim Pengembang (HoloDev — HOLOGY 9.0)
 
-Proyek ini dikembangkan oleh **Tim HoloDev** dalam rangka kompetisi inovasi teknologi **HOLOGY 9.0 (Fakultas Ilmu Komputer, Universitas Brawijaya)**:
+Proyek ini dikembangkan oleh **Tim The Malang We Wont Share** dalam rangka kompetisi inovasi teknologi **HOLOGY 9.0 (Fakultas Ilmu Komputer, Universitas Brawijaya)**:
 * **Rayhan** — *UI/UX Design dan Asset Digital* (The Hipster)
 * **Rayka** — *Tech Lead, Fullstack Architecture & AI Engineering* (The Hacker)
 * **Haekal** — *Business Analyst & Strategic Proposal* (The Hustler)
@@ -309,5 +309,5 @@ Proyek ini dikembangkan oleh **Tim HoloDev** dalam rangka kompetisi inovasi tekn
 
 <div align="center">
   <sub>Dibangun dengan kebanggaan untuk pelestarian warisan adiluhung budaya Indonesia</sub><br>
-  <sub><strong>HOLO-DEV</strong> • HOLOGY 9.0 • 2026</sub>
+  <sub><strong>The Malang We Wont Share</strong> • HOLOGY 9.0 • 2026</sub>
 </div>
